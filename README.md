@@ -12,4 +12,4 @@ _Repositório para o Métix Project_
 
 - Ao proteger as transações PIX de fraudes, o projeto não apenas melhora a experiência dos usuários, mas também contruibui para a estabilidade e confiabilidade do sistema financeiro nacional.
 
-- Ao todo, a implementação desse sistema é um passzo essencial para assegurar que o crescimento do PIX continue sendo um benefício para a sociedade, sem comprometer a segurança ou a confiança no sistema já estabelecido.
+- Ao todo, a implementação desse sistema é um passo essencial para assegurar que o crescimento do PIX continue sendo um benefício para a sociedade, sem comprometer a segurança ou a confiança no sistema já estabelecido.
