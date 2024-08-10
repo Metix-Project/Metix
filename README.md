@@ -4,7 +4,7 @@ _Repositório para o Métix Project_
 
 # O que é o Métix Project?
 
-- O Métix Project vem com a intenção de auxiliar no monitoramento e proteção de transações PIX, assim, diminuindo drasticamente as fraudes e erros dentro deste processo.
+- O Métix Project vem com a intenção de auxiliar no monitoramento e proteção de transações PIX. Assim, diminuindo drasticamente as fraudes e erros dentro deste processo.
 
 # Por que usar o Métix?
 
