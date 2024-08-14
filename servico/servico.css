@@ -1,0 +1,92 @@
+.tela-servico {
+    background-image: url(tela-fundo-servico.jpg);
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    background-position: center;
+}
+
+.engloba-servico {
+    margin-left: 18rem;
+    display: flex;
+    gap: 4rem;
+}
+
+
+.engloba-servico h1 {
+    font-size: 3rem;
+    margin-top: 3.7rem;
+}
+
+.engloba-servico span {
+    width: 35%;
+    height: 2rem;
+    margin-top: 4rem;
+}
+
+.conteudo-servico {
+    margin-top: 3rem;
+    margin-left: 4rem;
+}
+
+.cards-servico {
+    display: flex;
+    gap: 12rem;
+    margin-top: 4rem;
+    margin-left: 26rem;
+}
+
+.cartao1-servico {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    height: 18rem; 
+    width: 15rem;  
+    padding: 1rem; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.cartao1-servico svg {
+    margin-top: 0.5rem;
+    width: 2rem;  
+    height: 2rem; 
+}
+
+.cartao1-servico h5 {
+    font-size: 0.875rem; 
+    text-align: center; 
+}
+
+.cartao1-servico span {
+    font-size: 1rem; 
+    text-align: center; 
+    margin: 0.5rem;
+}
+
+.cartao2-servico {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    height: 18rem; 
+    width: 15rem;  
+    padding: 1rem; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.cartao2-servico svg {
+    margin-top: 0.5rem;
+    width: 2rem;   
+    height: 2rem;  
+}
+
+.cartao2-servico h5 {
+    font-size: 0.875rem;  
+    text-align: center; 
+}
+
+.cartao2-servico span {
+    font-size: 1rem;  
+    text-align: center; 
+    margin: 0.5rem; 
+}
