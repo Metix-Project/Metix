@@ -1,5 +1,5 @@
 .tela-servico {
-    background-image: url(../src/imgs/tela-fundo-servico.jpg);
+    background-image: url('data:image/svg+xml,<svg width="1919" height="737" viewBox="0 0 1919 737" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M-3.5 271.5C438.833 403.667 1442.2 616 1917 408" stroke="%23957B5C" stroke-width="10"/><path d="M-3.77746 382.002C438.556 514.169 1441.92 726.502 1916.72 518.502" stroke="%23957B5C" stroke-width="10"/><path d="M-3.77746 174.002C438.556 306.169 1441.92 518.502 1916.72 310.502" stroke="%23957B5C" stroke-width="10"/></svg>');
     background-repeat: no-repeat; 
     background-size: cover; 
     background-position: center;
@@ -21,6 +21,7 @@ body::-webkit-scrollbar {
 
 .engloba-servico h1 {
     font-size: 3rem;
+    margin-top: 2rem;
 }
 
 .engloba-servico span {
@@ -30,13 +31,13 @@ body::-webkit-scrollbar {
 }
 
 .conteudo-servico {
-    margin-top: 3rem;
+    margin-top: 0.5rem;
     width: 85%;
 }
 
 .cards-servico {
     display: flex;
-    gap: 5rem;
+    gap: 6rem;
     margin-top: 4rem;
 }
 
@@ -113,10 +114,6 @@ body::-webkit-scrollbar {
     margin-bottom: 10px;
     margin-left: 20%;
     padding: 20px;
-    border: 3px solid #957B5C;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgb(95, 62, 62);
-    background-color: #DEDEDE;
     box-sizing: border-box;
     display: flex;
     align-items: center;
