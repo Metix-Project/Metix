@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --tamanho-footer: 65px;
+}
+
+.header {
+    height: 80px;
+    background-color: #191715;
+    width: 100vw;
+}
+
+.header .container {
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    background-color: #191715;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: row;
+    color: #FFFFFF;
+}
+
+.navbar {
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    list-style: none;
+    color: #FFFFFF;
+}
+
+.container {
+    display: flex;
+    width: 80%;
+    margin: auto;
+}
+
+.header .agora {
+    color: #593F1E;
+}
+
+.header a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+#login {
+    background-color: #505050;
+    height: 64px;
+    width: 190px;
+}
+
+#cadastro {
+    background-color: #3A3A3A;
+    height: 64px;
+    width: 190px;
+}
+
+.footer {
+    background-color: #191715;
+    height: 150px;
+    color: #fff;
+    display: flex;
+    font-size: 15px;
+  }
+  
+  .footer .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #num-email {
+    margin-top: 20px;
+  }
+
+  #clickables {
+    margin-bottom: 20px;
+  }
+
+  .footer2 {
+    background-color: #121010;
+    height: 98px;
+    color: #fff;
+  }
+
+  .footer2 .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+  }
+
+  .footer2 .container h4 {
+    margin-top: 40px;
+  }
