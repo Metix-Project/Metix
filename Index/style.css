@@ -16,7 +16,8 @@
 .header {
   height: 80px;
   background-color: #191715;
-  width: 100vw;
+  width: 100vw; 
+  position: fixed;
 }
 
 .header .container {
@@ -617,7 +618,7 @@ body {
 
 .inicio {
   display: flex;
-  padding: 0 5%;
+  padding: 5% 5%;
   background: #191715;
 }
 .inicio .textos {
