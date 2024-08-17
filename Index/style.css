@@ -18,6 +18,7 @@
   background-color: #191715;
   width: 100vw; 
   position: fixed;
+  z-index: 10;
 
 }
 
