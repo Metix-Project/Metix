@@ -29,7 +29,11 @@
 .logo-container {
   display: flex;
   flex-direction: row;
+  height: 100%;
   color: #ffffff;
+}
+.logo-container img {
+  height: 100%;
 }
 
 .navbar {
