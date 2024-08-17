@@ -16,7 +16,8 @@
 .header {
   height: 80px;
   background-color: #191715;
-  width: 100vw;
+  width: 100vw; 
+  position: fixed;
 }
 
 .header .container {
@@ -37,7 +38,7 @@
 }
 
 .navbar {
-  width: 400px;
+  width: 65%;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -53,24 +54,29 @@
 
 .header .agora {
   color: #593f1e;
+  font-weight: bolder;
 }
 
 .header a {
   text-decoration: none;
   color: #ffffff;
   font-weight: bold;
+  font-size: 20px;
 }
 
 #login {
   background-color: #505050;
   height: 64px;
-  width: 190px;
+  width: 350px;
+  padding: 31.5% 80%;
 }
 
 #cadastro {
   background-color: #3a3a3a;
   height: 64px;
-  width: 190px;
+  width: 350px;
+  padding: 20% 50%;
+  margin-left: 7%;
 }
 
 .footer {
@@ -621,7 +627,7 @@ body {
 
 .inicio {
   display: flex;
-  padding: 0 5%;
+  padding: 5% 5%;
   background: #191715;
 }
 .inicio .textos {
