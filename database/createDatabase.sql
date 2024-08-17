@@ -6,17 +6,17 @@ create table Empresa(
 		id int primary key auto_increment,
     razaoSocial varchar(80) not null,
     nomeFantasia varchar(80),
-    email varchar(80) not null,
-    cnpj char(18) not null,
-    telefone char(19) not null
+    email varchar(80) not null unique,
+    cnpj char(18) not null unique,
+    telefone char(19) not null unique
 );
 create table Usuario(
 		id int auto_increment,
     nome varchar(80) not null,
-    email varchar(80) not null,
+    email varchar(80) not null unique,
     senha varchar(80) not null,
-    cpf char(14) not null,
-    telefone char(19) not null,
+    cpf char(14) not null unique,
+    telefone char(19) not null unique,
     cargo char(15) not null,
     fkEmpresa int not null,
     
@@ -25,7 +25,8 @@ create table Usuario(
 );
 create table Servidor(
 		id int primary key auto_increment,
-    macAddress char(17) not null,
+    macAddress char(17) not null unique,
+    pontoDeControle int not null,
     fkEmpresa int not null,
     
     constraint ServidorFkEmpresa foreign key (fkEmpresa) references Empresa(id)
