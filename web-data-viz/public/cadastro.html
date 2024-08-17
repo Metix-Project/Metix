@@ -61,7 +61,7 @@
       <span id="mensagem_erro"></span>
     </div>
   </div>
-  <form onsubmit="cadastrar(event)">
+  <div class="form">
     <h1>Cadastre-se no nosso sistema</h1>
     <div class="campos">
       <label>
@@ -84,6 +84,15 @@
         <span>CPF:</span>
         <input id="cpf_input" type="text" placeholder="CPF" required />
       </label>
+      <label>
+        <span>Cargo:</span>
+        <select name="" id="cargo_input" placeholder="Cargo de atuação" required>
+          <option value="">Cargo de atuação</option>
+          <option value="Ger">Gerente</option>
+          <option value="Tec">Técnico</option>
+        </select>
+      </label>
+
     </div>
     <button type="submit" onclick="cadastrar()">CADASTRAR</button>
 
@@ -135,6 +144,7 @@
     var senhaVar = senha_input.value;
     var telefoneVar = telefone_input.value;
     var cpfVar = cpf_input.value;
+    var cargoVar = cargo_input.value;
 
     // var confirmacaoSenhaVar = confirmacao_senha_input.value;
     // var codigoVar = codigo_input.value;
@@ -146,7 +156,8 @@
       emailVar == "" ||
       senhaVar == "" ||
       telefoneVar == "" ||
-      cpfVar == ""
+      cpfVar == "" ||
+      cargoVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -184,7 +195,8 @@
         emailServer: emailVar,
         senhaServer: senhaVar,
         telefoneServer: telefoneVar,
-        cpfServer:cpfVar
+        cpfServer: cpfVar,
+        cargoServer:cargoVar
         
       }),
     })
