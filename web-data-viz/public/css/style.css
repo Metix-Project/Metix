@@ -450,7 +450,7 @@ body::-webkit-scrollbar {
 /* TELA EQUIPE */
 
 .equipe {
-  background-image: url("../src/imgs/background_equipe.png");
+  background-image: url("../assets/imgs/background_equipe.png");
   background-size: cover;
   height: auto;
   display: flex;
