@@ -18,6 +18,7 @@
   background-color: #191715;
   width: 100vw; 
   position: fixed;
+
 }
 
 .header .container {
@@ -32,9 +33,26 @@
   flex-direction: row;
   height: 100%;
   color: #ffffff;
+  margin-top: 1%;
 }
+
 .logo-container img {
   height: 100%;
+  margin-right: 3%;
+}
+
+.metix-container {
+  width: 190px;
+  
+}
+
+.metix-container h5 {
+  width: 100%;
+}
+
+.metix-container h4 {
+  font-size: 30px;
+  width: 100%;
 }
 
 .navbar {
@@ -76,7 +94,7 @@
   height: 64px;
   width: 350px;
   padding: 20% 50%;
-  margin-left: 7%;
+  margin-left: 23%;
 }
 
 .footer {
