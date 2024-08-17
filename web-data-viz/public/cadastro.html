@@ -10,87 +10,108 @@
 
   <script src="./js/sessao.js"></script>
 
-  <link rel="stylesheet" href="./css/estilo.css" />
+  <link rel="stylesheet" href="./css/cadastro.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+
   <link rel="icon" href="./assets/icon/favicon2.ico" />
   <link rel="preconnect" href="https://fonts.gstatic.com" />
 </head>
 
 <body onload="listar()">
   <!--header inicio-->
-  <div class="header">
-    <div class="container">
-      <h1 class="titulo">AquaTech</h1>
-      <ul class="navbar">
-        <li>
-          <a href="index.html">Inicial</a>
-        </li>
-        <li>
-          <a href="simulador.html">Simulador</a>
-        </li>
-        <li>|</li>
-        <li>
-          <a href="login.html">Login</a>
-        </li>
-        <li class="agora">
-          <a href="#">Cadastro</a>
-        </li>
-      </ul>
-    </div>
+  <div class="cad">
+      <div class="header">
+          <div class="container">
+              <div class="logo-container">
+                  <img src="./assets/imgs/logo.png" alt="Métix logo" class="logo_header" style="height: 70%;">
+                  <div class="metix-container">    
+                      <h4>Métix</h4>
+                      <h5>Proteção divina</h5>
+                  </div>
+              </div>
+              <ul class="navbar">
+                  <li>
+                      <a href="#" class="agora">Início</a>
+                  </li>
+                  <li>
+                      <a href="#">Serviços</a>
+                  </li>
+                  <li>
+                      <a href="#">Sobre nós</a>
+                  </li>
+                  <li>
+                      <a href="#">Equipe</a>
+                  </li>
+                  <li>
+                      <a href="./login.html" id="login">Login</a>
+                  </li>
+                  <li>
+                      <a href="./cadastro.html" id="cadastro">Cadastro</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
   </div>
+
+
   <!--header fim-->
 
-  <div class="login">
-    <div class="alerta_erro">
-      <div class="card_erro" id="cardErro">
-        <span id="mensagem_erro"></span>
-      </div>
-    </div>
-    <div class="container">
-      <div class="card card-cadastro">
-        <h2>Bem-vindo!</h2>
-        <div class="formulario">
-          <!--
-                         Para inserir mais um campo, copie uma das inputs abaixo.
-                         Assim que inserir vá para o script abaixo.
-                     -->
-          <div class="campo">
-            <span>Código de ativação:</span>
-            <input id="codigo_input" type="text" placeholder="Insira aqui seu código" />
-          </div>
-          <div class="campo">
-            <span>Nome:</span>
-            <input id="nome_input" type="text" placeholder="Seu nome" />
-          </div>
-          <div class="campo">
-            <span>E-mail:</span>
-            <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
-          </div>
-          <div class="campo">
-            <span>Senha:</span>
-            <input id="senha_input" type="password" placeholder="******" />
-          </div>
-          <div class="campo">
-            <span>Confirmação da Senha:</span>
-            <input id="confirmacao_senha_input" type="password" placeholder="******" />
-          </div>
-          <button class="botao" onclick="cadastrar()">Cadastrar</button>
-        </div>
-        <div id="div_aguardar" class="loading-div">
-          <img src="./assets/circle-loading.gif" id="loading-gif" />
-        </div>
-
-        <div id="div_erros_login"></div>
-      </div>
+  <div class="alerta_erro">
+    <div class="card_erro" id="cardErro">
+      <span id="mensagem_erro"></span>
     </div>
   </div>
+  <form onsubmit="cadastrar(event)">
+    <h1>Cadastre-se no nosso sistema</h1>
+    <div class="campos">
+      <label>
+        <span>Nome:</span>
+        <input id="nome_input" type="text" placeholder="Username" required autofocus />
+      </label>
+      <label>
+        <span>Email:</span>
+        <input id="email_input" type="email" placeholder="Email" required />
+      </label>
+      <label>
+        <span>Senha:</span>
+        <input id="senha_input" type="password" placeholder="Password" required />
+      </label>
+      <label>
+        <span>Telefone:</span>
+        <input id="inputTelefone" type="tel" placeholder="Telephone" required />
+      </label>
+      <label>
+        <span>CPF:</span>
+        <input id="inputCPF" type="text" placeholder="CPF" required />
+      </label>
+    </div>
+    <button type="submit" onclick="cadastrar()">CADASTRAR</button>
+
+    <div id="divAguardar" class="loading-div">
+      <img src="./assets/circle-loading.gif" id="loading-gif" style="height: 20px;" />
+    </div>
+
+    <div id="div_erros_login"></div>
+  </form>
+  <script src="script.js"></script>
+
 
   <!--footer inicio-->
-  <div class="footer">
-    <div class="container">
-      <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
-      <span class="version">v1.0.0</span>
-    </div>
-  </div>
+  
+            <!-- <div class="footer">
+              <div class="container">
+                  <h4 id="clickables">Não sei botar os símbolos :(</h4>
+                  <h3>Rua Haddock Lobo, 595 São Paulo - SP - Brasil</h3>
+                  <h4 id="num-email">+55 11 40207812ㅤㅤㅤㅤㅤㅤㅤMetix@gmail.com</h4>
+              </div>
+          </div>
+          <div class="footer2">
+              <div class="container">
+                  <h4>Copyright © 2024</h4>
+                  <h4>SPTECH - São Paulo Tech School</h4>
+              </div>
+          </div> -->
+
   <!--footer fim-->
 </body>
 
@@ -100,6 +121,8 @@
 
   // Array para armazenar empresas cadastradas para validação de código de ativação 
   let listaEmpresasCadastradas = [];
+
+  divAguardar.style.display = 'none';
 
   function cadastrar() {
     // aguardar();

@@ -18,8 +18,14 @@
   background-color: #191715;
   width: 100vw; 
   position: fixed;
+  top: 0;
   z-index: 10;
 
+}
+
+.cad {
+  position: fixed;
+  left: 0px;
 }
 
 .header .container {
@@ -45,6 +51,10 @@
 .metix-container {
   width: 190px;
   
+}
+
+.cad .metix-container{
+  margin-top: -5px;
 }
 
 .metix-container h5 {
@@ -96,6 +106,15 @@
   width: 350px;
   padding: 20% 50%;
   margin-left: 23%;
+}
+
+.cad #login {
+  padding: 22% 70%;
+}
+
+.cad #cadastro {
+  padding: 14% 40%;
+  margin-left: 30%;
 }
 
 .footer {
