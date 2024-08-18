@@ -272,177 +272,163 @@ body::-webkit-scrollbar {
 
 /* TELA SOB NOS */
 
-.sobre .social {
-  background-color: #b3b2b2;
+.engloba-tudo{
   display: flex;
-  height: 90vh;
-  align-items: center;
-  display: flex;
-}
-
-.sobre .social .container {
-  justify-content: center;
-  align-items: center;
-  display: flex;
+  align-items: column;
   flex-direction: column;
+  background-color: #B3B2B2;
 }
 
-.sobre .social .container .boxes {
+.sobre{
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 30px 0;
-}
-
-.sobre .social p {
-  text-align: center;
-}
-
-.sobre .container {
-  display: flex;
-  justify-content: center;
-  width: 90%;
-  margin: auto;
-}
-
-.sobre .header .container {
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  border-bottom: 3px solid black;
-}
-
-.sobre .container img {
-  width: 80px;
-  height: 80px;
-  margin: 0;
-}
-
-.sobre .social .container {
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-.sobre .social .container .boxes {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 30px 0;
-  margin-top: 40px;
-}
-
-.sobre .boxes_sobre h1 {
-  color: white;
-}
-.sobre .boxes_sobre {
-  display: flex;
-  width: 100%;
-  height: 175vh;
-  padding: 30px 0;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.sobre .box {
-  width: 250px;
-  text-align: center;
-  border: 5px solid black;
-  padding: 10px 40px;
-  border-radius: 10px;
-  font-size: 16px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.403);
-  text-align: justify;
-}
-
-.sobre .box p {
-  text-align: justify;
-}
-
-.sobre .box img {
-  width: 120px;
-  height: 120px;
-}
-
-.sobre .box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.sobre .box_sobre {
-  background-color: #b3b2b2;
-  width: 120vh;
-  height: 60vh;
-  padding: 10px 40px;
-  font-size: 40px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.403);
-  text-align: justify;
-  justify-content: space-between;
-  width: 100%;
-  padding: 30px 0;
-}
-
-.sobre .content_sobre {
-  width: 100%;
-  height: 80%;
-  display: flex;
-}
-
-.sobre .img_sobre {
-  width: 40%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.sobre .texto_sobre {
-  width: 60%;
-  height: 100%;
-}
-
-.sobre .texto_sobre p {
-  font-size: 20px;
-}
-
-.sobre .titulo_sobre {
-  width: 100%;
-  height: 20%;
-  display: flex;
-}
-
-.sobre .space1 {
-  width: 40%;
-  height: 100%;
-}
-
-.sobre .box_sobre img {
-  width: 60vh;
-  height: 60vh;
-  border-radius: 10%;
-}
-
-.sobre .box_sobre p {
-  font-size: 30px;
+  height: 90%;
   width: 70%;
-  margin-top: 75px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 12rem;
 }
 
-.sobre .container {
-  font-size: 30px;
+.social {
+  display: flex;
+  height: 90%;
+  width: 70%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 12rem;
 }
 
-.sobre .social .container .boxes .box p {
-  font-size: 24px;
+.engloba-Sob-nos-1{
+  display: flex;
+  justify-content: space-around;
+  margin-right: 10%;
+  margin-left: 7%;
 }
 
-.sobre .social .container .boxes .box h4 {
-  font-size: 30px;
-  padding: 0px;
-  margin: 15px;
+.engloba-Sob-nos-2{
+  margin-left: 4%;
+  margin-right: 0.5rem;
+}
+
+.engloba-Sob-nos-2 span{
+  display: flex;
+  justify-content: space-around;
+  font-size: 1rem;
+  width: 90%;
+  align-items: baseline;
+  margin-left: 10%;
+}
+
+.texto_sobre{
+  width: 57%;
+  height: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.texto_sobre h1{
+  font-size: 3rem;
+  align-items: normal;
+  margin-right: 1.7rem;
+  margin-top: 0.7rem;
+}
+
+.texto_sobre span{
+  font-size: 1.2rem;
+  margin-left: 20%;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  width: 80%;
+  text-align: justify;
+}
+
+.boxes{
+  display: flex;
+  align-items: center;
+  flex-direction: center;
+  justify-content: column;
+  background-color: white;
+  height: 18rem; 
+  width: 27%;  
+  padding: 1rem; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 1); 
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+
+.boxes:hover{
+  transform: scale(1.05);
+}
+
+.social h1{
+  margin-left: 1.6rem;
+  font-size: 3rem;
+  align-items: normal;
+}
+
+.span-bosta{
+  margin-top: 2rem;
+  margin-left: 4%;
+  margin-bottom: 5%;
+  width: 92%;
+  text-align: justify;
+  display: flex;
+}
+
+.container span{
+  text-align: justify;
+  font-size: 1.3rem;
+}
+
+.cartoes{
+  display: flex;
+  align-items: center;
+  flex-direction: center;
+  justify-content: space-around;
+  width: 60%;
+  margin-left: 16.3rem;
+  margin-bottom: 5%;
+}
+
+.boxes .box{
+  display: flex;
+  text-align: justify;
+  align-items: center;
+  flex-direction: column;
+  height: 15rem; 
+  width: 17rem;  
+  padding: 1rem; 
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+  margin-bottom: 25%;
+}
+
+.fundo-icones{
+  background-color:#DEDEDE;
+  border-radius: 6px;
+}
+
+.boxes .box h4{
+  font-size: 1.4rem;
+  margin-top: 1.5rem;
+}
+
+.boxes .box p{
+  font-size: 17px;
+  margin-bottom: 5%;
+  margin-top: 1.5rem;
+  height: auto;
 }
 
 /* TELA EQUIPE */
