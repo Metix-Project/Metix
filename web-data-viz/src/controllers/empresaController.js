@@ -23,20 +23,20 @@ function buscarPorId(req, res) {
 }
 
 function cadastrar(req, res) {
-  var cnpj = req.body.cnpj;
-  var razaoSocial = req.body.razaoSocial;
+  var razao = req.body.razaoServer;
+  var fantasia = req.body.fantasiaServer;
+  var email = req.body.emailServer;
+  var cnpj = req.body.cnpjServer;
+  var telefone = req.body.telefoneServer;
 
-  empresaModel.buscarPorCnpj(cnpj).then((resultado) => {
-    if (resultado.length > 0) {
-      res
-        .status(401)
-        .json({ mensagem: `a empresa com o cnpj ${cnpj} já existe` });
-    } else {
-      empresaModel.cadastrar(razaoSocial, cnpj).then((resultado) => {
-        res.status(201).json(resultado);
-      });
-    }
-  });
+  if (razao == undefined) {
+    res.status(400).send("Sua razão está undefined!");
+  } else if (fantasia = undefined) {
+    res.status(400).send("Seu nome fantasia está undefined!");
+  } else if (email == undefined) {
+    res.status(400).send("Seu e-mail está undefined!");
+    
+  }
 }
 
 module.exports = {
@@ -45,3 +45,10 @@ module.exports = {
   cadastrar,
   listar,
 };
+ /*
+             razaoServer: razaoVar,
+            fantasiaServer: fantasiaVar,
+            emailServer: emailVar,
+            cnpjServer: cnpjVar,
+            telefoneServer: telefoneVar,
+ */
