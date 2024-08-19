@@ -42,10 +42,10 @@
                         <a href="#">Equipe</a>
                     </li>
                     <li>
-                        <a href="../login/login.html" id="login">Login</a>
+                        <a href="login.html" id="login">Login</a>
                     </li>
                     <li>
-                        <a href="../cadastro/cadastro.html" id="cadastro">Cadastro</a>
+                        <a href="cadastro.html" id="cadastro">Cadastro</a>
                     </li>
                 </ul>
             </div>
@@ -53,16 +53,16 @@
     </div>
 </div>
 
-    <form onsubmit="logar(event)">
+    <form onsubmit="entrar(event)">
         <h1>Faça login no nosso sistema</h1>
         <div class="campos">
             <label>
                 <span>Email:</span>
-                <input id="email_input" type="email" placeholder="Email" required autofocus />
+                <input id="email_input" type="email" placeholder="Email" required autofocus autocomplete="email" />
             </label>
             <label>
                 <span>Senha:</span>
-                <input id="senha_input" type="password" placeholder="Password" required />
+                <input id="senha_input" type="password" placeholder="Password" required autocomplete="current-password" />
             </label>
             <div class="links">
                 <a href="">Esqueceu a senha?</a>
@@ -72,8 +72,9 @@
     </form>
     <script src="/js/script.js"></script>
     <script>
-        function entrar() {
-            aguardar();
+        function entrar(event) {
+            logar(event)
+            // aguardar();
     
             var emailVar = email_input.value;
             var senhaVar = senha_input.value;
@@ -115,7 +116,7 @@
                         sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
     
                         setTimeout(function () {
-                            window.location = "./dashboard/cards.html";
+                            window.location = "";
                         }, 1000); // apenas para exibir o loading
     
                     });
@@ -126,7 +127,7 @@
     
                     resposta.text().then(texto => {
                         console.error(texto);
-                        finalizarAguardar(texto);
+                        // finalizarAguardar(texto);
                     });
                 }
     
