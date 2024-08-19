@@ -272,12 +272,6 @@ body::-webkit-scrollbar {
 
 /* TELA SOB NOS */
 
-.engloba-tudo{
-  display: flex;
-  align-items: column;
-  flex-direction: column;
-  background-color: #B3B2B2;
-}
 
 .sobre{
   display: flex;
@@ -345,11 +339,11 @@ body::-webkit-scrollbar {
   margin-left: 20%;
 }
 
-.container{
+.container-sob-nos{
   display: flex;
   flex-direction: column;
   height: 50%;
-  width: 80%;
+  width: 100%;
   text-align: justify;
 }
 
@@ -386,7 +380,7 @@ body::-webkit-scrollbar {
   display: flex;
 }
 
-.container span{
+.container-sob-nos span{
   text-align: justify;
   font-size: 1.3rem;
 }
