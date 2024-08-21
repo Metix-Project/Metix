@@ -1,4 +1,4 @@
-var usuarioModel = require("../models/usuarioModel");
+var servidorModel = require("../models/servidorModel");
 
 function cadastrar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
@@ -26,7 +26,7 @@ function cadastrar(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha, tel, cpf, cargo)
+        servidorModel.cadastrar(nome, email, senha, tel, cpf, cargo)
             .then(
                 function (resultado) {
                     res.status(200).json(resultado);
@@ -54,7 +54,7 @@ function autenticar(req, res) {
         res.status(400).send("Sua senha está indefinida!");
     } else {
 
-        usuarioModel.autenticar(email, senha)
+        servidorModel.autenticar(email, senha)
             .then(
                 function (resultadoAutenticar) {
                     if (resultadoAutenticar.length == 1) {
