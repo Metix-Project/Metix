@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teste</title>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const div = document.createElement("div");
+      const canvas = document.createElement("canvas");
+      div.appendChild(canvas);
+      document.body.appendChild(div);
+
+      const chart = new Chart(canvas, {
+        data: {
+          type: "pie",
+          labels: ["1", "2", "3"],
+          datasets: [
+            {
+              label: "a",
+              data: [2, 5, 8],
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>
