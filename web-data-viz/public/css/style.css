@@ -153,6 +153,7 @@
   flex-direction: column;
   gap: 2dvw;
   align-items: center;
+  margin-left: 26rem;
 }
 .footer .footer1 .info .clickables img {
   width: 15%;
@@ -186,6 +187,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  background-color: #dedede;
 }
 
 body::-webkit-scrollbar {
@@ -319,8 +321,9 @@ body::-webkit-scrollbar {
   display: flex;
   align-items: column;
   flex-direction: column;
-  background-color: #b3b2b2;
+  background-color: #938a8a;
 }
+
 
 .sobre {
   display: flex;
@@ -379,13 +382,15 @@ body::-webkit-scrollbar {
 .texto_sobre h1 {
   font-size: 3rem;
   align-items: normal;
-  margin-right: 4.6rem;
+  margin-right: 8rem;
   margin-top: 0.7rem;
+  color: white;
 }
 
 .texto_sobre span {
   font-size: 1.2rem;
   margin-left: 15%;
+  color: white;
 }
 
 .container-sob-nos {
@@ -394,6 +399,7 @@ body::-webkit-scrollbar {
   height: 50%;
   width: 90%;
   text-align: justify;
+  color: white;
 }
 
 .boxes {
@@ -401,13 +407,14 @@ body::-webkit-scrollbar {
   align-items: center;
   flex-direction: center;
   justify-content: column;
-  background-color: white;
+  background-color: #5c5854;
   height: 18rem;
   width: 27%;
   padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
   border-radius: 5px;
   transition: transform 0.3s ease;
+  
 }
 
 .boxes:hover {
@@ -415,14 +422,16 @@ body::-webkit-scrollbar {
 }
 
 .social h1 {
-  margin-left: 1.6rem;
+ margin-top: 2rem;
   font-size: 3rem;
   align-items: normal;
+  margin-left: 22rem;
+  color: white  ;
 }
 
 .span-bosta {
   margin-top: 2rem;
-  margin-left: 4%;
+  margin-left: 5rem;
   margin-bottom: 5%;
   width: 92%;
   text-align: justify;
@@ -440,7 +449,7 @@ body::-webkit-scrollbar {
   flex-direction: center;
   justify-content: space-around;
   width: 60%;
-  margin-left: 16.3rem;
+  margin-left: 20rem;
   margin-bottom: 5%;
 }
 
@@ -458,13 +467,14 @@ body::-webkit-scrollbar {
 }
 
 .fundo-icones {
-  background-color: #dedede;
+  /* background-color: black; */
   border-radius: 6px;
 }
 
 .boxes .box h4 {
   font-size: 1.4rem;
   margin-top: 1.5rem;
+  color: white;
 }
 
 .boxes .box p {
@@ -472,6 +482,7 @@ body::-webkit-scrollbar {
   margin-bottom: 5%;
   margin-top: 1.5rem;
   height: auto;
+  color: white;
 }
 
 /* TELA EQUIPE */
