@@ -4,12 +4,12 @@ _Repositório para o Métix Project_
 
 # O que é o Métix Project?
 
-- O Métix Project vem com a intenção de auxiliar no monitoramento e proteção de transações PIX. Assim, diminuindo drasticamente as fraudes e erros dentro deste processo.
+- O Métix Project vem com a intenção criar uma plataforma tecnológica capaz de lidar com o imenso volume de dados gerado pelas transações PIX.
 
-# Por que usar o Métix?
+# Como o Métix fará isso?
 
-- A utilização do Métix é uma oportunidade única e crucial para reforçar a segurança do sistema financeiro do Banco Central do Brasil em um contexto de crescente digitalização.
+- Serão implementados algoritmos projetados para monitorar os servidores do sistema PIX em tempo real, identificando padrões anômalos que possam indicar falhas, congestionamentos ou outras irregularidades que comprometam a eficiência das transações.
 
-- Ao proteger as transações PIX de fraudes, o projeto não apenas melhora a experiência dos usuários, mas também contruibui para a estabilidade e confiabilidade do sistema financeiro nacional.
+- Ao detectar qualquer anomalia, o sistema possa agir de forma proativa, ajustando os recursos ou notificando as equipes técnicas para garantir que o fluxo de transações continue sem interrupções.
 
-- Ao todo, a implementação desse sistema é um passo essencial para assegurar que o crescimento do PIX continue sendo um benefício para a sociedade, sem comprometer a segurança ou a confiança no sistema já estabelecido.
+- Ao todo, a implementação desse sistema é um passo essencial para assegurar que o crescimento do PIX continue sendo um benefício para a sociedade. Garantindo a confiança no sistema já estabelecido.

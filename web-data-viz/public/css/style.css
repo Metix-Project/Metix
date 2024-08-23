@@ -16,11 +16,10 @@
 .header {
   height: 80px;
   background-color: #191715;
-  width: 100vw; 
+  width: 100dvw;
   position: fixed;
   top: 0;
   z-index: 10;
-
 }
 
 .cad {
@@ -50,10 +49,9 @@
 
 .metix-container {
   width: 190px;
-  
 }
 
-.cad .metix-container{
+.cad .metix-container {
   margin-top: -5px;
 }
 
@@ -127,44 +125,58 @@
   margin-left: 30%;
 }
 
-.footer {
-  background-color: #191715;
-  height: 150px;
-  color: #fff;
-  display: flex;
-  font-size: 15px;
-}
-
-.footer .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
-
 #num-email {
   margin-top: 20px;
 }
 
-#clickables {
-  margin-bottom: 20px;
-}
-
-.footer2 {
-  background-color: #121010;
-  height: 98px;
+.footer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-family: "Noto Serif", serif;
   color: #fff;
 }
-
-.footer2 .container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  text-align: center;
+.footer * {
+  box-sizing: border-box;
 }
 
-.footer2 .container h4 {
-  margin-top: 40px;
+.footer .footer1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  padding: 2dvw;
+  background-color: #191715;
+}
+.footer .footer1 .info {
+  display: flex;
+  flex-direction: column;
+  gap: 2dvw;
+  align-items: center;
+}
+.footer .footer1 .info .clickables img {
+  width: 15%;
+}
+.footer .footer1 .info div {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.footer .footer1 .info .contato div {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+}
+.footer .footer1 .logo {
+  width: 6%;
+}
+.footer .footer2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 2dvw;
+  background-color: #121010;
 }
 
 /* TELA SERVICOS */
@@ -303,14 +315,14 @@ body::-webkit-scrollbar {
 
 /* TELA SOB NOS */
 
-.engloba-tudo{
+.engloba-tudo {
   display: flex;
   align-items: column;
   flex-direction: column;
-  background-color: #B3B2B2;
+  background-color: #b3b2b2;
 }
 
-.sobre{
+.sobre {
   display: flex;
   height: 90%;
   width: 70%;
@@ -332,19 +344,19 @@ body::-webkit-scrollbar {
   margin-left: 12rem;
 }
 
-.engloba-Sob-nos-1{
+.engloba-Sob-nos-1 {
   display: flex;
   justify-content: space-around;
   margin-right: 10%;
   margin-left: 7%;
 }
 
-.engloba-Sob-nos-2{
+.engloba-Sob-nos-2 {
   margin-left: 4%;
   margin-right: 0.5rem;
 }
 
-.engloba-Sob-nos-2 span{
+.engloba-Sob-nos-2 span {
   display: flex;
   justify-content: space-around;
   font-size: 1rem;
@@ -353,7 +365,7 @@ body::-webkit-scrollbar {
   margin-left: 10%;
 }
 
-.texto_sobre{
+.texto_sobre {
   width: 57%;
   height: auto;
   padding: 20px;
@@ -364,19 +376,19 @@ body::-webkit-scrollbar {
   flex-direction: column;
 }
 
-.texto_sobre h1{
+.texto_sobre h1 {
   font-size: 3rem;
   align-items: normal;
   margin-right: 4.6rem;
   margin-top: 0.7rem;
 }
 
-.texto_sobre span{
+.texto_sobre span {
   font-size: 1.2rem;
   margin-left: 15%;
 }
 
-.container-sob-nos{
+.container-sob-nos {
   display: flex;
   flex-direction: column;
   height: 50%;
@@ -384,31 +396,31 @@ body::-webkit-scrollbar {
   text-align: justify;
 }
 
-.boxes{
+.boxes {
   display: flex;
   align-items: center;
   flex-direction: center;
   justify-content: column;
   background-color: white;
-  height: 18rem; 
-  width: 27%;  
-  padding: 1rem; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 1); 
+  height: 18rem;
+  width: 27%;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
   border-radius: 5px;
   transition: transform 0.3s ease;
 }
 
-.boxes:hover{
+.boxes:hover {
   transform: scale(1.05);
 }
 
-.social h1{
+.social h1 {
   margin-left: 1.6rem;
   font-size: 3rem;
   align-items: normal;
 }
 
-.span-bosta{
+.span-bosta {
   margin-top: 2rem;
   margin-left: 4%;
   margin-bottom: 5%;
@@ -417,12 +429,12 @@ body::-webkit-scrollbar {
   display: flex;
 }
 
-.container-sob-nos span{
+.container-sob-nos span {
   text-align: justify;
   font-size: 1.3rem;
 }
 
-.cartoes{
+.cartoes {
   display: flex;
   align-items: center;
   flex-direction: center;
@@ -432,30 +444,30 @@ body::-webkit-scrollbar {
   margin-bottom: 5%;
 }
 
-.boxes .box{
+.boxes .box {
   display: flex;
   text-align: justify;
   align-items: center;
   flex-direction: column;
-  height: 15rem; 
-  width: 17rem;  
-  padding: 1rem; 
+  height: 15rem;
+  width: 17rem;
+  padding: 1rem;
   border-radius: 5px;
   transition: transform 0.3s ease;
   margin-bottom: 25%;
 }
 
-.fundo-icones{
-  background-color:#DEDEDE;
+.fundo-icones {
+  background-color: #dedede;
   border-radius: 6px;
 }
 
-.boxes .box h4{
+.boxes .box h4 {
   font-size: 1.4rem;
   margin-top: 1.5rem;
 }
 
-.boxes .box p{
+.boxes .box p {
   font-size: 17px;
   margin-bottom: 5%;
   margin-top: 1.5rem;
