@@ -15,7 +15,7 @@ i = 1
 
 
 while i == 1:
-    time.sleep(2)
+    time.sleep(60)
     print('\n')
     print('\n')
 
