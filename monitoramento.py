@@ -3,19 +3,19 @@ import time;
 
 import mysql.connector
 from uuid import getnode as get_mac
-macAddress = get_mac()
+macAddress = hex(get_mac())[2:]
 
 mydb = mysql.connector.connect(user='metixUser', 
                               password='sptech',
                               host='10.18.33.18',
-                              database='metix')
+                              database='Metix')
 
 
 i = 1
 
 
 while i == 1:
-    time.sleep(60)
+    time.sleep(2)
     print('\n')
     print('\n')
 
@@ -27,7 +27,7 @@ while i == 1:
     print('Percentual de gasto memoria:')
     print(memoria)
 
-    disco = psutil.disk_usage('C:\\').percent
+    disco = psutil.disk_usage('/').percent
     print('Percentual de gasto de disco:')
     print(disco)
 
