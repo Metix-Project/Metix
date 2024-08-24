@@ -243,7 +243,6 @@ body::-webkit-scrollbar {
 
 .engloba-servico span {
   width: 45%;
-  height: 1rem;
   margin-top: 1rem;
   display: flex;
 }
@@ -823,7 +822,6 @@ body {
 
   .engloba-servico span {
     width: 45%;
-    height: 1rem;
     margin-top: 1rem;
     display: flex;
   }
