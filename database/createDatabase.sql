@@ -1,3 +1,4 @@
+drop database if exists Metix;
 create database Metix;
 
 use Metix;
@@ -32,12 +33,11 @@ create table Servidor(
     constraint ServidorFkEmpresa foreign key (fkEmpresa) references Empresa(id)
 );
 create table DadosServidor(
-		macAddress int not null,
+		macAddress varchar(17) not null,
     dadosCpu decimal(7, 2) not null,
     dadosMemoria decimal(7, 2) not null,
     dadosDisco decimal(7, 2) not null,
-    tempCpu decimal(7, 2),
-    tempMemoria decimal(7, 2),
-    tempDisco decimal(7, 2),
-    dataHora datetime default current_timestamp
+    tempCpu decimal(7, 2) not null,
+    tempMemoria decimal(7, 2) not null,
+    dataHora datetime not null default current_timestamp
 );

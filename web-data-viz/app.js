@@ -1,38 +1,38 @@
-// var ambiente_processo = 'producao';
-var ambiente_processo = "desenvolvimento";
+// declaração das variáveis:
+// var ambiente_processo = 'producao'; // em caso de produção
+var ambiente_processo = "desenvolvimento"; // em caso de desenvolvimento
 var caminho_env = ambiente_processo === "producao" ? ".env" : ".env.dev";
 
-var PORTA_APP = process.env.APP_PORT;
-var HOST_APP = process.env.APP_HOST;
-
-// bibliotecas/dependências:
+// declaração das bibliotecas/dependências:
+//   traz os dados do arquivo .env ou .env.dev:
 require("dotenv").config({ path: caminho_env });
 
+//   define as bibliotecas/frameworks:
 var express = require("express");
 var cors = require("cors");
 var path = require("path");
 
-// arquivos de rotas:
-var usuarioRouter = require("./src/routes/usuarios");
-var servidorRouter = require("./src/routes/servidor");
-var graficosRouter = require("./src/routes/graficos");
+// define os arquivos de rotas:
+var usuarioRouter = require("./src/routes/usuarioRouter.js");
+var servidorRouter = require("./src/routes/servidorRouter.js");
+var graficosRouter = require("./src/routes/graficosRouter.js");
 
-// declarando o servidor:
+// define a variável do servidor:
 var app = express();
 
-//   configurações de servidor:
+//   define as configurações do servidor:
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
 
-//     definindo as rotas:
+//     define as rotas:
 app.use("/usuarios", usuarioRouter);
 app.use("/servidor", servidorRouter);
 app.use("/graficos", graficosRouter);
 
-//   rodando o servidor (listing):
-app.listen(PORTA_APP, function () {
-  console.log(`Servidor rodando`);
+//   roda o servidor (listing/escuta por conexões):
+app.listen(process.env.APP_PORT, function () {
+  console.log(`Servidor rodando em http://${process.env.APP_HOST}:${process.env.APP_PORT}`);
 });

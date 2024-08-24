@@ -1,23 +1,22 @@
-var graficosModel = require("../models/graficosModel");
+// define o arquivo de models:
+var graficosModel = require("../models/graficosModel.js");
 
 function pegarDados(req, res) {
-  // redirecionando para o model:
+  // envia os dados para a função `pegarDados` do model:
   graficosModel
     .pegarDados(nome, email, senha, tel, cpf, cargo)
     .then(function (resultado) {
+      // retorna o resultado para o then do fetch com um status de sucesso (200-299):
       res.status(200).json(resultado);
     })
     .catch(function (erro) {
-      console.log(erro);
-      console.log(
-        "\nHouve um erro ao realizar o cadastro! Erro: ",
-        erro.sqlMessage
-      );
+      console.log("servidorModel.js: ", erro);
+      // retorna o erro para o then do fetch com um status de erro de servidor (500-599):
       res.status(500).json(erro);
     });
 }
 
-// exportando para outro arquivo:
+// exporta para outro arquivo:
 module.exports = {
   pegarDados,
 };

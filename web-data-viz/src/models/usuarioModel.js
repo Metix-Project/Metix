@@ -1,22 +1,24 @@
-var database = require("../database/config")
+// define o arquivo de conexão com o database:
+var database = require("../database/connection.js");
+
+function listar(fkEmpresa) {
+  // retorna a resposta do banco de dados para o controller:
+  return database.executar(`SELECT id, nome, email, fkEmpresa FROM Usuario WHERE fkEmpresa = '${fkEmpresa}';`);
+}
 
 function cadastrar(nome, email, senha, tel, cpf, cargo) {
-    var instrucaoSql = `
-        INSERT INTO Usuario (nome, email, senha, telefone, cpf, cargo, fkEmpresa) VALUES ('${nome}', '${email}', '${senha}', '${tel}', '${cpf}', '${cargo}', 1);
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+  // retorna a resposta do banco de dados para o controller:
+  return database.executar(`INSERT INTO Usuario (nome, email, senha, telefone, cpf, cargo, fkEmpresa) VALUES ('${nome}', '${email}', '${senha}', '${tel}', '${cpf}', '${cargo}', 1);`);
 }
 
 function autenticar(email, senha) {
-    var instrucaoSql = `
-        SELECT id, nome, email, fkEmpresa as empresaId FROM Usuario WHERE email = '${email}' AND senha = '${senha}';
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+  // retorna a resposta do banco de dados para o controller:
+  return database.executar(`SELECT id, nome, email, fkEmpresa FROM Usuario WHERE email = '${email}' AND senha = '${senha}';`);
 }
 
+// exporta para outro arquivo:
 module.exports = {
-    autenticar,
-    cadastrar
+  listar,
+  cadastrar,
+  autenticar,
 };

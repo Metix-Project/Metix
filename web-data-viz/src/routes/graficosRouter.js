@@ -2,13 +2,13 @@
 var express = require("express");
 var router = express.Router();
 
-// arquivo do controller:
+// define o arquivo de controller:
 var graficosController = require("../controllers/graficosController.js");
 
-// redirecionando para o controller:
+// redireciona para o controller caso seja o método "get":
 router.get("/pegarDados", function (req, res) {
   graficosController.pegarDados(req, res);
 });
 
-// exportando para outro arquivo:
+// exporta para outro arquivo:
 module.exports = router;
