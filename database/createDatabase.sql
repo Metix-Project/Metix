@@ -37,7 +37,7 @@ create table DadosServidor(
     dadosCpu decimal(7, 2) not null,
     dadosMemoria decimal(7, 2) not null,
     dadosDisco decimal(7, 2) not null,
-    tempCpu decimal(7, 2) not null,
-    tempMemoria decimal(7, 2) not null,
+    tempCpu decimal(7, 2),
+    tempMemoria decimal(7, 2),
     dataHora datetime not null default current_timestamp
 );
