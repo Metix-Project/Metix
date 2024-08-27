@@ -210,7 +210,6 @@ body::-webkit-scrollbar {
   text-align: justify;
   display: flex;
   width: 45rem;
-  height: 10rem;
   gap: 1rem;
 }
 
@@ -224,8 +223,6 @@ body::-webkit-scrollbar {
 .texto1-servico span {
   display: flex;
   width: 100%;
-  height: 20%;
-
 }
 
 .conteudo-servico {
@@ -243,7 +240,6 @@ body::-webkit-scrollbar {
 
 .engloba-servico span {
   width: 45%;
-  margin-top: 1rem;
   display: flex;
 }
 
@@ -322,7 +318,6 @@ body::-webkit-scrollbar {
 .screen-servico {
   width: 61%;
   height: auto;
-  margin-bottom: 10px;
   margin-left: 20%;
   padding: 20px;
   box-sizing: border-box;
@@ -796,7 +791,6 @@ body {
     flex-direction: column;
     display: flex;
     width: 100%;
-    height: auto;
     gap: 1rem;
   }
 
@@ -809,8 +803,6 @@ body {
   .texto1-servico span {
     display: flex;
     width: 15rem;
-    height: auto;
-
   }
 
   .imagem-sobre-nos {
@@ -821,8 +813,7 @@ body {
   }
 
   .engloba-servico span {
-    width: 45%;
-    margin-top: 1rem;
+    width: 100%;
     display: flex;
   }
 
@@ -830,6 +821,7 @@ body {
     justify-content: center;
     flex-direction: column;
     text-align: justify;
+    margin-top: 5%;
   }
 
   .cards-servico {
@@ -869,9 +861,7 @@ body {
   .screen-servico {
     width: 100%;
     height: auto;
-    margin-bottom: 10px;
     margin-left: 0;
-    padding: 20px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -1018,7 +1008,7 @@ body {
     margin-left: 5rem;
     margin-bottom: 5%;
     width: 20rem;
-    text-align: justify;
+    text-align: center;
     display: flex;
   }
 
