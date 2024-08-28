@@ -42,9 +42,23 @@
           <li>
             <a href="./cadastro.html" id="cadastro">Cadastro</a>
           </li>
-        </ul>
       </div>
+      <div id="menu-container">
+        <button id="menu-icon" class="menu-icon" onclick="MenuBotao()"></button>
+        <div id="itens-laterais" class="fechado">
+          <ul>
+            <li><a href="#" class="agora">Início</a></li>
+            <li><a href="#">Serviços</a></li>
+            <li><a href="#">Sobre nós</a></li>
+            <li><a href="#">Equipe</a></li>
+            <li><a href="./login.html" id="login">Login</a></li>
+            <li><a href="./cadastro.html" id="cadastro">Cadastro</a></li>
+          </ul>
+        </div>
+      </div>
+      </ul>
     </div>
+  </div>
   </div>
 
   <div class="inicio">
@@ -372,5 +386,13 @@
       C1.style.backgroundColor = "#FFF";
       C2.style.backgroundColor = "";
     }
+  }
+
+
+  function MenuBotao(){
+
+      var menu = document.getElementById('itens-laterais');
+      menu.classList.toggle('aberto');
+  
   }
 </script>
