@@ -12,16 +12,9 @@ cargo = int(input())
 
 if (cargo == 1):
     # conecta ao banco de dados usando um usuário com acesso limitado:
-    
-
     print("Você não tem permissão para fazer buscar no MySQL")
-elif (cargo == 2):
-    mydb = mysql.connector.connect(
-    user='root', 
-    password='L3108P1702',
-    host='localhost',
-    database='Metix'
-    )
+    
+    
 
 print("Escolha qual máquina deseja monitorar: \n")
 print("1")
@@ -62,12 +55,22 @@ elif (met == "2"):
     metV = "Byte"
 
 
-mycursor = mydb.cursor()
+
 
 comp = comp + metV
 
 # inicia um loop infinito:
 while True:
+  mydb = mysql.connector.connect(
+    user='root', 
+    password='L3108P1702',
+    host='localhost',
+    database='Metix'
+    )
+
+  mycursor = mydb.cursor()
+  
+
   print("\n \n==========================")
   print("\n \nValores:")
   print (comp)
