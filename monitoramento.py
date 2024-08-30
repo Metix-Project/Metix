@@ -5,7 +5,7 @@ import mysql.connector
 from uuid import getnode as get_mac
 macAddress = hex(get_mac())[2:]
 
-mydb = mysql.connector.connect(user='metixUserInsert', 
+mydb = mysql.connector.connect(user='metixUser', 
                               password='sptech',
                               host='10.18.33.18',
                               database='Metix')
@@ -25,7 +25,7 @@ mycursor.execute(sql)
 resultado = mycursor.fetchall()
 
 if len(resultado) <= 0:
-    print("Máquina não cadastrada no nosso sistema.")
+    print("Máquina de Mac: " + macAddress + " não cadastrada no nosso sistema.")
 
 else:
     i = 1
@@ -61,9 +61,12 @@ else:
 
         mycursor = mydb.cursor()
 
+        memoriaB = memoriaB / (2**32)
+        discoB = discoB / (2**32)
+
         sql = "INSERT INTO DadosServidor (macAddress, CpuPorc, MemoriaPorc, DiscoPorc, CpuByte, MemoriaByte, DiscoByte, pontoDeControle) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         val = [
-          (macAddress, cpuP, memoriaP, discoP, cpuB, memoriaB, discoB, resultado[0])
+          (macAddress, cpuP, memoriaP, discoP, cpuB, memoriaB, discoB, resultado[0][0])
         ]
 
         mycursor.executemany(sql, val)
