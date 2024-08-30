@@ -174,7 +174,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -189,7 +189,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -205,7 +205,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -225,7 +225,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -240,7 +240,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -255,7 +255,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -274,7 +274,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -289,7 +289,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -304,7 +304,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -324,7 +324,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -339,7 +339,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
@@ -354,7 +354,7 @@ if (opcao == 1):
                     #o conector mysql do python não envia automaticamente a instrução
                     # logo, o método commit envia a instrução para o servidor de banco de dados:
                     resultado = mycursor.fetchall()
-                    print("O resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
+                    print("\nO resultado médio para as opções de monitoramento selecionadas foi: \n", resultado[0][0])
 
             
                     # espera 2 segundos para iniciar o loop novamente
