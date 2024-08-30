@@ -11,47 +11,63 @@ mydb = mysql.connector.connect(user='metixUserInsert',
                               database='Metix')
 
 
-i = 1
+    
+mycursor = mydb.cursor()
 
+#armazena a instrução e os valores:
+sql = "SELECT pontoDeControle FROM Servidor WHERE macAddress = '" + macAddress + "'"
 
-while i == 1:
-    time.sleep(5)
-    print('\n')
-    print('\n')
+# executa a instrução (várias vezes por causa do loop):
+mycursor.execute(sql)
 
-    cpuP = psutil.cpu_percent()
-    print('Percentual de gasto CPU:')
-    print(cpuP)
+#o conector mysql do python não envia automaticamente a instrução
+# logo, o método commit envia a instrução para o servidor de banco de dados:
+resultado = mycursor.fetchall()
 
-    cpuB = psutil.cpu_times()[0] + psutil.cpu_times()[1]
-    print('Bytes gastos CPU:')
-    print(cpuB)
+if len(resultado) <= 0:
+    print("Máquina não cadastrada no nosso sistema.")
 
-    memoriaP = psutil.virtual_memory().percent
-    print('Percentual de gasto memoria:')
-    print(memoriaP)
+else:
+    i = 1
 
-    memoriaB = psutil.virtual_memory().used
-    print('Bytes gasto de memoria:')
-    print(memoriaB)
+    while i == 1:
+        time.sleep(5)
+        print('\n')
+        print('\n')
 
-    discoP = psutil.disk_usage('/').percent
-    print('Percentual de gasto de disco:')
-    print(discoP)
+        cpuP = psutil.cpu_percent()
+        print('Percentual de gasto CPU:')
+        print(cpuP)
 
-    discoB = psutil.disk_usage('/').used
-    print('Bytes gasto em Disco:')
-    print(discoB)
+        cpuB = psutil.cpu_times()[0] + psutil.cpu_times()[1]
+        print('Bytes gastos CPU:')
+        print(cpuB)
 
-    mycursor = mydb.cursor()
+        memoriaP = psutil.virtual_memory().percent
+        print('Percentual de gasto memoria:')
+        print(memoriaP)
 
-    sql = "INSERT INTO DadosServidor (macAddress, CpuPorc, MemoriaPorc, DiscoPorc, CpuByte, MemoriaByte, DiscoByte) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    val = [
-      (macAddress, cpuP, memoriaP, discoP, cpuB, memoriaB, discoB)
-    ]
+        memoriaB = psutil.virtual_memory().used
+        print('Bytes gasto de memoria:')
+        print(memoriaB)
 
-    mycursor.executemany(sql, val)
+        discoP = psutil.disk_usage('/').percent
+        print('Percentual de gasto de disco:')
+        print(discoP)
 
-    mydb.commit()
+        discoB = psutil.disk_usage('/').used
+        print('Bytes gasto em Disco:')
+        print(discoB)
 
-    # print(mycursor.rowcount, "was inserted.")
+        mycursor = mydb.cursor()
+
+        sql = "INSERT INTO DadosServidor (macAddress, CpuPorc, MemoriaPorc, DiscoPorc, CpuByte, MemoriaByte, DiscoByte, pontoDeControle) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        val = [
+          (macAddress, cpuP, memoriaP, discoP, cpuB, memoriaB, discoB, resultado[0])
+        ]
+
+        mycursor.executemany(sql, val)
+
+        mydb.commit()
+
+        # print(mycursor.rowcount, "was inserted.")

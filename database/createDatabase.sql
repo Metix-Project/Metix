@@ -42,5 +42,6 @@ create table DadosServidor(
     DiscoByte int not null,
     tempCpu decimal(7, 2),
     tempMemoria decimal(7, 2),
-    dataHora datetime not null default current_timestamp
+    dataHora datetime not null default current_timestamp,
+    pontoDeControle int not null
 );
