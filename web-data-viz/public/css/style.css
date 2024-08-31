@@ -207,6 +207,9 @@
  }
 
 .engloba-servico-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
   align-items: center;
   width: 83%;
 }
@@ -214,13 +217,12 @@
 .engloba-servico {
   text-align: justify;
   display: flex;
-  width: 45rem;
   gap: 1rem;
 }
 
 .engloba-servico h1 {
+  white-space: nowrap;
   font-size: 3rem;
-  margin-top: 2rem;
   align-items: center;
   justify-content: center;
 }
@@ -237,14 +239,11 @@
 }
 
 .imagem-sobre-nos {
-  width: 45%;
   border-radius: 7px;
-  margin-top: 2.5rem;
-  margin-left: 4rem
+  width: 50%;
 }
 
 .engloba-servico span {
-  width: 45%;
   display: flex;
 }
 
@@ -347,9 +346,10 @@
 
 .engloba-tudo {
   display: flex;
-  align-items: column;
+  align-items: center;
   flex-direction: column;
   background-color: #938a8a;
+  padding: 1.8rem 0;
 }
 
 
@@ -359,9 +359,7 @@
   width: 70%;
   align-items: center;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  margin-left: 10rem;
 }
 
 .social {
@@ -378,8 +376,6 @@
 .engloba-Sob-nos-1 {
   display: flex;
   justify-content: space-around;
-  margin-right: 10%;
-  margin-left: 7%;
 }
 
 .engloba-Sob-nos-2 {
@@ -397,8 +393,6 @@
 }
 
 .texto_sobre {
-  width: 40rem;
-  height: auto;
   padding: 5px;
   display: flex;
   align-items: center;
@@ -409,7 +403,6 @@
 .texto_sobre h1 {
   font-size: 3rem;
   color: white;
-  margin-top: 1.8rem;
 }
 
 .texto_sobre span {
@@ -431,11 +424,10 @@
 .boxes {
   display: flex;
   align-items: center;
-  flex-direction: center;
-  justify-content: column;
+  flex-direction: column;
+  justify-content: center;
   background-color: #5c5854;
-  height: 18rem;
-  width: 27%;
+  width: 25%;
   padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
   border-radius: 5px;
@@ -451,11 +443,10 @@
   margin-top: 2rem;
   font-size: 3rem;
   align-items: normal;
-  margin-left: 15rem;
   color: white;
 }
 
-.span-bosta {
+.span-principios {
   margin-top: 2rem;
   margin-left: 4rem;
   margin-bottom: 5%;
@@ -472,11 +463,8 @@
 .cartoes {
   display: flex;
   align-items: center;
-  flex-direction: center;
   justify-content: space-around;
-  width: 55%;
-  margin-left: 17rem;
-  margin-bottom: 5%;
+  width: 75%;
 }
 
 .boxes .box {
@@ -484,12 +472,10 @@
   text-align: center;
   align-items: center;
   flex-direction: column;
-  height: 15rem;
-  width: 15rem;
+  width: 100%;
   padding: 1rem;
   border-radius: 5px;
   transition: transform 0.3s ease;
-  margin-bottom: 25%;
 }
 
 .fundo-icones {
@@ -751,15 +737,33 @@ body {
   width: 40dvw;
 }
 
+
+/* avisos */
+
+#mensagem_erro {
+  border-radius: 5px;
+  padding: 0.5em;
+}
+
+.sucesso {
+  background-color: #49a133ff;
+  border: 2px solid rgb(41, 102, 25);
+}
+
+.erro {
+  background-color: rgb(161, 51, 51);
+  border: 3px solid rgb(102, 25, 25);
+}
+
+/* fim avisos */
+
 /*RESPONSIVIDADE FUNCIONANDO!!!!!*/
 
 @media screen and (max-width: 900px) {
 
   /*Removendo o cabeçalho no moba*/
   .header{
-    width: 0;
-    height: 0;
-    background-color: n;
+    background-color: transparent;
   }
 
   .header .container {
@@ -806,7 +810,7 @@ body {
     left: 0; /* Quando o menu é aberto */
   }
 
-  #login {
+  .cad #login, #login {
     background-color: #505050;
     height: 64px;
     width: 350px;
@@ -814,7 +818,7 @@ body {
     margin-left: -10%;
   }
   
-  #cadastro {
+  .cad #cadastro, #cadastro {
     background-color: #3a3a3a;
     height: 0;
     width: 0;
@@ -1055,11 +1059,9 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: column;
+    justify-content: center;
     background-color: #5c5854;
-    height: 18rem;
-    width: 100%;
-    margin: 5%;
+    width: auto;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
     border-radius: 5px;
     transition: transform 0.3s ease;
@@ -1070,7 +1072,7 @@ body {
     transform: scale(1.05);
   }
 
-  .span-bosta {
+  .span-principios {
     margin-top: 2rem;
     margin-left: 5rem;
     margin-bottom: 5%;
@@ -1093,10 +1095,10 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
+    gap: 1em;
+    align-items: stretch;
     justify-content: space-around;
     width: 55%;
-    margin-left: 1rem;
-    margin-bottom: 5%;
   }
 
   .boxes .box {
@@ -1104,11 +1106,8 @@ body {
     text-align: center;
     align-items: center;
     flex-direction: column;
-    height: 15rem;
-    width: 12rem;
     padding: 1rem;
     transition: transform 0.3s ease;
-    margin-bottom: 25%;
   }
 
   .fundo-icones {
