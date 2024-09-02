@@ -13,8 +13,13 @@
   --tamanho-footer: 65px;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
 .header {
-  height: 80px;
+  height: 5rem;
   background-color: #191715;
   width: 100dvw;
   position: fixed;
@@ -760,6 +765,10 @@ body {
 /*RESPONSIVIDADE FUNCIONANDO!!!!!*/
 
 @media screen and (max-width: 900px) {
+
+  html {
+    scroll-padding-top: 0;
+  }
 
   /*Removendo o cabeçalho no moba*/
   .header{

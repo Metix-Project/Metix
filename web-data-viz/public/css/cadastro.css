@@ -51,7 +51,7 @@ body {
   justify-content: space-between;
 }
 
-.form .campos label input {
+.form .campos label :is(input, select) {
   transition: transform 0.2s;
   border-radius: 5px;
   border: none;
@@ -60,10 +60,10 @@ body {
   background: 0.3em center / 1.5em no-repeat #b4a89f;
   font-size: 1rem;
 }
-.form .campos label input:hover {
+.form .campos label :is(input, select):hover {
   transform: scale(105%, 105%);
 }
-.form .campos label input:focus-visible {
+.form .campos label :is(input, select):focus-visible {
   border: 1px solid black;
 }
 .form .campos label input:invalid:not(:placeholder-shown, :focus) {
@@ -71,22 +71,8 @@ body {
 }
 
 .form .campos label select {
-  transition: transform 0.2s;
-  border-radius: 5px;
-  border: none;
-  padding: 0.5em;
-  padding-left: 2em;
-  background: 0.3em center / 1.5em no-repeat #b4a89f;
-  font-size: 1rem;
+  padding-left: 0.5em;
 }
-.form .campos label inpselectut:hover {
-  transform: scale(105%, 105%);
-}
-.form .campos label select:focus-visible {
-  border: 1px solid black;
-}
-
-
 .form button {
   transition: transform 0.2s;
   cursor: pointer;
@@ -103,19 +89,19 @@ body {
   transform: scale(105%, 105%);
 }
 
-.form #inputNome {
+.form #nome_input {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23D27C2C' d='M5.85 17.1q1.275-.975 2.85-1.537T12 15t3.3.563t2.85 1.537q.875-1.025 1.363-2.325T20 12q0-3.325-2.337-5.663T12 4T6.337 6.338T4 12q0 1.475.488 2.775T5.85 17.1M12 13q-1.475 0-2.488-1.012T8.5 9.5t1.013-2.488T12 6t2.488 1.013T15.5 9.5t-1.012 2.488T12 13m0 9q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22'/%3E%3C/svg%3E");
 }
-.form #inputEmail {
+.form #email_input {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23D27C2C' d='M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zM20 8l-7.475 4.675q-.125.075-.262.113t-.263.037t-.262-.037t-.263-.113L4 8v10h16zm-8 3l8-5H4zM4 8v.25v-1.475v.025V6v.8v-.012V8.25zv10z'/%3E%3C/svg%3E");
 }
-.form #inputSenha {
+.form #senha_input {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23D27C2C' d='M6 22q-.825 0-1.412-.587T4 20V10q0-.825.588-1.412T6 8h1V6q0-2.075 1.463-3.537T12 1t3.538 1.463T17 6v2h1q.825 0 1.413.588T20 10v10q0 .825-.587 1.413T18 22zm0-2h12V10H6zm6-3q.825 0 1.413-.587T14 15t-.587-1.412T12 13t-1.412.588T10 15t.588 1.413T12 17M9 8h6V6q0-1.25-.875-2.125T12 3t-2.125.875T9 6zM6 20V10z'/%3E%3C/svg%3E");
 }
-.form #inputTelefone {
+.form #telefone_input {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23D27C2C' d='M19.95 21q-3.125 0-6.175-1.362t-5.55-3.863t-3.862-5.55T3 4.05q0-.45.3-.75t.75-.3H8.1q.35 0 .625.238t.325.562l.65 3.5q.05.4-.025.675T9.4 8.45L6.975 10.9q.5.925 1.187 1.787t1.513 1.663q.775.775 1.625 1.438T13.1 17l2.35-2.35q.225-.225.588-.337t.712-.063l3.45.7q.35.1.575.363T21 15.9v4.05q0 .45-.3.75t-.75.3'/%3E%3C/svg%3E");
 }
-.form #inputCPF {
+.form #cpf_input {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23D27C2C' d='M7 17h7v-2H7zm0-4h10v-2H7zm0-4h10V7H7zM5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm0-2h14V5H5zM5 5v14z'/%3E%3C/svg%3E");
 }
 
