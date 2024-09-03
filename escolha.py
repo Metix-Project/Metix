@@ -92,7 +92,7 @@ if (opcao == 1):
                     print(resultado[0])
 
             
-                    # espera 2 segundos para iniciar o loop novamente
+                    # espera 5 segundos para iniciar o loop novamente
                     time.sleep(5)
 
         elif temp == 2:
