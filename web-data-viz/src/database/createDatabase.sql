@@ -11,6 +11,7 @@ create table Empresa(
     cnpj char(18) not null unique,
     telefone char(19) not null unique
 );
+
 create table Usuario(
 		id int auto_increment,
     nome varchar(80) not null,
