@@ -40,8 +40,8 @@ else:
         print(cpuP)
 
         cpuB = psutil.cpu_times()[0] + psutil.cpu_times()[1]
-        print('Bytes gastos CPU:')
-        print(cpuB)
+        print('GHz gastos CPU:')
+        print(cpuB / (2 ** 10))
 
         memoriaP = psutil.virtual_memory().percent
         print('Percentual de gasto memoria:')
@@ -61,10 +61,10 @@ else:
 
         mycursor = mydb.cursor()
 
-        memoriaB = memoriaB / (2**32)
-        discoB = discoB / (2**32)
+        memoriaB = memoriaB / (2 ** 32)
+        discoB = discoB / (2 ** 32)
 
-        sql = "INSERT INTO DadosServidor (macAddress, CpuPorc, MemoriaPorc, DiscoPorc, CpuByte, MemoriaByte, DiscoByte, pontoDeControle) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO DadosServidor (macAddress, cpuPorc, memoriaPorc, discoPorc, cpuAbs, memoriaAbs, discoAbs, pontoDeControle) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         val = [
           (macAddress, cpuP, memoriaP, discoP, cpuB, memoriaB, discoB, resultado[0][0])
         ]

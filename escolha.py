@@ -55,20 +55,20 @@ if (opcao == 1):
         temp = input()
 
         print("Escolha qual componente deseja monitorar:")
-        print("Cpu")
-        print("Memoria")
-        print("Disco \n")
+        print("cpu")
+        print("memoria")
+        print("disco \n")
         comp = input()
 
         print("Escolha métrica monitorar:")
         print("1 percentual")
-        print("2 bytes \n")
+        print("2 absoluta \n")
         met = input()
 
         if (met == "1"):
             metV = "Porc"
         elif (met == "2"):
-            metV = "Byte"
+            metV = "Abs"
 
 
         comp += metV
@@ -141,20 +141,20 @@ if (opcao == 1):
             temp = int(input())
 
             print("\nEscolha qual componente deseja monitorar:")
-            print("Cpu")
-            print("Memoria")
-            print("Disco \n")
+            print("cpu")
+            print("memoria")
+            print("disco \n")
             comp = input()
 
             print("\nEscolha métrica monitorar:")
             print("1 percentual")
-            print("2 bytes \n")
+            print("2 absoluta \n")
             met = input()
 
             if (met == "1"):
                 metV = "Porc"
             elif (met == "2"):
-                metV = "Byte"
+                metV = "Abs"
 
 
             comp = comp + metV
