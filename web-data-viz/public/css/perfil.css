@@ -19,19 +19,19 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: center / 100% url('data:image/svg+xml,<svg width="1966" height="601" viewBox="0 0 1966 601" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1961.03 595.336C1529.9 479.75 534.549 287.625 2.18833 443.812M1962.47 410.842C1531.34 295.256 535.988 103.131 3.6279 259.318M1964 215.348C1532.87 99.7618 537.514 -92.3634 5.1533 63.8237" stroke="%234A453F" stroke-width="10"/></svg>') no-repeat #dddddd;
+  background: center / 100% url('data:image/svg+xml,<svg width="1966" height="601" viewBox="0 0 1966 601" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1961.03 595.336C1529.9 479.75 534.549 287.625 2.18833 443.812M1962.47 410.842C1531.34 295.256 535.988 103.131 3.6279 259.318M1964 215.348C1532.87 99.7618 537.514 -92.3634 5.1533 63.8237" stroke="%23dddF" stroke-width="10"/></svg>') no-repeat #4A453F;
   min-height: 100dvh;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 1em;
   align-items: center;
   border-radius: 5px;
   padding: 2em 4em;
   width: 75%;
-  background-color: #c7c7dd;
+  background-color: #ddd;
+  margin-top: 4%;
 }
 
 form h1 {
@@ -61,7 +61,9 @@ form .subform {
   align-items: stretch;
   align-self: stretch;
   padding: 2em;
-  background: #d9d9d9;
+  background: #a4a2a2;
+  border-radius: 10px;
+  
 }
 
 form .campos {
