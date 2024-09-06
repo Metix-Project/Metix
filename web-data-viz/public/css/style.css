@@ -52,6 +52,10 @@ html {
   margin-top: 1%;
 }
 
+.menuHambur{
+  display: none;
+}
+
 .logo-container img {
   height: 100%;
   margin-right: 3%;
@@ -778,6 +782,10 @@ body {
   .header .container {
     display: none;
     margin: +10;
+  }
+
+  .menuHambur{
+    display: flex;
   }
 
   #menu-icon {
