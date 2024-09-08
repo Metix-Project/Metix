@@ -1,10 +1,10 @@
 package school.sptech;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import school.sptech.database.Database;
 import school.sptech.database.dao.DadosServidorDao;
-import school.sptech.database.entities.DadosServidorEntity;
+import school.sptech.database.dao.EmpresaDao;
+import school.sptech.database.dao.ServidorDao;
 
 import java.util.List;
 
@@ -15,7 +15,6 @@ public class Main {
         conexao = database.getTemplate();
         DadosServidorDao dadosServidorDao = new DadosServidorDao(conexao);
 
-//        conexao.update("insert into Servidor values (default, 'c7d12465a943', 1, 1)");
-        System.out.println(dadosServidorDao);
+        System.out.println(dadosServidorDao.selectLast(5));
     }
 }

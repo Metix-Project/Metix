@@ -9,15 +9,15 @@ import java.util.List;
 public class DadosServidorDao {
     private JdbcTemplate conexao;
 
-    DadosServidorDao(JdbcTemplate conexao) {
+    public DadosServidorDao(JdbcTemplate conexao) {
         this.conexao = conexao;
     }
 
-    public String selectLast5() {
+    public String selectLast(Integer limite) {
         String resultado = "";
-        List<DadosServidorEntity> dadosServidor = conexao.query("select * from DadosServidor order by dataHora desc limit 5", new BeanPropertyRowMapper(DadosServidorEntity.class));
+        List<DadosServidorEntity> dadosServidor = conexao.query("select * from DadosServidor order by dataHora desc limit " + limite, new BeanPropertyRowMapper(DadosServidorEntity.class));
 
-        for (DadosServidorEntity dadoServidor : dadosServidor) resultado += dadoServidor.toString() + "\n";
+        for (DadosServidorEntity dadoServidor : dadosServidor) resultado += dadoServidor.getInfo() + "\n";
         return resultado;
     }
 }

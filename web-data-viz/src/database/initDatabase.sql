@@ -1,3 +1,6 @@
+-- create database:
+
+-- drop database Metix
 create database if not exists Metix;
 
 use Metix;
@@ -43,3 +46,31 @@ create table if not exists DadosServidor(
     dataHora datetime not null default current_timestamp,
     pontoDeControle int not null
 );
+
+-- end create database
+
+-- create users:
+
+-- drop user 'metixAdm'@'%';
+create user if exists 'metixAdm'@'%' identified by 'sptech';
+grant all privileges on Metix.* to 'metixAdm'@'%';
+
+-- drop user 'metixUser'@'%';
+create user if exists 'metixUser'@'%' identified by 'sptech';
+grant insert, select on Metix.* to 'metixUser'@'%';
+
+-- drop user 'metixUserInsert'@'%';
+create user if exists 'metixUserInsert'@'%' identified by 'sptech';
+grant insert on Metix.* to 'metixUserInsert'@'%';
+
+-- drop user 'metixUserSelect'@'%';
+create user if exists 'metixUserSelect'@'%' identified by 'sptech';
+grant select on Metix.* to 'metixUserSelect'@'%';
+
+-- end create users
+
+-- insert BC:
+
+insert into Empresa (id, razaoSocial, nomeFantasia, email, cnpj, telefone) values (1, "Banco Central do Brasil", "Banco Central do Brasil", "bc@br.br", "12345678901234", "1234567890123");
+
+-- end insert BC

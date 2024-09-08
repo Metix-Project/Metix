@@ -83,17 +83,15 @@ public class DadosServidorEntity {
         this.pontoDeControle = pontoDeControle;
     }
 
-    @Override
-    public String toString() {
-        return "{ macAddress: " + this.macAddress +
-            ", cpuPorc: " + this.cpuPorc +
-            ", memoriaPorc: " + this.memoriaPorc +
-            ", discoPorc: " + this.discoPorc +
-            ", cpuAbs: " + this. cpuAbs+
-            ", memoriaAbs: " + this.memoriaAbs +
-            ", discoAbs: " + this.discoAbs +
-            ", dataHora: " + this.dataHora +
-            ", pontoDeControle: " + this.pontoDeControle +
-            " }";
+    public String getInfo() {
+        return "{ macAddress: " + getMacAddress() +
+            ", cpuPorc: " + getCpuPorc() +
+            ", memoriaPorc: " + getMemoriaPorc() +
+            ", discoPorc: " + getDiscoPorc() +
+            ", cpuAbs: " + getCpuAbs() +
+            ", memoriaAbs: " + getMemoriaAbs() +
+            ", discoAbs: " + getDiscoAbs() +
+            ", dataHora: " + getDataHora() +
+            ", pontoDeControle: " + getPontoDeControle() + " }";
     }
 }

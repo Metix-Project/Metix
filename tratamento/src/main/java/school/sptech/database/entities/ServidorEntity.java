@@ -1,15 +1,18 @@
 package school.sptech.database.entities;
 
 public class ServidorEntity {
+    private Integer id;
     private String macAddress;
-    private Double cpuPorc;
-    private Double memoriaPorc;
-    private Double discoPorc;
-    private Double cpuAbs;
-    private Double memoriaAbs;
-    private Double discoAbs;
-    private String dataHora;
     private Integer pontoDeControle;
+    private Integer fkEmpresa;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getMacAddress() {
         return macAddress;
@@ -17,62 +20,6 @@ public class ServidorEntity {
 
     public void setMacAddress(String macAddress) {
         this.macAddress = macAddress;
-    }
-
-    public Double getCpuPorc() {
-        return cpuPorc;
-    }
-
-    public void setCpuPorc(Double cpuPorc) {
-        this.cpuPorc = cpuPorc;
-    }
-
-    public Double getMemoriaPorc() {
-        return memoriaPorc;
-    }
-
-    public void setMemoriaPorc(Double memoriaPorc) {
-        this.memoriaPorc = memoriaPorc;
-    }
-
-    public Double getDiscoPorc() {
-        return discoPorc;
-    }
-
-    public void setDiscoPorc(Double discoPorc) {
-        this.discoPorc = discoPorc;
-    }
-
-    public Double getCpuAbs() {
-        return cpuAbs;
-    }
-
-    public void setCpuAbs(Double cpuAbs) {
-        this.cpuAbs = cpuAbs;
-    }
-
-    public Double getMemoriaAbs() {
-        return memoriaAbs;
-    }
-
-    public void setMemoriaAbs(Double memoriaAbs) {
-        this.memoriaAbs = memoriaAbs;
-    }
-
-    public Double getDiscoAbs() {
-        return discoAbs;
-    }
-
-    public void setDiscoAbs(Double discoAbs) {
-        this.discoAbs = discoAbs;
-    }
-
-    public String getDataHora() {
-        return dataHora;
-    }
-
-    public void setDataHora(String dataHora) {
-        this.dataHora = dataHora;
     }
 
     public Integer getPontoDeControle() {
@@ -83,17 +30,18 @@ public class ServidorEntity {
         this.pontoDeControle = pontoDeControle;
     }
 
-    @Override
-    public String toString() {
-        return "{ macAddress: " + this.macAddress +
-            ", cpuPorc: " + this.cpuPorc +
-            ", memoriaPorc: " + this.memoriaPorc +
-            ", discoPorc: " + this.discoPorc +
-            ", cpuAbs: " + this. cpuAbs+
-            ", memoriaAbs: " + this.memoriaAbs +
-            ", discoAbs: " + this.discoAbs +
-            ", dataHora: " + this.dataHora +
-            ", pontoDeControle: " + this.pontoDeControle +
-            " }";
+    public Integer getFkEmpresa() {
+        return fkEmpresa;
+    }
+
+    public void setEmpresa(Integer fkEmpresa) {
+        this.fkEmpresa = fkEmpresa;
+    }
+
+    public String getInfo() {
+        return "{ id: " + getId() +
+            ", macAddress: " + getMacAddress() +
+            ", pontoDeControle: " + getPontoDeControle() +
+            ", fkEmpresa: " + getFkEmpresa() + " }";
     }
 }
