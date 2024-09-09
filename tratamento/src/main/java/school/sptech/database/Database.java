@@ -9,7 +9,7 @@ public class Database {
     public Database() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://10.18.33.18:3306/Metix");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/Metix");
         dataSource.setUsername("metixUser");
         dataSource.setPassword("sptech");
 

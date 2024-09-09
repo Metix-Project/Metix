@@ -74,3 +74,9 @@ grant select on Metix.* to 'metixUserSelect'@'%';
 insert into Empresa (id, razaoSocial, nomeFantasia, email, cnpj, telefone) values (1, "Banco Central do Brasil", "Banco Central do Brasil", "bc@br.br", "12345678901234", "1234567890123");
 
 -- end insert BC
+
+
+insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('10f60a853491', 1, 1);
+insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('e8fb1cd57ab6', 2, 1);
+insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('d09466c9be45', 3, 1);
+insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('c7d12465a943', 3, 1);

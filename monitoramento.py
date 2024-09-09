@@ -6,9 +6,9 @@ from uuid import getnode as get_mac
 macAddress = hex(get_mac())[2:]
 
 mydb = mysql.connector.connect(user='metixUser', 
-                              password='sptech',
-                              host='10.18.33.18',
-                              database='Metix')
+                               password='sptech',
+                               host='localhost',
+                               database='Metix')
 
 
     
