@@ -10,7 +10,7 @@
 }
 
 :root {
-  --tamanho-footer: 65px;
+  --tamanho-footer: 90px;
 }
 
 html {
@@ -229,16 +229,18 @@ html {
   gap: 1rem;
 }
 
-.engloba-servico h1 {
+.engloba-servico-conteudo h1 {
   white-space: nowrap;
-  font-size: 3rem;
+  font-size: 2.5rem;
   align-items: center;
   justify-content: center;
 }
 
-.texto1-servico span {
+.engloba-servico-conteudo span{
   display: flex;
   width: 100%;
+  font-size: 20px;
+text-align: justify;
 }
 
 .conteudo-servico {
@@ -258,17 +260,20 @@ html {
 
 .cards-servico {
   display: flex;
-  gap: 6rem;
+  gap: 10rem;
   margin-top: 4rem;
+
 }
+
+
 
 .cartao1-servico {
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: white;
-  height: 18rem;
-  width: 15rem;
+  height: 20rem;
+  width: 17rem;
   padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
   border-radius: 5px;
@@ -285,30 +290,31 @@ html {
 }
 
 .cartao1-servico h5 {
-  font-size: 0.875rem;
+  font-size: 1.4rem;
   text-align: center;
 }
 
 .cartao1-servico span {
-  font-size: 1rem;
+  font-size: 18px;
   text-align: center;
   margin: 0.5rem;
 }
 
-.cartao2-servico {
+/* .cartao2-servico {
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: white;
+  font-size: 18px;
   height: 18rem;
   width: 15rem;
   padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
   border-radius: 5px;
   transition: transform 0.3s ease;
-}
+} */
 
-.cartao2-servico:hover {
+/* .cartao2-servico:hover {
   transform: scale(1.05);
 }
 
@@ -326,7 +332,7 @@ html {
   font-size: 1rem;
   text-align: center;
   margin: 0.5rem;
-}
+} */
 
 .screen-servico {
   width: 61%;
@@ -891,6 +897,7 @@ body {
   .texto1-servico span {
     display: flex;
     width: 15rem;
+    
   }
 
   .imagem-sobre-nos {
@@ -903,6 +910,7 @@ body {
   .engloba-servico span {
     width: 100%;
     display: flex;
+    
   }
 
   .texto2-servico {
