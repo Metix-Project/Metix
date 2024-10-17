@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Métix - Início</title>
     <link rel="stylesheet" href="./css/style.css" />
+<<<<<<< HEAD
     <link rel="icon" href="./assets/imgs/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+=======
+
+    <link rel="icon" href="./assets/imgs/logoSemtexto.png">
+>>>>>>> 31163e985c80e479a1a0e5fd4270c1b5940c9e33
   </head>
 
   <body>
     <div id="screen">
       <div class="header">
         <div class="container">
+<<<<<<< HEAD
           <a href="index.html" class="logo-container">
             <img src="./assets/imgs/logo1.png" alt="Métix logo" class="logo_header" style="height: 200%; margin-top: -13.5%;" />
             <div class="metix-container">
@@ -21,12 +27,18 @@
               <h5>Proteção divina</h5>
               -->
             </div>
+=======
+          <a href="index.html/#" class="logo-container">
+            <img src="./assets/imgs/logoSemtexto.png" alt="Métix logo" class="logo_header" style="height: 70%;">
+            <img src="assets/imgs/texto.png" alt="Métix Texto" id="texto_header" style="height: 120%; margin-top: -10%;">
+>>>>>>> 31163e985c80e479a1a0e5fd4270c1b5940c9e33
           </a>
           <ul class="navbar">
             <li>
               <a href="./index.html" class="agora">Início</a>
             </li>
             <li>
+<<<<<<< HEAD
               <a href="#servicos">Serviços</a>
             </li>
             <li>
@@ -37,10 +49,26 @@
             </li>
             <li>
               <a href="./login.html" class="lgCd">Login</a>
+=======
+              <a href="index.html#servicos">Serviços</a>
+            </li>
+            <li>
+              <a href="index.html#sobrenos">Sobre nós</a>
+            </li>
+            <li>
+              <a href="index.html#equipe">Equipe</a>
+            </li>
+            <li>
+              <a href="index.html/login.html" id="login">Login</a>
+>>>>>>> 31163e985c80e479a1a0e5fd4270c1b5940c9e33
             </li>
             <li>|</li>
             <li>
+<<<<<<< HEAD
               <a href="./cadastro.html" class="lgCd">Cadastro</a>
+=======
+              <a href="index.html/cadastro.html" id="cadastro">Cadastro</a>
+>>>>>>> 31163e985c80e479a1a0e5fd4270c1b5940c9e33
             </li>
           </ul>
         </div>
@@ -141,6 +169,7 @@
       </div>
     </div>
 
+<<<<<<< HEAD
     <div id="equipe" class="equipe">
       
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
@@ -231,6 +260,8 @@
     </div>
 
 
+=======
+>>>>>>> 31163e985c80e479a1a0e5fd4270c1b5940c9e33
     <div class="footer">
       <div class="footer1">
         <div class="info">
@@ -256,151 +287,6 @@
 </html>
 
 <script>
-  var cont = 0;
-  C1.style.backgroundColor = "#FFF";
-
-  function TrocarDir() {
-    if (cont == 0) {
-      img_card.innerHTML = `<img src="./assets/imgs/lucas_sampaio.png" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Lucas Sampaio";
-      desc.innerHTML = "Não é possível mudar o vento, mas é possível ajustar as velas";
-      gitHB.innerHTML = "@Lucas_Lucena31";
-      linkD.innerHTML = "@LucasLucena31";
-      cont = 1;
-      contEsq = 5;
-
-      C2.style.backgroundColor = "#FFF";
-      C1.style.backgroundColor = "";
-    } else if (cont == 1) {
-      img_card.innerHTML = `<img src="./assets/imgs/nagasse.jpeg" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Lucas Nagasse";
-      desc.innerHTML = "A prática leva a perfeição";
-      gitHB.innerHTML = "@Lucas_Nagasse17";
-      linkD.innerHTML = "@LucasNagasse89";
-      cont = 2;
-      contEsq = 4;
-
-      C3.style.backgroundColor = "#FFF";
-      C2.style.backgroundColor = "";
-    } else if (cont == 2) {
-      img_card.innerHTML = `<img src="./assets/imgs/gisele.png" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Gisele Rezende";
-      desc.innerHTML = "Permita-se ser uma obra em constante construção";
-      gitHB.innerHTML = "@GiseleRezende";
-      linkD.innerHTML = "@RezendeGisele";
-      cont = 3;
-      contEsq = 3;
-
-      C4.style.backgroundColor = "#FFF";
-      C3.style.backgroundColor = "";
-    } else if (cont == 3) {
-      img_card.innerHTML = `<img src="./assets/imgs/enzo.jpeg" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Enzo Jorge";
-      desc.innerHTML = "Com grandes poderes, vem grandes responsabilidades";
-      gitHB.innerHTML = "@EnzoJorge";
-      linkD.innerHTML = "@JorgeEnzo";
-      cont = 4;
-      contEsq = 2;
-
-      C5.style.backgroundColor = "#FFF";
-      C4.style.backgroundColor = "";
-    } else if (cont == 4) {
-      img_card.innerHTML = `<img src="./assets/imgs/leonardo.png" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Leo Piotto";
-      desc.innerHTML = "Não importa o quão lento você vá, desde que você não pare";
-      gitHB.innerHTML = "@LeoPiotto";
-      linkD.innerHTML = "@PiottoLeo";
-      cont = 5;
-      contEsq = 1;
-
-      C6.style.backgroundColor = "#FFF";
-      C5.style.backgroundColor = "";
-    } else if (cont == 5) {
-      img_card.innerHTML = `<img src="./assets/imgs/isaque.jpeg" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Isaque Benitez";
-      desc.innerHTML = "Com um coração de ferro, poderemos vencer todas as adversidades";
-      gitHB.innerHTML = "@Isaque_Bntz94";
-      linkD.innerHTML = "@Isaque_Bntz94";
-      cont = 0;
-      contEsq = 0;
-
-      C1.style.backgroundColor = "#FFF";
-      C6.style.backgroundColor = "";
-    }
-  }
-
-  contEsq = 0;
-
-  function TrocarEsq() {
-    if (contEsq == 4) {
-      img_card.innerHTML = `<img src="./assets/imgs/lucas_sampaio.png" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Lucas Sampaio";
-      desc.innerHTML = "Não é possível mudar o vento, mas é possível ajustar as velas";
-      gitHB.innerHTML = "@Lucas_Lucena31";
-      linkD.innerHTML = "@LucasLucena31";
-      contEsq = 5;
-      cont = 1;
-
-      C2.style.backgroundColor = "#FFF";
-      C3.style.backgroundColor = "";
-    } else if (contEsq == 3) {
-      img_card.innerHTML = `<img src="./assets/imgs/nagasse.jpeg" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Lucas Nagasse";
-      desc.innerHTML = "A prática leva a perfeição";
-      gitHB.innerHTML = "@Lucas_Nagasse17";
-      linkD.innerHTML = "@LucasNagasse89";
-      contEsq = 4;
-      cont = 2;
-
-      C3.style.backgroundColor = "#FFF";
-      C4.style.backgroundColor = "";
-    } else if (contEsq == 2) {
-      img_card.innerHTML = `<img src="./assets/imgs/gisele.png" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Gisele Rezende";
-      desc.innerHTML = "Permita-se ser uma obra em constante construção";
-      gitHB.innerHTML = "@GiseleRezende";
-      linkD.innerHTML = "@RezendeGisele";
-      contEsq = 3;
-      cont = 3;
-
-      C4.style.backgroundColor = "#FFF";
-      C5.style.backgroundColor = "";
-    } else if (contEsq == 1) {
-      img_card.innerHTML = `<img src="./assets/imgs/enzo.jpeg" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Enzo Jorge";
-      desc.innerHTML = "Com grandes poderes, vem grandes responsabilidades";
-      gitHB.innerHTML = "@EnzoJorge";
-      linkD.innerHTML = "@JorgeEnzo";
-      contEsq = 2;
-      cont = 4;
-
-      C5.style.backgroundColor = "#FFF";
-      C6.style.backgroundColor = "";
-    } else if (contEsq == 0) {
-      img_card.innerHTML = `<img src="./assets/imgs/leonardo.png" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Leo Piotto";
-      desc.innerHTML = "Não importa o quão lento você vá, desde que você não pare";
-      gitHB.innerHTML = "@LeoPioto";
-      linkD.innerHTML = "@PiotoLeo";
-      contEsq = 1;
-      cont = 5;
-
-      C6.style.backgroundColor = "#FFF";
-      C1.style.backgroundColor = "";
-    } else if (contEsq == 5) {
-      img_card.innerHTML = `<img src="./assets/imgs/isaque.jpeg" alt="" width="250px" height="250px">`;
-      name_card.innerHTML = "Isaque Benitez";
-      desc.innerHTML = "Com um coração de ferro, poderemos vencer todas as adversidades";
-      gitHB.innerHTML = "@Tony_Stark84894";
-      linkD.innerHTML = "@Tony_Stark84894";
-      contEsq = 0;
-      cont = 0;
-
-      C1.style.backgroundColor = "#FFF";
-      C2.style.backgroundColor = "";
-    }
-  }
-
   function MenuBotao() {
     var menu = document.getElementById("itens-laterais");
     menu.classList.toggle("aberto");
