@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Métix Proteção Divina</title>
+    <link rel="icon" href="./assets/imgs/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- scripts do Chart.js - 2022-1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!--Script Gerador WordCloud -->
+    <link rel="shortcut icon" href="img/icoNumeEtiqueta.ico" type="image/x-icon">
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js">		</script>
+    <script src="js/scrypt.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #4e2b16;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+        }
+
+        .sidebar h1 {
+            text-align: center;
+        }
+
+        .logo img {
+            align-items: center;
+            padding: 10%;
+            width: 50%;
+            margin-top: -20%;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #4e2b16;
+            color: white;
+            padding: 10px;
+            margin-top: -50px;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            margin-bottom: 50%;
+        }
+
+        .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #d1d7d9;
+            margin-bottom: 10px;
+        }
+
+        .profile h2,
+        .profile h4 {
+            margin: 10px;
+            padding: 5px;
+            text-align: start;
+        }
+
+        .profile h2 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .profile p {
+            font-size: 16px;
+        }
+
+        .prfTxt {
+            margin-top: 0.2%;
+        }
+
+        .sidebar select {
+            background-color: #d1d7d9;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            width: 250px;
+        }
+
+        .sidebar button {
+            background-color: #ccc;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            width: 250px;
+        }
+
+        .sidebar button:hover {
+            background-color: #aaa;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: -30px;
+            padding: 50px;
+            background-color: #ddd;
+        }
+
+        .server-grid {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .server-box {
+            background-color: #644a3d;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            width: 22%;
+        }
+
+        .server-box .component1 {
+            background-color: #a68a6d;
+            padding: 5px;
+        }
+
+        .server-box .component2 {
+            background-color: #bda282;
+            padding: 5px;
+        }
+
+        .server-box .component3 {
+            background-color: #d3b997;
+            padding: 5px;
+        }
+
+        .charts {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            color: #4e2b16;
+            text-align: center;
+        }
+
+        .chart {
+            width: 30%;
+            background-color: #cebca7af;
+            padding: 12px;
+            border-radius: 2px;
+        }
+
+        .wordCloud {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .wrdCld {
+            width: 49%;
+            height: 350px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div>
+
+                <div class="logo">
+                    <img src="assets/imgs/Logo1.png" alt="">
+                </div>
+
+                <div class="profile">
+                    <img src="assets/imgs/Jamal.png"
+                        alt="Profile">
+                    <div class="prfTxt">
+                        <h2>Olá, Jamal</h2>
+                        <h4>Cargo: Gerente</h4>
+                    </div>
+                </div>
+
+                <div>
+                    <select name="" id="">
+                        <option value="">Select Período</option>
+                        <option value="">Atual</option>
+                        <option value="">Hora</option>
+                        <option value="">Dia</option>
+                        <option value="">Mês</option>
+                        <option value="">Ano</option>
+                    </select>
+                </div>
+
+
+                <div>
+                    <select name="" id="">
+                        <option value="">Select Servidor</option>
+                        <option value="">Servidor 1</option>
+                        <option value="">Servidor 2</option>
+                        <option value="">Servidor 3</option>
+                    </select>
+                </div>
+
+                <div>
+                    <button>Visualizar Métricas do Técnico</button>
+                </div>
+
+                <div>
+                    <button>Sair</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Server Info -->
+            <div class="server-grid">
+                <div class="server-box">
+                    <h3>SERV 1</h3>
+                    <div class="component1">Componente 1<br>90%</div>
+                    <div class="component2">Componente 2<br>40%</div>
+                    <div class="component3">Componente 3<br>40%</div>
+                </div>
+                <div class="server-box">
+                    <h3>SERV 2</h3>
+                    <div class="component1">Componente 1<br>90%</div>
+                    <div class="component2">Componente 2<br>40%</div>
+                    <div class="component3">Componente 3<br>40%</div>
+                </div>
+                <div class="server-box">
+                    <h3>SERV 3</h3>
+                    <div class="component1">Componente 1<br>90%</div>
+                    <div class="component2">Componente 2<br>40%</div>
+                    <div class="component3">Componente 3<br>40%</div>
+                </div>
+                <div class="server-box">
+                    <h3>SERV 4</h3>
+                    <div class="component1">Componente 1<br>90%</div>
+                    <div class="component2">Componente 2<br>40%</div>
+                    <div class="component3">Componente 3<br>40%</div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts">
+                <div class="chart">
+                    <h4>média por tempo para monitorar o upTime</h4>
+                    <!-- Gráfico pode ser inserido aqui -->
+                    <div>
+                        <canvas id="myChart5"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="chart">
+                    <h4>Picos de consumo do servidor</h4>
+                    <!-- Gráfico pode ser inserido aqui -->
+                    <div>
+                        <canvas id="myChart6"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="chart">
+                    <h4>Previsão de melhora de equipamento</h4>
+                    <!-- Gráfico pode ser inserido aqui -->
+                    <div>
+                        <canvas id="myChart7"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="wordCloud">
+                <div class="wrdCld" id="container-WordCloud"></div>
+                <div class="wrdCld" id="container-WordCloud2"></div>
+            </div>
+
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    const labels5 = ['CPU', 'RAM', 'DISCO'];
+    const data5 = {
+        labels: labels5,
+        datasets: [{
+            label: 'Servidor 1',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            fill: true,
+            borderColor: '#6C493A',
+            tension: 0.1
+        }]
+    };
+
+    const config5 = {
+        type: 'line',
+        data: data5,
+    };
+
+    const myChart5 = new Chart(
+        document.getElementById('myChart5'),
+        config5
+    );
+
+
+    // Gráfico 6
+    const labels6 = ['CPU', 'RAM', 'DISCO'];
+    const data6 = {
+        labels: labels6,
+        datasets: [{
+            label: 'Componente x servidor',
+            data: [65, 59, 80],
+            backgroundColor: [
+                '#252320',
+                '#494540',
+                '#3c3935'
+            ],
+            borderColor: [
+                '#252320',
+                '#494540',
+                '#3c3935'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const config6 = {
+        type: 'bar',
+        data: data6,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    };
+
+    const myChart6 = new Chart(
+        document.getElementById('myChart6'),
+        config6
+    );
+
+    //Gráfico 7
+    const labels7 = ['CPU', 'RAM', 'DISCO'];
+    const data7 = {
+        labels: labels7,
+        datasets: [{
+            label: 'Servidor 1',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            fill: true,
+            borderColor: '#6C493A',
+            tension: 0.1
+        }]
+    };
+
+    const config7 = {
+        type: 'line',
+        data: data7,
+    };
+
+    const myChart7 = new Chart(
+        document.getElementById('myChart7'),
+        config7
+    );
+
+    //WordCloud 
+    anychart.onDocumentReady(function () {
+
+        var data = [
+            { "x": "Rio Grande do Sul", "value": 1090000000 },
+            { "x": "Mato Grosso", "value": 983000000 },
+            { "x": "Paraná", "value": 544000000 },
+            { "x": "Mato Grosso do Sul", "value": 527000000 },
+            { "x": "Rio de Janeiro", "value": 422000000 },
+            { "x": "São Paulo", "value": 281000000 },
+            { "x": "Espírito Santo", "value": 267000000 },
+            { "x": "Distrito Federal", "value": 261000000 },
+            { "x": "Santa Catarina", "value": 229000000 },
+            { "x": "Goiás", "value": 229000000 },
+            { "x": "Minas Gerais", "value": 150000000 },
+            { "x": "Pará", "value": 148000000 },
+            { "x": "Ceará", "value": 129000000 },
+            { "x": "Maranhão", "value": 129000000 },
+            { "x": "Paraíba", "value": 121000000 },
+            { "x": "Sergipe", "value": 121000000 },
+            { "x": "Tocantins", "value": 121000000 },
+            { "x": "Bahia", "value": 121000000 },
+            { "x": "Rondônia", "value": 121000000 },
+            { "x": "Roraima", "value": 121000000 },
+            { "x": "Amazonas", "value": 121000000 },
+            { "x": "Piauí", "value": 121000000 },
+            { "x": "Alagoas", "value": 121000000 },
+            { "x": "Acre", "value": 121000000 },
+            { "x": "Amapá", "value": 121000000 },
+            { "x": "Rio Grande do Norte", "value": 121000000 }];
+
+        // Criando nosso grafico de Nuvem de Etiquetas
+        var chart = anychart.tagCloud(data);
+
+        // Definindo o titulo
+        chart.title('Regiões que mais enviaram transações');
+
+        // Vamos setar o angulo das palavras e a disposiçao dentro da nuvem
+        chart.angles([0, 0, 0]);
+
+        var colorScale = anychart.scales.ordinalColor();
+        colorScale.ranges([
+            { from: 0, to: 300000000, color: "#eed7c5" },  // Exemplo: cores mais claras para valores baixos
+            { from: 300000000, to: 700000000, color: "#f1dca7" }, // Cores intermediárias
+            { from: 700000000, to: 1200000000, color: "#ffedd8" } // Cores mais intensas para valores altos
+        ]);
+
+        // Aplicando a escala de cores
+        chart.colorScale(colorScale);
+
+        // definindo a cor do background
+        chart.background().fill({ keys: ["#583101", "#583101", "#583101"], angle: 130, });
+
+        // montando o grafico
+        chart.container("container-WordCloud");
+        chart.draw();
+
+        // algumas ferramentas  
+        var formatter = "{%value}{scale:(1)(1000)(1000)(1000)|( dozen)( thousand)( million)( billion)}"; var tooltip = chart.tooltip();
+        tooltip.format(formatter);
+
+    });
+
+
+    //W-C2
+    anychart.onDocumentReady(function () {
+
+        var data = [
+            { "x": "São Paulo", "value": 1090000000 },
+            { "x": "Goiás", "value": 983000000 },
+            { "x": "Paraná", "value": 544000000 },
+            { "x": "Rio Grande do Sul", "value": 527000000 },
+            { "x": "Rio de Janeiro", "value": 422000000 },
+            { "x": "Santa Catarina", "value": 281000000 },
+            { "x": "Espírito Santo", "value": 267000000 },
+            { "x": "Distrito Federal", "value": 261000000 },
+            { "x": "Mato Grosso do Sul", "value": 229000000 },
+            { "x": "Minas Gerais", "value": 229000000 },
+            { "x": "Mato Grosso", "value": 150000000 },
+            { "x": "Ceará", "value": 148000000 },
+            { "x": "Alagoas", "value": 129000000 },
+            { "x": "Rondônia", "value": 129000000 },
+            { "x": "Amazonas", "value": 121000000 },
+            { "x": "Pará", "value": 121000000 },
+            { "x": "Maranhão", "value": 121000000 },
+            { "x": "Amapá", "value": 121000000 },
+            { "x": "Tocantins", "value": 121000000 },
+            { "x": "Roraima", "value": 121000000 },
+            { "x": "Sergipe", "value": 121000000 },
+            { "x": "Rio Grande do Norte", "value": 121000000 },
+            { "x": "Bahia", "value": 121000000 },
+            { "x": "Paraíba", "value": 121000000 },
+            { "x": "Acre", "value": 121000000 }];
+
+        // Criando nosso grafico de Nuvem de Etiquetas
+        var chart = anychart.tagCloud(data);
+
+        // Definindo o titulo
+        chart.title('Regiões que mais receberam transações')
+
+        // Vamos setar o angulo das palavras e a disposiçao dentro da nuvem
+        chart.angles([0, 0, 0]);
+
+        var colorScale = anychart.scales.ordinalColor();
+        colorScale.ranges([
+            { from: 0, to: 300000000, color: "#eed7c5" },  // Exemplo: cores mais claras para valores baixos
+            { from: 300000000, to: 700000000, color: "#f1dca7" }, // Cores intermediárias
+            { from: 700000000, to: 1200000000, color: "#ffedd8" } // Cores mais intensas para valores altos
+        ]);
+
+        // Aplicando a escala de cores
+        chart.colorScale(colorScale);
+
+        // definindo a cor do background
+        chart.background().fill({ keys: ["#583101", "#583101", "#583101"], angle: 130, });
+
+        // montando o grafico
+        chart.container("container-WordCloud2");
+        chart.draw();
+
+        // algumas ferramentas  
+        var formatter = "{%value}{scale:(1)(1000)(1000)(1000)|( dozen)( thousand)( million)( billion)}"; var tooltip = chart.tooltip();
+        tooltip.format(formatter);
+
+    });
+
+</script>

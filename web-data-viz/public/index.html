@@ -5,39 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Métix - Início</title>
     <link rel="stylesheet" href="./css/style.css" />
-
     <link rel="icon" href="./assets/imgs/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
   <body>
     <div id="screen">
       <div class="header">
         <div class="container">
-          <a href="/" class="logo-container">
-            <img src="./assets/imgs/logo.png" alt="Métix logo" class="logo_header" style="height: 70%" />
+          <a href="index.html" class="logo-container">
+            <img src="./assets/imgs/logo1.png" alt="Métix logo" class="logo_header" style="height: 200%; margin-top: -13.5%;" />
             <div class="metix-container">
+              <!--
               <h4>Métix</h4>
               <h5>Proteção divina</h5>
+              -->
             </div>
           </a>
           <ul class="navbar">
             <li>
-              <a href="/#" class="agora">Início</a>
+              <a href="./index.html" class="agora">Início</a>
             </li>
             <li>
-              <a href="/#servicos">Serviços</a>
+              <a href="#servicos">Serviços</a>
             </li>
             <li>
-              <a href="/#sobrenos">Sobre nós</a>
+              <a href="#sobrenos">Sobre nós</a>
             </li>
             <li>
-              <a href="/#equipe">Equipe</a>
+              <a href="#equipe">Equipe</a>
             </li>
             <li>
-              <a href="./login.html" id="login">Login</a>
+              <a href="./login.html" class="lgCd">Login</a>
             </li>
+            <li>|</li>
             <li>
-              <a href="./cadastro.html" id="cadastro">Cadastro</a>
+              <a href="./cadastro.html" class="lgCd">Cadastro</a>
             </li>
           </ul>
         </div>
@@ -45,12 +48,12 @@
           <button id="menu-icon" class="menu-icon" onclick="MenuBotao()"></button>
           <div id="itens-laterais" class="fechado">
             <ul>
-              <li><a href="/#" class="agora">Início</a></li>
+              <li><a href="./index.html" class="agora">Início</a></li>
               <li><a href="/#servicos">Serviços</a></li>
               <li><a href="/#sobrenos">Sobre nós</a></li>
               <li><a href="/#equipe">Equipe</a></li>
-              <li><a href="./login.html" id="login">Login</a></li>
-              <li><a href="./cadastro.html" id="cadastro">Cadastro</a></li>
+              <li><a href="./login.html">Login</a></li>
+              <li><a href="./cadastro.html">Cadastro</a></li>
             </ul>
           </div>
         </div>
@@ -71,36 +74,18 @@
         <div class="engloba-servico-conteudo">
           <h1 class="titulo-servico">Nossos serviços</h1>
           <div class="engloba-servico">
-            
-            <span class="texto1-servico"> Na Métrix, oferecemos uma série de serviços projetados para assegurar a eficiência e a segurança das suas transações via PIX. Nosso compromisso é garantir que suas operações sejam sempre ágeis e livres de problemas.</span>
-          </div>
-          <div class="conteudo-servico">
-            <span class="texto2-servico">
-              Temos uma visão de que, na nossa realidade atual, as transações via PIX vêm tomando o mercado e trazendo grande revoluções. Mas em meio a esse mercado novo e recente, exitem diversas vulnerabilidades.<br /><br />
-              Nós, da Métix, buscamos tornar o seu empreendimento o mais seguro possível trazendo confiança<br />
-              para o seu négocio, atráves de nossos serviços.
-            </span>
+            <span class="texto1-servico"> Na Métrix, oferecemos serviços projetados para garantir a eficiência e segurança das suas transações via PIX, assegurando que suas operações sejam ágeis e confiáveis. Em um mercado recente e com vulnerabilidades, buscamos trazer confiança ao seu negócio, protegendo suas transações e fortalecendo sua segurança. </span>
           </div>
         </div>
         <div class="cards-servico">
           <div class="cartao1-servico">
-            <div class="fundo-icone-cartao">
-              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 28 28">
-                <path fill="#704d24" d="M13.56 2.142a.75.75 0 0 1 .878 0c.643.464 2.088 1.312 3.897 2.041c1.81.73 3.922 1.317 5.913 1.317a.75.75 0 0 1 .75.75v7.752q0 .483-.057.958A4 4 0 0 0 17.5 17v.041A3 3 0 0 0 15 20v5q0 .386.093.744q-.495.15-.966.232l-.128.022l-.129-.022c-2.205-.385-4.9-1.917-7.033-4.024C4.703 19.843 3 17.029 3 14.002V6.25a.75.75 0 0 1 .75-.75c1.991 0 4.103-.587 5.914-1.317c1.808-.73 3.253-1.577 3.896-2.04M18.5 18v-1a3 3 0 1 1 6 0v1h.5a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2zm1.5-1v1h3v-1a1.5 1.5 0 0 0-3 0m3 5.5a1.5 1.5 0 1 0-3 0a1.5 1.5 0 0 0 3 0" />
-              </svg>
-            </div>
             <h5>Proteção Avançada</h5>
-            <span> Atuamos de forma proativa para identificar problemas recorrentes, reduzindo interrupções e melhorando a experiência do usuário, enquanto configuramos alertas que notificam você sobre qualquer anomalia ou falha, permitindo uma resposta rápida e eficaz. </span>
+            <span> Atuamos de forma proativa para prevenir problemas e melhorar a experiência do usuário, configurando alertas que notificam sobre falhas, possibilitando respostas rápidas e eficazes. </span>
           </div>
 
           <div class="cartao1-servico">
-            <div class="fundo-icone-cartao">
-              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                <path fill="#704d24" d="M12 9a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m5.86 10.31C16.23 21.22 14.28 22.45 12 23c-2.56-.61-4.7-2.07-6.42-4.37C3.86 16.34 3 13.8 3 11V5l9-4l9 4v6c0 2.39-.64 4.61-1.92 6.67l-2.91-2.91c.52-.79.83-1.76.83-2.76a5 5 0 0 0-5-5a5 5 0 0 0-5 5a5 5 0 0 0 5 5c1 0 1.97-.31 2.76-.83z" />
-              </svg>
-            </div>
             <h5>Monitoramento em Tempo real</h5>
-            <span> Acompanhamento em tempo real das suas transações, garantindo agilidade e continuidade, aliado à geração de relatórios completos que fornecem uma visão clara do desempenho do sistema e das transações, auxiliando na tomada de decisões estratégicas. </span>
+            <span> Acompanhamento em tempo real das transações e relatórios completos garantem agilidade e suporte a decisões estratégicas. </span>
           </div>
         </div>
       </div>
@@ -108,18 +93,18 @@
 
     <div id="sobrenos" class="engloba-tudo">
       <div class="sobre">
-        <img class="imagem-sobre-nos" src="./assets/imgs/imagen-sobre-nos.jpg" />
+        <img class="imagem-sobre-nos" src="https://img.freepik.com/premium-photo/revolution-online-banking-merging-finance-with-technology-uuid_31965-634408.jpg?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid" />
         <div class="texto_sobre">
           <h1>Sobre nós</h1>
           <span
             >A Métix é uma empresa recém fundada em 2024 por meio de um projeto acadêmico. <br /><br />
             Nosso négocio nasce perante a instabilidade do mercado e a necessidade de uma segurança e monitoramento de transações. <br /><br
           /></span>
-          <span> Buscamos promover a confiança entre os empreendimentos bancários e seus contratantes, pois a segurnaça é a base de toda opereção!<br /><br /> </span>
+          <span> Buscamos promover a confiança entre os empreendimentos bancários e seus contratantes, pois a segurança é a base de toda operação!<br /><br /> </span>
         </div>
       </div>
 
-      <div class="social">
+      <div class="social1">
         <div class="container-sob-nos">
           <h1>Nossos princípios</h1>
           <span class="span-principios"> Promover o trabalho em equipe e a cooperação com nossos clientes para alcançar objetivos comuns e garantir o sucesso mútuo. </span>
@@ -132,7 +117,7 @@
               <img src="./assets/imgs/Colaboração.png" style="width: 70px" />
             </div>
             <h4>Colaboração</h4>
-            <p>Utlizar novas tecnologias e métodos para melhor a experiência do cliente e oferecer soluções mais eficazes e eficientes.</p>
+            <p>Utlizar novas tecnologias e métodos para melhor a experiência do cliente e oferecer soluções mais facéis e simplificadas.</p>
           </div>
         </div>
         <div class="boxes">
@@ -157,41 +142,94 @@
     </div>
 
     <div id="equipe" class="equipe">
-      <div>
-        <h1>Nossa equipe</h1>
-        <h4>Membros da equipe Métrix que contribuiram e participaram atividamente da criação e da gestão da empresa:</h4>
-      </div>
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
 
-      <div class="contd">
-        <div class="SetaEsq" onclick="TrocarEsq()"></div>
-        <div class="card">
-          <div id="img_card">
-            <img src="./assets/imgs/isaque.jpeg" alt="" width="250px" height="250px" />
-          </div>
-          <div class="info">
-            <h1 id="name_card">Isaque Benitez</h1>
-            <h4>"<span id="desc">Com um coração de ferro, poderemos vencer todas as adversidades</span>"</h4>
-            <div class="gith_line">
-              <div class="git"></div>
-              <h4 id="gitHB">@Isaque_Bntz94</h4>
-            </div>
-            <div class="lind_line">
-              <div class="lind"></div>
-              <h4 id="linkD">@Isaque_Bntz94</h4>
-            </div>
-          </div>
+<section class="container2">
+  <h2>Conheça a equipe por trás do projeto e seus papéis</h2>
+
+  <div class="row">
+    <div class="col-md-2 col-sm-6">
+      <div class="our-team">
+        <div class="pic">
+          <img src="https://img.freepik.com/premium-photo/greek-statue-overlay_1077742-1575.jpg?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid">
         </div>
-        <div class="SetaDir" onclick="TrocarDir()"></div>
-      </div>
-      <div class="legenda_card">
-        <div class="circle" id="C1"></div>
-        <div class="circle" id="C2"></div>
-        <div class="circle" id="C3"></div>
-        <div class="circle" id="C4"></div>
-        <div class="circle" id="C5"></div>
-        <div class="circle" id="C6"></div>
+        <h3 class="title">Arthur Ramos</h3>
+        <span class="post">Cientista de dados</span>
+        <ul class="social">
+          <li><a href="#" class="fa fa-github"></a></li>
+          <li><a href="#" class="fa fa-envelope"></a></li>
+          <li><a href="#" class="fa fa-linkedin"></a></li>
+        </ul>
       </div>
     </div>
+
+    <div class="col-md-2 col-sm-6">
+      <div class="our-team">
+        <div class="pic">
+          <img src="https://img.freepik.com/premium-photo/greek-statue-overlay_1077742-1575.jpg?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid">
+        </div>
+        <h3 class="title">Fabrício Prudente</h3>
+        <span class="post">Cientista de dados</span>
+        <ul class="social">
+          <li><a href="#" class="fa fa-github"></a></li>
+          <li><a href="#" class="fa fa-envelope"></a></li>
+          <li><a href="#" class="fa fa-linkedin"></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-2 col-sm-6">
+      <div class="our-team">
+        <div class="pic">
+          <img src="https://img.freepik.com/premium-photo/greek-statue-overlay_1077742-1575.jpg?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid">
+        </div>
+        <h3 class="title">Luís Henrique</h3>
+        <span class="post">Cientista de dados</span>
+        <ul class="social">
+          <li><a href="#" class="fa fa-github"></a></li>
+          <li><a href="#" class="fa fa-envelope"></a></li>
+          <li><a href="#" class="fa fa-linkedin"></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-2 col-sm-6">
+      <div class="our-team">
+        <div class="pic">
+          <img src="https://img.freepik.com/premium-photo/roman-head-statue-isolated-black-baground_941097-152577.jpg?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid">
+        </div>
+        <h3 class="title">Luiza Moreira</h3>
+        <span class="post">Cientista de dados</span>
+        <ul class="social">
+          <li><a href="#" class="fa fa-github"></a></li>
+          <li><a href="#" class="fa fa-envelope"></a></li>
+          <li><a href="#" class="fa fa-linkedin"></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-2 col-sm-6">
+      <div class="our-team">
+        <div class="pic">
+          <img src="https://img.freepik.com/premium-photo/greek-statue-overlay_1077742-1575.jpg?uid=R70681073&ga=GA1.1.919901262.1725540811&semt=ais_hybrid">
+        </div>
+        <h3 class="title">Victor Hugo</h3>
+        <span class="post">Cientista de dados</span>
+        <ul class="social">
+          <li><a href="#" class="fa fa-github"></a></li>
+          <li><a href="#" class="fa fa-envelope"></a></li>
+          <li><a href="#" class="fa fa-linkedin"></a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+    </div>
+
 
     <div class="footer">
       <div class="footer1">
@@ -207,7 +245,7 @@
             <div><img src="./assets/icones/email.svg" alt="github.svg" /> <span>Metix@gmail.com</span></div>
           </div>
         </div>
-        <img class="logo" src="./assets/imgs/logo.png" alt="logo.png" />
+        <img class="logo" src="./assets/imgs/logo1.2.png" alt="logo.png" />
       </div>
       <div class="footer2">
         <span>Copyright © 2024</span>

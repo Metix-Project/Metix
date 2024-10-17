@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
+/*FONTES ATUAIS*/
+@import url('https://fonts.googleapis.com/css2?family=Macondo+Swash+Caps&display=swap'); /*Fonte Grega - "Macondo Swash Caps"   */
+@import url('https://fonts.googleapis.com/css2?family=Bubbler+One&display=swap'); /*Fonte Fina   -    "Bubbler One"         */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400..800&display=swap'); /*Fonte padrão  -  "Baloo Paaji 2"   */
+
+
 :root {
   font-size: 1rem;
 }
@@ -9,9 +15,22 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Noto Serif", serif;
+  font-family: "Baloo Paaji 2", serif;
   outline: none;
   outline-offset: 1px;
+}
+
+.header .agora {
+  font-family: "Macondo Swash Caps", sans-serif;
+  color: #593f1e;
+  font-weight: bolder;
+}
+
+.header a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 body {
@@ -19,7 +38,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: center / 100% url("data:image/svg+xml,%3Csvg width='1979' height='589' viewBox='0 0 1979 589' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 5C437.333 117.167 1441.8 301.4 1977 141M2 189.5C437.333 301.667 1441.8 485.9 1977 325.5M2 385C437.333 497.167 1441.8 681.4 1977 521' stroke='%23B3B2B2' stroke-width='10'/%3E%3C/svg%3E%0A") no-repeat #4d4439;
+  background: center / 100% url("data:image/svg+xml,%3Csvg width='1979' height='589' viewBox='0 0 1979 589' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 5C437.333 117.167 1441.8 301.4 1977 141M2 189.5C437.333 301.667 1441.8 485.9 1977 325.5M2 385C437.333 497.167 1441.8 681.4 1977 521' stroke='%23B3B2B2' stroke-width='10'/%3E%3C/svg%3E%0A") no-repeat #191715;
   min-height: 100dvh;
 }
 
@@ -80,7 +99,7 @@ body {
   border: none;
   padding: 0.5em;
   background-color: #524432;
-  font-family: "Quantico", sans-serif;
+  font-family: "Macondo Swash Caps", sans-serif;
   font-weight: bold;
   font-size: 1.2rem;
   color: #e7ae79;

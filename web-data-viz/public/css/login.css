@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
+/*FONTES ATUAIS*/
+@import url('https://fonts.googleapis.com/css2?family=Macondo+Swash+Caps&display=swap'); /*Fonte Grega - "Macondo Swash Caps"   */
+@import url('https://fonts.googleapis.com/css2?family=Bubbler+One&display=swap'); /*Fonte Fina   -    "Bubbler One"         */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400..800&display=swap'); /*Fonte padrão  -  "Baloo Paaji 2"   */
+
+
 :root {
   font-size: 1rem;
 }
@@ -9,7 +15,7 @@
   height: 80px;
   background-color: #191715;
   width: 100vw; 
- 
+  font-family: "Macondo Swash Caps", sans-serif;
   top: 0;
   z-index: 10;
 }
@@ -64,6 +70,7 @@
 }
 
 .header .agora {
+  font-family: "Macondo Swash Caps", sans-serif;
   color: #593f1e;
   font-weight: bolder;
 }
@@ -75,48 +82,24 @@
   font-size: 20px;
 }
 
-#login {
-  background-color: #505050;
-  height: 64px;
-  width: 350px;
-  padding: 31.5% 80%;
-}
-
-#cadastro {
-  background-color: #3a3a3a;
-  height: 64px;
-  width: 350px;
-  padding: 20% 50%;
-  margin-left: 23%;
-}
-
-.login #login {
-  padding: 22% 70%;
-  margin-top: 400px;
-}
-
-.login #cadastro {
-  padding: 14% 40%;
-  margin-left: 30%;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Noto Serif", serif;
+  font-family: "Baloo Paaji 2", serif;
   outline: none;
   outline-offset: 1px;
 }
 
 body {
+  font-family: "Baloo Paaji 2", serif;
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1em;
-  background: center / 100% url("data:image/svg+xml,%3Csvg width='1981' height='584' viewBox='0 0 1981 584' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1979.16 578.85C1543.38 468.436 538.175 288.245 3.62507 450.797M1978.41 394.352C1542.63 283.937 537.433 103.747 2.88275 266.299M1977.63 198.853C1541.85 88.439 536.646 -91.7515 2.09616 70.8006' stroke='%23B3B2B2' stroke-width='10'/%3E%3C/svg%3E%0A") no-repeat #505050;
+  background: center / 100% url("data:image/svg+xml,%3Csvg width='1981' height='584' viewBox='0 0 1981 584' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1979.16 578.85C1543.38 468.436 538.175 288.245 3.62507 450.797M1978.41 394.352C1542.63 283.937 537.433 103.747 2.88275 266.299M1977.63 198.853C1541.85 88.439 536.646 -91.7515 2.09616 70.8006' stroke='%23B3B2B2' stroke-width='10'/%3E%3C/svg%3E%0A") no-repeat #191715;
   min-height: 100dvh;
   
 }
@@ -180,7 +163,7 @@ form button {
   padding: 0.5em;
   min-width: 50%;
   background-color: #524432;
-  font-family: "Quantico", sans-serif;
+  font-family: "Macondo Swash Caps", sans-serif;
   font-weight: bold;
   font-size: 1.2rem;
   color: #e7ae79;
