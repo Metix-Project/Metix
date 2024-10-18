@@ -7,9 +7,12 @@
     <title>Dashboard - Métix Proteção Divina</title>
     <link rel="icon" href="./assets/imgs/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
 
     <!-- scripts do Chart.js - 2022-1 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+
 
     <!--Script Gerador WordCloud -->
     <link rel="shortcut icon" href="img/icoNumeEtiqueta.ico" type="image/x-icon">
@@ -161,14 +164,14 @@
 
         .charts {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-evenly;
             margin-bottom: 20px;
             color: #4e2b16;
             text-align: center;
         }
 
         .chart {
-            width: 30%;
+            width: 40%;
             background-color: #cebca7af;
             padding: 12px;
             border-radius: 2px;
@@ -210,9 +213,7 @@
                 <div>
                     <select name="" id="">
                         <option value="">Select Período</option>
-                        <option value="">Atual</option>
-                        <option value="">Hora</option>
-                        <option value="">Dia</option>
+                        <option value="">Semana</option>
                         <option value="">Mês</option>
                         <option value="">Ano</option>
                     </select>
@@ -225,6 +226,8 @@
                         <option value="">Servidor 1</option>
                         <option value="">Servidor 2</option>
                         <option value="">Servidor 3</option>
+                        <option value="">Servidor 4</option>
+
                     </select>
                 </div>
 
@@ -273,33 +276,28 @@
             <!-- Charts Section -->
             <div class="charts">
                 <div class="chart">
-                    <h4>média por tempo para monitorar o upTime</h4>
-                    <!-- Gráfico pode ser inserido aqui -->
-                    <div>
-                        <canvas id="myChart5"></canvas>
-                    </div>
-
-                </div>
-
-                <div class="chart">
-                    <h4>Picos de consumo do servidor</h4>
-                    <!-- Gráfico pode ser inserido aqui -->
-                    <div>
-                        <canvas id="myChart6"></canvas>
-                    </div>
-
-                </div>
-
-                <div class="chart">
                     <h4>Previsão de melhora de equipamento</h4>
                     <!-- Gráfico pode ser inserido aqui -->
                     <div>
                         <canvas id="myChart7"></canvas>
                     </div>
 
+                
                 </div>
 
+                <div class="chart">
+                    <h4>Porcentagem de Uso dos Componentes</h4>
+                    <!-- Gráfico pode ser inserido aqui -->
+                    <div>
+                        <canvas id="myChart6"></canvas>
+                    </div>
+
+                </div>
             </div>
+
+
+
+            
 
             <div class="wordCloud">
                 <div class="wrdCld" id="container-WordCloud"></div>
@@ -337,66 +335,146 @@
     );
 
 
-    // Gráfico 6
-    const labels6 = ['CPU', 'RAM', 'DISCO'];
-    const data6 = {
-        labels: labels6,
-        datasets: [{
-            label: 'Componente x servidor',
-            data: [65, 59, 80],
-            backgroundColor: [
-                '#252320',
-                '#494540',
-                '#3c3935'
-            ],
-            borderColor: [
-                '#252320',
-                '#494540',
-                '#3c3935'
-            ],
-            borderWidth: 1
-        }]
-    };
+// Gráfico 6
+const labels6 = ['CPU', 'RAM', 'DISCO'];
+const data6 = {
+    labels: labels6,
+    datasets: [{
+        label: 'Porcentagem de Uso por Componente',
+        data: [65, 59, 80],
+        backgroundColor: [
+            '#0000FF',  // CPU
+            '#570987',  // RAM
+            '#008000'   // DISCO
+        ],
+        borderColor: [
+            '#0000FF',  // CPU
+            '#570987',  // RAM
+            '#008000'   // DISCO
+        ],
+        borderWidth: 1
+    }]
+};
 
-    const config6 = {
-        type: 'bar',
-        data: data6,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+const config6 = {
+    type: 'bar',
+    data: data6,
+    options: {
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    generateLabels: function(chart) {
+                        return chart.data.labels.map((label, i) => ({
+                            text: label ,
+                            fillStyle: chart.data.datasets[0].backgroundColor[i]
+                        }));
+                    }
                 }
             }
         },
-    };
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Porcentagem de Uso (%)'
+                }
+            }
+        }
+    },
+};
 
-    const myChart6 = new Chart(
-        document.getElementById('myChart6'),
-        config6
-    );
+const myChart6 = new Chart(
+    document.getElementById('myChart6'),
+    config6
+);
 
     //Gráfico 7
-    const labels7 = ['CPU', 'RAM', 'DISCO'];
+    
+    
+    // Exemplo de dados de porcentagem de componentes ao longo do tempo
+    const labels7 = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5'];
     const data7 = {
         labels: labels7,
         datasets: [{
-            label: 'Servidor 1',
-            data: [65, 59, 80, 81, 56, 55, 40],
-            fill: true,
-            borderColor: '#6C493A',
+            label: 'CPU',
+            data: [65, 59, 80, 81, 75], // Exemplo de dados reais
+            borderColor: '#0000FF',
+            fill: false,
+            tension: 0.1
+        }, {
+            label: 'RAM',
+            data: [60, 62, 65, 68, 70], // Exemplo de dados reais
+            borderColor: '#570987',
+            fill: false,
+            tension: 0.1
+        }, {
+            label: 'DISCO',
+            data: [80, 78, 82, 85, 90], // Exemplo de dados reais
+            borderColor: '#008000',
+            fill: false,
             tension: 0.1
         }]
     };
 
+    // Limite da linha horizontal (limite para troca)
+    const limiteMelhoria = 85;
+
     const config7 = {
         type: 'line',
         data: data7,
+        options: {
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100, // Valor máximo do gráfico
+                    title: {
+                        display: true,
+                        text: 'Porcentagem de Uso (%)'
+                    }
+                }
+            },
+            elements: {
+                line: {
+                    borderWidth: 2
+                },
+                point: {
+                    radius: 3
+                }
+            },
+            plugins: {
+                annotation: {
+                    annotations: {
+                        line1: {
+                            type: 'line',
+                            yMin: limiteMelhoria,
+                            yMax: limiteMelhoria,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            label: {
+                                enabled: false,
+                                content: 'Limite para troca',
+                                position: 'start'
+                            }
+                        }
+                    }
+                }
+            }
+        }
     };
 
+    // Criando o gráfico com a regressão
     const myChart7 = new Chart(
         document.getElementById('myChart7'),
         config7
     );
+
 
     //WordCloud 
     anychart.onDocumentReady(function () {
