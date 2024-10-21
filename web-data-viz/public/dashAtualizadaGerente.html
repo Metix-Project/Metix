@@ -212,7 +212,6 @@
 
                 <div>
                     <select name="" id="">
-                        <option value="">Select Período</option>
                         <option value="">Semana</option>
                         <option value="">Mês</option>
                         <option value="">Ano</option>
@@ -222,7 +221,6 @@
 
                 <div>
                     <select name="" id="">
-                        <option value="">Select Servidor</option>
                         <option value="">Servidor 1</option>
                         <option value="">Servidor 2</option>
                         <option value="">Servidor 3</option>
@@ -232,8 +230,10 @@
                 </div>
 
                 <div>
-                    <button>Visualizar Métricas do Técnico</button>
+                    <a href="dashAtualizadaTecnico.html"><button>Visualizar Métricas do Técnico</button></a>
+                    
                 </div>
+
 
                 <div>
                     <button>Sair</button>
@@ -343,14 +343,14 @@ const data6 = {
         label: 'Porcentagem de Uso por Componente',
         data: [65, 59, 80],
         backgroundColor: [
-            '#0000FF',  // CPU
-            '#570987',  // RAM
-            '#008000'   // DISCO
+            '#6C493A',  // CPU
+            '#B08968',  // RAM
+            '#6F5E53'   // DISCO
         ],
         borderColor: [
-            '#0000FF',  // CPU
-            '#570987',  // RAM
-            '#008000'   // DISCO
+            '#6C493A',  // CPU
+            '#B08968',  // RAM
+            '#6F5E53'   // DISCO
         ],
         borderWidth: 1
     }]
@@ -400,19 +400,19 @@ const myChart6 = new Chart(
         datasets: [{
             label: 'CPU',
             data: [65, 59, 80, 81, 75], // Exemplo de dados reais
-            borderColor: '#0000FF',
+            borderColor: '#6C493A',
             fill: false,
             tension: 0.1
         }, {
             label: 'RAM',
             data: [60, 62, 65, 68, 70], // Exemplo de dados reais
-            borderColor: '#570987',
+            borderColor: '#B08968',
             fill: false,
             tension: 0.1
         }, {
             label: 'DISCO',
             data: [80, 78, 82, 85, 90], // Exemplo de dados reais
-            borderColor: '#008000',
+            borderColor: '#6F5E53',
             fill: false,
             tension: 0.1
         }]
