@@ -19,6 +19,7 @@
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js">		</script>
     <script src="js/scrypt.js"></script>
+    <script src="js/sessao.js"></script>
 
     <style>
         body {
@@ -202,16 +203,20 @@
                 </div>
 
                 <div class="profile">
-                    <img src="assets/imgs/Jamal.png"
-                        alt="Profile">
+                    <img alt="Profile" id="profileImage">
                     <div class="prfTxt">
-                        <h2>Olá, Jamal</h2>
-                        <h4>Cargo: Gerente</h4>
+                        <h2 id="profileName">Olá, Usuário!</h2>
+                        <h4 id="profilePosition">Cargo: Gerente</h4>
                     </div>
                 </div>
 
                 <div>
-                    <button>Sair</button>
+                    <button>MONITORAMENTO EM TEMPO REAL</button>
+                    <button>ALERTAS</button>
+                    <button>HISTÓRICO</button>
+                    <button>PREVISÕES</button>
+                    <button>MANUTENÇÃO</button>
+                    <button onclick="limparSessao()">Sair</button>
                 </div>
 
             </div>
@@ -230,6 +235,5 @@
 </html>
 
 <script>
-
-    
+    window.onload = validarSessao();
 </script>

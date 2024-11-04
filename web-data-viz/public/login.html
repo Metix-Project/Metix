@@ -108,9 +108,12 @@
 
           if (resposta.ok) {
             resposta.json().then((json) => {
-              sessionStorage.EMAIL_USUARIO = json[0].email;
+              sessionStorage.EMAIL_USUARIO = json[0].emailUsuario;
               sessionStorage.NOME_USUARIO = json[0].nome;
-              sessionStorage.ID_USUARIO = json[0].id;
+              sessionStorage.ID_USUARIO = json[0].idUsuario;
+              sessionStorage.CARGO_USUARIO = json[0].cargo;
+              sessionStorage.IMAGEM_USUARIO = json[0].imgLogo;
+
 
               cardErro.style.display = "block";
 
@@ -118,11 +121,13 @@
               mensagem_erro.innerHTML = "Redirecionando para a próxima tela";
 
               setTimeout(function () {
-                if (cargoVar == "Ger") {
-                  window.location = "dashGerente\dashAtualizadaGerente.html"; 
-                } else {
-                  window.location = "dashTecnico\dashAtualizadaTecnico.html";
-                }
+                // if (cargoVar == "Gerente") {
+                //   window.location = "dashGerente\dashAtualizadaGerente.html"; 
+                // } else {
+                //   window.location = "dashTecnico\dashAtualizadaTecnico.html";
+                // }
+
+                window.location = "telaBase.html"
               }, 1000); // apenas para exibir o loading
             });
           } else {
