@@ -2,11 +2,11 @@ _Repositório para o Métix Project_
 
 <hr>
 
-# O que é o Métix Project?
+# O que é a Métix Project?
 
 - O Métix Project vem com a intenção criar uma plataforma tecnológica capaz de lidar com o imenso volume de dados gerado pelas transações PIX.
 
-# Como o Métix fará isso?
+# Como a Métix fará isso?
 
 - Serão implementados algoritmos projetados para monitorar os servidores do sistema PIX em tempo real, identificando padrões anômalos que possam indicar falhas, congestionamentos ou outras irregularidades que comprometam a eficiência das transações.
 
