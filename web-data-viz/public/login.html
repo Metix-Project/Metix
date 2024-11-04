@@ -1,142 +1,151 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Métix | Login</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script src="./js/sessao.js"></script>
+  <title>Métix | Login</title>
 
-    <link rel="stylesheet" href="./css/login.css" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="icon" href="./assets/imgs/logo.png">
-  </head>
+  <script src="./js/sessao.js"></script>
 
-  <body>
-    <div class="header">
-      <div class="container">
-        <a href="index.html" class="logo-container">
-          <img src="./assets/imgs/logo1.png" alt="Métix logo" class="logo_header" style="height: 200%; margin-top: -30%;" />
-          <!--
+  <link rel="stylesheet" href="./css/login.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="icon" href="./assets/imgs/logo.png">
+</head>
+
+<body>
+  <div class="header">
+    <div class="container">
+      <a href="index.html" class="logo-container">
+        <img src="./assets/imgs/logo1.png" alt="Métix logo" class="logo_header"
+          style="height: 200%; margin-top: -30%;" />
+        <!--
           <div class="metix-container">
             <h4>Métix</h4>
             <h5>Proteção divina</h5>
           </div>
 -->
-        </a>
-        <ul class="navbar">
-          <li>
-            <a href="./index.html">Início</a>
-          </li>
-          <li>
-            <a href="./login.html" class="agora">Login</a>
-          </li>
-          <li>
-            <a href="./cadastro.html">Cadastro</a>
-          </li>
+      </a>
+      <ul class="navbar">
+        <li>
+          <a href="./index.html">Início</a>
+        </li>
+        <li>
+          <a href="./login.html" class="agora">Login</a>
+        </li>
+        <li>
+          <a href="./cadastro.html">Cadastro</a>
+        </li>
+      </ul>
+    </div>
+    <div id="menu-container">
+      <button id="menu-icon" class="menu-icon" onclick="MenuBotao()"></button>
+      <div id="itens-laterais" class="fechado">
+        <ul>
+          <li><a href="./index.html">Início</a></li>
+          <li><a href="./login.html" id="login">Login</a></li>
+          <li><a href="./cadastro.html" id="cadastro">Cadastro</a></li>
         </ul>
       </div>
-      <div id="menu-container">
-        <button id="menu-icon" class="menu-icon" onclick="MenuBotao()"></button>
-        <div id="itens-laterais" class="fechado">
-          <ul>
-            <li><a href="./index.html">Início</a></li>
-            <li><a href="./login.html" id="login">Login</a></li>
-            <li><a href="./cadastro.html" id="cadastro">Cadastro</a></li>
-          </ul>
-        </div>
+    </div>
+  </div>
+
+  <div class="alerta_erro">
+    <div class="card_erro" id="cardErro">
+      <span id="mensagem_erro"></span>
+    </div>
+  </div>
+  <form onsubmit="entrar(event)">
+    <h1>Faça login no nosso sistema</h1>
+    <div class="campos">
+      <label>
+        <span>Email:</span>
+        <input id="email_input" type="email" placeholder="Email" required autofocus autocomplete="email"
+          value="jamal@gmail.com" />
+      </label>
+      <label>
+        <span>Senha:</span>
+        <input id="senha_input" type="password" placeholder="Senha" required autocomplete="current-password"
+          value="1234567!" />
+      </label>
+      <div class="links">
+        <a href="">Esqueceu a senha?</a>
       </div>
     </div>
+    <button type="submit"> <a href="dashAtualizadaGerente.html"></a>Login</button>
+  </form>
+  <script src="/js/script.js"></script>
+  <script>
+    function entrar(event) {
+      logar(event);
+      // aguardar();
 
-    <div class="alerta_erro">
-      <div class="card_erro" id="cardErro">
-        <span id="mensagem_erro"></span>
-      </div>
-    </div>
-    <form onsubmit="entrar(event)">
-      <h1>Faça login no nosso sistema</h1>
-      <div class="campos">
-        <label>
-          <span>Email:</span>
-          <input id="email_input" type="email" placeholder="Email" required autofocus autocomplete="email" />
-        </label>
-        <label>
-          <span>Senha:</span>
-          <input id="senha_input" type="password" placeholder="Senha" required autocomplete="current-password" />
-        </label>
-        <div class="links">
-          <a href="">Esqueceu a senha?</a>
-        </div>
-      </div>
-      <button type="submit"> <a href="dashAtualizadaGerente.html"></a>Login</button>
-    </form>
-    <script src="/js/script.js"></script>
-    <script>
-      function entrar(event) {
-        logar(event);
-        // aguardar();
+      var emailVar = email_input.value;
+      var senhaVar = senha_input.value;
 
-        var emailVar = email_input.value;
-        var senhaVar = senha_input.value;
-
-        if (emailVar == "" || senhaVar == "") {
-          cardErro.style.display = "block";
-          mensagem_erro.className = "erro";
-          mensagem_erro.innerHTML = "Preencha todos os campos";
-          // finalizarAguardar();
-          return false;
-        }
-
-        fetch("/usuarios/autenticar", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            emailServer: emailVar,
-            senhaServer: senhaVar,
-          }),
-        })
-          .then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!");
-
-            if (resposta.ok) {
-              resposta.json().then((json) => {
-                sessionStorage.EMAIL_USUARIO = json[0].email;
-                sessionStorage.NOME_USUARIO = json[0].nome;
-                sessionStorage.ID_USUARIO = json[0].id;
-
-                cardErro.style.display = "block";
-
-                mensagem_erro.className = "sucesso";
-                mensagem_erro.innerHTML = "Redirecionando para a próxima tela";
-
-                setTimeout(function () {
-                  window.location = "/perfil.html";
-                }, 1000); // apenas para exibir o loading
-              });
-            } else {
-              console.log("Houve um erro ao tentar realizar o login!");
-
-              resposta.text().then((texto) => {
-                console.error(texto);
-                // finalizarAguardar(texto);
-              });
-            }
-          })
-          .catch(function (erro) {
-            console.log(erro);
-          });
-
+      if (emailVar == "" || senhaVar == "") {
+        cardErro.style.display = "block";
+        mensagem_erro.className = "erro";
+        mensagem_erro.innerHTML = "Preencha todos os campos";
+        // finalizarAguardar();
         return false;
       }
 
-      function MenuBotao() {
-        var menu = document.getElementById("itens-laterais");
-        menu.classList.toggle("aberto");
-      }
-    </script>
-  </body>
+      fetch("/usuarios/autenticar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          emailServer: emailVar,
+          senhaServer: senhaVar,
+        }),
+      })
+        .then(function (resposta) {
+          console.log("ESTOU NO THEN DO entrar()!");
+
+          if (resposta.ok) {
+            resposta.json().then((json) => {
+              sessionStorage.EMAIL_USUARIO = json[0].email;
+              sessionStorage.NOME_USUARIO = json[0].nome;
+              sessionStorage.ID_USUARIO = json[0].id;
+
+              cardErro.style.display = "block";
+
+              mensagem_erro.className = "sucesso";
+              mensagem_erro.innerHTML = "Redirecionando para a próxima tela";
+
+              setTimeout(function () {
+                if (cargoVar == "Ger") {
+                  window.location = "dashGerente\dashAtualizadaGerente.html"; 
+                } else {
+                  window.location = "dashTecnico\dashAtualizadaTecnico.html";
+                }
+              }, 1000); // apenas para exibir o loading
+            });
+          } else {
+            console.log("Houve um erro ao tentar realizar o login!");
+
+            resposta.text().then((texto) => {
+              console.error(texto);
+              // finalizarAguardar(texto);
+            });
+          }
+        })
+        .catch(function (erro) {
+          console.log(erro);
+        });
+
+      return false;
+    }
+
+    function MenuBotao() {
+      var menu = document.getElementById("itens-laterais");
+      menu.classList.toggle("aberto");
+    }
+  </script>
+</body>
+
 </html>

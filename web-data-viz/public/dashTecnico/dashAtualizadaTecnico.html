@@ -277,7 +277,7 @@
             <!-- Charts Section -->
             <div class="charts">
                 <div class="chart">
-                    <h4>Visão individual de cada componente</h4>
+                    <h4>Servidor 1</h4>
                     <!-- Gráfico pode ser inserido aqui -->
                     <div>
                         <canvas id="myChart5"></canvas>
@@ -338,11 +338,11 @@
 </html>
 
 <script>
-const labels5 = ['CPU', 'RAM', 'DISCO'];
+const labels5 = ['12h00', '13h00', '14h00'];
 const data5 = {
   labels: labels5,
   datasets: [{
-    label: 'Servidor 1',
+    label: 'Percentual de uso da Memória RAM',
     data: [65, 59, 80, 81, 56, 55, 40],
     fill: true,
     borderColor: '#6C493A',
@@ -367,7 +367,7 @@ const data6 = {
   labels: labels6,
   datasets: [{
     label: 'Componente x servidor',
-    data: [65, 59, 80],
+    data: [65, 80, 59],
     backgroundColor: [
       '#252320',
       '#494540',
