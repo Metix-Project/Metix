@@ -16,10 +16,12 @@
 
     <!--Script Gerador WordCloud -->
     <link rel="shortcut icon" href="img/icoNumeEtiqueta.ico" type="image/x-icon">
-    
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
     <script src="js/scrypt.js"></script>
     <script src="js/sessao.js"></script>
-    <link rel="stylesheet" href="./css/dashboardBase.css">
+
+    <link rel="stylesheet" href="../css/dashboardBase.css">
 </head>
 
 <body>
@@ -40,13 +42,8 @@
                     </div>
                 </div>
 
-                <div class="dashboardLinks">
-                    <a>MONITORAMENTO EM TEMPO REAL</a>
-                    <a>ALERTAS</a>
-                    <a href="./dashGerente/historico.html">HISTÓRICO</a>
-                    <a>PREVISÕES</a>
-                    <a>MANUTENÇÃO</a>
-                    <a onclick="limparSessao()">Sair</a>
+                <div>
+                    <button onclick="limparSessao()">Sair</button>
                 </div>
 
             </div>
