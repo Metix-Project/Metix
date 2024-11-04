@@ -11,7 +11,8 @@ create table if not exists Empresa(
     nomeFantasia varchar(80),
     email varchar(80) not null unique,
     cnpj char(18) not null unique,
-    telefone char(19) not null unique
+    telefone char(19) not null unique,
+    imgLoco VARCHAR(255)
 );
 create table if not exists Usuario(
 		id int auto_increment,
@@ -71,10 +72,11 @@ grant select on Metix.* to 'metixUserSelect'@'%';
 
 -- insert BC:
 
-insert into Empresa (id, razaoSocial, nomeFantasia, email, cnpj, telefone) values (1, "Banco Central do Brasil", "Banco Central do Brasil", "bc@br.br", "12345678901234", "1234567890123");
+insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, email, cnpj, telefone) values (1, "Banco Central do Brasil", "Banco Central do Brasil", "bc@br.br", "12345678901234", "1234567890123", "https://avatars.githubusercontent.com/u/16822015?s=200&v=4");
 
 -- end insert BC
 
+alter table Usuario rename column telefone to telefoneUsuario;
 
 insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('10f60a853491', 1, 1);
 insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('e8fb1cd57ab6', 2, 1);
