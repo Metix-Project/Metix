@@ -6,29 +6,29 @@ create database if not exists Metix;
 use Metix;
 
 create table if not exists Empresa(
-		id int primary key auto_increment,
+idEmpresa int primary key auto_increment,
     razaoSocial varchar(80) not null,
     nomeFantasia varchar(80),
-    email varchar(80) not null unique,
+    emailEmpresa varchar(80) not null unique,
     cnpj char(18) not null unique,
-    telefone char(19) not null unique,
+    telefoneEmpresa char(19) not null unique,
     imgLoco VARCHAR(255)
 );
 create table if not exists Usuario(
-		id int auto_increment,
+idUsuario int auto_increment,
     nome varchar(80) not null,
     email varchar(80) not null unique,
     senha varchar(80) not null,
     cpf char(14) not null unique,
-    telefone char(19) not null unique,
+    telefoneEmpresa char(19) not null unique,
     cargo char(15) not null,
     fkEmpresa int not null,
     
     primary key (id, fkEmpresa),
-    constraint UsuarioFkEmpresa foreign key (fkEmpresa) references Empresa(id)
+    constraint UsuarioFkEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
 );
 create table if not exists Servidor(
-		id int auto_increment,
+id int auto_increment,
     macAddress char(17) not null unique,
     pontoDeControle int not null,
     fkEmpresa int not null,
@@ -72,11 +72,7 @@ grant select on Metix.* to 'metixUserSelect'@'%';
 
 -- insert BC:
 
-insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, email, cnpj, telefone) values (1, "Banco Central do Brasil", "Banco Central do Brasil", "bc@br.br", "12345678901234", "1234567890123", "https://avatars.githubusercontent.com/u/16822015?s=200&v=4");
-
--- end insert BC
-
-alter table Usuario rename column telefone to telefoneUsuario;
+insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa) values (1, "Banco Central do Brasil", "Banco Central do Brasil", "bc@br.br", "12345678901234", "1234567890123", "https://avatars.githubusercontent.com/u/16822015?s=200&v=4");
 
 insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('10f60a853491', 1, 1);
 insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('e8fb1cd57ab6', 2, 1);
