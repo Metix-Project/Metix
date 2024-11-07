@@ -1,5 +1,5 @@
-create database Metix1;
-use Metix1;
+create database Metix;
+use Metix;
 
 create table Empresa(
 	idEmpresa int primary key auto_increment,
