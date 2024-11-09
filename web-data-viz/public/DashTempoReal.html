@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Métix Proteção Divina</title>
+    <link rel="icon" href="./assets/imgs/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+
+    <!-- scripts do Chart.js - 2022-1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+
+
+    <!--Script Gerador WordCloud -->
+    <link rel="shortcut icon" href="img/icoNumeEtiqueta.ico" type="image/x-icon">
+    
+    <script src="js/scrypt.js"></script>
+    <script src="js/sessao.js"></script>
+    <link rel="stylesheet" href="./css/dashboardBase.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div>
+
+                <div class="logo">
+                    <img src="assets/imgs/Logo1.png" alt="">
+                </div>
+
+                <div class="profile">
+                    <img alt="Profile" id="profileImage">
+                    <div class="prfTxt">
+                        <h2 id="profileName">Olá, Usuário!</h2>
+                        <h4 id="profilePosition">Cargo: Gerente</h4>
+                    </div>
+                </div>
+
+                <div class="dashboardLinks">
+                    <a>MONITORAMENTO EM TEMPO REAL</a>
+                    <a>ALERTAS</a>
+                    <a href="./dashGerente/historico.html">HISTÓRICO</a>
+                    <a>PREVISÕES</a>
+                    <a>MANUTENÇÃO</a>
+                    <a onclick="limparSessao()">Sair</a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Server Info -->
+
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    // window.onload = validarSessao();
+</script>
