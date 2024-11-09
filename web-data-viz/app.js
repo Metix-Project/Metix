@@ -34,6 +34,7 @@ app.use("/graficos", graficosRouter);
 
 //   roda o servidor (listing/escuta por conexões):
 app.listen(process.env.APP_PORT, function () {
+  console.log("Bem-vindo(a) à Metix!");
   console.log(`Servidor rodando em http://${process.env.APP_HOST}:${process.env.APP_PORT}`);
   // console.log("Servidor rodando em: http://ec2-98-80-26-79.compute-1.amazonaws.com:3333");
 });
