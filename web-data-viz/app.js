@@ -1,6 +1,6 @@
 // declaração das variáveis:
 // var ambiente_processo = 'producao'; // em caso de produção
-var ambiente_processo = "desenvolvimento"; // em caso de desenvolvimento
+var ambiente_processo = "producao"; // em caso de desenvolvimento
 var caminho_env = ambiente_processo === "producao" ? ".env" : ".env.dev";
 
 // declaração das bibliotecas/dependências:
