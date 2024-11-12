@@ -2,7 +2,6 @@
 node_modules/
 
 # Ignorar arquivos específicos
-package-lock.json
 .env.dev
 env.dev
 
