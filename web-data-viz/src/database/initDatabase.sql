@@ -46,6 +46,7 @@ macAddress varchar(17) not null,
     MbpsEnviados decimal(7, 2),
 	MbpsRecebidos decimal(7, 2),
     TotalMbps decimal(7,2),
+	Latencia decimal(7,2),
     dataHora datetime not null default current_timestamp,
     pontoDeControle int not null
 );
