@@ -92,7 +92,7 @@
 
     <div class="charts-container">
             <div class="chart-container">
-                <h4>Correlação de Processamento(%) e Rede (MB)</h4>
+                <h4>Correlação de CPU(%) e Rede (MB)</h4>
                 
                 <div>
                     <canvas id="chartProcessamento"></canvas>
@@ -131,15 +131,15 @@ const data = {
     labels: labels,
     datasets: [
         {
-            label: 'Processamento (%)',
-            data: [40, 60, 80, 75, 90, 85, 70],  
+            label: 'CPU (%)',
+            data: [40, 60, 65, 75, 85, 74, 55],  
             fill: true,
             borderColor: 'green',
             tension: 0.1
         },
         {
             label: 'Rede (MB)',
-            data: [50, 65, 60, 70, 80, 75, 60],  
+            data: [50, 65, 70, 80, 80, 75, 60],  
             fill: true,
             borderColor: 'orange',
             tension: 0.1
@@ -166,14 +166,14 @@ const data2 = {
     datasets: [
         {
             label: 'Latência (ms)',
-            data: [130, 120, 130, 110, 140, 150, 120],  
+            data: [30, 70, 50, 40, 60, 45, 55],  
             fill: true,
             borderColor: 'purple',
             tension: 0.1
         },
         {
             label: 'Limite Ideal',
-            data: [150, 150, 150, 150, 150, 150, 150],  
+            data: [100, 100, 100, 100, 100, 100, 100],  
             fill: true,
             borderColor: 'red',
             tension: 0.1
