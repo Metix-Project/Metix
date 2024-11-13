@@ -20,3 +20,4 @@ router.post("/autenticar", function (req, res) {
 
 // exporta para outro arquivo:
 module.exports = router;
+  

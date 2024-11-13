@@ -14,7 +14,7 @@ function listar(fkEmpresa) {
 // Buscar o id da Empresa com base no codigoSeguranca
 function buscarIdEmpresaPorCodigo(codigoSeguranca) {
   return database.executar(
-    `SELECT idEmpresa 
+    `SELECT id 
      FROM Empresa 
      WHERE codigoSeguranca = ?;`, 
     [codigoSeguranca]
@@ -22,11 +22,11 @@ function buscarIdEmpresaPorCodigo(codigoSeguranca) {
 }
 
 // Cadastro de usuário usando o idEmpresa obtido pelo código de segurança
-function cadastrar(nome, email, senha, tel, cpf, cargo, idEmpresa) {
+function cadastrar(nome, email, senha, tel, cpf, cargo, fkEmpresa) {
   return database.executar(
     `INSERT INTO Usuario (nome, email, senha, telefone, cpf, cargo, fkEmpresa) 
      VALUES (?, ?, ?, ?, ?, ?, ?);`, 
-    [nome, email, senha, tel, cpf, cargo, idEmpresa]
+    [nome, email, senha, tel, cpf, cargo, fkEmpresa]
   );
 }
 
