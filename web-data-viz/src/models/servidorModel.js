@@ -10,6 +10,11 @@ function cadastrar(macAddres, pontoDeControle, fkEmpresa) {
   return database.executar(`INSERT INTO Sevidor (macAddres, pontoDeControle, fkEmpresa) VALUES ('${macAddres}', '${pontoDeControle}', '${fkEmpresa}');`);
 }
 
+function buscarIdEmpresaPorCodigo(codigoSeguranca) {
+  return database.executar(`SELECT idEmpresa FROM Empresa WHERE codigoSeguranca = ?`, [codigoSeguranca]);
+}
+
+
 // exporta para outro arquivo:
 module.exports = {
   listar,

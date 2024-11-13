@@ -21,7 +21,6 @@ create table Usuario(
     telefoneEmpresa char(19) not null unique,
     cargo char(15) not null,
     fkEmpresa int not null,
-
     primary key (idUsuario, fkEmpresa),
     constraint UsuarioFkEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
 );

@@ -87,6 +87,10 @@
           <input id="cpf_input" type="text" placeholder="CPF" required />
         </label>
         <label>
+          <span>Codigo de Segurança:</span>
+          <input id="codigoSeguranca_input" type="text" placeholder="Codigo de Segurança" required />
+        </label>
+        <label>
           <span>Cargo:</span>
           <select name="" id="cargo_input" placeholder="Cargo de atuação" required>
             <option value="">Cargo de atuação</option>
@@ -127,13 +131,14 @@
     var telefoneVar = telefone_input.value;
     var cpfVar = cpf_input.value;
     var cargoVar = cargo_input.value;
+    var codigoSegurancaVar = codigoSeguranca_input.value;
 
     // var confirmacaoSenhaVar = confirmacao_senha_input.value;
     // var codigoVar = codigo_input.value;
     // var idEmpresaVincular
 
     // Verificando se há algum campo em branco
-    if (nomeVar == "" || emailVar == "" || senhaVar == "" || telefoneVar == "" || cpfVar == "" || cargoVar == "") {
+    if (nomeVar == "" || emailVar == "" || senhaVar == "" || telefoneVar == "" || cpfVar == "" || cargoVar == "" || codigoSegurancaVar == "") {
       cardErro.style.display = "block";
       mensagem_erro.className = "erro";
       mensagem_erro.innerHTML = "Preencha todos os campos";
@@ -172,6 +177,7 @@
         telefoneServer: telefoneVar,
         cpfServer: cpfVar,
         cargoServer: cargoVar,
+        codigoSegurancaServer: codigoSegurancaVar,
       }),
     })
       .then(function (resposta) {
