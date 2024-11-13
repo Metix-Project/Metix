@@ -18,7 +18,7 @@ create table Usuario(
     email varchar(80) not null unique,
     senha varchar(80) not null,
     cpf char(14) not null unique,
-    telefoneEmpresa char(19) not null unique,
+    telefone char(19) not null unique,
     cargo char(15) not null,
     fkEmpresa int not null,
     primary key (idUsuario, fkEmpresa),
