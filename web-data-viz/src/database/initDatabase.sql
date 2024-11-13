@@ -8,6 +8,7 @@ create table Empresa(
     emailEmpresa varchar(80) not null unique,
     cnpj char(18) not null unique,
     telefoneEmpresa char(19) not null unique,
+    codigoSeguranca char(6) not null unique, 
     imgLogo VARCHAR(255)
 );
 
@@ -30,7 +31,6 @@ id int auto_increment,
     macAddress char(17) not null unique,
     pontoDeControle int not null,
     fkEmpresa int not null,
-
     primary key (id, fkEmpresa),
     constraint ServidorFkEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
 );
@@ -70,7 +70,8 @@ insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, t
 	"Banco Central do Brasil", 
 	"bc@br.br", 
 	"12345678901234",  
-	"1234567890123", 
+	"1234567890123",
+    "B3C6B9",
 	"https://avatars.githubusercontent.com/u/16822015?s=200&v=4"
 );
 

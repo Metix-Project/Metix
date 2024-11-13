@@ -68,24 +68,27 @@ function autenticar(req, res) {
   // armazena os valores do body do fetch:
   var email = req.body.emailServer;
   var senha = req.body.senhaServer;
+  var codigoSeguranca = req.body.codigoSegurancaServer;
 
   // valida os valores:
   if (email == undefined) {
     res.status(400).send("Seu email está indefinido!");
   } else if (senha == undefined) {
     res.status(400).send("Sua senha está indefinida!");
+  } else if (codigoSeguranca == undefined) {
+    res.status(400).send("O código de segurança está indefinido!");
   } else {
     // caso tudo esteja validado
     // envia os dados para a função `autenticar` do model:
     usuarioModel
-      .autenticar(email, senha)
+      .autenticar(email, senha, codigoSeguranca)
       .then(function (resultadoAutenticar) {
         if (resultadoAutenticar.length == 1) {
           // retorna o resultado para o then do fetch com um status de sucesso (200-299):
           res.status(200).json(resultadoAutenticar);
         } else if (resultadoAutenticar.length == 0) {
           // retorna o erro para o then do fetch com um status de erro de cliente (400-499):
-          res.status(403).send("Email e/ou senha inválido(s).");
+          res.status(403).send("Email, senha e/ou código de segurança inválido(s).");
         }
       })
       .catch(function (erro) {
@@ -95,6 +98,7 @@ function autenticar(req, res) {
       });
   }
 }
+
 
 // exporta para outro arquivo:
 module.exports = {
