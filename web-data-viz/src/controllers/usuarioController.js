@@ -21,31 +21,34 @@ function listar(req, res) {
 function cadastrar(req, res) {
   var { nomeServer: nome, emailServer: email, senhaServer: senha, telefoneServer: tel, cpfServer: cpf, cargoServer: cargo, codigoSegurancaServer: codigoSeguranca } = req.body;
 
+  // Verificando se todos os campos obrigatórios estão preenchidos
   if (!nome || !email || !senha || !tel || !cpf || !cargo || !codigoSeguranca) {
-    res.status(400).send("Preencha todos os campos obrigatórios.");
-    return;
+    return res.status(400).send("Preencha todos os campos obrigatórios.");
   }
 
+  // Busca o idEmpresa com base no código de segurança
   usuarioModel.buscarIdEmpresaPorCodigo(codigoSeguranca)
     .then((resultado) => {
       if (resultado.length === 0) {
-        res.status(404).send("Código de segurança inválido.");
-      } else {
-        const idEmpresa = resultado[0].idEmpresa;
-
-        usuarioModel.cadastrar(nome, email, senha, tel, cpf, cargo, idEmpresa)
-          .then(() => res.status(201).send("Cadastro realizado com sucesso!"))
-          .catch((erro) => {
-            console.error("Erro ao cadastrar usuário:", erro);
-            res.status(500).send("Erro ao realizar o cadastro.");
-          });
+        return res.status(404).send("Código de segurança inválido.");
       }
+      
+      const fkEmpresa = resultado[0].idEmpresa;
+
+      // Cadastro do usuário com o idEmpresa encontrado
+      usuarioModel.cadastrar(nome, email, senha, tel, cpf, cargo, fkEmpresa)
+        .then(() => res.status(201).send("Cadastro realizado com sucesso!"))
+        .catch((erro) => {
+          console.error("Erro ao cadastrar usuário:", erro);
+          res.status(500).send("Erro ao realizar o cadastro.");
+        });
     })
     .catch((erro) => {
       console.error("Erro ao buscar idEmpresa:", erro);
       res.status(500).send("Erro ao verificar código de segurança.");
     });
 }
+
 
 function autenticar(req, res) {
   var email = req.body.emailServer;
