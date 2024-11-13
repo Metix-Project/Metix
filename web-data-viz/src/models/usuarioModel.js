@@ -13,7 +13,6 @@ function cadastrar(nome, email, senha, tel, cpf, cargo) {
 
 function autenticar(email, senha) {
   // retorna a resposta do banco de dados para o controller:
-<<<<<<< HEAD
   return database.executar(
     `SELECT * 
      FROM Usuario 
@@ -24,10 +23,6 @@ function autenticar(email, senha) {
     [email, senha, codigoSeguranca]
   );
   }
-=======
-  return database.executar(`SELECT * FROM Usuario JOIN Empresa ON fkEmpresa = idEmpresa WHERE Usuario.email = '${email}' AND Usuario.senha = '${senha}';`);
-}
->>>>>>> b937df818e441b08d12967d328bf419fd6dff299
 
 // exporta para outro arquivo:
 module.exports = {
