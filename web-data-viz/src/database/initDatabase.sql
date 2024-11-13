@@ -63,7 +63,7 @@ grant insert on Metix.* to 'metixUserInsert'@'%';
 create user if not exists 'metixUserSelect'@'%' identified by 'sptech';
 grant select on Metix.* to 'metixUserSelect'@'%';
 
-insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa, imgLogo) values (
+insert into Empresa (id, razaoSocial, nomeFantasia, email, cnpj, telefone, imgLogo) values (
 	1, 
 	"Banco Central do Brasil", 
 	"Banco Central do Brasil", 
