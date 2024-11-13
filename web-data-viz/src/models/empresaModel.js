@@ -3,22 +3,22 @@ var database = require("../database/connection.js");
 
 function listar(fkEmpresa) {
   // retorna a resposta do banco de dados para o controller:
-  return database.executar(`SELECT id, razaoSocial, nomeFantasia, email, cnpj, telefone FROM Empresa;`);
+  return database.executar(`SELECT idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa FROM Empresa;`);
 }
 
 function cadastrar(razaoSocial, nomeFantasia, email, cnpj, telefone) {
   // retorna a resposta do banco de dados para o controller:
-  return database.executar(`INSERT INTO Usuario (razaoSocial, nomeFantasia, email, cnpj, telefone) VALUES ('${razaoSocial}', '${nomeFantasia}', '${email}', '${cnpj}', '${telefone});`);
+  return database.executar(`INSERT INTO Empresa (razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa) VALUES ('${razaoSocial}', '${nomeFantasia}', '${email}', '${cnpj}', '${telefone});`);
 }
 
 function buscarPorId(id) {
   // retorna a resposta do banco de dados para o controller:
-  return database.executar(`SELECT id, razaoSocial, nomeFantasia, email, cnpj, telefone FROM Empresa where id = ${id};`);
+  return database.executar(`SELECT idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa FROM Empresa where idEmpresa = ${id};`);
 }
 
 function buscarPorCnpj(cnpj) {
   // retorna a resposta do banco de dados para o controller:
-  return database.executar(`SELECT id, razaoSocial, nomeFantasia, email, cnpj, telefone FROM Empresa where cnpj = ${cnpj};`);
+  return database.executar(`SELECT idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa FROM Empresa where cnpj = ${cnpj};`);
 }
 
 // exporta para outro arquivo:
@@ -26,5 +26,5 @@ module.exports = {
   listar,
   cadastrar,
   buscarPorId,
-  buscarPorCnpj,
+  buscarPorCnpj
 };
