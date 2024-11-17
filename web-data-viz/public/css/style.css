@@ -18,6 +18,14 @@
 
 :root {
   --tamanho-footer: 90px;
+  --cor-primaria: rgba();
+  --cor-secundaria: rgba();
+  --cor-terciaria: rgba();
+  --cor-uso-cpu: rgba();
+  --cor-uso-ram: rgba();
+  --cor-uso-disco: rgba();
+  --cor-freq-cpu: rgba();
+  --cor-latencia: rgba();
 }
 
 html {

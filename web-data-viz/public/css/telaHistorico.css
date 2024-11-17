@@ -1,0 +1,232 @@
+:root {
+    --cor-primaria: rgba(89, 63, 30, 1);
+    --cor-secundaria: rgba(89, 63, 30, 0.5);
+    --altura-slider: 7px;
+    --tamanho-slider: 20px;
+
+    --cor-usage-cpu: maroon;
+    --cor-usage-ram: dodgerblue;
+    --cor-usage-disk: springgreen;
+    --cor-freq-cpu: gold;
+    --cor-latencia: orange;
+}
+
+.main-content {
+    padding: 30px;
+    overflow-y: scroll;
+}
+
+.macAddress {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+select {
+    font-size: 16px;
+    width: 120px;
+    text-align: right;
+    border-radius: 3px;
+    border: 2px solid var(--cor-primaria);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 35px;
+}
+
+.metricas .cards {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.metricas .cards .card {
+    text-align: center;
+    background-color: var(--cor-secundaria);
+    font-size: 18px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    border: 3px var(--cor-primaria) solid;
+    padding: 5px;
+    width: 18%;
+    height: 100px;
+    gap: 10px;
+    margin: 35px 0;
+}
+
+.infoValue {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.graphics1 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.metricas {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    gap: 30px;
+    padding: 55px 25px 25px 25px;
+    box-sizing: border-box;
+}
+
+.dados {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 40px;
+}
+
+.dados canvas, .dados .warnings .warningCard {
+    border: 2px solid var(--cor-primaria);
+    padding: 20px;
+    border-radius: 7px;
+    background-color: #f4f4f4;
+}
+
+.dados .warnings {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.warningCard {
+    display: flex;
+    flex-direction: column;
+    height: 35%;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    background-color: var(--cor-secundaria) !important;
+    color: white;
+}
+
+.filtros {
+    margin-bottom: -35px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 30px;
+    justify-content: space-between;
+}
+
+.filtro {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    max-width: 100%;
+    min-width: 30%;
+    height: 60px;
+    background-color: rgb(209, 199, 185);
+    border-radius: 5px;
+    border: 2px solid var(--cor-primaria);
+}
+
+.selects {
+    justify-content: center !important;
+    flex-direction: row !important;
+    gap: 10px;
+}
+
+#dualHandleSlider input[type="range"]{
+    position: absolute;
+    top: 20%;
+    width: 90%;
+    pointer-events: none;
+    appearance: none;
+    background: none;
+}
+
+#dualHandleSlider input[type="range"]::-webkit-slider-thumb {
+    pointer-events: all;
+    width: var(--tamanho-slider);
+    height: var(--tamanho-slider);
+    border-radius: 50%;
+    background: var(--cor-primaria);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: calc((var(--tamanho-slider) - var(--altura-slider))/2*-1);
+}
+
+#dualHandleSlider input[type="range"]::-moz-range-thumb {
+    pointer-events: all;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--cor-primaria);
+    cursor: pointer;
+}
+
+#dualHandleSlider input[type="range"]:focus {
+    outline: none;
+}
+
+#dualHandleSlider input[type="range"]:first-child::-webkit-slider-runnable-track {
+    background-color: var(--cor-secundaria);
+    border-radius: 5px;
+}
+
+#dualHandleSlider input[type="range"]:first-child::-moz-range-track {
+    background-color: #ddd;
+}
+
+#dualHandleSlider input[type="range"]::-webkit-slider-runnable-track {
+    height: var(--altura-slider);
+}
+
+.rangeLegend {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.rangeLegend input {
+    border: 1px solid var(--cor-primaria);
+    border-radius: 4px;
+    margin: 8px;
+}
+
+.title {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.cardValue {
+    font-size: 26px;
+    font-weight: bold;
+    background-color: springgreen;
+    border-radius: 5px;
+    padding: 8px;
+    color: white;
+    border: 2px solid var(--cor-primaria);
+    width: 60%;
+    text-align: center;
+}

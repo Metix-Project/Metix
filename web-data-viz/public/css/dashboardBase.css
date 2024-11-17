@@ -3,6 +3,7 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 .container {
@@ -14,6 +15,7 @@ body {
 /* Sidebar */
 .sidebar {
     background-color: #4e2b16;
+    height: 100vh;
     color: white;
     padding: 20px;
     display: flex;
@@ -21,6 +23,7 @@ body {
     justify-content: space-between;
     align-items: center;
     text-align: center;
+    box-sizing: border-box;
 }
 
 .sidebar h1 {

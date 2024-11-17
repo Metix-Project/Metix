@@ -9,8 +9,8 @@ function validarSessao() {
     var profilePosition = document.getElementById("profilePosition")
 
     if (email != null && nome != null) {
-        profileName.innerHTML = nome;
-        profilePosition.innerHTML = position;
+        profileName.innerHTML = "Olá, " + nome;
+        profilePosition.innerHTML = "Cargo: " + position;
         profileImage.src = imagem;
     } else {
         window.location = "../login.html";
