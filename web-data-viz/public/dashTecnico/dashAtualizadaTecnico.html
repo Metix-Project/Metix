@@ -8,7 +8,7 @@
     <link rel="icon" href="./assets/imgs/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
-    <!-- scripts do Chart.js - 2022-1 -->
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -168,32 +168,6 @@
             border-radius: 2px;
         }
 
-        /* Alert Table */
-        .alert-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #a68a6d;
-            color: white;
-        }
-
-        .alert-table th,
-        .alert-table td {
-            padding: 10px;
-            border: 1px solid white;
-            text-align: center;
-        }
-
-        .alert-table th {
-            background-color: #644a3d;
-        }
-
-        .tableAlert{
-            width: 100%;
-            background-color: #cebca7af;
-            padding: 10px;
-            border-radius: 2px;
-            text-align: center;
-        }
     </style>
 </head>
 
@@ -216,26 +190,13 @@
                 </div>
             </div>
 
+         
             <div>
-                <select name="" id="">
-                    
-                    <option value="">Dia</option>
-                    <option value="">Mês</option>
-                    
-                </select>
-            </div>
 
-
-            <div>
-                <select name="" id="">
-                    <option value="">Servidor 1</option>
-                    <option value="">Servidor 2</option>
-                    <option value="">Servidor 3</option>
-                    <option value="">Servidor 4</option>
-                </select>
-            </div>
-
-            <div>
+                <button>Tempo Real</button>
+                <button>Histórico</button>
+                <button>Previsão</button>
+                <button>Manutenção</button>
                 <a href="index.html"><button>Sair</button></a>
             </div>
 
@@ -274,19 +235,35 @@
                 </div>
             </div>
 
+
+            <div>
+                <select class="filter-container" id="">
+                    <option value="">Servidor 1</option>
+                    <option value="">Servidor 2</option>
+                    <option value="">Servidor 3</option>
+                    <option value="">Servidor 4</option>
+                </select>
+            </div>
+
+
+            
+
+
+
+
             <!-- Charts Section -->
             <div class="charts">
                 <div class="chart">
-                    <h4>Servidor 1</h4>
-                    <!-- Gráfico pode ser inserido aqui -->
+                    <h4>Correlação de uso CPU (%) e Memoria RAM (%)</h4>
+                    
                     <div>
                         <canvas id="myChart5"></canvas>
                     </div>
 
                 </div>
                 <div class="chart">
-                    <h4>Componente x Servidor</h4>
-                    <!-- Gráfico pode ser inserido aqui -->
+                    <h4>Visão Geral dos Servidores</h4>
+                    
                     <div>
                         <canvas id="myChart6"></canvas>
                     </div>
@@ -294,41 +271,7 @@
                 </div>
             </div>
 
-            <!-- Alert Table -->
-             <div class="tableAlert">
-             <h4>Tabela dos alertas</h4>
-            <table class="alert-table">
-                <tr>
-                    <th>MacAdress</th>
-                    <th>Componente</th>
-                    <th>Porcentagem</th>
-                    <th>DataHora Alerta</th>
-                </tr>
-                <tr>
-                    <td>S1245B</td>
-                    <td>Disco</td>
-                    <td>90%</td>
-                    <td>10-10-2024 10:15:26</td>
-                </tr>
-                <tr>
-                    <td>S2261A</td>
-                    <td>RAM</td>
-                    <td>95%</td>
-                    <td>12-10-2024 12:54:00</td>
-                </tr>
-                <tr>
-                    <td>S1245B</td>
-                    <td>Disco</td>
-                    <td>90%</td>
-                    <td>10-10-2024 10:15:26</td>
-                </tr>
-                <tr>
-                    <td>S2261A</td>
-                    <td>RAM</td>
-                    <td>95%</td>
-                    <td>12-10-2024 12:54:00</td>
-                </tr>
-            </table>
+            
         </div>
 
         </div>
@@ -338,17 +281,28 @@
 </html>
 
 <script>
-const labels5 = ['12h00', '13h00', '14h00'];
+const labels5 = ['12h', '13h', '14h', '15h', '16h', '17h', '18h'];
+
 const data5 = {
   labels: labels5,
-  datasets: [{
-    label: 'Percentual de uso da Memória RAM',
-    data: [65, 59, 80, 81, 56, 55, 40],
-    fill: true,
-    borderColor: '#6C493A',
-    tension: 0.1
-  }]
+  datasets: [
+    {
+      label: 'Memória RAM (%)',
+      data: [65, 59, 80, 81, 56, 70, 50], 
+      fill: true,
+      borderColor: 'green',
+      tension: 0.1
+    },
+    {
+      label: 'CPU (%)',
+      data: [60, 50, 85, 70, 60, 65, 55], 
+      fill: true,
+      borderColor: '#4E73DF',
+      tension: 0.1
+    }
+  ]
 };
+
 
 const config5 = {
   type: 'line',
@@ -362,29 +316,65 @@ const myChart5 = new Chart(
 
 
 // Gráfico 6
-const labels6 = ['CPU', 'RAM', 'DISCO'];
-const data6 = {
-  labels: labels6,
-  datasets: [{
-    label: 'Componente x servidor',
-    data: [65, 80, 59],
-    backgroundColor: [
-      '#252320',
-      '#494540',
-      '#3c3935'
-    ],
-    borderColor: [
-     '#252320',
-      '#494540',
-      '#3c3935'
-    ],
-    borderWidth: 1
-  }]
+const labels = ['Servidor 1', 'Servidor 2', 'Servidor 3', 'Servidor 4']; 
+
+const data = {
+  labels: labels, 
+  datasets: [
+    {
+      label: 'CPU (%)',
+      data: [55, 60, 40, 45], 
+      backgroundColor: '#4E73DF', 
+      borderColor: 'black',
+      borderWidth: 1
+    },
+    {
+      label: 'RAM (%)',
+      data: [50, 55, 60, 50], 
+      backgroundColor: '#917db8', 
+      borderColor: 'black',
+      borderWidth: 1
+    },
+    {
+      label: 'Disco (%)',
+      data: [30, 35, 25, 20], 
+      backgroundColor: 'green', 
+      borderColor: 'black',
+      borderWidth: 1
+    }
+  ]
 };
+
+const options = {
+  responsive: true,
+  scales: {
+    y: {
+      beginAtZero: true,  
+      ticks: {
+        stepSize: 10 
+      }
+    }
+  },
+  plugins: {
+    title: {
+      display: true,
+      
+    },
+    tooltip: {
+      mode: 'index',
+      intersect: false,
+    }
+  },
+  maintainAspectRatio: false,
+  barPercentage: 0.10, 
+  categoryPercentage: 0.8 
+};
+
+
 
 const config6 = {
   type: 'bar',
-  data: data6,
+  data: data,
   options: {
     scales: {
       y: {

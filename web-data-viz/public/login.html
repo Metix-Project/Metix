@@ -63,12 +63,17 @@
       <label>
         <span>Email:</span>
         <input id="email_input" type="email" placeholder="Email" required autofocus autocomplete="email"
-          value="jamal@gmail.com" />
+          value="" />
       </label>
       <label>
         <span>Senha:</span>
         <input id="senha_input" type="password" placeholder="Senha" required autocomplete="current-password"
-          value="123456" />
+          value="" />
+      </label>
+      <label>
+        <span>Codigo de Segurança:</span>
+        <input id="codigoSeguranca_input" type="text" placeholder="Codigo de Segurança" required 
+          value="" />
       </label>
       <div class="links">
         <a href="">Esqueceu a senha?</a>
@@ -84,8 +89,9 @@
 
       var emailVar = email_input.value;
       var senhaVar = senha_input.value;
+      var codigoSegurancaVar = codigoSeguranca_input.value;
 
-      if (emailVar == "" || senhaVar == "") {
+      if (emailVar == "" || senhaVar == "" || codigoSegurancaVar == "") {
         cardErro.style.display = "block";
         mensagem_erro.className = "erro";
         mensagem_erro.innerHTML = "Preencha todos os campos";
@@ -101,6 +107,7 @@
         body: JSON.stringify({
           emailServer: emailVar,
           senhaServer: senhaVar,
+          codigoSegurancaServer: codigoSegurancaVar,
         }),
       })
         .then(function (resposta) {
@@ -113,7 +120,6 @@
               sessionStorage.ID_USUARIO = json[0].idUsuario;
               sessionStorage.CARGO_USUARIO = json[0].cargo;
               sessionStorage.IMAGEM_USUARIO = json[0].imgLogo;
-
 
               cardErro.style.display = "block";
 
