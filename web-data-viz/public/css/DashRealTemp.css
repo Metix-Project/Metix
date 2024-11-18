@@ -2,7 +2,7 @@
 
 body {
     background-color: #644a3d;
-    color: #fff;
+    color: #f4f4f4;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -30,20 +30,50 @@ body {
 
 .kpi {
     background-color: #644a3d;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     text-align: center;
-    width: 30%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
- 
+    width: 45%;
+}
+
+.quadrado-editor{
+    display: flex;
+    justify-content: space-between;
 }
 
 .quadrado-dentro{
     background-color: #e2d8cdaf;
+    border-radius: 5px;
+    height: 60%;
+    width: 130px;
+    border: solid 2px #000000;
+}
+
+.quadrado-dentro-pico1{
+    background-color: yellow;
+    border-radius: 5px;
+    height: 60%;
+    width: 130px;
+    border: solid 2px #000000;
+}
+
+.quadrado-dentro-pico2{
+    background-color: #ff0000af;
+    border-radius: 5px;
+    height: 60%;
+    width: 130px;
+    border: solid 2px #000000;
+}
+
+
+.quadrado-dentro3{
+    background-color: #2bff00af;
     padding: 15px;
     border-radius: 5px;
-    height: 65%;
+    height: 55%;
     width: 87%;
+    border: solid 2px #000000;
+
 }
 
 .kpi h3 {
@@ -66,7 +96,9 @@ body {
     width: 50%;
     background-color: #d4c9bdaf;
     padding: 10px;
-    border-radius: 2px;;
+    border-radius: 2px;
+    background-color: #cebca7af;
+
 }
 
 .charts-container{
