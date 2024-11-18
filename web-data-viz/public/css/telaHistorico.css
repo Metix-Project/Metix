@@ -16,13 +16,6 @@ body {
     overflow: hidden;
 }
 
-.main-content {
-    padding: 30px;
-    background-color: #191715;
-    color: white;
-    background-image: url('data:image/svg+xml,<svg width="1919" height="737" viewBox="0 0 1919 737" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M-3.5 271.5C438.833 403.667 1442.2 616 1917 408" stroke="%23957B5C" stroke-width="7" stroke-opacity="0.3"/><path d="M-3.77746 382.002C438.556 514.169 1441.92 726.502 1916.72 518.502" stroke="%23957B5C" stroke-width="7" stroke-opacity="0.3"/><path d="M-3.77746 174.002C438.556 306.169 1441.92 518.502 1916.72 310.502" stroke="%23957B5C" stroke-width="7" stroke-opacity="0.3"/></svg>');
-}
-
 .macAddress {
     display: flex;
     flex-direction: row;
