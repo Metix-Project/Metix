@@ -29,7 +29,11 @@ body {
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
+<<<<<<< HEAD
     padding: 10px 0;
+=======
+    padding: 40px 0;
+>>>>>>> 98a8e29299ec63b69d84b73be2fa2bc0f327961f
 }
 
 .sidebar h1 {
@@ -50,8 +54,8 @@ body {
 }
 
 .profile img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     background-color: white;
     margin-bottom: 10px;
@@ -64,11 +68,18 @@ body {
 }
 
 .profile h2 {
+<<<<<<< HEAD
     font-size: 22px;
 }
 
 .profile h4 {
     font-size: 14px;
+=======
+    font-size: 28px;
+}
+
+.profile h4 {
+>>>>>>> 98a8e29299ec63b69d84b73be2fa2bc0f327961f
     font-weight: normal;
 }
 
@@ -79,10 +90,13 @@ body {
     align-items: center;
 }
 
+<<<<<<< HEAD
 .sidebar .dashboardLinks h2 {
     font-size: 22px;
 }
 
+=======
+>>>>>>> 98a8e29299ec63b69d84b73be2fa2bc0f327961f
 .sidebar .dashboardLinks button {
     background-color: #645f59;
     border-radius: 5px;
@@ -91,10 +105,17 @@ body {
     margin-bottom: 15px;
     cursor: pointer;
     text-align: center;
+<<<<<<< HEAD
     font-size: 15px;
     width: 200px;
     color: white;
     height: 40px;
+=======
+    font-size: 16px;
+    width: 100%;
+    color: white;
+    height: 50px;
+>>>>>>> 98a8e29299ec63b69d84b73be2fa2bc0f327961f
 }
 
 .sidebar .dashboardLinks button:hover {
@@ -105,5 +126,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+<<<<<<< HEAD
     width: 80%;
+=======
+>>>>>>> 98a8e29299ec63b69d84b73be2fa2bc0f327961f
 }

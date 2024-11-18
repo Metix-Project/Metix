@@ -2,23 +2,37 @@
 var database = require("../database/connection.js");
 
 function listar(fkEmpresa) {
-  // retorna a resposta do banco de dados para o controller:
-  return database.executar(`SELECT id, nome, email, fkEmpresa FROM Usuario WHERE fkEmpresa = '${fkEmpresa}';`);
+  // Retorna os usuários da empresa específica
+  return database.executar(
+    `SELECT * FROM Usuario WHERE fkEmpresa = ${fkEmpresa};`
+  );
 }
 
-function cadastrar(nome, email, senha, tel, cpf, cargo) {
-  // retorna a resposta do banco de dados para o controller:
-  return database.executar(`INSERT INTO Usuario (nome, email, senha, telefone, cpf, cargo, fkEmpresa) VALUES ('${nome}', '${email}', '${senha}', '${tel}', '${cpf}', '${cargo}', 1);`);
+// Buscar o id da Empresa com base no codigoSeguranca
+function buscarIdEmpresaPorCodigo(codigoSeguranca) {
+  return database.executar(
+    `SELECT idEmpresa FROM Empresa WHERE codigoSeguranca = "${codigoSeguranca}";`
+  );
 }
 
-function autenticar(email, senha) {
-  // retorna a resposta do banco de dados para o controller:
-  return database.executar(`SELECT * FROM Usuario JOIN Empresa ON fkEmpresa = idEmpresa WHERE emailUsuario = '${email}' AND senha = '${senha}';`);
+// Cadastro de usuário usando o idEmpresa obtido pelo código de segurança
+function cadastrar(nome, email, senha, tel, cpf, cargo, fkEmpresa) {
+  return database.executar(
+    `INSERT INTO Usuario (nome, email, senha, telefone, cpf, cargo, fkEmpresa) VALUES ("${nome}", "${email}", "${senha}", "${tel}", "${cpf}", "${cargo}", ${fkEmpresa});`
+  );
+}
+
+// Autenticação de usuário considerando o codigoSeguranca
+function autenticar(email, senha, codigoSeguranca) {
+  return database.executar(
+    `SELECT Usuario.*, Empresa.idEmpresa, Empresa.razaoSocial, Empresa.imgLogo FROM Usuario JOIN Empresa ON Usuario.fkEmpresa = Empresa.idEmpresa WHERE Usuario.email = "${email}" AND Usuario.senha = "${senha}" AND Empresa.codigoSeguranca = "${codigoSeguranca}";`
+  );
 }
 
 // exporta para outro arquivo:
 module.exports = {
   listar,
+  buscarIdEmpresaPorCodigo,
   cadastrar,
-  autenticar,
+  autenticar
 };

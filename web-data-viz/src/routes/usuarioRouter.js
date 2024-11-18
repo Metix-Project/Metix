@@ -6,7 +6,7 @@ var router = express.Router();
 var usuarioController = require("../controllers/usuarioController.js");
 
 // redireciona para o controller caso seja o método "post":
-router.post("/listar", function (req, res) {
+router.get("/listar", function (req, res) {
   usuarioController.listar(req, res);
 });
 
@@ -20,3 +20,4 @@ router.post("/autenticar", function (req, res) {
 
 // exporta para outro arquivo:
 module.exports = router;
+  
