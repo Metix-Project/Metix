@@ -35,7 +35,7 @@ body {
 
 select {
     font-size: 16px;
-    width: 120px;
+    width: 190px;
     text-align: right;
     border-radius: 3px;
     border: 1px solid var(--cor-primaria);
@@ -49,25 +49,21 @@ h1 {
     font-size: 35px;
 }
 
-.metricas .cards {
-    display: flex;
-    flex-direction: column;
+h2 {
     width: 100%;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
+    text-align: center;
 }
 
-.metricas .cards .subCards {
+.metricas .cards {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-around;
     align-items: center;
-    margin: 10px 0;
+    margin: 40px 0;
 }
 
-.subCards .card {
+.cards .card {
     text-align: center;
     background-color: var(--cor-secundaria);
     font-size: 18px;
@@ -78,12 +74,24 @@ h1 {
     align-items: center;
     padding: 5px;
     width: 20%;
-    height: 80px;
-    gap: 10px;
+    height: 120px;
+    line-height: 25px;
+    gap: 15px;
+}
+
+#alertDetails {
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 13px;
+}
+
+#alertDetails:hover {
+    color: #bbb;
 }
 
 .infoValue {
-    font-size: 22px;
+    font-size: 30px;
     font-weight: bold;
 }
 
@@ -249,7 +257,7 @@ h1 {
 .cardValue {
     font-size: 26px;
     font-weight: bold;
-    background-color: rgb(255, 81, 0);
+    background-color: rgb(255, 166, 0);
     border-radius: 5px;
     padding: 8px;
     color: white;
