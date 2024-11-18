@@ -5,125 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Métix Proteção Divina</title>
-    <link rel="icon" href="./assets/imgs/logo.png">
+    <link rel="icon" href="../assets/imgs/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+    <link rel="stylesheet" href="../css/DashRealTemp.css">
+    <link rel="stylesheet" href="../css/dashboardBase.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background-color: #4e2b16;
-            color: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
-        }
-
-        .sidebar h1 {
-            text-align: center;
-        }
-
-        .logo img {
-            align-items: center;
-            padding: 10%;
-            width: 50%;
-            margin-top: -20%;
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #4e2b16;
-            color: white;
-            padding: 10px;
-            margin-top: -50px;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            margin-bottom: 50%;
-        }
-
-        .profile img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: #d1d7d9;
-            margin-bottom: 10px;
-        }
-
-        .profile h2,
-        .profile h4 {
-            margin: 10px;
-            padding: 5px;
-            text-align: start;
-        }
-
-        .profile h2 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-
-        .profile p {
-            font-size: 16px;
-        }
-
-        .prfTxt {
-            margin-top: 0.2%;
-        }
-
-        .sidebar select{
-            background-color: #d1d7d9;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            text-align: center;
-            font-size: 16px;
-            width: 250px;
-        }
-
-        .sidebar button {
-            background-color: #ccc;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            text-align: center;
-            font-size: 16px;
-            width: 250px;
-        }
-
-        .sidebar button:hover {
-            background-color: #aaa;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-top: -30px;
-            padding: 50px;
-            background-color: #ddd;
-        }
-
+        
         .server-grid {
             display: flex;
             justify-content: space-between;
@@ -151,21 +42,25 @@
         .server-box .component3 {
             background-color: #d3b997;
             padding: 5px;
+            
         }
 
         .div_select{
-          width: 10%;
+          width: 32%;
           margin-bottom: 2%;
+          display: flex;
+          justify-content: space-between;
+          margin-left: 500px;
         }
 
         .filter-container{
-          width: 200px;
+          width: 150px;
           text-align: center;
           padding: 10px;
           border-radius: 10px;
-          border: 1px solid #9f8274;
-          background-color: #ae9385;
-          color: #4e2b16;
+          border: 1px solid black;
+          background-color: #645f59;
+          color: white;
 
         }
 
@@ -178,11 +73,8 @@
         }
 
         .chart {
-<<<<<<< HEAD
             width: 47%;
-=======
             width: 60%;
->>>>>>> 98a8e29299ec63b69d84b73be2fa2bc0f327961f
             background-color: #cebca7af;
             padding: 10px;
             border-radius: 2px;
@@ -192,78 +84,86 @@
 </head>
 
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div>
-
-                <div class="logo">
-                    <img src="assets/imgs/Logo1.png" alt="">
-                </div>
-
-                <div class="profile">
-                    <img src="assets/imgs/Zeca.png"
-                        alt="Profile">
-                        <div class="prfTxt">
-                    <h2>Olá, Zeca</h2>
-                    <h4>Cargo: Técnico</h4>
-                </div>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="profile">
+            <img alt="Profile" id="profileImage">
+            <div class="prfTxt">
+                <h2 id="profileName">Olá, Usuário!</h2>
+                <h4 id="profilePosition">Cargo: Gerente</h4>
             </div>
-
-         
-            <div>
-
-                <button>Tempo Real</button>
-                <button>Histórico</button>
-                <button>Previsão</button>
-                <button>Manutenção</button>
-                <a href="index.html"><button>Sair</button></a>
-            </div>
-
-
-            </div>
-
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Server Info -->
-            <div class="server-grid">
-                <div class="server-box">
-                    <h3>SERV 1</h3>
-                    <div class="component1">CPU<br>65%</div>
-                    <div class="component2">Memória<br>60%</div>
-                    <div class="component3">Disco<br>80%</div>
-                </div>
-                <div class="server-box">
-                    <h3>SERV 2</h3>
-                    <div class="component1">CPU<br>80%</div>
-                    <div class="component2">Memória<br>60%</div>
-                    <div class="component3">Disco<br>60%</div>
-                </div>
-                <div class="server-box">
-                    <h3>SERV 3</h3>
-                    <div class="component1">CPU<br>90%</div>
-                    <div class="component2">Memória<br>90%</div>
-                    <div class="component3">Disco<br>40%</div>
-                </div>
-                <div class="server-box">
-                    <h3>SERV 4</h3>
-                    <div class="component1">CPU<br>40%</div>
-                    <div class="component2">Memória<br>35%</div>
-                    <div class="component3">Disco<br>20%</div>
-                </div>
+        <div class="dashboardLinks">
+            <button onclick="window.location.href='DashTempoReal.html'">MONITORAMENTO</button>
+            <button>ALERTAS</button>
+            <button onclick="window.location.href='dashGerente/telaHistorico.html'">HISTÓRICO</button>
+            <button>PREVISÕES</button>
+            <button>MANUTENÇÃO</button>
+            <button onclick="limparSessao()">Sair</button>
+
+            <div class="logo">
+                <img src="../assets/imgs/Logo1.png" alt="Metix logo">
             </div>
+        </div>
+</div>
+
+<div class="main-content">
+            
+  <div class="div_select">
+    <select class="filter-container" id="">
+        <option value="">CPU</option>
+        <option value="">Memória RAM</option>
+        <option value="">Disco</option>
+        <option value="">Rede</option>
+    </select>
+    <select class="filter-container" id="">
+      <option value="">Servidor 1</option>
+      <option value="">Servidor 2</option>
+      <option value="">Servidor 3</option>
+      <option value="">Servidor 4</option>
+  </select>
+
+</div>
+  <div class="kpi-container">
+      <div class="kpi">
+          <h3>Taxa de Transferência</h3>
+          <div class="quadrado-editor">
+          <div class="quadrado-dentro-taxaTranferencia">
+              <p>Enviados: <br> <br><span>300 Mbps</span></p>
+          </div>
+          <div class="quadrado-dentro-taxaTranferencia">                              
+              <p>Recebidos: <br> <br> <span>500 Mbps</span></p>
+          </div>
+      </div>
+      </div>
+      <div class="kpi">
+          <h3>Pico de Transferência</h3>
+          <div class="quadrado-editor">
+          <div id="1" class="quadrado-dentro-pico1">
+              <p>Enviados: <br><span>800 Mbps</span></p>
+              <p>Data: <br> 2024-10-29</p>
+              <p>Hora: 13:15</p>
+          </div>
+          <div id="2" class="quadrado-dentro-pico2">
+              <p>Recebidos: <br> <span>1200 Mbps</span></p>
+              <p>Data: <br> 2024-10-29</p>
+              <p>Hora: 13:15</p>
+          </div>
+      </div>
+          
+      </div>
+      <div class="kpi">
+          <h3>Tempo em Alta Utilização</h3>
+          <div class="quadrado-dentro3">
+          <p>Nas últimas 24 horas, ficou em alta utilização de requisições: </p><span>5% do tempo</span></p>
+          </div>
+      </div>
+  </div>
 
 
-            <div class="div_select">
-                <select class="filter-container" id="">
-                    <option value="">Servidor 1</option>
-                    <option value="">Servidor 2</option>
-                    <option value="">Servidor 3</option>
-                    <option value="">Servidor 4</option>
-                </select>
-            </div>
+           
 
 
 
