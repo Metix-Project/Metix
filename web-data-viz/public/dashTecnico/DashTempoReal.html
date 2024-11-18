@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Métix Proteção Divina</title>
-    <link rel="icon" href="./assets/imgs/logo.png">
+    <link rel="icon" href="../assets/imgs/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
-    <link rel="stylesheet" href="css/DashRealTemp.css">
-    <link rel="stylesheet" href="css/dashboardBase.css">
+    <link rel="stylesheet" href="../css/DashRealTemp.css">
+    <link rel="stylesheet" href="../css/dashboardBase.css">
     
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -17,11 +17,11 @@
 
 
     <!--Script Gerador WordCloud -->
-    <link rel="shortcut icon" href="img/icoNumeEtiqueta.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/icoNumeEtiqueta.ico" type="image/x-icon">
     
-    <script src="js/scrypt.js"></script>
-    <script src="js/sessao.js"></script>
-    <link rel="stylesheet" href="./css/dashboardBase.css">
+    <script src="../js/scrypt.js"></script>
+    <script src="../js/sessao.js"></script>
+    <link rel="stylesheet" href="../css/dashboardBase.css">
 </head>
 
 <body>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="dashboardLinks">
-                <button onclick="window.location.href='DashTempoReal.html'">MONITORAMENTO EM TEMPO REAL</button>
+                <button onclick="window.location.href='DashTempoReal.html'">MONITORAMENTO</button>
                 <button>ALERTAS</button>
                 <button onclick="window.location.href='dashGerente/telaHistorico.html'">HISTÓRICO</button>
                 <button>PREVISÕES</button>
@@ -53,17 +53,17 @@
 
        
 
-        <div class="container3">
+        <div class="main-content">
             
             <div class="kpi-container">
                 <div class="kpi">
                     <h3>Taxa de Transferência</h3>
                     <div class="quadrado-editor">
-                    <div class="quadrado-dentro">
-                        <p>Enviados: <br><br> <span>300 Mbps</span></p>
+                    <div class="quadrado-dentro-taxaTranferencia">
+                        <p>Enviados: <br> <br><span>300 Mbps</span></p>
                     </div>
-                    <div class="quadrado-dentro">                              
-                        <p>Recebidos: <br><br> <span>500 Mbps</span></p>
+                    <div class="quadrado-dentro-taxaTranferencia">                              
+                        <p>Recebidos: <br> <br> <span>500 Mbps</span></p>
                     </div>
                 </div>
                 </div>
@@ -132,53 +132,67 @@
     // window.onload = validarSessao();
     //npm install chartjs-plugin-annotation LIMITE DOS GRÁFICOS	
 
-
-
-
-
-
-
-
-
-
-
-
-
+     
 // Processamento e Rede
 const labels = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
 
 const data = {
     labels: labels,
     datasets: [
-    {
-            label: 'Limite Ideal',
-            data: [1000, 1000, 1000, 1000, 1000, 1000, 1000],  
-            fill: true,
-            borderColor: 'red',
-            tension: 0.1
-        },
-
         {
             label: 'Enviados (MB)',
             data: [300, 500, 800, 400, 600, 300, 300],  
             fill: true,
             borderColor: '#3f2121',
-            tension: 0.1
+            tension: 0.1,
+            backgroundColor: 'rgba(255, 0, 0, 0.2)'
         },
-
         {
             label: 'Recebidos (MB)',
             data: [400, 550, 1200, 550, 700, 400, 500],  
             fill: true,
             borderColor: 'navy',
-            tension: 0.1
-        }
+            tension: 0.1,
+            backgroundColor: 'rgba(0, 0, 255, 0.2)'
+        },
+    {
+            label: 'Limite Ideal',
+            data: [1000, 1000, 1000, 1000, 1000, 1000, 1000],  
+            fill: true,
+            borderColor: 'red',
+            tension: 0,
+            pointBorderWidth: 0,
+            pointBackgroundColor: 'transparent'
+        }   
+
+
     ]
 };
 
 const config = {
     type: 'line',
-    data: data,
+    data: data, 
+    options: {
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white' 
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: 'white'
+                }
+            },
+            y: {
+                ticks: {
+                    color: 'white'
+                }
+            }
+        }
+    }
 };
 
 const myChart1 = new Chart(
@@ -198,14 +212,18 @@ const data2 = {
             data: [30, 70, 50, 40, 60, 45, 55],  
             fill: true,
             borderColor: 'purple',
-            tension: 0.1
+            tension: 0.1,
+
+            backgroundColor: 'rgba(128, 0, 128, 0.2)'
         },
         {
             label: 'Limite Ideal',
             data: [100, 100, 100, 100, 100, 100, 100],  
             fill: true,
             borderColor: 'red',
-            tension: 0.1
+            tension: 0.1,
+            pointBorderWidth: 0,
+            pointBackgroundColor: 'transparent'
         }
     ]
 };
@@ -213,6 +231,27 @@ const data2 = {
 const config2 = {
     type: 'line',
     data: data2, 
+    options: {
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white' 
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: 'white'
+                }
+            },
+            y: {
+                ticks: {
+                    color: 'white'
+                }
+            }
+        }
+    }
 };
 
 const myChart2 = new Chart(

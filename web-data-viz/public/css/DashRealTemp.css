@@ -1,8 +1,8 @@
 
 
 body {
-    background-color: #644a3d;
-    color: #f4f4f4;
+
+    color: #ffffff;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -11,12 +11,12 @@ body {
     margin: 0;
 }
 
-.container3 {
-    width: 90%;
+.main-content {
+    width: 100%;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    
+    align-items: center;
 
 }
 
@@ -29,7 +29,7 @@ body {
 }
 
 .kpi {
-    background-color: #644a3d;
+    background-color: #3f3b36;
     padding: 10px;
     border-radius: 10px;
     text-align: center;
@@ -39,7 +39,21 @@ body {
 .quadrado-editor{
     display: flex;
     justify-content: space-between;
+    
+    height: 110%;
 }
+
+    .quadrado-dentro-taxaTranferencia{
+        background-color: #e2d8cdaf;
+        border-radius: 5px;
+        width: 47%;
+        border: solid 2px #000000;
+        height: 60%;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+
 
 .quadrado-dentro{
     background-color: #e2d8cdaf;
@@ -94,10 +108,9 @@ body {
 
 .chart-container {
     width: 50%;
-    background-color: #d4c9bdaf;
     padding: 10px;
     border-radius: 2px;
-    background-color: #cebca7af;
+    background-color: #645f59;
 
 }
 
@@ -106,14 +119,14 @@ body {
     width: 150vb;
     justify-content: space-between;
     margin-bottom: 20px;
-    color: #4e2b16;
+    color: white;
     text-align: center;
     margin-top: 30px;
             
 }
 
 canvas {
-    background-color: #d6d6d4;
+    background-color: #3f3b36;
     padding: 10px;
     border-radius: 10px;
     

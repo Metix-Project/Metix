@@ -34,21 +34,21 @@ id int auto_increment,
     constraint ServidorFkEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
 );
 
+
+
+
 create table DadosServidor(
-macAddress varchar(17) not null,
-    cpuPorc decimal(7, 2) not null,
-    memoriaPorc decimal(7, 2) not null,
-    discoPorc decimal(7, 2) not null,
-    cpuAbs int not null,
-    memoriaAbs int not null,
-    discoAbs int not null,
+dataHora datetime not null default current_timestamp,
+macAddress varchar(17),
+    cpuPorc decimal(7, 2),
+    memoriaPorc decimal(7, 2),
+    discoPorc decimal(7, 2),
     MbpsEnviados decimal(7, 2),
 	MbpsRecebidos decimal(7, 2),
-    TotalMbps decimal(7,2),
-	Latencia decimal(7,2),
-    dataHora datetime not null default current_timestamp,
-    pontoDeControle int not null
+	Latencia decimal(7,2)
 );
+
+select * from DadosServidor;
 
 create user if not exists 'metixAdm'@'%' identified by 'sptech';
 grant all privileges on Metix.* to 'metixAdm'@'%';
