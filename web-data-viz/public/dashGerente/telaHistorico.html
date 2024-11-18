@@ -45,11 +45,11 @@
 
             <div class="dashboardLinks">
                 <h2>Dashboards</h2>
-                <button>MONITORAMENTO EM TEMPO REAL</button>
-                <button>ALERTAS</button>
-                <button onclick="window.location.href = 'telaHistorico.html'">HISTÓRICO</button>
-                <button>PREVISÕES</button>
-                <button>MANUTENÇÃO</button>
+                <button>Monitoramento</button>
+                <button>Alertas</button>
+                <button onclick="window.location.href = 'telaHistorico.html'">Histórico</button>
+                <button>Previsões</button>
+                <button>Manutenção</button>
                 <button onclick="limparSessao()">Sair</button>
             </div>
             <div class="logo">
@@ -61,7 +61,6 @@
         <div class="main-content">
             <h1 id="bodyTitle">Histórico dos Dados do Servidor - MacAddress 10f60a853491</h1>
             <div class="graphics1">
-                <h2>Filtros</h2>
                 <div class="filtros">
                     <div class="filtro selects">
                         <span>Selecione o Servidor: </span>
@@ -94,34 +93,6 @@
                 </div>
                 <div class="metricas">
                     <div class="cards" id="cards">
-                        <!-- <div class="subCards">
-                            <div class="card">
-                                <span>Uso médio da CPU</span>
-                                <span class="infoValue" id="cpuUsageValue">55%</span>
-                            </div>
-                            <div class="card">
-                                <span>Uso médio da RAM</span>
-                                <span class="infoValue" id="ramUsageValue">12.7 GB</span>
-                            </div>
-                            <div class="card">
-                                <span>Uso médio do Disco</span>
-                                <span class="infoValue" id="diskUsageValue">598 GB</span>
-                            </div>
-                        </div>
-                        <div class="subCards">
-                            <div class="card">
-                                <span>Média de GHz da CPU</span>
-                                <span class="infoValue" id="cpuFreqValue">1.3 GHz</span>
-                            </div>
-                            <div class="card">
-                                <span>Latência Média</span>
-                                <span class="infoValue" id="internetValue">5 Ms</span>
-                            </div>
-                            <div class="card">
-                                <span>Rede</span>
-                                <span class="infoValue" id="internetValue">70 MB</span>
-                            </div>
-                        </div> -->
                         <div class="card">
                             <span>Uso médio da CPU</span>
                             <span class="infoValue" id="initialValue">55%</span>
@@ -141,12 +112,12 @@
                         <div class="moreInfo">
                             <div class="warnings">
                                 <div class="infoCard">
-                                    <span class="title">Percentual de Tempo em Funcionamento Normal</span>
-                                    <span class="cardValue" id="percentValue">89%</span>
-                                </div>
-                                <div class="infoCard">
                                     <span class="title">Tempo Total Acima do Limite Indicado</span>
                                     <span class="cardValue" id="timeValue">3h 45min 54s</span>
+                                </div>
+                                <div class="infoCard">
+                                    <span class="title">Último Registro de Alerta do Componente</span>
+                                    <span class="cardValue" id="percentValue">13h24 17/11/2024</span>
                                 </div>
                             </div>
                             <div class="infoCard">
@@ -188,7 +159,7 @@
                 </div>
             `;
 
-            atualizarGraficoLinha(valores1, maxValues1, 'rgba(200, 190, 220, 0.8)', 'rgba(200, 190, 220, 0.2)', "Uso do Processador");
+            atualizarGraficoLinha(valores1, maxValues1, 'rgba(102, 35, 168, 0.8)', 'rgba(102, 35, 168, 0.2)', "Uso do Processador");
             document.getElementById("initialValue").innerHTML = `${mediaCpuUsagePerc}%`;
         }
         else if(componente == 2) {
@@ -212,7 +183,7 @@
                 </div>
             `;
 
-            atualizarGraficoLinha(valores2, maxValues2, 'rgba(0, 240, 100, 0.8)', 'rgba(0, 240, 100, 0.2)', "Uso da Memória RAM");
+            atualizarGraficoLinha(valores2, maxValues2, 'rgba(238, 139, 206, 0.8)', 'rgba(238, 139, 206, 0.2)', "Uso da Memória RAM");
             document.getElementById("initialValue").innerHTML = `${mediaRamUsageValue} GB`;
         }
         else if(componente == 3) {
@@ -236,7 +207,7 @@
                 </div>
             `;
 
-            atualizarGraficoLinha(valores3, maxValues3, 'rgba(80, 150, 225, 0.8)', 'rgba(80, 150, 225, 0.2)', "Armazenamento");
+            atualizarGraficoLinha(valores3, maxValues3, 'rgba(0, 219, 212, 0.8)', 'rgba(0, 219, 212, 0.2)', "Armazenamento");
             document.getElementById("initialValue").innerHTML = `${mediaDiskUsageValue} GB`;
         }
         else if(componente == 4) {
@@ -295,7 +266,7 @@
     var dia = 30;
     
     var historicoComponenteEscolhido = document.getElementById('historicoComponenteEscolhido').getContext('2d');
-    historicoComponenteEscolhido.canvas.parentNode.style.height = '400px';
+    historicoComponenteEscolhido.canvas.parentNode.style.height = '330px';
 
     var labels = [];
     var valores1 = [];
@@ -376,8 +347,8 @@
                     {
                         label: "Uso do Processador",
                         borderWidth: 4,
-                        borderColor: 'rgba(200, 190, 220, 0.8)',
-                        backgroundColor: 'rgba(200, 190, 220, 0.2)',
+                        borderColor: 'rgba(102, 35, 168, 0.8)',
+                        backgroundColor: 'rgba(102, 35, 168, 0.2)',
                         fill: true,
                         lineTension: 0.3,
                         data: valores1
