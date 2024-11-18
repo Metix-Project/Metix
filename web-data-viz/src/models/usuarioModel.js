@@ -25,7 +25,7 @@ function cadastrar(nome, email, senha, tel, cpf, cargo, fkEmpresa) {
 // Autenticação de usuário considerando o codigoSeguranca
 function autenticar(email, senha, codigoSeguranca) {
   return database.executar(
-    `SELECT Usuario.*, Empresa.idEmpresa, Empresa.razaoSocial FROM Usuario JOIN Empresa ON Usuario.fkEmpresa = Empresa.idEmpresa WHERE Usuario.email = "${email}" AND Usuario.senha = "${senha}" AND Empresa.codigoSeguranca = "${codigoSeguranca}";`
+    `SELECT Usuario.*, Empresa.idEmpresa, Empresa.razaoSocial, Empresa.imgLogo FROM Usuario JOIN Empresa ON Usuario.fkEmpresa = Empresa.idEmpresa WHERE Usuario.email = "${email}" AND Usuario.senha = "${senha}" AND Empresa.codigoSeguranca = "${codigoSeguranca}";`
   );
 }
 

@@ -8,22 +8,21 @@ body {
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 4fr;
     height: 100vh;
 }
 
 /* Sidebar */
 .sidebar {
-    background-color: #4e2b16;
+    background-color: #302d29;
     height: 100vh;
     color: white;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    text-align: center;
     box-sizing: border-box;
+    padding: 40px 0;
 }
 
 .sidebar h1 {
@@ -31,63 +30,38 @@ body {
 }
 
 .logo img {
-    align-items: center;
-    padding: 10%;
     width: 50%;
-    margin-top: -20%;
 }
 
 .profile {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #4e2b16;
     color: white;
     padding: 10px;
-    margin-top: -50px;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    margin-bottom: 50%;
+    flex-direction: column;
 }
 
 .profile img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-    background-color: #d1d7d9;
+    background-color: white;
     margin-bottom: 10px;
 }
 
 .profile h2,
 .profile h4 {
-    margin: 10px;
-    padding: 5px;
+    margin: 5px 0;
     text-align: start;
 }
 
 .profile h2 {
-    font-size: 18px;
-    margin-bottom: 5px;
+    font-size: 28px;
 }
 
-.profile p {
-    font-size: 16px;
-}
-
-.prfTxt {
-    margin-top: 0.2%;
-}
-
-.sidebar select {
-    background-color: #d1d7d9;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    text-align: center;
-    font-size: 16px;
-    width: 250px;
+.profile h4 {
+    font-weight: normal;
 }
 
 .sidebar .dashboardLinks {
@@ -97,17 +71,26 @@ body {
     align-items: center;
 }
 
-.sidebar .dashboardLinks a {
-    background-color: #ccc;
+.sidebar .dashboardLinks button {
+    background-color: #645f59;
     border-radius: 5px;
+    border: none;
     padding: 10px;
     margin-bottom: 15px;
     cursor: pointer;
     text-align: center;
     font-size: 16px;
-    width: 250px;
+    width: 100%;
+    color: white;
+    height: 50px;
 }
 
-.sidebar .dashboardLinks a:hover {
-    background-color: #aaa;
+.sidebar .dashboardLinks button:hover {
+    background-color: #161513;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

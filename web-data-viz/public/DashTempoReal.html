@@ -28,29 +28,25 @@
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <div>
-
-                <div class="logo">
-                    <img src="assets/imgs/Logo1.png" alt="">
+            <div class="profile">
+                <img alt="Profile" id="profileImage">
+                <div class="prfTxt">
+                    <h2 id="profileName">Olá, Usuário!</h2>
+                    <h4 id="profilePosition">Cargo: Gerente</h4>
                 </div>
+            </div>
 
-                <div class="profile">
-                    <img alt="Profile" id="profileImage">
-                    <div class="prfTxt">
-                        <h2 id="profileName">Olá, Usuário!</h2>
-                        <h4 id="profilePosition">Cargo: Gerente</h4>
-                    </div>
-                </div>
+            <div class="dashboardLinks">
+                <button onclick="window.location.href='DashTempoReal.html'">MONITORAMENTO EM TEMPO REAL</button>
+                <button>ALERTAS</button>
+                <button onclick="window.location.href='dashGerente/telaHistorico.html'">HISTÓRICO</button>
+                <button>PREVISÕES</button>
+                <button>MANUTENÇÃO</button>
+                <button onclick="limparSessao()">Sair</button>
+            </div>
 
-                <div class="dashboardLinks">
-                    <a href="DashTempoReal.html">MONITORAMENTO EM TEMPO REAL</a>
-                    <a>ALERTAS</a>
-                    <a href="./dashGerente/historico.html">HISTÓRICO</a>
-                    <a>PREVISÕES</a>
-                    <a>MANUTENÇÃO</a>
-                    <a onclick="limparSessao()">Sair</a>
-                </div>
-
+            <div class="logo">
+                <img src="assets/imgs/Logo1.png" alt="">
             </div>
 
         </div>
