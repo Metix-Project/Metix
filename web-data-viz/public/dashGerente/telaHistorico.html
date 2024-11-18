@@ -163,9 +163,10 @@
             document.getElementById("geminiText").style.borderColor = 'rgb(255, 218, 107)';
             historicoComponenteEscolhidoChart.options.scales.y.max = 100;
             historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
+            historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
             historicoComponenteEscolhidoChart.update();
 
-            atualizarGraficoLinha(valores1, maxValues1, 'rgba(255, 218, 107, 0.8)', 'rgba(255, 218, 107, 0.2)', "do Uso do Processador");
+            atualizarGraficoLinha(valores1, maxValues1, 'rgba(255, 218, 107, 0.8)', 'rgba(255, 218, 107, 0.2)', "Uso do Processador");
             document.getElementById("initialValue").innerHTML = `${mediaCpuUsagePerc}%`;
         }
         else if(componente == 2) {
@@ -194,9 +195,10 @@
             document.getElementById("geminiText").style.borderColor = 'rgb(192, 178, 160)';
             historicoComponenteEscolhidoChart.options.scales.y.max = 100;
             historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
+            historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
             historicoComponenteEscolhidoChart.update();
 
-            atualizarGraficoLinha(valores2, maxValues2, 'rgba(192, 178, 160, 0.8)', 'rgba(192, 178, 160, 0.2)', "do Uso da Memória RAM");
+            atualizarGraficoLinha(valores2, maxValues2, 'rgba(192, 178, 160, 0.8)', 'rgba(192, 178, 160, 0.2)', "Uso da Memória RAM");
             document.getElementById("initialValue").innerHTML = `${mediaRamUsageValue} GB`;
         }
         else if(componente == 3) {
@@ -225,9 +227,10 @@
             document.getElementById("geminiText").style.borderColor = 'rgb(249, 146, 44)';
             historicoComponenteEscolhidoChart.options.scales.y.max = 100;
             historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
+            historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
             historicoComponenteEscolhidoChart.update();
 
-            atualizarGraficoLinha(valores3, maxValues3, 'rgba(249, 146, 44, 0.8)', 'rgba(249, 146, 44, 0.2)', "do Armazenamento");
+            atualizarGraficoLinha(valores3, maxValues3, 'rgba(249, 146, 44, 0.8)', 'rgba(249, 146, 44, 0.2)', "Armazenamento");
             document.getElementById("initialValue").innerHTML = `${mediaDiskUsageValue} GB`;
         }
         else if(componente == 4) {
@@ -252,19 +255,20 @@
             document.getElementById("geminiText").style.borderColor = 'rgb(102, 35, 168)';
             historicoComponenteEscolhidoChart.options.scales.y.max = 150;
             historicoComponenteEscolhidoChart.options.scales.y.title.text = "Milisegundos";
+            historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
             historicoComponenteEscolhidoChart.update();
 
-            atualizarGraficoLinha(valores4, maxValues4, 'rgba(102, 35, 168, 0.8)', 'rgba(102, 35, 168, 0.2)', "da Latência");
+            atualizarGraficoLinha(valores4, maxValues4, 'rgba(102, 35, 168, 0.8)', 'rgba(102, 35, 168, 0.2)', "Latência");
             document.getElementById("initialValue").innerHTML = `${mediaLatenciaValue} Ms`;
         }
         else {
             document.getElementById("cards").innerHTML = `
                 <div class="card">
-                    <span>Tráfedo médio</span>
+                    <span>Quantidade Média de Pacotes Recebidos</span>
                     <span class="infoValue" id="initialValue">120 Mbps</span>
                 </div>
                 <div class="card">
-                    <span>Limite Permitido</span>
+                    <span>Quantidade Média de Pacotes Enviados</span>
                     <span class="infoValue" id="limitValue">670 Mbps</span>
                 </div>
                 <div class="card">
@@ -273,6 +277,25 @@
                     <span onclick="alert('')" id="alertDetails">Ver detalhes</span>
                 </div>
             `;
+
+            document.getElementById("alertTimeValue").style.borderColor = 'rgb(65, 178, 141)';
+            document.getElementById("totalTimeValue").style.borderColor = 'rgb(65, 178, 141)';
+            document.getElementById("geminiText").style.borderColor = 'rgb(65, 178, 141)';
+            historicoComponenteEscolhidoChart.options.scales.y.max = 1250;
+            historicoComponenteEscolhidoChart.options.scales.y.title.text = "Mbps";
+            historicoComponenteEscolhidoChart.data.datasets[2] = {
+                label: "Pacotes Recebidos",
+                borderWidth: 4,
+                borderColor: 'rgba(5, 208, 222, 0.8)',
+                backgroundColor: 'rgba(5, 208, 222, 0.2)',
+                fill: true,
+                lineTension: 0.3,
+                data: valores6
+            }
+            historicoComponenteEscolhidoChart.update();
+
+            atualizarGraficoLinha(valores5, maxValues5, 'rgba(125, 148, 60, 0.8)', 'rgba(125, 148, 60, 0.2)', "Rede");
+            document.getElementById("initialValue").innerHTML = `${mediaLatenciaValue} Ms`;
         }
     }
 
@@ -287,6 +310,7 @@
     var valores3 = [];
     var valores4 = [];
     var valores5 = [];
+    var valores6 = [];
 
     var maxValues1 = [];
     var maxValues2 = [];
@@ -295,6 +319,7 @@
     var maxValues5 = [];
 
     var valores = [valores1, valores2];
+    var redeValores = [valores5, valores6];
 
     for(var i = 0; i < dia; i++){
         var data = new Date();
@@ -304,6 +329,7 @@
         maxValues2[i] = 92;
         maxValues3[i] = 94;
         maxValues4[i] = 100;
+        maxValues5[i] = 1000;
 
         valores.forEach((vetorValores)=>{
             if(!i) {
@@ -351,6 +377,21 @@
                 valores4[i] = valores4[i - 1] + (Math.random() * 10 - 10);
             }
         }
+
+        redeValores.forEach((vetorValores)=>{
+            if(!i) vetorValores[i] = Math.random() * 1249 + 1;
+            else {
+                if(vetorValores[i - 1] > 1100){
+                    vetorValores[i] = vetorValores[i - 1] - (Math.random() * 50 + 1);
+                }
+                else if(vetorValores[i - 1] < 5) {
+                    vetorValores[i] = vetorValores[i - 1] + (Math.random() * 50 + 1);
+                }
+                else {
+                    vetorValores[i] = vetorValores[i - 1] + (Math.random() * 50 - 10);
+                }
+            }
+        })
     }
 
     var mediaCpuUsagePerc = Math.round(valores1.reduce((total, atual) => total + atual, 0) / valores1.length * 10) / 10;
@@ -455,7 +496,7 @@
                     },
                     title: {
                         display: true,
-                        text: `Últimos Dados Capturados do Uso do Processador`,
+                        text: `Últimos Dados Capturados | Uso do Processador`,
                         font: {
                             size: 25,
                             weight: 'bold'
@@ -474,7 +515,7 @@
         historicoComponenteEscolhidoChart.data.datasets[0].borderColor = cor1;
         historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = cor2;
         historicoComponenteEscolhidoChart.data.datasets[0].label = component;
-        historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados ${component}`;
+        historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | ${component}`;
         historicoComponenteEscolhidoChart.update();
     }
 
