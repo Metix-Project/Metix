@@ -4,13 +4,16 @@ function validarSessao() {
     var position = sessionStorage.CARGO_USUARIO;
     var nome = sessionStorage.NOME_USUARIO;
     var imagem = sessionStorage.IMAGEM_USUARIO;
+    var empresa = sessionStorage.EMPRESA_USUARIO;
 
     var profileName = document.getElementById("profileName");
-    var profilePosition = document.getElementById("profilePosition")
+    var profilePosition = document.getElementById("profilePosition");
+    var profileBusiness = document.getElementById("profileBusiness");
 
-    if (email != null && nome != null) {
+    if (email != null && nome != null && empresa != null) {
         profileName.innerHTML = nome;
-        profilePosition.innerHTML = position;
+        profilePosition.innerHTML = "Cargo: " + position;
+        profileBusiness.innerHTML = empresa;
         profileImage.src = imagem;
     } else {
         window.location = "../login.html";

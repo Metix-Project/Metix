@@ -8,7 +8,8 @@ create table Empresa(
     emailEmpresa varchar(80) not null unique,
     cnpj char(18) not null unique,
     telefoneEmpresa char(19) not null unique,
-    imgLoco VARCHAR(255)
+    codigoSeguranca char(6) not null unique, 
+    imgLogo VARCHAR(255)
 );
 
 create table Usuario(
@@ -17,10 +18,9 @@ create table Usuario(
     email varchar(80) not null unique,
     senha varchar(80) not null,
     cpf char(14) not null unique,
-    telefoneEmpresa char(19) not null unique,
+    telefone char(19) not null unique,
     cargo char(15) not null,
     fkEmpresa int not null,
-
     primary key (idUsuario, fkEmpresa),
     constraint UsuarioFkEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
 );
@@ -30,7 +30,6 @@ id int auto_increment,
     macAddress char(17) not null unique,
     pontoDeControle int not null,
     fkEmpresa int not null,
-
     primary key (id, fkEmpresa),
     constraint ServidorFkEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
 );
@@ -43,6 +42,10 @@ macAddress varchar(17) not null,
     cpuAbs int not null,
     memoriaAbs int not null,
     discoAbs int not null,
+    MbpsEnviados decimal(7, 2),
+	MbpsRecebidos decimal(7, 2),
+    TotalMbps decimal(7,2),
+	Latencia decimal(7,2),
     dataHora datetime not null default current_timestamp,
     pontoDeControle int not null
 );
@@ -60,13 +63,14 @@ grant insert on Metix.* to 'metixUserInsert'@'%';
 create user if not exists 'metixUserSelect'@'%' identified by 'sptech';
 grant select on Metix.* to 'metixUserSelect'@'%';
 
-insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa, imgLoco) values (
+insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa, codigoSeguranca, imgLogo) values (
 	1, 
 	"Banco Central do Brasil", 
 	"Banco Central do Brasil", 
 	"bc@br.br", 
 	"12345678901234",  
-	"1234567890123", 
+	"1234567890123",
+    "B3C6B9",
 	"https://avatars.githubusercontent.com/u/16822015?s=200&v=4"
 );
 
