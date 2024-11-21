@@ -13,74 +13,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <style>
-        
-        .server-grid {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .server-box {
-            background-color: #644a3d;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            width: 22%;
-        }
-
-        .server-box .component1 {
-            background-color: #a68a6d;
-            padding: 5px;
-        }
-
-        .server-box .component2 {
-            background-color: #bda282;
-            padding: 5px;
-        }
-
-        .server-box .component3 {
-            background-color: #d3b997;
-            padding: 5px;
-            
-        }
-
-        .div_select{
-          width: 32%;
-          margin-bottom: 2%;
-          display: flex;
-          justify-content: space-between;
-          margin-left: 500px;
-        }
-
-        .filter-container{
-          width: 150px;
-          text-align: center;
-          padding: 10px;
-          border-radius: 10px;
-          border: 1px solid black;
-          background-color: #645f59;
-          color: white;
-
-        }
-
-        .charts {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            color: #4e2b16;
-            text-align: center;
-        }
-
-        .chart {
-            width: 47%;
-            width: 60%;
-            background-color: #cebca7af;
-            padding: 10px;
-            border-radius: 2px;
-        }
-
-    </style>
+    
 </head>
 
 <body>
@@ -91,7 +24,7 @@
             <img alt="Profile" id="profileImage">
             <div class="prfTxt">
                 <h2 id="profileName">Olá, Usuário!</h2>
-                <h4 id="profilePosition">Cargo: Gerente</h4>
+                <h4 id="profilePosition">Cargo: Técnico</h4>
             </div>
         </div>
 
@@ -112,196 +45,308 @@
 <div class="main-content">
             
   <div class="div_select">
-    <select class="filter-container" id="">
-        <option value="">CPU</option>
-        <option value="">Memória RAM</option>
-        <option value="">Disco</option>
-        <option value="">Rede</option>
+    <select class="filter-container" id="selectServidor" onchange="modificarComponente()">
+      <option value="Servidor1">Servidor 1</option>
+      <option value="Servidor2">Servidor 2</option>
+      <option value="Servidor3">Servidor 3</option>
+      <option value="Servidor4">Servidor 4</option>
     </select>
-    <select class="filter-container" id="">
-      <option value="">Servidor 1</option>
-      <option value="">Servidor 2</option>
-      <option value="">Servidor 3</option>
-      <option value="">Servidor 4</option>
-  </select>
+    <select class="filter-container" id="selectComponente" onchange="modificarComponente()">
+      <option value="cpu">CPU</option>
+      <option value="memoria">Memória RAM</option>
+      <option value="disco">Disco</option>
+      <option value="rede">Rede</option>
+      <option value="latencia">Latência</option>
+    </select>
+  </div>
 
-</div>
   <div class="kpi-container">
       <div class="kpi">
-          <h3>Taxa de Transferência</h3>
+          <h3>Uso de CPU em Tempo Real</h3>
           <div class="quadrado-editor">
-          <div class="quadrado-dentro-taxaTranferencia">
-              <p>Enviados: <br> <br><span>300 Mbps</span></p>
+          <div class="quadrado-dentro3">
+              <p><span>65%</span></p>
           </div>
-          <div class="quadrado-dentro-taxaTranferencia">                              
-              <p>Recebidos: <br> <br> <span>500 Mbps</span></p>
-          </div>
+          
       </div>
       </div>
       <div class="kpi">
-          <h3>Pico de Transferência</h3>
+          <h3> 2 Principais picos de Uso</h3>
           <div class="quadrado-editor">
           <div id="1" class="quadrado-dentro-pico1">
-              <p>Enviados: <br><span>800 Mbps</span></p>
+              <p>Porcentagem: <br><span>85%</span></p>
               <p>Data: <br> 2024-10-29</p>
-              <p>Hora: 13:15</p>
+              <p>Hora: 15:00</p>
           </div>
           <div id="2" class="quadrado-dentro-pico2">
-              <p>Recebidos: <br> <span>1200 Mbps</span></p>
-              <p>Data: <br> 2024-10-29</p>
-              <p>Hora: 13:15</p>
+            <p>Porcentagem: <br><span>95%</span></p>
+            <p>Data: <br> 2024-10-29</p>
+            <p>Hora: 15:00</p>
           </div>
       </div>
           
       </div>
       <div class="kpi">
-          <h3>Tempo em Alta Utilização</h3>
+          <h3>Quantidade de Alertas</h3>
           <div class="quadrado-dentro3">
-          <p>Nas últimas 24 horas, ficou em alta utilização de requisições: </p><span>5% do tempo</span></p>
+          <p>Nas últimas 24 horas, foi aberto: <br></p><span>2 <br>alertas</span></p>
           </div>
       </div>
   </div>
 
+    <div class="charts-container">
 
-           
-
-
-
-            <!-- Charts Section -->
-            <div class="charts">
-                <div class="chart">
-                    <h4>Correlação de uso CPU (%) e Memoria RAM (%)</h4>
-                    
-                    <div>
-                        <canvas id="myChart5"></canvas>
-                    </div>
-
-                </div>
-                <div class="chart">
-                    <h4>Visão Geral dos Servidores</h4>
-                    
-                    <div>
-                        <canvas id="myChart6"></canvas>
-                    </div>
-
-                </div>
-            </div>
-
-            
+        <div id="chart-cpu" class="chart-container" style="display: block;">
+            <canvas id="myChart5"></canvas>
         </div>
 
-        </div>
+        <div id="chart-rede" class="chart-container" style="display: none;">
+            <canvas id ="chartProcessamento"></canvas>
+        </div> 
+
+            <div id="chart-latencia" class="chart-container" style="display: none;">
+                <canvas id="chartLatencia"></canvas>
+        </div> 
     </div>
+
+
+</div>
+
+        
+    
 </body>
 
 </html>
 
 <script>
-const labels5 = ['12h', '13h', '14h', '15h', '16h', '17h', '18h'];
+    function modificarComponente() {
+      const componenteSelecionado = document.getElementById("selectComponente").value;
+      
+      document.getElementById("chart-cpu").style.display = "none";
+      document.getElementById("chart-rede").style.display = "none";
+      document.getElementById("chart-latencia").style.display = "none";
+        
+      // Nesse If está mostrando os graficos pedidos no select
+      if (componenteSelecionado === "cpu") {
+        document.getElementById("chart-cpu").style.display = "block";
+      } 
+      else if (componenteSelecionado === "rede") {
+        document.getElementById("chart-rede").style.display = "block";
+      }
+      else if (componenteSelecionado === "latencia") {
+        document.getElementById("chart-latencia").style.display = "block";
+      }
 
-const data5 = {
-  labels: labels5,
-  datasets: [
-    {
-      label: 'Memória RAM (%)',
-      data: [65, 59, 80, 81, 56, 70, 50], 
-      fill: true,
-      borderColor: 'green',
-      tension: 0.1
-    },
-    {
-      label: 'CPU (%)',
-      data: [60, 50, 85, 70, 60, 65, 55], 
-      fill: true,
-      borderColor: '#4E73DF',
-      tension: 0.1
     }
-  ]
-};
-
-
-const config5 = {
-  type: 'line',
-  data: data5,
-};
-
-const myChart5 = new Chart(
-  document.getElementById('myChart5'),
-  config5
-);
-
-
-// Gráfico 6
-const labels = ['Servidor 1', 'Servidor 2', 'Servidor 3', 'Servidor 4']; 
+    /////////////////// AQUI ESTOU MONTANDO OS GRAFICOOSS //////////////////
+    const labels5 = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
+  
+    const data5 = {
+      labels: labels5,
+      datasets: [
+        {
+          label: 'CPU (%)',
+          data: [60, 50, 95, 85, 60, 65, 55],
+          fill: true,
+          borderColor: 'rgb(255, 218, 107)',
+          backgroundColor: 'rgb(255, 218, 107, 0.2)',
+          tension: 0.1
+        },
+        {
+          label: 'Limite Ideal',
+          data: [85, 85, 85, 85, 85, 85, 85],
+          fill: true,
+          borderColor: 'red',
+          tension: 0,
+          pointBorderWidth: 0,
+          pointBackgroundColor: 'transparent'
+        }
+      ]
+    };
+  
+    const config5 = {
+      type: 'line',
+      data: data5,
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Uso de CPU (%) - 24H',
+            color: 'white',
+            font: {
+              size: 18,
+              weight: 'bold',
+            },
+            padding: {
+              top: 10,
+              bottom: 30,
+            },
+          },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: 'white'
+                }
+            },
+            y: {
+                ticks: {
+                    color: 'white'
+                }
+            }
+        }
+      },
+    };
+  
+    const myChart5 = new Chart(
+      document.getElementById('myChart5'),
+      config5
+    );
+  
+    const labels = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
 
 const data = {
-  labels: labels, 
-  datasets: [
-    {
-      label: 'CPU (%)',
-      data: [55, 60, 40, 45], 
-      backgroundColor: '#4E73DF', 
-      borderColor: 'black',
-      borderWidth: 1
-    },
-    {
-      label: 'RAM (%)',
-      data: [50, 55, 60, 50], 
-      backgroundColor: '#917db8', 
-      borderColor: 'black',
-      borderWidth: 1
-    },
-    {
-      label: 'Disco (%)',
-      data: [30, 35, 25, 20], 
-      backgroundColor: 'green', 
-      borderColor: 'black',
-      borderWidth: 1
-    }
-  ]
+    labels: labels,
+    datasets: [
+        {
+            label: 'Enviados (MB)',
+            data: [300, 500, 800, 400, 600, 300, 300],  
+            fill: true,
+            borderColor: 'rgb(125, 148, 60)',
+            tension: 0.1,
+            backgroundColor: 'rgb(125, 148, 60, 0.2)'
+        },
+        {
+            label: 'Recebidos (MB)',
+            data: [400, 550, 1200, 550, 700, 400, 500],  
+            fill: true,
+            borderColor: 'rgb(5, 208, 222)',
+            tension: 0.1,
+            backgroundColor: 'rgb(5, 208, 222, 0.2)'
+        },
+        {
+            label: 'Limite Ideal',
+            data: [1000, 1000, 1000, 1000, 1000, 1000, 1000],  
+            fill: true,
+            borderColor: 'red',
+            tension: 0,
+            pointBorderWidth: 0,
+            pointBackgroundColor: 'transparent'
+        }
+    ]
 };
 
-const options = {
-  responsive: true,
-  scales: {
-    y: {
-      beginAtZero: true,  
-      ticks: {
-        stepSize: 10 
-      }
+const config = {
+    type: 'line',
+    data: data, 
+    options: {
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white' 
+                }
+            },
+            title: {
+                display: true,
+                text: 'Monitoramento de Rede (MB) - 24H',
+                color: 'white',
+                font: {
+                    size: 18,
+                    weight: 'bold',
+                },
+                padding: {
+                    top: 10,
+                    bottom: 30,
+                },
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: 'white'
+                }
+            },
+            y: {
+                ticks: {
+                    color: 'white'
+                }
+            }
+        }
     }
-  },
-  plugins: {
-    title: {
-      display: true,
-      
-    },
-    tooltip: {
-      mode: 'index',
-      intersect: false,
-    }
-  },
-  maintainAspectRatio: false,
-  barPercentage: 0.10, 
-  categoryPercentage: 0.8 
 };
 
-
-
-const config6 = {
-  type: 'bar',
-  data: data,
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  },
-};
-
-const myChart6 = new Chart(
-  document.getElementById('myChart6'),
-  config6
+const myChart1 = new Chart(
+    document.getElementById('chartProcessamento'),
+    config
 );
-</script>
+
+const labels2 = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
+
+const data2 = {
+    labels: labels2,
+    datasets: [
+        {
+            label: 'Latência (ms)',
+            data: [30, 70, 50, 40, 60, 45, 55],  
+            fill: true,
+            borderColor: 'rgb(102, 35, 168)',
+            tension: 0.1,
+            backgroundColor: 'rgb(102, 35, 168, 0.3)'
+        },
+        {
+            label: 'Limite Ideal',
+            data: [100, 100, 100, 100, 100, 100, 100],  
+            fill: true,
+            borderColor: 'red',
+            tension: 0.1,
+            pointBorderWidth: 0,
+            pointBackgroundColor: 'transparent'
+        }
+    ]
+};
+
+const config2 = {
+    type: 'line',
+    data: data2, 
+    options: {
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white' 
+                }
+            },
+            title: {
+                display: true,
+                text: 'Latência (Ms) - 24H',
+                color: 'white',
+                font: {
+                    size: 18,
+                    weight: 'bold',
+                },
+                padding: {
+                    top: 10,
+                    bottom: 30,
+                },
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: 'white'
+                }
+            },
+            y: {
+                ticks: {
+                    color: 'white'
+                }
+            }
+        }
+    }
+};
+
+const myChart2 = new Chart(
+    document.getElementById('chartLatencia'), 
+    config2 
+);
+  </script>
+  

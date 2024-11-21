@@ -32,7 +32,7 @@
                 <img alt="Profile" id="profileImage">
                 <div class="prfTxt">
                     <h2 id="profileName">Olá, Usuário!</h2>
-                    <h4 id="profilePosition">Cargo: Gerente</h4>
+                    <h4 id="profilePosition">Cargo: Técnico</h4>
                 </div>
             </div>
 
@@ -55,6 +55,20 @@
 
         <div class="main-content">
             
+            <div class="div_select">
+                <select class="filter-container" id="selectServidor">
+                  <option value="">Servidor 1</option>
+                  <option value="">Servidor 2</option>
+                  <option value="">Servidor 3</option>
+                  <option value="">Servidor 4</option>
+              </select>
+              <select class="filter-container" id="selectComponente" onchange="modificarComponente()">
+                <option value="cpu">CPU</option>
+                <option value="memoria">Memória RAM</option>
+                <option value="disco">Disco</option>
+                <option value="rede">Rede</option>
+            </select>
+            </div>
             <div class="kpi-container">
                 <div class="kpi">
                     <h3>Taxa de Transferência</h3>
@@ -86,7 +100,8 @@
                 <div class="kpi">
                     <h3>Tempo em Alta Utilização</h3>
                     <div class="quadrado-dentro3">
-                    <p>Nas últimas 24 horas, ficou em alta utilização de requisições: </p><span>5% do tempo</span></p>
+                    <p>Nas últimas 24 horas, ficou em alta utilização de requisições:
+                         </p><span>5% do tempo</span></p>
                     </div>
                 </div>
             </div>
@@ -99,7 +114,7 @@
 
     <div class="charts-container">
             <div class="chart-container">
-                <h4>Monitoramento de Rede (MB)</h4>
+                <!-- <h4>Monitoramento de Rede (MB)</h4> -->
                 
                 <div>
                     <canvas id="chartProcessamento"></canvas>
@@ -108,7 +123,7 @@
             </div>
 
             <div class="chart-container">
-                <h4>Latência (Ms)</h4>
+                <!-- <h4>Latência (Ms)</h4> -->
                 
                 <div>
                     <canvas id="chartLatencia"></canvas>
@@ -122,16 +137,14 @@
         
         <script src="script.js"></script>
 
-
-    </div>
+</div>
+    
 </body>
 
 </html>
 
 <script>
     // window.onload = validarSessao();
-    //npm install chartjs-plugin-annotation LIMITE DOS GRÁFICOS	
-
      
 // Processamento e Rede
 const labels = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
@@ -155,7 +168,7 @@ const data = {
             tension: 0.1,
             backgroundColor: 'rgba(0, 0, 255, 0.2)'
         },
-    {
+        {
             label: 'Limite Ideal',
             data: [1000, 1000, 1000, 1000, 1000, 1000, 1000],  
             fill: true,
@@ -163,9 +176,7 @@ const data = {
             tension: 0,
             pointBorderWidth: 0,
             pointBackgroundColor: 'transparent'
-        }   
-
-
+        }
     ]
 };
 
@@ -178,6 +189,19 @@ const config = {
                 labels: {
                     color: 'white' 
                 }
+            },
+            title: {
+                display: true,
+                text: 'Monitoramento de Rede (MB) - 24H',
+                color: 'white',
+                font: {
+                    size: 18,
+                    weight: 'bold',
+                },
+                padding: {
+                    top: 10,
+                    bottom: 30,
+                },
             }
         },
         scales: {
@@ -196,10 +220,9 @@ const config = {
 };
 
 const myChart1 = new Chart(
-  document.getElementById('chartProcessamento'),
-  config
+    document.getElementById('chartProcessamento'),
+    config
 );
-
 
 // Gráfico de Latência
 const labels2 = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
@@ -211,9 +234,8 @@ const data2 = {
             label: 'Latência (ms)',
             data: [30, 70, 50, 40, 60, 45, 55],  
             fill: true,
-            borderColor: 'purple',
+            borderColor: '',
             tension: 0.1,
-
             backgroundColor: 'rgba(128, 0, 128, 0.2)'
         },
         {
@@ -237,6 +259,19 @@ const config2 = {
                 labels: {
                     color: 'white' 
                 }
+            },
+            title: {
+                display: true,
+                text: 'Latência (Ms) - 24H',
+                color: 'white',
+                font: {
+                    size: 18,
+                    weight: 'bold',
+                },
+                padding: {
+                    top: 10,
+                    bottom: 30,
+                },
             }
         },
         scales: {
@@ -255,10 +290,29 @@ const config2 = {
 };
 
 const myChart2 = new Chart(
-  document.getElementById('chartLatencia'), 
-  config2 
+    document.getElementById('chartLatencia'), 
+    config2 
 );
 
+function modificarComponente() {
+    const selectComponente = document.getElementById('selectComponente').value;
 
+    var tituloGrafico5 = '';
+    var tituloGrafico6 = '';
+
+    if (selectComponente === 'cpu') {
+        myChart1.data.datasets[0].data = [60, 50, 95, 85, 60, 65, 55];  
+        myChart1.data.datasets[1].data = [55, 60, 40, 45];
+        tituloGrafico5 = 'Uso de CPU (%) - 24H';
+        tituloGrafico6 = 'Visão Geral dos Servidores (CPU)';
+
+        myChart1.options.plugins.title.text = tituloGrafico5;
+        myChart2.options.plugins.title.text = tituloGrafico6;
+
+        myChart1.update();
+        myChart2.update();
+        
+    }
+}
 
 </script>

@@ -20,6 +20,26 @@ body {
 
 }
 
+.div_select{
+    width: 32%;
+    margin-bottom: 2%;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 600px;
+  }
+
+  
+  .filter-container{
+    width: 150px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+    background-color: #645f59;
+    color: white;
+
+  }
+
 .kpi-container {
     display: flex;
     justify-content: space-between;
@@ -30,7 +50,7 @@ body {
 
 .kpi {
     background-color: #3f3b36;
-    padding: 10px;
+    padding: 5px;
     border-radius: 10px;
     text-align: center;
     width: 45%;
@@ -48,7 +68,7 @@ body {
         border-radius: 5px;
         width: 47%;
         border: solid 2px #000000;
-        height: 60%;
+        height: 50%;
         align-items: center;
         justify-content: center;
         display: flex;
@@ -66,25 +86,34 @@ body {
 .quadrado-dentro-pico1{
     background-color: yellow;
     border-radius: 5px;
-    height: 60%;
+    height: 50%;
     width: 130px;
     border: solid 2px #000000;
+}
+
+.quadrado-dentro-pico1 p{
+    margin: 7px;
+}
+
+.quadrado-dentro-pico2 p{
+    margin: 7px;
 }
 
 .quadrado-dentro-pico2{
     background-color: #ff0000af;
     border-radius: 5px;
-    height: 60%;
+    height: 50%;
     width: 130px;
     border: solid 2px #000000;
 }
+
 
 
 .quadrado-dentro3{
     background-color: #2bff00af;
     padding: 15px;
     border-radius: 5px;
-    height: 55%;
+    height: 50%;
     width: 87%;
     border: solid 2px #000000;
 
@@ -107,28 +136,81 @@ body {
 }
 
 .chart-container {
-    width: 50%;
+   display: flex;
+    width: 60%;
     padding: 10px;
     border-radius: 2px;
     background-color: #645f59;
-
+    height: 300px;
 }
 
 .charts-container{
     display: flex;
-    width: 150vb;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
     color: white;
     text-align: center;
-    margin-top: 30px;
-            
+           
 }
+
+
+
+/* DASH GRUPOOO */
+.server-grid {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.server-box {
+    background-color: #644a3d;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    width: 22%;
+}
+
+.server-box .component1 {
+    background-color: #a68a6d;
+    padding: 5px;
+}
+
+.server-box .component2 {
+    background-color: #bda282;
+    padding: 5px;
+}
+
+.server-box .component3 {
+    background-color: #d3b997;
+    padding: 5px;
+    
+}
+
+
+.charts {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: #4e2b16;
+    text-align: center;
+}
+
+.chart {
+    width: 47%;
+    width: 60%;
+    background-color: #cebca7af;
+    padding: 10px;
+    border-radius: 2px;
+}
+
+
 
 canvas {
     background-color: #3f3b36;
     padding: 10px;
     border-radius: 10px;
-    
+    height: 280px;
      
 }
