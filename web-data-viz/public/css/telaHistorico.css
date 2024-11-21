@@ -236,11 +236,11 @@ h2 {
 }
 
 .cardValue {
-    font-size: 23px;
+    font-size: 21px;
     font-weight: bold;
     padding: 8px;
     color: white;
-    width: 90%;
+    width: 95%;
     text-align: center;
     border-bottom: 4px solid var(--cor-usage-cpu);
     border-radius: 5px;

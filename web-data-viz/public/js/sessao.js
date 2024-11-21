@@ -9,6 +9,7 @@ function validarSessao() {
     var profileName = document.getElementById("profileName");
     var profilePosition = document.getElementById("profilePosition");
     var profileBusiness = document.getElementById("profileBusiness");
+    var profileImage = document.getElementById("profileImage");
 
     if (email != null && nome != null && empresa != null) {
         profileName.innerHTML = nome;
