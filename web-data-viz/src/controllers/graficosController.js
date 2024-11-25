@@ -16,7 +16,46 @@ function pegarDados(req, res) {
     });
 }
 
+function DadosKpiCPU (req, res) { 
+  console.log("puxando dados CPU")
+
+  graficosModel.DadosKpiCPU()
+  .then(function (resposta) {
+      if(resposta.length > 0) {
+          console.log("Estou no Controller");
+          res.status(200).json(resposta);
+      } else {
+        res.status(204).send("nenhum resultado encontrado")
+      }
+
+  }).catch(function (erro) {
+    console.log(erro);
+    console.log("houve um erro ao buscar resultados", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage)
+  });
+}
+
+async function DadosKpiCPUPicos(req, res) {
+    console.log("puxando dados CPU");
+
+    try {
+        const resultado1 = await graficosModel.DadosKpiCPUPicos();  // Use o await para esperar o resultado da consulta
+        if (resultado1.length > 0) {
+            console.log("Estou no Controller");
+            res.status(200).json(resultado1);  // Enviar a resposta JSON para o cliente
+        } else {
+            res.status(204).send("Nenhum resultado encontrado");
+        }
+    } catch (erro) {
+        console.log("Houve um erro ao buscar resultados", erro.sqlMessage);
+        res.status(500).json({ error: erro.sqlMessage });
+    }
+}
+
+
 // exporta para outro arquivo:
 module.exports = {
   pegarDados,
+  DadosKpiCPU,
+  DadosKpiCPUPicos
 };

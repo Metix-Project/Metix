@@ -30,7 +30,7 @@ app.use(cors());
 //     define as rotas:
 app.use("/usuarios", usuarioRouter);
 app.use("/servidor", servidorRouter);
-app.use("/graficos", graficosRouter);
+app.use("/graficosRouter", graficosRouter);
 
 //   roda o servidor (listing/escuta por conexões):
 app.listen(process.env.APP_PORT, function () {

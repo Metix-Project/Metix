@@ -10,5 +10,14 @@ router.get("/pegarDados", function (req, res) {
   graficosController.pegarDados(req, res);
 });
 
+router.get("/DadosKpiCPU", function (req, res) {
+  graficosController.DadosKpiCPU(req, res);
+});
+
+router.get("/DadosKpiCPUPicos", function (req, res) {
+  graficosController.DadosKpiCPUPicos(req, res);
+});
+
+
 // exporta para outro arquivo:
 module.exports = router;
