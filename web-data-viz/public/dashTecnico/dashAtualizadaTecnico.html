@@ -16,7 +16,7 @@
 
 </head>
 
-<body onload="DadosKpiCPU(); DadosKpiCPUPicos();">
+<body onload="DadosKpiCPU(); DadosKpiCPUPicos(); DadosKpiCPUAlertas(); DadosKpiCPUTempoReal();">
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
@@ -91,7 +91,7 @@
                     <div class="kpi">
                         <h3>Quantidade de Alertas</h3>
                         <div class="quadrado-dentro-alertas">
-                            <p>Nas últimas 24 horas, foi aberto: <br></p><span>2 <br>alertas</span></p>
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="CPUAlerta"> X </span> <br> <span>alertas</span></p>
                         </div>
                         <div class="botao-alertas">
                             <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
@@ -293,9 +293,9 @@
 </html>
 
 <script>
-    // setInterval(() => {
-    //         window.location.reload();
-    //     }, 5000);
+    setInterval(() => {
+            window.location.reload();
+        }, 10000);
     function modificarComponente() {
         const componenteSelecionado = document.getElementById("selectComponente").value;
 
@@ -338,14 +338,14 @@
     }
 
     /////////////////// AQUI ESTOU MONTANDO OS GRAFICOOSS //////////////////
-    const labels5 = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
+    const labels5 = [];
 
     const data5 = {
         labels: labels5,
         datasets: [
             {
                 label: 'CPU (%)',
-                data: [60, 50, 95, 85, 60, 65, 55],
+                data: [],
                 fill: true,
                 borderColor: 'rgb(255, 218, 107)',
                 backgroundColor: 'rgb(255, 218, 107, 0.2)',
@@ -391,7 +391,10 @@
                 y: {
                     ticks: {
                         color: 'white'
-                    }
+                    },
+                    min: 0,
+                    max: 100
+
                 }
             }
         },
@@ -664,7 +667,7 @@
                         .then(function (resposta) {
                             console.log(resposta)
 
-                            DadosCPU.innerHTML = `${resposta[0].DadosKpiCPU2}%`
+                            DadosCPU.innerHTML = `${resposta[0].mediaUsoCPU}%`
                         })
                 } else {
                     throw "Houve erro ao puxar";
@@ -707,10 +710,65 @@
     });
 }
 
+function DadosKpiCPUAlertas() {
+        fetch("/graficosRouter/DadosKpiCPUAlertas/", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPICpuAlertas");
+                console.log("resposta:", resposta);
 
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta)
 
+                            CPUAlerta.innerHTML = `${resposta[0].CPUAlerta}`
+                        })
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+}
 
+function DadosKpiCPUTempoReal() {
+    fetch("/graficosRouter/DadosKpiCPUTempoReal/", {
+        method: "GET",
+    })
+        .then(function (resposta) {
+            console.log("Estou na função do DadosKpiCPUTempoReal");
+            console.log("resposta:", resposta);
 
+            if (resposta.ok) {
+                resposta.json()
+                    .then(function (resposta) {
+                        console.log(resposta);
+
+                        
+                        const labelsAtualizados = resposta.map(dado => dado.hora); 
+                        const cpuDadosAtualizados = resposta.map(dado => dado.CPUTempoReal);
+
+                        // Atualize os labels e os dados do gráfico
+                        myChart5.data.labels = labelsAtualizados;
+                        myChart5.data.datasets[0].data = cpuDadosAtualizados;
+
+                        // Atualize o limite ideal (mantendo o tamanho)
+                        myChart5.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+
+                        // Re-renderize o gráfico
+                        myChart5.update();
+                    });
+            } else {
+                throw "Houve erro ao puxar";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+}
 
 
 

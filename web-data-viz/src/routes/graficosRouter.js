@@ -18,6 +18,14 @@ router.get("/DadosKpiCPUPicos", function (req, res) {
   graficosController.DadosKpiCPUPicos(req, res);
 });
 
+router.get("/DadosKpiCPUAlertas", function (req, res) {
+  graficosController.DadosKpiCPUAlertas(req, res);
+});
+
+router.get("/DadosKpiCPUTempoReal", function (req, res) {
+  graficosController.DadosKpiCPUTempoReal(req, res);
+});
+
 
 // exporta para outro arquivo:
 module.exports = router;

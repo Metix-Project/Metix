@@ -1,4 +1,5 @@
 // define o arquivo de conexão com o database:
+
 var database = require("../database/connection.js");
 
 function pegarDados() {
@@ -7,7 +8,9 @@ function pegarDados() {
 }
 
 function DadosKpiCPU(){
-  var instrucaosql   = `SELECT cpuPorc AS DadosKpiCPU2 FROM DadosServidor ORDER BY dataHora DESC LIMIT 1;`;
+  var instrucaosql   = `SELECT macAddress, ROUND(AVG(cpuPorc), 2) AS mediaUsoCPU
+FROM DadosServidor WHERE dataHora >= NOW() - INTERVAL 1 DAY
+GROUP BY macAddress;`;
 
   console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql)
@@ -24,10 +27,31 @@ LIMIT 2;`;
   
 }
 
+
+function DadosKpiCPUAlertas(){
+  var instrucaosql   = `SELECT macAddress, COUNT(*) AS CPUAlerta
+FROM DadosServidor WHERE cpuPorc > 85
+GROUP BY macAddress;`;
+
+  console.log("Executando Query \n" + instrucaosql);
+  return database.executar(instrucaosql)
+}
+
+function DadosKpiCPUTempoReal(){
+  var instrucaosql   = `SELECT DATE_FORMAT(dataHora, '%H:%i:%s') AS hora, cpuPorc AS CPUTempoReal
+FROM DadosServidor ORDER BY dataHora LIMIT 5;`;
+
+  console.log("Executando Query \n" + instrucaosql);
+  return database.executar(instrucaosql)
+}
+
 // exporta para outro arquivo:
 module.exports = {
   pegarDados,
   DadosKpiCPU,
-  DadosKpiCPUPicos
+  DadosKpiCPUPicos,
+  DadosKpiCPUAlertas,
+  DadosKpiCPUTempoReal
+
 };
   
