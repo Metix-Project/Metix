@@ -26,6 +26,21 @@ router.get("/DadosKpiCPUTempoReal", function (req, res) {
   graficosController.DadosKpiCPUTempoReal(req, res);
 });
 
+router.get("/DadosKpiMemoria", function (req, res) {
+  graficosController.DadosKpiMemoria(req, res);
+});
+
+router.get("/DadosKpiMemoriaPicos", function (req, res) {
+  graficosController.DadosKpiMemoriaPicos(req, res);
+});
+
+router.get("/DadosKpiMemoriaAlertas", function (req, res) {
+  graficosController.DadosKpiMemoriaAlertas(req, res);
+});
+
+router.get("/DadosKpiMemoriaTempoReal", function (req, res) {
+  graficosController.DadosKpiMemoriaTempoReal(req, res);
+});
 
 // exporta para outro arquivo:
 module.exports = router;

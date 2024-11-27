@@ -16,7 +16,8 @@
 
 </head>
 
-<body onload="DadosKpiCPU(); DadosKpiCPUPicos(); DadosKpiCPUAlertas(); DadosKpiCPUTempoReal();">
+<body onload="DadosKpiCPU(); DadosKpiCPUPicos(); DadosKpiCPUAlertas(); DadosKpiCPUTempoReal(); 
+DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMemoriaTempoReal();">
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
@@ -107,7 +108,7 @@
                         <h3>Média de Uso da Memória</h3>
                         <div class="quadrado-editor">
                             <div class="quadrado-dentro-media">
-                                <p>Nas últimas 24 horas, a média é: <br></p><span>65%</span></p>
+                                <p>Nas últimas 24 horas, a média é: <br></p><span id="DadosMemoria">X%</span></p>
                             </div>
                         </div>
                     </div>
@@ -116,14 +117,14 @@
                         <h3>2 Principais Picos de Uso</h3>
                         <div class="quadrado-editor">
                             <div class="quadrado-dentro-pico1">
-                                <p>Porcentagem: <br><span>90%</span></p>
-                                <p>Data: <br> 2024-11-23</p>
-                                <p>Hora: 14:30</p>
+                                <p>Porcentagem: <br><span id="Memoriapico1" >X%</span></p>
+                                <p>Data: <br> <span id="Memoriadatapico1">X</span></p>
+                                <p>Hora: <br><span id="Memoriahorapico1">X</span></p>
                             </div>
-                            <div class="quadrado-dentro-pico2">
-                                <p>Porcentagem: <br><span>87%</span></p>
-                                <p>Data: <br> 2024-11-23</p>
-                                <p>Hora: 11:45</p>
+                            <div id="2" class="quadrado-dentro-pico2">
+                                <p>Porcentagem: <br><span id="Memoriapico2">X%</span></p>
+                                <p>Data: <br> <span id="Memoriadatapico2">x</span></p>
+                                <p>Hora: <br> <span id="Memoriahorapico2">x</span></p>
                             </div>
                         </div>
                     </div>
@@ -131,7 +132,7 @@
                     <div class="kpi">
                         <h3>Quantidade de Alertas</h3>
                         <div class="quadrado-dentro-alertas">
-                            <p>Nas últimas 24 horas, foi aberto: <br></p><span>2 <br>alertas</span></p>
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="MemoriaAlerta"> X </span> <br> <span>alertas</span></p>
                         </div>
                         <div class="botao-alertas">
                             <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
@@ -550,14 +551,14 @@
     );
 
     //////// GRAFICOOO MEMORIAAAA /////////
-    const labels3 = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
+    const labels3 = [];
 
     const data3 = {
         labels: labels3,
         datasets: [
             {
                 label: 'Memória RAM (%)',
-                data: [30, 70, 80, 50, 60, 95, 85],
+                data: [],
                 fill: true,
                 borderColor: 'rgb(192, 178, 160)',
                 tension: 0.1,
@@ -651,7 +652,7 @@
         config4
     );
 
-
+//AQUI COMEÇA CPU
     function DadosKpiCPU() {
         fetch("/graficosRouter/DadosKpiCPU/", {
             method: "GET",
@@ -771,11 +772,129 @@ setInterval(DadosKpiCPUPicos, 10000);
 setInterval(DadosKpiCPU, 10000);
 setInterval(DadosKpiCPUAlertas, 10000);
 
+//AQUI COMEÇA MEMORIA RAM
+
+function DadosKpiMemoria() {
+        fetch("/graficosRouter/DadosKpiMemoria/", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPIMemoria");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta)
+
+                            DadosMemoria.innerHTML = `${resposta[0].mediaUsoMemoria}%`
+                        })
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
 
 
+    function DadosKpiMemoriaPicos() {
+    fetch("/graficosRouter/DadosKpiMemoriaPicos/", {
+        method: "GET",
+    })
+    .then(function (resposta) {
+        console.log("Estou na função do DadosKpiMemoriaPicos");
+        console.log("resposta:", resposta);
 
+        if (resposta.ok) {
+            return resposta.json(); 
+        } else {
+            throw "Houve erro ao puxar";
+        }
+    })
+    .then(function (resposta) {
+        console.log(resposta);
 
+        
+        Memoriapico1.innerHTML = `${resposta[0].picoMemoria}%`;
+        Memoriadatapico1.innerHTML = `${resposta[0].Data1}`
+        Memoriahorapico1.innerHTML = `${resposta[0].Hora1}`
 
+        Memoriapico2.innerHTML = `${resposta[1].picoMemoria}%`;
+        Memoriadatapico2.innerHTML = `${resposta[1].Data1}`
+        Memoriahorapico2.innerHTML = `${resposta[1].Hora1}`
 
+    })
+    .catch(function (erro) {
+        console.log(`#ERRO: ${erro}`);
+    });
+}
+
+function DadosKpiMemoriaAlertas() {
+        fetch("/graficosRouter/DadosKpiMemoriaAlertas/", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPIMemoriaAlertas");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta)
+
+                            MemoriaAlerta.innerHTML = `${resposta[0].MemoriaAlerta1}`
+                        })
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+}
+
+function DadosKpiMemoriaTempoReal() {
+    
+    fetch("/graficosRouter/DadosKpiMemoriaTempoReal/", {
+        method: "GET",
+    })
+        .then(function (resposta) {
+            console.log("Estou na função do DadosKpiMemoriaTempoReal");
+            console.log("resposta:", resposta);
+
+            if (resposta.ok) {
+                resposta.json()
+                    .then(function (resposta) {
+                        console.log(resposta);
+                        resposta.reve
+                        
+                        const labelsAtualizados = resposta.map(dado => dado.hora); 
+                        const MemoriaDadosAtualizados = resposta.map(dado => dado.MemoriaTempoReal);
+
+                        myChart3.data.labels = labelsAtualizados.reverse();
+                        myChart3.data.datasets[0].data = MemoriaDadosAtualizados.reverse();
+
+                       
+                        myChart3.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+
+                        myChart3.update();
+                    });
+            } else {
+                throw "Houve erro ao puxar";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+}
+
+setInterval(DadosKpiMemoriaTempoReal, 10000);
+setInterval(DadosKpiMemoriaPicos, 10000);
+setInterval(DadosKpiMemoria, 10000);
+setInterval(DadosKpiMemoriaAlertas, 10000);
+
+//AQUI COMEÇA DISCO
 
 </script>
