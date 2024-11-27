@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Métix Proteção Divina</title>
+  <link rel="icon" href="../assets/imgs/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="../js/sessao.js"></script>
+  <script src="https://unpkg.com/cal-heatmap/dist/cal-heatmap.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/cal-heatmap/dist/cal-heatmap.css">
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/cal-heatmap/dist/plugins/Tooltip.min.js"></script>
+  <script src="https://unpkg.com/cal-heatmap/dist/plugins/LegendLite.min.js"></script>
+  <script src="https://unpkg.com/cal-heatmap/dist/plugins/CalendarLabel.min.js"></script>
+  <link rel="stylesheet" href="../css/dashboardBase.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="profile">
+        <img alt="Profile" id="profileImage">
+        <h2 id="profileName">Usuário</h2>
+        <h4 id="profilePosition">Cargo: Gerente</h4>
+        <h4 id="profileBusiness">Banco</h4>
+      </div>
+
+      <div class="dashboardLinks">
+        <h2>Dashboards</h2>
+        <button>Monitoramento</button>
+        <button>Alertas</button>
+        <button onclick="window.location.href = 'telaHistorico.html'">Histórico</button>
+        <button>Previsões</button>
+        <button>Manutenção</button>
+        <button onclick="limparSessao()">Sair</button>
+      </div>
+      <div class="logo">
+        <img src="../assets/imgs/Logo1.png" alt="Metix Logo">
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1 id="bodyTitle">DASHBOARD DE MANUTENÇÃO</h1>
+      <div id="cal-heatmap"></div>
+      <div id="heatmap-container"
+        style="background: #22272d; color: #adbac7; border-radius: 3px; padding: 1rem; overflow: hidden;">
+        <div id="ex-ghDay" class="margin-bottom--md"></div>
+        <a id="previous" href="#" class="button button--sm button--secondary margin-top--sm" style="margin-right: 8px;">
+          ← Previous
+        </a>
+        <a id="next" href="#" class="button button--sm button--secondary margin-top--sm">
+          Next →
+        </a>
+        <div style="float: right; font-size: 12px;">
+          <span style="color: #768390;">Less</span>
+          <div id="ex-ghDay-legend" style="display: inline-block; margin: 0 4px;"></div>
+          <span style="color: #768390; font-size: 12px;">More</span>
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="status-cards">
+        <div class="status-card green">
+          <h3>111</h3>
+          <p>COMPONENTES EM ESTADO ESTÁVEL</p>
+        </div>
+        <div class="status-card red">
+          <h3>05</h3>
+          <p>COMPONENTES EM ESTADO DE ALERTA</p>
+        </div>
+      </div>
+      <button>Agendar manutenção</button>
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script>
+  fetch('https://transacoes-pix-metix.s3.us-east-1.amazonaws.com/dados_simulados_transacoes.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao carregar o arquivo');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data); 
+    })
+    .catch(error => {
+      console.error('Erro:', error);
+    });
+
+
+  const cal = new CalHeatmap();
+
+  // cal.paint({
+  //   data: {
+  //     source: 'C:/Users/victo/Desktop/Metix/web-data-viz/public/dashGerente/dados_simulados_transacoes', // Substitua pela URL do seu arquivo JSON
+  //     type: 'json',             // O arquivo é JSON
+  //     x: d => new Date(d.Ano, d.Mes - 1, d.Dia, d.Hora), // Converte Ano, Mês, Dia, Hora para um objeto Date
+  //     y: d => d.Media_transacoes_por_hora,               // Acessa diretamente o valor da média
+  //     groupY: 'min',                                     // Agrupa pelos valores mínimos (menor média por hora)
+  //   },
+  //   date: {
+  //     start: new Date(2022, 0, 1, 0), // Início do calendário (2022-01-01 00:00)
+  //     min: new Date(2022, 0, 1, 0),  // Limite mínimo para navegação
+  //     max: new Date(2024, 11, 31, 23), // Limite máximo para navegação (ajuste conforme necessário)
+  //   },
+  //   range: 12,
+  //   scale: {
+  //     color: {
+  //       type: 'threshold',
+  //       range: ['#14432a', '#166b34', '#37a446', '#4dd05a'],
+  //       domain: [10, 20, 30],
+  //     },
+  //   },
+  //   domain: {
+  //     type: 'month',
+  //     gutter: 4,
+  //     label: { text: 'MMM', textAlign: 'start', position: 'top' },
+  //   },
+  //   subDomain: { type: 'ghDay', radius: 2, width: 11, height: 11, gutter: 4 },
+  //   itemSelector: '#ex-ghDay',
+  // }, [
+  //   [
+  //     Tooltip,
+  //     {
+  //       text: (date, value, dayjsDate) => {
+  //         return (
+  //           (value ? value : 'No') +
+  //           ' contributions on ' +
+  //           dayjsDate.format('dddd, MMMM D, YYYY')
+  //         );
+  //       },
+  //     },
+  //   ],
+  //   [
+  //     LegendLite,
+  //     {
+  //       includeBlank: true,
+  //       itemSelector: '#ex-ghDay-legend',
+  //       radius: 2,
+  //       width: 11,
+  //       height: 11,
+  //       gutter: 4,
+  //     },
+  //   ],
+  //   [
+  //     CalendarLabel,
+  //     {
+  //       width: 30,
+  //       textAlign: 'start',
+  //       text: () => dayjs.weekdaysShort().map((d, i) => (i % 2 == 0 ? '' : d)),
+  //       padding: [25, 0, 0, 0],
+  //     },
+  //   ],
+  // ]);
+
+  document.getElementById('previous').addEventListener('click', e => {
+    e.preventDefault();
+    cal.previous(); // Vai para o mês anterior
+  });
+
+  document.getElementById('next').addEventListener('click', e => {
+    e.preventDefault();
+    cal.next(); // Vai para o próximo mês
+  });
+
+</script>
+
+<style>
+  /* Status Cards */
+  .status-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    background: none;
+  }
+
+  .status-card {
+    background-color: #2c2c2c;
+    /* Fundo cinza claro */
+    padding: 30px;
+    border-radius: 10px 10px 10px 10px;
+    /* Bordas superiores arredondadas */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-top: 30px solid;
+    /* Define a borda superior */
+  }
+
+  .status-card.green {
+    border-top-color: #4c9b1e;
+    /* Cor verde para "Estado Estável" */
+  }
+
+  .status-card.green h3 {
+    color: #4c9b1e;
+  }
+
+  .status-card.green p {
+    color: #59a62d;
+  }
+
+  .status-card.red {
+    border-top-color: #d13e3e;
+  }
+
+  .status-card.red h3 {
+    color: #d13e3e;
+  }
+
+  .status-card.red p {
+    color: #d13e3e;
+  }
+
+  .status-card h3 {
+    font-size: 48px;
+    color: rgb(0, 0, 0);
+    margin: 0;
+  }
+
+  .status-card p {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    margin: 10px 0 0;
+  }
+
+  /* From Uiverse.io by portseif */
+  button {
+    align-items: center;
+    background-color: #2C2C2C;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    font-family: ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+    text-decoration: none;
+    text-transform: uppercase;
+    outline: 0;
+    border: 0;
+    padding: 1rem;
+    border-radius: 70px 70px 70px 70px;
+    border: 2px solid rgb(99, 99, 99);
+    ;
+  }
+
+  button:before {
+    background-color: #fff;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    margin-right: 10px;
+    transition: all .42s cubic-bezier(.25, .8, .25, 1);
+    width: 0;
+  }
+
+  button:hover:before {
+    background-color: #fff;
+    width: 3rem;
+  }
+</style>

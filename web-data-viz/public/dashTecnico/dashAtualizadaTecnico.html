@@ -10,343 +10,891 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
     <link rel="stylesheet" href="../css/DashRealTemp.css">
     <link rel="stylesheet" href="../css/dashboardBase.css">
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    
+
 </head>
 
-<body>
-  <div class="container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="profile">
-            <img alt="Profile" id="profileImage">
-            <div class="prfTxt">
-                <h2 id="profileName">Olá, Usuário!</h2>
-                <h4 id="profilePosition">Cargo: Técnico</h4>
+<body onload="DadosKpiCPU(); DadosKpiCPUPicos(); DadosKpiCPUAlertas(); DadosKpiCPUTempoReal(); 
+DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMemoriaTempoReal();">
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile">
+                <img alt="Profile" id="profileImage">
+                <div class="prfTxt">
+                    <h2 id="profileName">Olá, Usuário!</h2>
+                    <h4 id="profilePosition">Cargo: Técnico</h4>
+                </div>
+            </div>
+
+            <div class="dashboardLinks">
+                <button onclick="window.location.href='DashTempoReal.html'">MONITORAMENTO</button>
+                <button>ALERTAS</button>
+                <button onclick="window.location.href='dashGerente/telaHistorico.html'">HISTÓRICO</button>
+                <button>PREVISÕES</button>
+                <button>MANUTENÇÃO</button>
+                <button onclick="limparSessao()">Sair</button>
+
+                <div class="logo">
+                    <img src="../assets/imgs/Logo1.png" alt="Metix logo">
+                </div>
             </div>
         </div>
 
-        <div class="dashboardLinks">
-            <button onclick="window.location.href='DashTempoReal.html'">MONITORAMENTO</button>
-            <button>ALERTAS</button>
-            <button onclick="window.location.href='dashGerente/telaHistorico.html'">HISTÓRICO</button>
-            <button>PREVISÕES</button>
-            <button>MANUTENÇÃO</button>
-            <button onclick="limparSessao()">Sair</button>
+        <div class="main-content">
 
-            <div class="logo">
-                <img src="../assets/imgs/Logo1.png" alt="Metix logo">
+            <div class="div_select">
+                <select class="filter-container" id="selectServidor" onchange="modificarComponente()">
+                    <option value="Servidor1">Servidor 1</option>
+                    <option value="Servidor2">Servidor 2</option>
+                    <option value="Servidor3">Servidor 3</option>
+                    <option value="Servidor4">Servidor 4</option>
+                </select>
+                <select class="filter-container" id="selectComponente" onchange="modificarComponente()">
+                    <option value="cpu">CPU</option>
+                    <option value="memoria">Memória RAM</option>
+                    <option value="disco">Disco</option>
+                    <option value="rede">Rede</option>
+                    <option value="latencia">Latência</option>
+                </select>
+            </div>
+
+
+            <div id="kpi-cpu" style="display: block;">
+                <div class="kpi-container">
+                    <div class="kpi">
+                        <h3>Média de Uso da CPU</h3>
+                        <div class="quadrado-editor">
+                            <div class="quadrado-dentro-media">
+                                <p>Nas últimas 24 horas, a média é: <br></p><span id="DadosCPU">X%</span></p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="kpi">
+                        <h3> 2 Principais picos de Uso</h3>
+                        <div class="quadrado-editor">
+                            <div class="quadrado-dentro-pico1">
+                                <p>Porcentagem: <br><span id="CPUpico1" >X%</span></p>
+                                <p>Data: <br> <span id="datapico1">X</span></p>
+                                <p>Hora: <br><span id="horapico1">X</span></p>
+                            </div>
+                            <div id="2" class="quadrado-dentro-pico2">
+                                <p>Porcentagem: <br><span id="CPUpico2">X%</span></p>
+                                <p>Data: <br> <span id="datapico2">x</span></p>
+                                <p>Hora: <br> <span id="horapico2">x</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi">
+                        <h3>Quantidade de Alertas</h3>
+                        <div class="quadrado-dentro-alertas">
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="CPUAlerta"> X </span> <br> <span>alertas</span></p>
+                        </div>
+                        <div class="botao-alertas">
+                            <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ////////////////////////////// -->
+            <div id="kpi-memoria" style="display: none;">
+                <div class="kpi-container">
+                    <div class="kpi">
+                        <h3>Média de Uso da Memória</h3>
+                        <div class="quadrado-editor">
+                            <div class="quadrado-dentro-media">
+                                <p>Nas últimas 24 horas, a média é: <br></p><span id="DadosMemoria">X%</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi">
+                        <h3>2 Principais Picos de Uso</h3>
+                        <div class="quadrado-editor">
+                            <div class="quadrado-dentro-pico1">
+                                <p>Porcentagem: <br><span id="Memoriapico1" >X%</span></p>
+                                <p>Data: <br> <span id="Memoriadatapico1">X</span></p>
+                                <p>Hora: <br><span id="Memoriahorapico1">X</span></p>
+                            </div>
+                            <div id="2" class="quadrado-dentro-pico2">
+                                <p>Porcentagem: <br><span id="Memoriapico2">X%</span></p>
+                                <p>Data: <br> <span id="Memoriadatapico2">x</span></p>
+                                <p>Hora: <br> <span id="Memoriahorapico2">x</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi">
+                        <h3>Quantidade de Alertas</h3>
+                        <div class="quadrado-dentro-alertas">
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="MemoriaAlerta"> X </span> <br> <span>alertas</span></p>
+                        </div>
+                        <div class="botao-alertas">
+                            <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--//////////////////////////// -->
+            <div id="kpi-disco" style="display: none;">
+                <div class="kpi-container">
+                    <div class="kpi">
+                        <h3>Média de Uso de Disco</h3>
+                        <div class="quadrado-editor">
+                            <div class="quadrado-dentro-media">
+                                <p>Nas últimas 24 horas, a média é: <br></p><span>55%</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi">
+                        <h3>2 Principais Picos de Uso</h3>
+                        <div class="quadrado-editor">
+                            <div class="quadrado-dentro-pico1">
+                                <p>Porcentagem: <br><span>60%</span></p>
+                                <p>Data: <br> 2024-11-23</p>
+                                <p>Hora: 14:30</p>
+                            </div>
+                            <div class="quadrado-dentro-pico2">
+                                <p>Porcentagem: <br><span>80%</span></p>
+                                <p>Data: <br> 2024-11-23</p>
+                                <p>Hora: 11:45</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi">
+                        <h3>Quantidade de Alertas</h3>
+                        <div class="quadrado-dentro-alertas">
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span> <br>alertas</span></p>
+                        </div>
+                        <div class="botao-alertas">
+                            <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--//////////////////////////// -->
+            <div id="kpi-rede" style="display: none;">
+                <div class="kpi-container">
+                    <div class="kpi">
+                        <h3>Rede - Média de Tráfego</h3>
+                        <div class="quadrado-editor">
+                            <div class="quadrado-dentro-media">
+                                Enviados: <span>120 MBps</span></p>
+                                Recebidos: <span>120 MBps</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi">
+                        <h3>2 Principais Picos de Tráfego</h3>
+                        <div class="quadrado-editor">
+                            <div class="quadrado-dentro-pico1">
+                                <p>Enviados: <br><span>250 MBps</span></p>
+                                <p>Data: <br> 2024-11-23</p>
+                                <p>Hora: 16:00</p>
+                            </div>
+                            <div class="quadrado-dentro-pico2">
+                                <p>Recebidos: <br><span>280 MBps</span></p>
+                                <p>Data: <br> 2024-11-23</p>
+                                <p>Hora: 10:45</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi">
+                        <h3>Quantidade de Alertas</h3>
+                        <div class="quadrado-dentro-alertas">
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span> 5<br>alertas</span></p>
+                        </div>
+                        <div class="botao-alertas">
+                            <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--//////////////////////////// -->
+            <div id="kpi-latencia" style="display: none;">
+                <div class="kpi-container">
+                    <div class="kpi">
+                        <h3>Média de Latência</h3>
+                        <div class="quadrado-editor">
+                            <div class="quadrado-dentro-media">
+                                <p>Nas últimas 24 horas, a média é: <br></p><span>30 ms</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi">
+                        <h3>2 Principais Picos</h3>
+                        <div class="quadrado-editor">
+                            <div class="quadrado-dentro-pico1">
+                                <p>Latência: <br><span>120 ms</span></p>
+                                <p>Data: <br> 2024-11-23</p>
+                                <p>Hora: 17:15</p>
+                            </div>
+                            <div class="quadrado-dentro-pico2">
+                                <p>Latência: <br><span>100 ms</span></p>
+                                <p>Data: <br> 2024-11-23</p>
+                                <p>Hora: 08:30</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi">
+                        <h3>Quantidade de Alertas</h3>
+                        <div class="quadrado-dentro-alertas">
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span> 5<br>alertas</span></p>
+                        </div>
+                        <div class="botao-alertas">
+                            <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div id="chart-cpu" class="chart-container" style="display: block;">
+                    <canvas id="myChart5"></canvas>
+                </div>
+
+                <div id="chart-rede" class="chart-container" style="display: none;">
+                    <canvas id="chartProcessamento"></canvas>
+                </div>
+
+                <div id="chart-latencia" class="chart-container" style="display: none;">
+                    <canvas id="chartLatencia"></canvas>
+                </div>
+
+                <div id="chart-memoria" class="chart-container" style="display: none;">
+                    <canvas id="chartMemoria"></canvas>
+                </div>
+
+                <div id="chart-disco" class="chart-container"
+                    style="display: none; align-items: center; justify-content: center;">
+                    <canvas id="chartDisco"></canvas>
+                </div>
+
             </div>
         </div>
-</div>
-
-<div class="main-content">
-            
-  <div class="div_select">
-    <select class="filter-container" id="selectServidor" onchange="modificarComponente()">
-      <option value="Servidor1">Servidor 1</option>
-      <option value="Servidor2">Servidor 2</option>
-      <option value="Servidor3">Servidor 3</option>
-      <option value="Servidor4">Servidor 4</option>
-    </select>
-    <select class="filter-container" id="selectComponente" onchange="modificarComponente()">
-      <option value="cpu">CPU</option>
-      <option value="memoria">Memória RAM</option>
-      <option value="disco">Disco</option>
-      <option value="rede">Rede</option>
-      <option value="latencia">Latência</option>
-    </select>
-  </div>
-
-  <div class="kpi-container">
-      <div class="kpi">
-          <h3>Uso de CPU em Tempo Real</h3>
-          <div class="quadrado-editor">
-          <div class="quadrado-dentro3">
-              <p><span>65%</span></p>
-          </div>
-          
-      </div>
-      </div>
-      <div class="kpi">
-          <h3> 2 Principais picos de Uso</h3>
-          <div class="quadrado-editor">
-          <div id="1" class="quadrado-dentro-pico1">
-              <p>Porcentagem: <br><span>85%</span></p>
-              <p>Data: <br> 2024-10-29</p>
-              <p>Hora: 15:00</p>
-          </div>
-          <div id="2" class="quadrado-dentro-pico2">
-            <p>Porcentagem: <br><span>95%</span></p>
-            <p>Data: <br> 2024-10-29</p>
-            <p>Hora: 15:00</p>
-          </div>
-      </div>
-          
-      </div>
-      <div class="kpi">
-          <h3>Quantidade de Alertas</h3>
-          <div class="quadrado-dentro3">
-          <p>Nas últimas 24 horas, foi aberto: <br></p><span>2 <br>alertas</span></p>
-          </div>
-      </div>
-  </div>
-
-    <div class="charts-container">
-
-        <div id="chart-cpu" class="chart-container" style="display: block;">
-            <canvas id="myChart5"></canvas>
-        </div>
-
-        <div id="chart-rede" class="chart-container" style="display: none;">
-            <canvas id ="chartProcessamento"></canvas>
-        </div> 
-
-            <div id="chart-latencia" class="chart-container" style="display: none;">
-                <canvas id="chartLatencia"></canvas>
-        </div> 
     </div>
-
-
-</div>
-
-        
-    
 </body>
 
 </html>
 
 <script>
+    
     function modificarComponente() {
-      const componenteSelecionado = document.getElementById("selectComponente").value;
-      
-      document.getElementById("chart-cpu").style.display = "none";
-      document.getElementById("chart-rede").style.display = "none";
-      document.getElementById("chart-latencia").style.display = "none";
-        
-      // Nesse If está mostrando os graficos pedidos no select
-      if (componenteSelecionado === "cpu") {
-        document.getElementById("chart-cpu").style.display = "block";
-      } 
-      else if (componenteSelecionado === "rede") {
-        document.getElementById("chart-rede").style.display = "block";
-      }
-      else if (componenteSelecionado === "latencia") {
-        document.getElementById("chart-latencia").style.display = "block";
-      }
+        const componenteSelecionado = document.getElementById("selectComponente").value;
 
-    }
-    /////////////////// AQUI ESTOU MONTANDO OS GRAFICOOSS //////////////////
-    const labels5 = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
-  
-    const data5 = {
-      labels: labels5,
-      datasets: [
-        {
-          label: 'CPU (%)',
-          data: [60, 50, 95, 85, 60, 65, 55],
-          fill: true,
-          borderColor: 'rgb(255, 218, 107)',
-          backgroundColor: 'rgb(255, 218, 107, 0.2)',
-          tension: 0.1
-        },
-        {
-          label: 'Limite Ideal',
-          data: [85, 85, 85, 85, 85, 85, 85],
-          fill: true,
-          borderColor: 'red',
-          tension: 0,
-          pointBorderWidth: 0,
-          pointBackgroundColor: 'transparent'
+        document.getElementById("chart-cpu").style.display = "none";
+        document.getElementById("chart-rede").style.display = "none";
+        document.getElementById("chart-latencia").style.display = "none";
+        document.getElementById("chart-memoria").style.display = "none";
+        document.getElementById("chart-disco").style.display = "none";
+        //KPI
+        document.getElementById("kpi-cpu").style.display = "none";
+        document.getElementById("kpi-disco").style.display = "none";
+        document.getElementById("kpi-rede").style.display = "none";
+        document.getElementById("kpi-memoria").style.display = "none";
+        document.getElementById("kpi-latencia").style.display = "none";
+
+
+
+        // Nesse If está mostrando os graficos pedidos no select
+        if (componenteSelecionado === "cpu") {
+            document.getElementById("chart-cpu").style.display = "block";
+            document.getElementById("kpi-cpu").style.display = "block";
         }
-      ]
+        else if (componenteSelecionado === "rede") {
+            document.getElementById("chart-rede").style.display = "block";
+            document.getElementById("kpi-rede").style.display = "block";
+        }
+        else if (componenteSelecionado === "latencia") {
+            document.getElementById("chart-latencia").style.display = "block";
+            document.getElementById("kpi-latencia").style.display = "block";
+        }
+        else if (componenteSelecionado === "memoria") {
+            document.getElementById("chart-memoria").style.display = "block";
+            document.getElementById("kpi-memoria").style.display = "block";
+
+        }
+        else if (componenteSelecionado === "disco") {
+            document.getElementById("chart-disco").style.display = "flex";
+            document.getElementById("kpi-disco").style.display = "block";
+        }
+    }
+
+    /////////////////// AQUI ESTOU MONTANDO OS GRAFICOOSS //////////////////
+    const labels5 = [];
+
+    const data5 = {
+        labels: labels5,
+        datasets: [
+            {
+                label: 'CPU (%)',
+                data: [],
+                fill: true,
+                borderColor: 'rgb(255, 218, 107)',
+                backgroundColor: 'rgb(255, 218, 107, 0.2)',
+                tension: 0.1
+            },
+            {
+                label: 'Limite Ideal',
+                data: [85, 85, 85, 85, 85, 85, 85],
+                fill: true,
+                borderColor: 'red',
+                tension: 0,
+                pointBorderWidth: 0,
+                pointBackgroundColor: 'transparent'
+            }
+        ]
     };
-  
+
     const config5 = {
-      type: 'line',
-      data: data5,
-      options: {
-        plugins: {
-          title: {
-            display: true,
-            text: 'Uso de CPU (%) - 24H',
-            color: 'white',
-            font: {
-              size: 18,
-              weight: 'bold',
+        type: 'line',
+        data: data5,
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Uso de CPU (%) - 24H',
+                    color: 'white',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 30,
+                    },
+                },
             },
-            padding: {
-              top: 10,
-              bottom: 30,
-            },
-          },
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: 'white'
-                }
-            },
-            y: {
-                ticks: {
-                    color: 'white'
+            scales: {
+                x: {
+                    ticks: {
+                        color: 'white'
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: 'white'
+                    },
+                    min: 0,
+                    max: 100
+
                 }
             }
-        }
-      },
+        },
     };
-  
+
     const myChart5 = new Chart(
-      document.getElementById('myChart5'),
-      config5
+        document.getElementById('myChart5'),
+        config5
     );
-  
+
     const labels = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
 
-const data = {
-    labels: labels,
-    datasets: [
-        {
-            label: 'Enviados (MB)',
-            data: [300, 500, 800, 400, 600, 300, 300],  
-            fill: true,
-            borderColor: 'rgb(125, 148, 60)',
-            tension: 0.1,
-            backgroundColor: 'rgb(125, 148, 60, 0.2)'
-        },
-        {
-            label: 'Recebidos (MB)',
-            data: [400, 550, 1200, 550, 700, 400, 500],  
-            fill: true,
-            borderColor: 'rgb(5, 208, 222)',
-            tension: 0.1,
-            backgroundColor: 'rgb(5, 208, 222, 0.2)'
-        },
-        {
-            label: 'Limite Ideal',
-            data: [1000, 1000, 1000, 1000, 1000, 1000, 1000],  
-            fill: true,
-            borderColor: 'red',
-            tension: 0,
-            pointBorderWidth: 0,
-            pointBackgroundColor: 'transparent'
-        }
-    ]
-};
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Enviados (MB)',
+                data: [300, 500, 800, 400, 600, 300, 300],
+                fill: true,
+                borderColor: 'rgb(125, 148, 60)',
+                tension: 0.1,
+                backgroundColor: 'rgb(125, 148, 60, 0.2)'
+            },
+            {
+                label: 'Recebidos (MB)',
+                data: [400, 550, 1200, 550, 700, 400, 500],
+                fill: true,
+                borderColor: 'rgb(5, 208, 222)',
+                tension: 0.1,
+                backgroundColor: 'rgb(5, 208, 222, 0.2)'
+            },
+            {
+                label: 'Limite Ideal',
+                data: [1000, 1000, 1000, 1000, 1000, 1000, 1000],
+                fill: true,
+                borderColor: 'red',
+                tension: 0,
+                pointBorderWidth: 0,
+                pointBackgroundColor: 'transparent'
+            }
+        ]
+    };
 
-const config = {
-    type: 'line',
-    data: data, 
-    options: {
-        plugins: {
-            legend: {
-                labels: {
-                    color: 'white' 
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white'
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Monitoramento de Rede (MB) - 24H',
+                    color: 'white',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 30,
+                    },
                 }
             },
-            title: {
-                display: true,
-                text: 'Monitoramento de Rede (MB) - 24H',
-                color: 'white',
-                font: {
-                    size: 18,
-                    weight: 'bold',
+            scales: {
+                x: {
+                    ticks: {
+                        color: 'white'
+                    }
                 },
-                padding: {
-                    top: 10,
-                    bottom: 30,
-                },
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: 'white'
-                }
-            },
-            y: {
-                ticks: {
-                    color: 'white'
+                y: {
+                    ticks: {
+                        color: 'white'
+                    }
                 }
             }
         }
+    };
+
+    const myChart1 = new Chart(
+        document.getElementById('chartProcessamento'),
+        config
+    );
+
+    const labels2 = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
+
+    const data2 = {
+        labels: labels2,
+        datasets: [
+            {
+                label: 'Latência (ms)',
+                data: [30, 70, 50, 40, 60, 45, 55],
+                fill: true,
+                borderColor: 'rgb(102, 35, 168)',
+                tension: 0.1,
+                backgroundColor: 'rgb(102, 35, 168, 0.3)'
+            },
+            {
+                label: 'Limite Ideal',
+                data: [100, 100, 100, 100, 100, 100, 100],
+                fill: true,
+                borderColor: 'red',
+                tension: 0.1,
+                pointBorderWidth: 0,
+                pointBackgroundColor: 'transparent'
+            }
+        ]
+    };
+
+    const config2 = {
+        type: 'line',
+        data: data2,
+        options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white'
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Latência (Ms) - 24H',
+                    color: 'white',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 30,
+                    },
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: 'white'
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: 'white'
+                    }
+                }
+            }
+        }
+    };
+
+    const myChart2 = new Chart(
+        document.getElementById('chartLatencia'),
+        config2
+    );
+
+    //////// GRAFICOOO MEMORIAAAA /////////
+    const labels3 = [];
+
+    const data3 = {
+        labels: labels3,
+        datasets: [
+            {
+                label: 'Memória RAM (%)',
+                data: [],
+                fill: true,
+                borderColor: 'rgb(192, 178, 160)',
+                tension: 0.1,
+                backgroundColor: 'rgb(192, 178, 160, 0.2)'
+            },
+            {
+                label: 'Limite Ideal',
+                data: [85, 85, 85, 85, 85, 85, 85],
+                fill: true,
+                borderColor: 'red',
+                tension: 0.1,
+                pointBorderWidth: 0,
+                pointBackgroundColor: 'transparent'
+            },
+        ]
+    };
+
+    const config3 = {
+        type: 'line',
+        data: data3,
+        options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white'
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Memória RAM (%) - 24H',
+                    color: 'white',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 30,
+                    },
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: 'white'
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: 'white',
+                    },
+                    min: 0,
+                    max: 100
+                }
+            }
+        }
+    };
+    const myChart3 = new Chart(
+        document.getElementById('chartMemoria'),
+        config3
+    );
+
+    ///////GRAFICOOO DISCCOOOOO//////////
+    const data4 = {
+        labels: ['Espaço Utilizado (%)', 'Espaço Disponível (%)'],
+        datasets: [
+            {
+                label: 'Uso de Disco',
+                data: [40, 60],
+                backgroundColor: ['rgb(249, 146, 44)', 'rgb(125, 148, 60)'],
+                hoverOffset: 4
+            }
+        ]
+    };
+
+    const config4 = {
+        type: 'doughnut',
+        data: data4,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            }
+        }
+    };
+
+    const myChart4 = new Chart(
+        document.getElementById('chartDisco'),
+        config4
+    );
+
+//AQUI COMEÇA CPU
+    function DadosKpiCPU() {
+        fetch("/graficosRouter/DadosKpiCPU/", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPICpu");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta)
+
+                            DadosCPU.innerHTML = `${resposta[0].mediaUsoCPU}%`
+                        })
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
     }
-};
 
-const myChart1 = new Chart(
-    document.getElementById('chartProcessamento'),
-    config
-);
+    function DadosKpiCPUPicos() {
+    fetch("/graficosRouter/DadosKpiCPUPicos/", {
+        method: "GET",
+    })
+    .then(function (resposta) {
+        console.log("Estou na função do DadosKpiCPUPicos");
+        console.log("resposta:", resposta);
 
-const labels2 = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
-
-const data2 = {
-    labels: labels2,
-    datasets: [
-        {
-            label: 'Latência (ms)',
-            data: [30, 70, 50, 40, 60, 45, 55],  
-            fill: true,
-            borderColor: 'rgb(102, 35, 168)',
-            tension: 0.1,
-            backgroundColor: 'rgb(102, 35, 168, 0.3)'
-        },
-        {
-            label: 'Limite Ideal',
-            data: [100, 100, 100, 100, 100, 100, 100],  
-            fill: true,
-            borderColor: 'red',
-            tension: 0.1,
-            pointBorderWidth: 0,
-            pointBackgroundColor: 'transparent'
+        if (resposta.ok) {
+            return resposta.json(); 
+        } else {
+            throw "Houve erro ao puxar";
         }
-    ]
-};
+    })
+    .then(function (resposta) {
+        console.log(resposta);
 
-const config2 = {
-    type: 'line',
-    data: data2, 
-    options: {
-        plugins: {
-            legend: {
-                labels: {
-                    color: 'white' 
+        
+        CPUpico1.innerHTML = `${resposta[0].picoCPU}%`;
+        datapico1.innerHTML = `${resposta[0].Data1}`
+        horapico1.innerHTML = `${resposta[0].Hora1}`
+
+        CPUpico2.innerHTML = `${resposta[1].picoCPU}%`;
+        datapico2.innerHTML = `${resposta[1].Data1}`
+        horapico2.innerHTML = `${resposta[1].Hora1}`
+
+    })
+    .catch(function (erro) {
+        console.log(`#ERRO: ${erro}`);
+    });
+}
+
+function DadosKpiCPUAlertas() {
+        fetch("/graficosRouter/DadosKpiCPUAlertas/", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPICpuAlertas");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta)
+
+                            CPUAlerta.innerHTML = `${resposta[0].CPUAlerta}`
+                        })
+                } else {
+                    throw "Houve erro ao puxar";
                 }
-            },
-            title: {
-                display: true,
-                text: 'Latência (Ms) - 24H',
-                color: 'white',
-                font: {
-                    size: 18,
-                    weight: 'bold',
-                },
-                padding: {
-                    top: 10,
-                    bottom: 30,
-                },
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+}
+
+function DadosKpiCPUTempoReal() {
+    
+    fetch("/graficosRouter/DadosKpiCPUTempoReal/", {
+        method: "GET",
+    })
+        .then(function (resposta) {
+            console.log("Estou na função do DadosKpiCPUTempoReal");
+            console.log("resposta:", resposta);
+
+            if (resposta.ok) {
+                resposta.json()
+                    .then(function (resposta) {
+                        console.log(resposta);
+                        resposta.reve
+                        
+                        const labelsAtualizados = resposta.map(dado => dado.hora); 
+                        const cpuDadosAtualizados = resposta.map(dado => dado.CPUTempoReal);
+
+                        myChart5.data.labels = labelsAtualizados.reverse();
+                        myChart5.data.datasets[0].data = cpuDadosAtualizados.reverse();
+
+                       
+                        myChart5.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+
+                        myChart5.update();
+                    });
+            } else {
+                throw "Houve erro ao puxar";
             }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: 'white'
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+}
+setInterval(DadosKpiCPUTempoReal, 10000);
+setInterval(DadosKpiCPUPicos, 10000);
+setInterval(DadosKpiCPU, 10000);
+setInterval(DadosKpiCPUAlertas, 10000);
+
+//AQUI COMEÇA MEMORIA RAM
+
+function DadosKpiMemoria() {
+        fetch("/graficosRouter/DadosKpiMemoria/", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPIMemoria");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta)
+
+                            DadosMemoria.innerHTML = `${resposta[0].mediaUsoMemoria}%`
+                        })
+                } else {
+                    throw "Houve erro ao puxar";
                 }
-            },
-            y: {
-                ticks: {
-                    color: 'white'
-                }
-            }
-        }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
     }
-};
 
-const myChart2 = new Chart(
-    document.getElementById('chartLatencia'), 
-    config2 
-);
-  </script>
-  
+
+    function DadosKpiMemoriaPicos() {
+    fetch("/graficosRouter/DadosKpiMemoriaPicos/", {
+        method: "GET",
+    })
+    .then(function (resposta) {
+        console.log("Estou na função do DadosKpiMemoriaPicos");
+        console.log("resposta:", resposta);
+
+        if (resposta.ok) {
+            return resposta.json(); 
+        } else {
+            throw "Houve erro ao puxar";
+        }
+    })
+    .then(function (resposta) {
+        console.log(resposta);
+
+        
+        Memoriapico1.innerHTML = `${resposta[0].picoMemoria}%`;
+        Memoriadatapico1.innerHTML = `${resposta[0].Data1}`
+        Memoriahorapico1.innerHTML = `${resposta[0].Hora1}`
+
+        Memoriapico2.innerHTML = `${resposta[1].picoMemoria}%`;
+        Memoriadatapico2.innerHTML = `${resposta[1].Data1}`
+        Memoriahorapico2.innerHTML = `${resposta[1].Hora1}`
+
+    })
+    .catch(function (erro) {
+        console.log(`#ERRO: ${erro}`);
+    });
+}
+
+function DadosKpiMemoriaAlertas() {
+        fetch("/graficosRouter/DadosKpiMemoriaAlertas/", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPIMemoriaAlertas");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta)
+
+                            MemoriaAlerta.innerHTML = `${resposta[0].MemoriaAlerta1}`
+                        })
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+}
+
+function DadosKpiMemoriaTempoReal() {
+    
+    fetch("/graficosRouter/DadosKpiMemoriaTempoReal/", {
+        method: "GET",
+    })
+        .then(function (resposta) {
+            console.log("Estou na função do DadosKpiMemoriaTempoReal");
+            console.log("resposta:", resposta);
+
+            if (resposta.ok) {
+                resposta.json()
+                    .then(function (resposta) {
+                        console.log(resposta);
+                        resposta.reve
+                        
+                        const labelsAtualizados = resposta.map(dado => dado.hora); 
+                        const MemoriaDadosAtualizados = resposta.map(dado => dado.MemoriaTempoReal);
+
+                        myChart3.data.labels = labelsAtualizados.reverse();
+                        myChart3.data.datasets[0].data = MemoriaDadosAtualizados.reverse();
+
+                       
+                        myChart3.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+
+                        myChart3.update();
+                    });
+            } else {
+                throw "Houve erro ao puxar";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+}
+
+setInterval(DadosKpiMemoriaTempoReal, 10000);
+setInterval(DadosKpiMemoriaPicos, 10000);
+setInterval(DadosKpiMemoria, 10000);
+setInterval(DadosKpiMemoriaAlertas, 10000);
+
+//AQUI COMEÇA DISCO
+
+</script>

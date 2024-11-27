@@ -95,3 +95,5 @@ insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('d09466c9b
 insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('c7d12465a943', 3, 1);
 
 select * from dadosServidorMedia;
+
+select * from dadosServidorMedia;
