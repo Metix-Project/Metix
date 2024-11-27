@@ -7,6 +7,9 @@ function pegarDados() {
   return database.executar(`select * from DadosServidor;`);
 }
 
+
+
+
 function DadosKpiCPU(){
   var instrucaosql   = `SELECT macAddress, ROUND(AVG(cpuPorc), 2) AS mediaUsoCPU
 FROM DadosServidor WHERE dataHora >= NOW() - INTERVAL 1 DAY
@@ -38,8 +41,8 @@ GROUP BY macAddress;`;
 }
 
 function DadosKpiCPUTempoReal(){
-  var instrucaosql   = `SELECT DATE_FORMAT(dataHora, '%H:%i:%s') AS hora, cpuPorc AS CPUTempoReal
-FROM DadosServidor ORDER BY dataHora LIMIT 5;`;
+  var instrucaosql   = `SELECT DATE_FORMAT(dataHora, '%H:%i') AS hora, cpuPorc AS CPUTempoReal
+FROM DadosServidor ORDER BY dataHora DESC LIMIT 5;`;
 
   console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql)

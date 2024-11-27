@@ -293,9 +293,7 @@
 </html>
 
 <script>
-    setInterval(() => {
-            window.location.reload();
-        }, 10000);
+    
     function modificarComponente() {
         const componenteSelecionado = document.getElementById("selectComponente").value;
 
@@ -735,6 +733,7 @@ function DadosKpiCPUAlertas() {
 }
 
 function DadosKpiCPUTempoReal() {
+    
     fetch("/graficosRouter/DadosKpiCPUTempoReal/", {
         method: "GET",
     })
@@ -746,19 +745,17 @@ function DadosKpiCPUTempoReal() {
                 resposta.json()
                     .then(function (resposta) {
                         console.log(resposta);
-
+                        resposta.reve
                         
                         const labelsAtualizados = resposta.map(dado => dado.hora); 
                         const cpuDadosAtualizados = resposta.map(dado => dado.CPUTempoReal);
 
-                        // Atualize os labels e os dados do gráfico
-                        myChart5.data.labels = labelsAtualizados;
-                        myChart5.data.datasets[0].data = cpuDadosAtualizados;
+                        myChart5.data.labels = labelsAtualizados.reverse();
+                        myChart5.data.datasets[0].data = cpuDadosAtualizados.reverse();
 
-                        // Atualize o limite ideal (mantendo o tamanho)
+                       
                         myChart5.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
 
-                        // Re-renderize o gráfico
                         myChart5.update();
                     });
             } else {
@@ -769,8 +766,10 @@ function DadosKpiCPUTempoReal() {
             console.log(`#ERRO: ${resposta}`);
         });
 }
-
-
+setInterval(DadosKpiCPUTempoReal, 10000);
+setInterval(DadosKpiCPUPicos, 10000);
+setInterval(DadosKpiCPU, 10000);
+setInterval(DadosKpiCPUAlertas, 10000);
 
 
 
