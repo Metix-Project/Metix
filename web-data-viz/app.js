@@ -16,6 +16,7 @@ var path = require("path");
 var usuarioRouter = require("./src/routes/usuarioRouter.js");
 var servidorRouter = require("./src/routes/servidorRouter.js");
 var graficosRouter = require("./src/routes/graficosRouter.js");
+var historicoRouter = require("./src/routes/historicoRouter.js");
 
 // define a variável do servidor:
 var app = express();
@@ -31,10 +32,21 @@ app.use(cors());
 app.use("/usuarios", usuarioRouter);
 app.use("/servidor", servidorRouter);
 app.use("/graficos", graficosRouter);
+app.use("/historico", historicoRouter);
 
 //   roda o servidor (listing/escuta por conexões):
 app.listen(process.env.APP_PORT, function () {
-  console.log("Bem-vindo(a) à Metix!");
+  console.log(`
+     /$$      /$$ /$$$$$$$$ /$$$$$$$$ /$$$$$$ /$$   /$$
+    | $$$    /$$$| $$_____/|__  $$__/|_  $$_/| $$  / $$
+    | $$$$  /$$$$| $$         | $$     | $$  |  $$/ $$/
+    | $$ $$/$$ $$| $$$$$      | $$     | $$   \\  $$$$/ 
+    | $$  $$$| $$| $$__/      | $$     | $$    >$$  $$ 
+    | $$\\  $ | $$| $$         | $$     | $$   /$$/\\  $$
+    | $$ \\/  | $$| $$$$$$$$   | $$    /$$$$$$| $$  \\ $$
+    |__/     |__/|________/   |__/   |______/|__/  |__/
+  
+  `);
   console.log(`Servidor rodando em http://${process.env.APP_HOST}:${process.env.APP_PORT}`);
   // console.log("Servidor rodando em: http://ec2-98-80-26-79.compute-1.amazonaws.com:3333");
 });

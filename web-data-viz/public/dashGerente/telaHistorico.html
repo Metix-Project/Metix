@@ -16,8 +16,8 @@
 
     <!--Script Gerador WordCloud -->
     <link rel="shortcut icon" href="../img/icoNumeEtiqueta.ico" type="image/x-icon">
-    
-    <script src="../js/scrypt.js"></script>
+
+    <script src="../js/script.js"></script>
     <script src="../js/sessao.js"></script>
     <link rel="stylesheet" href="../css/dashboardBase.css">
     <link rel="stylesheet" href="../css/telaHistorico.css">
@@ -64,16 +64,28 @@
                 <div class="filtros">
                     <div class="filtro selects">
                         <span>Selecione o Servidor: </span>
-                        <select id="selectServer" onchange="modificarServidor(document.getElementById('selectServer').value)">
-                            <option>10f60a853491</option>
-                            <option>e8fb1cd57ab6</option>
+                        <select id="selectServer"
+                            onchange="atualizarGraficoLinha(
+                                    dataVar, 
+                                    document.getElementById('selectServer').value, 
+                                    document.getElementById('selectHardware').value
+                                ), 
+                                modificarServidor(document.getElementById('selectServer').value)"
+                            >
+                            <option>f946307321c2</option>
+                            <option>14857f833746</option>
                             <option>d09466c9be45</option>
                             <option>c7d12465a943</option>
                         </select>
                     </div>
                     <div class="filtro selects">
                         <span>Selecione a Métrica: </span>
-                        <select id="selectHardware" onchange="modificarComponente(document.getElementById('selectHardware').value)">
+                        <select id="selectHardware"
+                            onchange="atualizarGraficoLinha(
+                                dataVar, 
+                                document.getElementById('selectServer').value, 
+                                document.getElementById('selectHardware').value
+                            )">
                             <option value="1">Uso do Processador</option>
                             <option value="2">Uso da Memória RAM</option>
                             <option value="3">Uso do Disco Rígido</option>
@@ -82,10 +94,10 @@
                         </select>
                     </div>
                     <div class="filtro" id="dualHandleSlider">
-                        <input type="range" min="7" max="90" value="30">
+                        <input type="range" min="7" max="91" value="35" step="7">
                         <span class="rangeLegend">
                             Últimos
-                            <input type="number" min="7" max="90" value="30" id="dayValue">
+                            <input type="number" min="7" max="90" value="35" id="dayValue" disabled="true">
                             dias
                         </span>
                     </div>
@@ -136,104 +148,19 @@
 <script>
     window.onload = validarSessao();
 
-    function modificarServidor(macAddress){
+    function modificarServidor(macAddress) {
         document.getElementById("bodyTitle").innerHTML = `Histórico dos Dados do Servidor - MacAddress ${macAddress}`;
     }
 
-    function modificarComponente(componente){
-        if(componente == 1) {
-            document.getElementById("cards").innerHTML = `
-                <div class="card">
-                    <span>Uso médio do Processador</span>
-                    <span class="infoValue" id="initialValue">55%</span>
-                </div>
-                <div class="card">
-                    <span>Limite Permitido</span>
-                    <span class="infoValue" id="limitValue">85%</span>
-                </div>
-                <div class="card">
-                    <span>Quantidade de Alertas</span>
-                    <span class="infoValue" id="qtdAlertsValue">4</span>
-                    <span onclick="alert('')" id="alertDetails">Ver detalhes</span>
-                </div>
-            `;
-
-            document.getElementById("alertTimeValue").style.borderColor = 'rgb(255, 218, 107)';
-            document.getElementById("totalTimeValue").style.borderColor = 'rgb(255, 218, 107)';
-            document.getElementById("geminiText").style.borderColor = 'rgb(255, 218, 107)';
-            historicoComponenteEscolhidoChart.options.scales.y.max = 100;
-            historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
-            historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
-            historicoComponenteEscolhidoChart.update();
-
-            atualizarGraficoLinha(valores1, maxValues1, 'rgba(255, 218, 107, 0.8)', 'rgba(255, 218, 107, 0.2)', "Uso do Processador");
-            document.getElementById("initialValue").innerHTML = `${mediaCpuUsagePerc}%`;
+    function modificarComponente(componente) {
+        if (componente == 1) {
+            
         }
-        else if(componente == 2) {
-            document.getElementById("cards").innerHTML = `
-                <div class="card">
-                    <span>Uso médio da Memória RAM</span>
-                    <span class="infoValue" id="initialValue">11.2 GB</span>
-                </div>
-                <div class="card">
-                    <span>Limite Permitido</span>
-                    <span class="infoValue" id="limitValue">14.5 GB</span>
-                </div>
-                <div class="card">
-                    <span>Total de Memória RAM</span>
-                    <span class="infoValue" id="initialValue">15.8 GB</span>
-                </div>
-                <div class="card">
-                    <span>Quantidade de Alertas</span>
-                    <span class="infoValue" id="qtdAlertsValue">2</span>
-                    <span onclick="alert('')" id="alertDetails">Ver detalhes</span>
-                </div>
-            `;
-
-            document.getElementById("alertTimeValue").style.borderColor = 'rgb(192, 178, 160)';
-            document.getElementById("totalTimeValue").style.borderColor = 'rgb(192, 178, 160)';
-            document.getElementById("geminiText").style.borderColor = 'rgb(192, 178, 160)';
-            historicoComponenteEscolhidoChart.options.scales.y.max = 100;
-            historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
-            historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
-            historicoComponenteEscolhidoChart.update();
-
-            atualizarGraficoLinha(valores2, maxValues2, 'rgba(192, 178, 160, 0.8)', 'rgba(192, 178, 160, 0.2)', "Uso da Memória RAM");
-            document.getElementById("initialValue").innerHTML = `${mediaRamUsageValue} GB`;
+        else if (componente == 2) {
         }
-        else if(componente == 3) {
-            document.getElementById("cards").innerHTML = `
-                <div class="card">
-                    <span>Média do Armazenamento</span>
-                    <span class="infoValue" id="initialValue">678.2 GB</span>
-                </div>
-                <div class="card">
-                    <span>Limite Permitido</span>
-                    <span class="infoValue" id="limitValue">930 GB</span>
-                </div>
-                <div class="card">
-                    <span>Armazenamento Total</span>
-                    <span class="infoValue" id="initialValue">986.7 GB</span>
-                </div>
-                <div class="card">
-                    <span>Quantidade de Alertas</span>
-                    <span class="infoValue" id="qtdAlertsValue">0</span>
-                    <span onclick="alert('')" id="alertDetails">Ver detalhes</span>
-                </div>
-            `;
-
-            document.getElementById("alertTimeValue").style.borderColor = 'rgb(249, 146, 44)';
-            document.getElementById("totalTimeValue").style.borderColor = 'rgb(249, 146, 44)';
-            document.getElementById("geminiText").style.borderColor = 'rgb(249, 146, 44)';
-            historicoComponenteEscolhidoChart.options.scales.y.max = 100;
-            historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
-            historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
-            historicoComponenteEscolhidoChart.update();
-
-            atualizarGraficoLinha(valores3, maxValues3, 'rgba(249, 146, 44, 0.8)', 'rgba(249, 146, 44, 0.2)', "Armazenamento");
-            document.getElementById("initialValue").innerHTML = `${mediaDiskUsageValue} GB`;
+        else if (componente == 3) {
         }
-        else if(componente == 4) {
+        else if (componente == 4) {
             document.getElementById("cards").innerHTML = `
                 <div class="card">
                     <span>Latência média</span>
@@ -299,134 +226,297 @@
         }
     }
 
-    var dia = 30;
-    
     var historicoComponenteEscolhido = document.getElementById('historicoComponenteEscolhido').getContext('2d');
     historicoComponenteEscolhido.canvas.parentNode.style.height = '330px';
 
-    var labels = [];
-    var valores1 = [];
-    var valores2 = [];
-    var valores3 = [];
-    var valores4 = [];
-    var valores5 = [];
-    var valores6 = [];
+    var dataAtual = new Date();
+    let dia = 35;
 
-    var maxValues1 = [];
-    var maxValues2 = [];
-    var maxValues3 = [];
-    var maxValues4 = [];
-    var maxValues5 = [];
+    dataAtual.setDate(dataAtual.getDate() - dia);
+    let year = dataAtual.getFullYear();
+    let month = String(dataAtual.getMonth() + 1).padStart(2, '0');
+    let day = String(dataAtual.getDate()).padStart(2, '0');
 
-    var valores = [valores1, valores2];
-    var redeValores = [valores5, valores6];
+    let dataVar = `${year}-${month}-${day}`;
+    let macAddressVar = "f946307321c2";
 
-    for(var i = 0; i < dia; i++){
-        var data = new Date();
-        data.setDate(data.getDate() - (dia - 1 - i));
-        labels[i] = data.toLocaleDateString();
-        maxValues1[i] = 85;
-        maxValues2[i] = 92;
-        maxValues3[i] = 94;
-        maxValues4[i] = 100;
-        maxValues5[i] = 1000;
+    // var valores = [valores1, valores2];
+    // var redeValores = [valores5, valores6];
 
-        valores.forEach((vetorValores)=>{
-            if(!i) {
-                valores1[i] = Math.random() * 99 + 1;
-                valores2[i] = Math.random() * 99 + 1;
-            } else {
-                if(vetorValores[i - 1] > 95){
-                    vetorValores[i] = vetorValores[i - 1] - (Math.random() * 10 + 1 );
-                }
-                else if(vetorValores[i - 1] < 5) {
-                    vetorValores[i] = vetorValores[i - 1] + (Math.random() * 10 + 1)
-                }
-                else {
-                    if(Math.random() < 0.5){
-                        vetorValores[i] = vetorValores[i - 1] + (Math.random() * 4 + 1)
-                    } else {
-                        vetorValores[i] = vetorValores[i - 1] - (Math.random() * 4 + 1)
+    // var mediaCpuUsagePerc = Math.round(valores1.reduce((total, atual) => total + atual, 0) / valores1.length * 10) / 10;
+
+    // document.getElementById("initialValue").innerHTML = `${mediaCpuUsagePerc}%`;
+
+    //vetorValores, vetorMax, cor1, cor2, component
+    function atualizarGraficoLinha(valorData, valorMacAddress, idMetrica) {
+        fetch("../historico/pegarMedias", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                dataServer: valorData,
+                macAddressServer: valorMacAddress
+            })
+        })
+        .then(function (resposta) {
+            console.log(resposta);
+
+            if (resposta.ok) {
+                resposta.json().then((dataJsonFunc) => {
+                    historicoComponenteEscolhidoChart.data.labels = [];
+                    historicoComponenteEscolhidoChart.data.datasets[0].data = [];
+                    historicoComponenteEscolhidoChart.data.datasets[1].data = [];
+                    historicoComponenteEscolhidoChart.update();
+
+                    var maxData = [];
+                    var arrayDate = dataJsonFunc.reverse().map(item => {
+                        var dataLocal = new Date(item.dia.split("T")[0]);
+                        
+                        var diaLocal = ("0" + dataLocal.getDate()).slice(-2);
+                        var mesLocal = ("0" + (dataLocal.getMonth() + 1)).slice(-2);
+                        var anoLocal = dataLocal.getFullYear();
+
+                        return `${diaLocal}/${mesLocal}/${anoLocal}`;
+                    })
+
+                    if(idMetrica == 1){
+                        let somaGeralCpu = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.cpuPorc), 0);
+                        let mediaGeralCpu = somaGeralCpu / dataJsonFunc.length;
+
+                        document.getElementById("cards").innerHTML = `
+                            <div class="card">
+                                <span>Uso médio do Processador</span>
+                                <span class="infoValue" id="initialValue">${mediaGeralCpu.toFixed(1)}%</span>
+                            </div>
+                            <div class="card">
+                                <span>Limite Permitido</span>
+                                <span class="infoValue" id="limitValue">85%</span>
+                            </div>
+                            <div class="card">
+                                <span>Quantidade de Alertas</span>
+                                <span class="infoValue" id="qtdAlertsValue">4</span>
+                                <span onclick="alert('')" id="alertDetails">Ver detalhes</span>
+                            </div>
+                        `;
+
+                        for(var i = 0; i < dataJsonFunc.length; i++){
+                            maxData.push(85);
+                        }
+
+                        var arrayValues = dataJsonFunc.reverse().map(item => parseFloat(item.cpuPorc));
+
+                        document.getElementById("alertTimeValue").style.borderColor = 'rgb(255, 218, 107)';
+                        document.getElementById("totalTimeValue").style.borderColor = 'rgb(255, 218, 107)';
+                        document.getElementById("geminiText").style.borderColor = 'rgb(255, 218, 107)';
+                        
+                        historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
+                        historicoComponenteEscolhidoChart.data.datasets[0].label = "Uso do Processador";
+                        historicoComponenteEscolhidoChart.data.datasets[0].borderColor = 'rgba(255, 218, 107, 0.8)';
+                        historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = 'rgba(255, 218, 107, 0.2)';
+                        historicoComponenteEscolhidoChart.data.datasets[1].data = maxData;
+                        historicoComponenteEscolhidoChart.data.labels = arrayDate;
+                        historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | Uso do Processador`;
+                        historicoComponenteEscolhidoChart.options.scales.y.max = 100;
+                        historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
+                        historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
                     }
-                }
-            }
+                    else if(idMetrica == 2){
+                        let somaGeralRam = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.memoriaGb), 0);
+                        let mediaGeralRam = somaGeralRam / dataJsonFunc.length;
+
+                        let somaGeralTotalRam = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.memoriaTotal), 0);
+                        let mediaGeralTotalRam = somaGeralTotalRam / dataJsonFunc.length;
+
+                        document.getElementById("cards").innerHTML = `
+                            <div class="card">
+                                <span>Uso médio da Memória RAM</span>
+                                <span class="infoValue" id="initialValue">${mediaGeralRam.toFixed(1)} GB</span>
+                            </div>
+                            <div class="card">
+                                <span>Limite Permitido</span>
+                                <span class="infoValue" id="limitValue">14.5 GB</span>
+                            </div>
+                            <div class="card">
+                                <span>Total de Memória RAM</span>
+                                <span class="infoValue" id="initialValue">${mediaGeralTotalRam.toFixed(1)} GB</span>
+                            </div>
+                            <div class="card">
+                                <span>Quantidade de Alertas</span>
+                                <span class="infoValue" id="qtdAlertsValue">2</span>
+                                <span onclick="alert('')" id="alertDetails">Ver detalhes</span>
+                            </div>
+                        `;
+
+                        for(var i = 0; i < dataJsonFunc.length; i++){
+                            maxData.push(85);
+                        }
+
+                        var arrayValues = dataJsonFunc.reverse().map(item => parseFloat(item.memoriaPorc));
+
+                        document.getElementById("alertTimeValue").style.borderColor = 'rgb(192, 178, 160)';
+                        document.getElementById("totalTimeValue").style.borderColor = 'rgb(192, 178, 160)';
+                        document.getElementById("geminiText").style.borderColor = 'rgb(192, 178, 160)';
+
+                        historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
+                        historicoComponenteEscolhidoChart.data.datasets[0].label = "Uso da Memória RAM";
+                        historicoComponenteEscolhidoChart.data.datasets[0].borderColor = 'rgba(192, 178, 160, 0.8)';
+                        historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = 'rgba(192, 178, 160, 0.2)';
+                        historicoComponenteEscolhidoChart.data.datasets[1].data = maxData;
+                        historicoComponenteEscolhidoChart.data.labels = arrayDate;
+                        historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | Uso da Memória RAM`;
+                        historicoComponenteEscolhidoChart.options.scales.y.max = 100;
+                        historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
+                        historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
+                    }
+                    else if(idMetrica == 3){
+                        let somaGeralDisco = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.discoGb), 0);
+                        let mediaGeralDisco = somaGeralDisco / dataJsonFunc.length;
+
+                        let somaGeralTotalDisco = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.discoTotal), 0);
+                        let mediaGeralTotalDisco = somaGeralTotalDisco / dataJsonFunc.length;
+
+                        document.getElementById("cards").innerHTML = `
+                            <div class="card">
+                                <span>Média do Armazenamento</span>
+                                <span class="infoValue" id="initialValue">${mediaGeralDisco.toFixed(1)} GB</span>
+                            </div>
+                            <div class="card">
+                                <span>Limite Permitido</span>
+                                <span class="infoValue" id="limitValue">930 GB</span>
+                            </div>
+                            <div class="card">
+                                <span>Armazenamento Total</span>
+                                <span class="infoValue" id="initialValue">${mediaGeralTotalDisco.toFixed(1)} GB</span>
+                            </div>
+                            <div class="card">
+                                <span>Quantidade de Alertas</span>
+                                <span class="infoValue" id="qtdAlertsValue">0</span>
+                                <span onclick="alert('')" id="alertDetails">Ver detalhes</span>
+                            </div>
+                        `;
+
+                        for(var i = 0; i < dataJsonFunc.length; i++){
+                            maxData.push(90);
+                        }
+
+                        var arrayValues = dataJsonFunc.reverse().map(item => parseFloat(item.discoPorc));
+
+                        document.getElementById("alertTimeValue").style.borderColor = 'rgb(249, 146, 44)';
+                        document.getElementById("totalTimeValue").style.borderColor = 'rgb(249, 146, 44)';
+                        document.getElementById("geminiText").style.borderColor = 'rgb(249, 146, 44)';
+
+                        historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
+                        historicoComponenteEscolhidoChart.data.datasets[0].label = "Armazenamento do Disco";
+                        historicoComponenteEscolhidoChart.data.datasets[0].borderColor = 'rgba(249, 146, 44, 0.8)';
+                        historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = 'rgba(249, 146, 44, 0.2)';
+                        historicoComponenteEscolhidoChart.data.datasets[1].data = maxData;
+                        historicoComponenteEscolhidoChart.data.labels = arrayDate;
+                        historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | Armazenamento do Disco`;
+                        historicoComponenteEscolhidoChart.options.scales.y.max = 100;
+                        historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
+                        historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
+                    }
+                    else if(idMetrica == 4){
+                        let somaGeralLatencia = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.latencia), 0);
+                        let mediaGeralLatencia = somaGeralLatencia / dataJsonFunc.length;
+                        
+                        document.getElementById("cards").innerHTML = `
+                            <div class="card">
+                                <span>Latência média</span>
+                                <span class="infoValue" id="initialValue">${mediaGeralLatencia.toFixed(1)} ms</span>
+                            </div>
+                            <div class="card">
+                                <span>Limite Permitido</span>
+                                <span class="infoValue" id="limitValue">100 ms</span>
+                            </div>
+                            <div class="card">
+                                <span>Quantidade de Alertas</span>
+                                <span class="infoValue" id="qtdAlertsValue">6</span>
+                                <span onclick="alert('')" id="alertDetails">Ver detalhes</span>
+                            </div>
+                        `;
+
+                        for(var i = 0; i < dataJsonFunc.length; i++){
+                            maxData.push(100);
+                        }
+
+                        var arrayValues = dataJsonFunc.reverse().map(item => parseFloat(item.latencia));
+
+                        document.getElementById("alertTimeValue").style.borderColor = 'rgb(102, 35, 168)';
+                        document.getElementById("totalTimeValue").style.borderColor = 'rgb(102, 35, 168)';
+                        document.getElementById("geminiText").style.borderColor = 'rgb(102, 35, 168)';
+
+                        historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
+                        historicoComponenteEscolhidoChart.data.datasets[0].label = "Latência";
+                        historicoComponenteEscolhidoChart.data.datasets[0].borderColor = 'rgba(102, 35, 168, 0.8)';
+                        historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = 'rgba(102, 35, 168, 0.2)';
+                        historicoComponenteEscolhidoChart.data.datasets[1].data = maxData;
+                        historicoComponenteEscolhidoChart.data.labels = arrayDate;
+                        historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | Latência`;
+                        historicoComponenteEscolhidoChart.options.scales.y.max = 250;
+                        historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
+                        historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
+                    }
+                    else {
+
+                    }
+
+                    historicoComponenteEscolhidoChart.update();
+                })
+            } else throw "Erro";
+        })
+        .catch(function (erro) {
+            console.error(erro);
         })
 
-        if(!i) valores3[0] = Math.random() * 99 + 1;
-        else {
-            if(valores3[i - 1] > 95){
-                valores3[i] = valores3[i - 1] - (Math.random() * 5 + 1);
-            }
-            else if(valores3[i - 1] < 5) {
-                valores3[i] = valores3[i - 1] + (Math.random() * 5 + 1);
-            }
-            else {
-                valores3[i] = valores3[i - 1] + (Math.random() * 6 - 3);
-            }
-        }
-
-        if(!i) valores4[0] = Math.random() * 149 + 1;
-        else {
-            if(valores4[i - 1] > 145){
-                valores4[i] = valores4[i - 1] - (Math.random() * 10 + 1);
-            }
-            else if(valores4[i - 1] < 5) {
-                valores4[i] = valores4[i - 1] + (Math.random() * 10 + 1);
-            }
-            else {
-                valores4[i] = valores4[i - 1] + (Math.random() * 10 - 10);
-            }
-        }
-
-        redeValores.forEach((vetorValores)=>{
-            if(!i) vetorValores[i] = Math.random() * 1249 + 1;
-            else {
-                if(vetorValores[i - 1] > 1100){
-                    vetorValores[i] = vetorValores[i - 1] - (Math.random() * 50 + 1);
-                }
-                else if(vetorValores[i - 1] < 5) {
-                    vetorValores[i] = vetorValores[i - 1] + (Math.random() * 50 + 1);
-                }
-                else {
-                    vetorValores[i] = vetorValores[i - 1] + (Math.random() * 50 - 10);
-                }
-            }
-        })
+        // historicoComponenteEscolhidoChart.data.datasets[0].data = vetorValores;
+        // historicoComponenteEscolhidoChart.data.datasets[1].data = vetorMax;
+        // historicoComponenteEscolhidoChart.data.datasets[0].borderColor = cor1;
+        // historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = cor2;
+        // historicoComponenteEscolhidoChart.data.datasets[0].label = component;
+        // historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | ${component}`;
+        // historicoComponenteEscolhidoChart.update();
     }
 
-    var mediaCpuUsagePerc = Math.round(valores1.reduce((total, atual) => total + atual, 0) / valores1.length * 10) / 10;
-    var mediaRamUsagePerc = Math.round(valores2.reduce((total, atual) => total + atual, 0) / valores2.length * 10) / 10;
-    var mediaDiskUsagePerc = Math.round(valores3.reduce((total, atual) => total + atual, 0) / valores3.length * 10) / 10;
-    var mediaLatenciaPerc = Math.round(valores4.reduce((total, atual) => total + atual, 0) / valores4.length * 10) / 10;
+    window.addEventListener("load", () => document.querySelectorAll("#dualHandleSlider").forEach(dualHandleSlider => {
+        const input = dualHandleSlider.querySelector("input[type='range']");
+        const dayValue = document.getElementById("dayValue");
 
-    var mediaRamUsageValue = Math.round(14.5 * mediaRamUsagePerc / 100 * 10)/10;
-    var mediaDiskUsageValue = Math.round(930 * mediaDiskUsagePerc / 100 * 10)/10;
-    var mediaLatenciaValue = Math.round(100 * mediaLatenciaPerc / 100 * 10)/10;
+        input.addEventListener("mouseup", () => {
+            dayValue.value = input.value;
+            dia = input.value;
 
+            var dataAtual = new Date();
+            dataAtual.setDate(dataAtual.getDate() - dia);
+            year = dataAtual.getFullYear();
+            month = String(dataAtual.getMonth() + 1).padStart(2, '0');
+            day = String(dataAtual.getDate()).padStart(2, '0');
 
-    document.getElementById("initialValue").innerHTML = `${mediaCpuUsagePerc}%`;
+            dataVar = `${year}-${month}-${day}`;
+
+            atualizarGraficoLinha(dataVar, macAddressVar, document.getElementById("selectHardware").value);
+        })
+    }));
 
     var historicoComponenteEscolhidoChart = new Chart(
         historicoComponenteEscolhido,
         {
             type: 'line',
-            data: {
-                labels: labels,
+            data: { 
                 datasets: [
                     {
-                        label: "Uso do Processador",
+                        label: "",
                         borderWidth: 4,
                         borderColor: 'rgba(255, 218, 107, 0.8)',
                         backgroundColor: 'rgba(255, 218, 107, 0.2)',
                         fill: true,
-                        lineTension: 0.3,
-                        data: valores1
+                        lineTension: 0.3
                     },
                     {
                         label: "Máximo",
                         borderWidth: 3,
                         borderColor: 'rgb(200, 0, 0)',
-                        data: maxValues1,
                         pointBorderWidth: 0,
                         pointBackgroundColor: 'transparent'
                     }
@@ -509,32 +599,5 @@
         }
     )
 
-    function atualizarGraficoLinha(vetorValores, vetorMax, cor1, cor2, component){
-        historicoComponenteEscolhidoChart.data.datasets[0].data = vetorValores;
-        historicoComponenteEscolhidoChart.data.datasets[1].data = vetorMax;
-        historicoComponenteEscolhidoChart.data.datasets[0].borderColor = cor1;
-        historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = cor2;
-        historicoComponenteEscolhidoChart.data.datasets[0].label = component;
-        historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | ${component}`;
-        historicoComponenteEscolhidoChart.update();
-    }
-
-    window.addEventListener("load", () => document.querySelectorAll("#dualHandleSlider").forEach(dualHandleSlider => {
-        const input = dualHandleSlider.querySelector("input[type='range']");
-        const dayValue = document.getElementById("dayValue");
-        
-        input.addEventListener("input", () => {
-            dayValue.value = input.value;
-            dia = input.value;
-        })
-
-        dayValue.addEventListener("input", () => {
-            input.value = dayValue.value;
-            dia = dayValue.value;
-        })
-    }));
-
-    // var historicoComponenteEscolhido = document.getElementById('historicoComponenteEscolhido').getContext('2d');
-    // historicoComponenteEscolhido.canvas.parentNode.style.width = '45%';
-    // historicoComponenteEscolhido.canvas.parentNode.style.height = '500px';
+    atualizarGraficoLinha(dataVar, macAddressVar, 1);
 </script>
