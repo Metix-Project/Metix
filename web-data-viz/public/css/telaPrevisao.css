@@ -1,0 +1,117 @@
+:root {
+    --cor-primaria: #161513;
+    --cor-secundaria: #3f3b36;
+    --cor-terciaria: #645f59;
+    --altura-slider: 7px;
+    --tamanho-slider: 20px;
+
+    --cor-usage-cpu: maroon;
+    --cor-usage-ram: dodgerblue;
+    --cor-usage-disk: springgreen;
+    --cor-freq-cpu: gold;
+    --cor-latencia: orange;
+}
+
+body {
+    overflow: hidden;
+}
+
+.main-content {
+    padding: 30px;
+    width: 100%;
+}
+
+h1 { 
+    text-align: center;
+    margin-bottom: 35px;
+    font-size: 35px;
+    margin-top: -10px;
+}
+
+.grafico {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: 3px solid --cor-primaria;
+    height: 300px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: var(--cor-secundaria);
+}
+
+.dados canvas {
+    border: 2px solid --cor-primaria;
+    padding: 20px;
+    border-radius: 7px;
+    background-color: #f4f4f4;
+}
+
+.conteudo {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.graficos {
+    flex: 2; /* Parte maior para os gráficos */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.chat {
+    flex: 1; /* Menor espaço para o chat */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--cor-secundaria);
+    border: 2px solid var(--cor-primaria);
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+
+    max-width: 350px
+}
+
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid var(--cor-primaria);
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+}
+
+#chatInput {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--cor-primaria);
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--cor-terciaria);
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--cor-primaria);
+}
