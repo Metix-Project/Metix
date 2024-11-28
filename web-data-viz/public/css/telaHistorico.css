@@ -60,14 +60,14 @@ h2 {
     gap: 15px;
 }
 
-#alertDetails {
+.seeMoreDetails {
     color: white;
     cursor: pointer;
     text-decoration: underline;
     font-size: 13px;
 }
 
-#alertDetails:hover {
+.seeMoreDetails:hover {
     color: #bbb;
 }
 
@@ -245,4 +245,40 @@ h2 {
     border-bottom: 4px solid var(--cor-usage-cpu);
     border-radius: 5px;
     transition: border-color 0.2s;
+}
+
+#modalContainer {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#modalContainer .modal {
+    background-color: rgb(79, 77, 74);;
+    width: 60%;
+    height: auto;
+    border: 3px solid var(--cor-primaria);
+    padding: 20px;
+    color: white;
+    font-size: 18px;
+}
+
+.top {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#closePopUp {
+    cursor: pointer;
+    font-weight: bold;
 }

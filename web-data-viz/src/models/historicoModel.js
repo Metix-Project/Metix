@@ -3,8 +3,9 @@ var database = require("../database/connection.js");
 
 function pegarMedias(macAddress, data) {
     var instrucaoSql = `
-        SELECT * FROM DadosServidorMedia WHERE fkMaquina = '${macAddress}' AND dia >= '${data}' ORDER BY dia DESC;
+        SELECT * FROM DadosServidorMedia WHERE fkMaquina = '${macAddress}' AND dia >= '${data}' ORDER BY dia ASC;
     `;
+
     return database.executar(instrucaoSql);
 }
 
