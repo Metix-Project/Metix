@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Métix Proteção Divina</title>
+    <link rel="icon" href="../assets/imgs/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+
+    <!-- scripts do Chart.js - 2022-1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+
+    <!--Script Gerador WordCloud -->
+    <link rel="shortcut icon" href="../img/icoNumeEtiqueta.ico" type="image/x-icon">
+    
+    <script src="../js/scrypt.js"></script>
+    <script src="../js/sessao.js"></script>
+    <link rel="stylesheet" href="../css/dashboardBase.css">
+    <link rel="stylesheet" href="../css/telaPrevisao.css">
+
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile">
+                <img alt="Profile" id="profileImage">
+                <h2 id="profileName">Usuário</h2>
+                <h4 id="profilePosition">Cargo: Gerente</h4>
+                <h4 id="profileBusiness">Banco</h4>
+            </div>
+
+            <div class="dashboardLinks">
+                <h2>Dashboards</h2>
+                <button>Monitoramento</button>
+                <button>Alertas</button>
+                <button onclick="window.location.href = 'telaHistorico.html'">Histórico</button>
+                <button onclick="window.location.href = 'telaPrevisao.html'">Previsões</button>
+                <button>Manutenção</button>
+                <button onclick="limparSessao()">Sair</button>
+            </div>
+            <div class="logo">
+                <img src="../assets/imgs/Logo1.png" alt="Metix Logo">
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1>Previsão de melhoria de componentes</h1>
+            <div class="conteudo">
+                <!-- Gráficos -->
+                <div class="graficos">
+                    <div class="grafico">
+                        <canvas id="Previsao1"></canvas>
+                    </div>
+                    <div class="grafico">
+                        <canvas id="Previsao2"></canvas>
+                    </div>
+                </div>
+                <!-- Chat -->
+                <div class="chat">
+                    <h2>Chat com IA</h2>
+                    <div class="chat-box">
+                        <div class="messages"></div>
+                        <div class="input-container">
+                            <input type="text" id="chatInput" placeholder="Digite sua mensagem...">
+                            <button onclick="enviarMensagem()">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+// Dados para o gráfico 1 (Gráfico de Componentes)
+const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+const dadosCPU = [20, 25, 30, 35, 40, 45, 50, 55, 50, 45, 40, 35];
+const dadosRAM = [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70];
+const dadosDisco = [10, 15, 20, 25, 30, 35, 30, 25, 20, 15, 10, 5];
+
+function calcularLinhaDeTendencia(dados) {
+    const n = dados.length;
+    const x = Array.from({ length: n }, (_, i) => i + 1); // 1, 2, 3, ..., n
+    const sumX = x.reduce((a, b) => a + b, 0);
+    const sumY = dados.reduce((a, b) => a + b, 0);
+    const sumXY = x.map((xi, i) => xi * dados[i]).reduce((a, b) => a + b, 0);
+    const sumX2 = x.map(xi => xi * xi).reduce((a, b) => a + b, 0);
+
+    const m = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX ** 2);
+    const b = (sumY - m * sumX) / n;
+
+    return x.map(xi => m * xi + b);
+}
+
+const tendenciaCPU = calcularLinhaDeTendencia(dadosCPU);
+const tendenciaRAM = calcularLinhaDeTendencia(dadosRAM);
+const tendenciaDisco = calcularLinhaDeTendencia(dadosDisco);
+
+// Configuração do gráfico 1
+const ctx1 = document.getElementById('Previsao1').getContext('2d');
+const grafico1 = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+        labels: meses,
+        datasets: [
+
+        {
+    label: 'Tendência CPU',
+    data: tendenciaCPU,
+    type: 'line',
+    borderColor: 'rgb(34, 97, 150)', // Azul escuro
+    borderWidth: 2,
+    fill: false,
+    tension: 0.4,
+},
+{
+    label: 'Tendência RAM',
+    data: tendenciaRAM,
+    type: 'line',
+    borderColor: 'rgb(107, 48, 227)', // Roxo escuro
+    borderWidth: 2,
+    fill: false,
+    tension: 0.4,
+},
+{
+    label: 'Tendência Disco',
+    data: tendenciaDisco,
+    type: 'line',
+    borderColor: 'rgb(227, 144, 61)', // Laranja 
+    borderWidth: 2,
+    fill: false,
+    tension: 0.4,
+},
+{
+    label: 'Uso de CPU (%)',
+    data: dadosCPU,
+    backgroundColor: 'rgb(54, 162, 235)', // Azul claro
+    borderWidth: 1,
+},
+{
+    label: 'Uso de RAM (%)',
+    data: dadosRAM,
+    backgroundColor: 'rgb(153, 102, 255)', // Roxo claro
+    borderWidth: 1,
+},
+{
+    label: 'Uso de Disco (%)',
+    data: dadosDisco,
+    backgroundColor: 'rgb(255, 159, 64)', // Laranja brilhante
+    borderWidth: 1,
+},
+
+
+        ],
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Meses',
+                },
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Uso (%)',
+                },
+                beginAtZero: true,
+            },
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+            },
+        },
+    },
+});
+
+// Dados para o gráfico 2 (Gráfico de Transações)
+const transacoesMedias = [120, 150, 180, 170, 200, 210, 190, 220, 230, 250, 240, 270];
+const linhaDeTendencia = calcularLinhaDeTendencia(transacoesMedias);
+
+// Configuração do gráfico 2
+const ctx2 = document.getElementById('Previsao2').getContext('2d');
+const grafico2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: meses,
+        datasets: [
+
+        {
+                label: 'Linha de Tendência',
+                data: linhaDeTendencia,
+                type: 'line',
+                borderColor: '#ffc300', // Amarelo
+                borderWidth: 2,
+                fill: false,
+                tension: 0.4,
+            },
+
+            {
+                label: 'Média de Transações por Mês',
+                data: transacoesMedias,
+                backgroundColor: 'rgba(34, 127, 188, 0.9)', // Azul
+                borderWidth: 1,
+            },
+
+        ],
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Meses',
+                },
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Média de Transações',
+                },
+                beginAtZero: true,
+            },
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+            },
+        },
+    },
+});
+
+
+
+</script>
