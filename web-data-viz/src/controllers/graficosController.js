@@ -18,7 +18,8 @@ function pegarDados(req, res) {
 
 function DadosKpiCPU (req, res) { 
   console.log("puxando dados CPU")
-  graficosModel.DadosKpiCPU()
+  var mcAdress = req.body.mcAdressServer;
+  graficosModel.DadosKpiCPU(mcAdress)
   .then(function (resposta) {
       if(resposta.length > 0) {
           console.log("Estou no Controller");
@@ -36,9 +37,10 @@ function DadosKpiCPU (req, res) {
 
 async function DadosKpiCPUPicos(req, res) {
     console.log("puxando dados CPU");
+    var mcAdress = req.body.mcAdressServer;
 
     try {
-        const resultado1 = await graficosModel.DadosKpiCPUPicos();  
+        const resultado1 = await graficosModel.DadosKpiCPUPicos(mcAdress);  
         if (resultado1.length > 0) {
             console.log("Estou no Controller");
             res.status(200).json(resultado1);  
@@ -53,7 +55,6 @@ async function DadosKpiCPUPicos(req, res) {
 
 function DadosKpiCPUAlertas (req, res) { 
   console.log("puxando dados CPU")
-
   graficosModel.DadosKpiCPUAlertas()
   .then(function (resposta) {
       if(resposta.length > 0) {
@@ -92,7 +93,7 @@ function DadosKpiCPUTempoReal (req, res) {
 //MEMORIA
 
 function DadosKpiMemoria (req, res) { 
-  console.log("puxando dados CPU")
+  console.log("puxando dados Memoria")
 
   graficosModel.DadosKpiMemoria()
   .then(function (resposta) {
@@ -167,6 +168,85 @@ function DadosKpiMemoriaTempoReal (req, res) {
   });
 }
 
+function DadosKpiRede (req, res) { 
+  console.log("puxando dados Rede")
+
+  graficosModel.DadosKpiRede()
+  .then(function (resposta) {
+      if(resposta.length > 0) {
+          console.log("Estou no Controller");
+          res.status(200).json(resposta);
+      } else {
+        res.status(204).send("nenhum resultado encontrado")
+      }
+
+  }).catch(function (erro) {
+    console.log(erro);
+    console.log("houve um erro ao buscar resultados", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage)
+  });
+}
+
+
+function DadosKpiRedePicos (req, res) { 
+  console.log("puxando dados Rede");
+
+  graficosModel.DadosKpiRedePicos()
+  .then(function (resposta) {
+      if(resposta.length > 0) {
+          console.log("Estou no Controller");
+          res.status(200).json(resposta);
+      } else {
+        res.status(204).send("nenhum resultado encontrado");
+      }
+  }).catch(function (erro) {
+    console.log(erro);
+    console.log("houve um erro ao buscar resultados", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  });
+}
+
+
+function DadosKpiRedeAlertas (req, res) { 
+  console.log("puxando dados Rede")
+
+  graficosModel.DadosKpiRedeAlertas()
+  .then(function (resposta) {
+      if(resposta.length > 0) {
+          console.log("Estou no Controller");
+          res.status(200).json(resposta);
+      } else {
+        res.status(204).send("nenhum resultado encontrado")
+      }
+
+  }).catch(function (erro) {
+    console.log(erro);
+    console.log("houve um erro ao buscar resultados", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage)
+  });
+}
+
+
+function GraficoRedeTempoReal(req, res) {
+  console.log("Puxando dados de rede");
+
+  graficosModel.GraficoRedeTempoReal()
+    .then(function (resultado) {
+      if (resultado.length > 0) {
+        console.log("Dados encontrados: ", resultado);
+        res.status(200).json(resultado);  // Retorna os dados para o cliente
+      } else {
+        res.status(204).send("Nenhum dado encontrado");  // Caso não haja dados
+      }
+    })
+    .catch(function (erro) {
+      console.log("Erro ao buscar dados: ", erro);
+      res.status(500).json(erro);  // Retorna erro de servidor
+    });
+}
+
+
+
 // exporta para outro arquivo:
 module.exports = {
   pegarDados,
@@ -174,8 +254,16 @@ module.exports = {
   DadosKpiCPUPicos,
   DadosKpiCPUAlertas,
   DadosKpiCPUTempoReal,
+
   DadosKpiMemoria,
   DadosKpiMemoriaPicos,
   DadosKpiMemoriaAlertas,
-  DadosKpiMemoriaTempoReal
+  DadosKpiMemoriaTempoReal,
+
+  DadosKpiRede,
+  DadosKpiRedePicos,
+  DadosKpiRedeAlertas,
+  GraficoRedeTempoReal
+
+
 };

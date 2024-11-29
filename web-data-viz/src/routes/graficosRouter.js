@@ -10,11 +10,11 @@ router.get("/pegarDados", function (req, res) {
   graficosController.pegarDados(req, res);
 });
 
-router.get("/DadosKpiCPU", function (req, res) {
+router.post("/DadosKpiCPU", function (req, res) {
   graficosController.DadosKpiCPU(req, res);
 });
 
-router.get("/DadosKpiCPUPicos", function (req, res) {
+router.post("/DadosKpiCPUPicos", function (req, res) {
   graficosController.DadosKpiCPUPicos(req, res);
 });
 
@@ -42,5 +42,20 @@ router.get("/DadosKpiMemoriaTempoReal", function (req, res) {
   graficosController.DadosKpiMemoriaTempoReal(req, res);
 });
 
+router.get("/DadosKpiRede", function (req, res) {
+  graficosController.DadosKpiRede(req, res);
+});
+
+router.get("/DadosKpiRedePicos", function (req, res) {
+  graficosController.DadosKpiRedePicos(req, res);
+});
+
+router.get("/DadosKpiRedeAlertas", function (req, res) {
+  graficosController.DadosKpiRedeAlertas(req, res);
+});
+
+router.get("/GraficoRedeTempoReal", function (req, res) {
+  graficosController.GraficoRedeTempoReal(req, res);
+});
 // exporta para outro arquivo:
 module.exports = router;
