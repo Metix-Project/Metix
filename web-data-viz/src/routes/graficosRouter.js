@@ -18,44 +18,61 @@ router.post("/DadosKpiCPUPicos", function (req, res) {
   graficosController.DadosKpiCPUPicos(req, res);
 });
 
-router.get("/DadosKpiCPUAlertas", function (req, res) {
+router.post("/DadosKpiCPUAlertas", function (req, res) {
   graficosController.DadosKpiCPUAlertas(req, res);
 });
 
-router.get("/DadosKpiCPUTempoReal", function (req, res) {
+router.post("/DadosKpiCPUTempoReal", function (req, res) {
   graficosController.DadosKpiCPUTempoReal(req, res);
 });
 
-router.get("/DadosKpiMemoria", function (req, res) {
+router.post("/DadosKpiMemoria", function (req, res) {
   graficosController.DadosKpiMemoria(req, res);
 });
 
-router.get("/DadosKpiMemoriaPicos", function (req, res) {
+router.post("/DadosKpiMemoriaPicos", function (req, res) {
   graficosController.DadosKpiMemoriaPicos(req, res);
 });
 
-router.get("/DadosKpiMemoriaAlertas", function (req, res) {
+router.post("/DadosKpiMemoriaAlertas", function (req, res) {
   graficosController.DadosKpiMemoriaAlertas(req, res);
 });
 
-router.get("/DadosKpiMemoriaTempoReal", function (req, res) {
+router.post("/DadosKpiMemoriaTempoReal", function (req, res) {
   graficosController.DadosKpiMemoriaTempoReal(req, res);
 });
 
-router.get("/DadosKpiRede", function (req, res) {
+router.post("/DadosKpiRede", function (req, res) {
   graficosController.DadosKpiRede(req, res);
 });
 
-router.get("/DadosKpiRedePicos", function (req, res) {
+router.post("/DadosKpiRedePicos", function (req, res) {
   graficosController.DadosKpiRedePicos(req, res);
 });
 
-router.get("/DadosKpiRedeAlertas", function (req, res) {
+router.post("/DadosKpiRedeAlertas", function (req, res) {
   graficosController.DadosKpiRedeAlertas(req, res);
 });
 
-router.get("/GraficoRedeTempoReal", function (req, res) {
+router.post("/GraficoRedeTempoReal", function (req, res) {
   graficosController.GraficoRedeTempoReal(req, res);
 });
+
+router.post("/DadosKpiLatencia", function (req, res) {
+  graficosController.DadosKpiLatencia(req, res);
+});
+
+router.post("/DadosKpiLatenciaPicos", function (req, res) {
+  graficosController.DadosKpiLatenciaPicos(req, res);
+});
+
+router.post("/DadosKpiLatenciaAlertas", function (req, res) {
+  graficosController.DadosKpiLatenciaAlertas(req, res);
+});
+
+router.post("/DadosKpiLatenciaTempoReal", function (req, res) {
+  graficosController.DadosKpiLatenciaTempoReal(req, res);
+});
+
 // exporta para outro arquivo:
 module.exports = router;
