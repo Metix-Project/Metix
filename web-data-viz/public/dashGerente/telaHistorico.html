@@ -91,11 +91,11 @@
                         </select>
                     </div>
                     <div class="filtro" id="dualHandleSlider">
-                        <input type="range" min="7" max="91" value="35" step="7">
+                        <input type="range" min="3" max="15" value="15">
                         <span class="rangeLegend">
-                            Últimos
-                            <input type="number" min="7" max="90" value="35" id="dayValue" disabled="true">
-                            dias
+                            Últimas
+                            <input type="number" min="3" max="15" value="15" id="weekValue" disabled="true">
+                            semanas
                         </span>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                                 </div>
                             </div>
                             <div class="infoCard">
-                                <span class="title">Sugestão do Gemini</span>
+                                <span class="title">Análise do Gemini</span>
                                 <span class="cardValue" id="geminiText">Carregando Resposta...</span>
                                 <span class="seeMoreDetails" onclick="document.getElementById('modalContainer').style.display = 'flex';">Ver detalhes</span>
                             </div>
@@ -139,11 +139,20 @@
             </div>
         </div>
     </div>
+    <div id="modalChart">
+        <div class="top">
+            <span id="modalChartTitle">Gráfico de Linha </span>
+            <span onclick="document.getElementById('modalChart').style.display = 'none';">&#10005;</span>
+        </div>
+        <div class="modal">
+            <canvas id="chartLineByDay"></canvas>
+        </div>
+    </div>
     <div id="modalContainer">
         <div class="modal">
             <div class="top">
                 <span>Resumo da Inteligência Artificial</span>
-                <span onclick="document.getElementById('modalContainer').style.display = 'none';" id="closePopUp">&#10005;</span>
+                <span onclick="document.getElementById('modalContainer').style.display = 'none';">&#10005;</span>
             </div>
             <p id="geminiParagraph"></p>
             <span>
@@ -216,9 +225,9 @@
     historicoComponenteEscolhido.canvas.parentNode.style.height = '330px';
 
     var dataAtual = new Date();
-    let dia = 35;
+    let semana = 15;
 
-    dataAtual.setDate(dataAtual.getDate() - dia);
+    dataAtual.setDate(dataAtual.getDate() - (semana * 7));
     let year = dataAtual.getFullYear();
     let month = String(dataAtual.getMonth() + 1).padStart(2, '0');
     let day = String(dataAtual.getDate()).padStart(2, '0');
@@ -256,41 +265,77 @@
                         historicoComponenteEscolhidoChart.update();
 
                         var maxData = [];
-                        var arrayDate = dataJsonFunc.map(item => {
+
+                        var arrayWeek = dataJsonFunc.reduce((acumulador, item)=>{
                             var dataLocal = new Date(item.dia.split("T")[0]);
+                            
+                            var diaDaSemana = dataLocal.getDay();
+                            var domingo = new Date(dataLocal);
+                            domingo.setDate(dataLocal.getDate() - diaDaSemana);
 
-                            var diaLocal = ("0" + dataLocal.getDate()).slice(-2);
-                            var mesLocal = ("0" + (dataLocal.getMonth() + 1)).slice(-2);
-                            var anoLocal = dataLocal.getFullYear();
+                            var diaLocal = ("0" + domingo.getDate()).slice(-2);
+                            var mesLocal = ("0" + (domingo.getMonth() + 1)).slice(-2);
+                            var anoLocal = domingo.getFullYear();
 
-                            return `${diaLocal}/${mesLocal}/${anoLocal}`;
-                        })
+                            var dateValue = `${diaLocal}/${mesLocal}/${anoLocal}`;
+
+                            if(!acumulador.includes(dateValue)){
+                                acumulador.push(dateValue);
+                            }
+
+                            return acumulador;
+                        }, []);
+
+                        console.warn(arrayWeek);
 
                         if (idMetrica == 1) {
                             let somaGeralCpu = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.cpuPorc), 0);
                             let mediaGeralCpu = somaGeralCpu / dataJsonFunc.length;
 
                             document.getElementById("cards").innerHTML = `
-                            <div class="card">
-                                <span>Uso médio do Processador</span>
-                                <span class="infoValue" id="initialValue">${mediaGeralCpu.toFixed(1)}%</span>
-                            </div>
-                            <div class="card">
-                                <span>Limite Permitido</span>
-                                <span class="infoValue" id="limitValue">85%</span>
-                            </div>
-                            <div class="card">
-                                <span>Quantidade de Alertas</span>
-                                <span class="infoValue" id="qtdAlertsValue">4</span>
-                                <span onclick="alert('')" class="seeMoreDetails">Ver detalhes</span>
-                            </div>
-                        `;
+                                <div class="card">
+                                    <span>Uso médio do Processador</span>
+                                    <span class="infoValue" id="initialValue">${mediaGeralCpu.toFixed(1)}%</span>
+                                </div>
+                                <div class="card">
+                                    <span>Limite Permitido</span>
+                                    <span class="infoValue" id="limitValue">85%</span>
+                                </div>
+                                <div class="card">
+                                    <span>Quantidade de Alertas</span>
+                                    <span class="infoValue" id="qtdAlertsValue">4</span>
+                                    <span onclick="alert('')" class="seeMoreDetails">Ver detalhes</span>
+                                </div>
+                            `;
 
-                            for (var i = 0; i < dataJsonFunc.length; i++) {
+                            for (var i = 0; i < arrayWeek.length; i++) {
                                 maxData.push(85);
                             }
 
-                            var arrayValues = dataJsonFunc.map(item => parseFloat(item.cpuPorc));
+                            var arrayValues = arrayWeek.reduce((acumulador, item) => {
+                                const diaMin = new Date(`${item.split('/')[2]}-${item.split('/')[1]}-${item.split('/')[0]}`);
+                                
+                                const diaMax = new Date(diaMin);
+                                diaMax.setDate(diaMax.getDate() + 6);
+
+                                alert(diaMin);
+                                alert(diaMax);
+                                
+                                var index;
+                                for(var i = 0; i < dataJsonFunc.length; i++){
+                                    var diaDaVez = new Date(dataJsonFunc[i].dia.split("T")[0]);
+                                    
+                                    if(diaDaVez == diaMin){
+                                        index = i;
+                                    }
+                                }
+
+                                // alert(index);
+
+                                parseFloat(item.cpuPorc);
+
+                                return acumulador;
+                            },[]);    
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(255, 218, 107)';
                             document.getElementById("totalTimeValue").style.borderColor = 'rgb(255, 218, 107)';
@@ -301,7 +346,7 @@
                             historicoComponenteEscolhidoChart.data.datasets[0].borderColor = 'rgba(255, 218, 107, 0.8)';
                             historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = 'rgba(255, 218, 107, 0.2)';
                             historicoComponenteEscolhidoChart.data.datasets[1].data = maxData;
-                            historicoComponenteEscolhidoChart.data.labels = arrayDate;
+                            historicoComponenteEscolhidoChart.data.labels = arrayWeek;
                             historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | Uso do Processador`;
                             historicoComponenteEscolhidoChart.options.scales.y.max = 100;
                             historicoComponenteEscolhidoChart.options.scales.y.title.text = "Percentual de Uso";
@@ -467,14 +512,14 @@
 
     window.addEventListener("load", () => document.querySelectorAll("#dualHandleSlider").forEach(dualHandleSlider => {
         const input = dualHandleSlider.querySelector("input[type='range']");
-        const dayValue = document.getElementById("dayValue");
+        const weekValue = document.getElementById("weekValue");
 
         input.addEventListener("mouseup", () => {
-            dayValue.value = input.value;
-            dia = input.value;
+            weekValue.value = input.value;
+            week = input.value;
 
             var dataAtual = new Date();
-            dataAtual.setDate(dataAtual.getDate() - dia);
+            dataAtual.setDate(dataAtual.getDate() - (week * 7));
             year = dataAtual.getFullYear();
             month = String(dataAtual.getMonth() + 1).padStart(2, '0');
             day = String(dataAtual.getDate()).padStart(2, '0');
@@ -516,7 +561,7 @@
                         },
                         title: {
                             display: true,
-                            text: "Dias",
+                            text: "Semanas",
                             color: 'white',
                             font: {
                                 size: 16,
@@ -635,7 +680,14 @@
 
                         response.json().then((answer) => {
                             console.log(answer.resultado);
-                            document.getElementById("geminiText").innerHTML = answer.resultado.split("CUT_HERE")[0];
+
+                            let textoGemini = answer.resultado.split(/Resumo/i)[1];
+
+                            if(textoGemini.match(/[*:#]/)){
+                                textoGemini = textoGemini.replace(/[*:#]/g, "");
+                            }
+
+                            document.getElementById("geminiText").innerHTML = textoGemini;
                             document.getElementById("geminiParagraph").innerHTML = answer.resultado;
                         });
                     })
@@ -654,12 +706,4 @@
 
     atualizarGraficoLinha(dataVar, macAddressVar, 1);
     gerarRelatorio(macAddressVar);
-
-    function openPopUp() {
-        document.getElementById("modalContainer").style.display = 'flex';
-    }
-
-    function closePopUp() {
-        document.getElementById("modalContainer").style.display = 'none';
-    }
 </script>

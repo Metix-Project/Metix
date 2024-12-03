@@ -282,3 +282,7 @@ h2 {
     cursor: pointer;
     font-weight: bold;
 }
+
+#geminiText {
+    font-size: 18px;
+}

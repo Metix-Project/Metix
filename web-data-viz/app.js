@@ -7,7 +7,7 @@ var caminho_env = ambiente_processo === "producao" ? ".env" : ".env.dev";
 //   traz os dados do arquivo .env ou .env.dev:
 require("dotenv").config({ path: caminho_env });
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const chatIA = new GoogleGenerativeAI("AIzaSyBEkyA_iqjNnyGzr-e4QEmWQfNMa2kfStc");
+const chatIA = new GoogleGenerativeAI("AIzaSyBBVHY5V-");
 
 //   define as bibliotecas/frameworks:
 var express = require("express");
@@ -18,6 +18,7 @@ var path = require("path");
 var usuarioRouter = require("./src/routes/usuarioRouter.js");
 var servidorRouter = require("./src/routes/servidorRouter.js");
 var graficosRouter = require("./src/routes/graficosRouter.js");
+var historicoRouter = require("./src/routes/historicoRouter.js");
 
 // define a variável do servidor:
 var app = express();
@@ -33,6 +34,7 @@ app.use(cors());
 app.use("/usuarios", usuarioRouter);
 app.use("/servidor", servidorRouter);
 app.use("/graficosRouter", graficosRouter);
+app.use("/historico", historicoRouter);
 
 //   roda o servidor (listing/escuta por conexões):
 app.listen(process.env.APP_PORT, function () {
@@ -41,30 +43,23 @@ app.listen(process.env.APP_PORT, function () {
   // console.log("Servidor rodando em: http://ec2-98-80-26-79.compute-1.amazonaws.com:3333");
 });
 
-var textoIA = [];
-var inicio = `
-  Com base no contexto e nos valores mostrados abaixo, crie um relatório após o texto "DIAS, VETORES E VALORES --->".
-  Contexto: A empresa Metix é uma companhia que monitora o desempenhos dos componentes de servidores do Banco Central do Brasil responsáveis pela transação de Pix diariamente, gerando insights e dashboards de monitoramento em tempo real, histórico e previsões para o cliente poder visualizar o comportamento destes hardwares.
-  O objetivo da Metix é reduzir as instabilidades nestes servidores devido às sobrecargas que ocorrem diariamente nestas máquinas. Para isso, foi delimitado alguns limites para cada componente hardware dos servidores:
-  - PERCENTUAL DE USO DO PROCESSADOR: 85% no máximo (independente do modelo do processador);
-  - PERCENTUAL DE USO DA MEMÓRIA RAM: 90% no máximo (independente da quantidade de RAM no servidor);
-  - PERCENTUAL DE ARMAZENAMENTO EM USO: 90% no máximo (independente do tamanho do armazenamento);
-  Importante destacar que os dados apresentados abaixo que estão representados em forma de vetor representam a média diária dos últimos 91 dias. Ou seja, cada valor numérico no vetor do processador representa a média daquele dia. São 91 dados a serem analisados nesses vetores. Além disso, o valor da capacidade total da Memória RAM e do Armazenamento são únicos.
-  Como escrever sua análise?
-  - Primeiramente, escreva uma análise explicativa do que está ocorrendo com cada componente (Processador, Memória RAM e Armazenamento);
-  - Em seguida, sugira como o usuário pode atuar para evitar a sobrecarga nos componentes com problemas;
-  - Escreva "CUT_HERE"
-  - Faça um resumo final de, no máximo, 4 palavras
-  O texto da análise deve conter as seguintes restrições:
-  - Não deve ter caracteres especiais (como os asteríscos);
-  - Não deve ter o nome da Metix ou do Banco Central do Brasil;
-  - Não deve conter o termo "IA" na resposta;
-  - É obrigatório retornar os dias em que o percentual de uso do Processador, Memória RAM ou Armazenamento esteve acima da porcentagem máxima permitida (os dias devem estar no formato exemplificado a seguir: 27/11/2024). Além disso, junto com o dia, deve haver os valores em porcentagem e em Gigabytes desses dias;
-  \n
-  DIAS, VETORES E VALORES --->
+const textoIA = [];
+
+const texto1 = `
+  Analise os componentes acima, já indicando o processamento, uso da memória RAM e uso do armazenamento em cada dia do JSON, e indique qual é o problema que está ocorrendo e sugira o que poderia ser feito para melhorias apenas nos componentes com problemas. Vale ressaltar que:
+  - O limite do uso do processador (CPU) é de 85%; \n
+  - O limite uso da Memória RAM é de 90%; \n
+  - O limite do espaço em uso do Armazenamento (Disco) é de 90%.\n\n
 `;
 
-textoIA.push(inicio);
+const texto2 = `Com a análise feita, explique como a sua análise foi feita para cada componente separadamente (Processador, Memória RAM e Disco). Indique também os dias que ultrapassaram o limite em algum dos componentes.\n\n`;
+
+const texto3 = `Após isso, resuma tudo que você disse anteriormente em, no máximo, 5 palavras.\n\n`;
+
+const texto4 = `Observações: \n
+- Os títulos devem ser: "Explicação da Análise Feita", "Processador", "Memória RAM", "Armazenamento", "Sugestão(ões)" e "Resumo"; \n
+- Nas sugestões, explique o motivo de cada uma da sugestão indicada; \n
+- Em "Resumo", o texto deve conter, no máximo, 5 palavras e indicar o componente com problemas. Não ultrapasse este limite!; \n`;
 
 app.post("/gerarRelatorio", async (req, res) => {
   const dia = req.body.diaServer;
@@ -77,24 +72,34 @@ app.post("/gerarRelatorio", async (req, res) => {
   const mbpsRecebido = req.body.mbpsRecebidoServer;
   const mbpsEnviado = req.body.mbpsEnviadoServer;
 
-  var componentValues = `\n
-    - DIAS ANALISADOS: ${dia}\n\n
-    - PERCENTUAIS MÉDIOS POR DIA SOBRE O USO DO PROCESSADOR (VALORES EM PORCENTAGEM): ${cpu}%\n
-    - QUANTIDADES MÉDIAS POR DIA SOBRE O USO DA MEMÓRIA RAM (VALORES EM PORCENTAGEM): ${ram}\n
-    - CAPACIDADE TOTAL DE MEMÓRIA RAM DO SERVIDOR (VALOR EM GIGABYTES): ${totalRam}\n
-    - QUANTIDADE MÉDIA DIÁRIA DE ARMAZENAMENTO EM USO DO DISCO RÍGIDO (VALORES EM PORCENTAGEM): ${disco}\n
-    - CAPACIDADE TOTAL DE ARMAZENAMENTO DO SERVIDOR (VALOR EM GIGABYTES): ${totalDisco}
-  `;
+  const jsonValores = dia.map((day, index) => ({
+    dia: day,
+    cpu: cpu[index],
+    ram: ram[index],
+    disco: disco[index]
+  }));
+
+  // console.log(JSON.stringify(jsonValores));
+
+  const componentValues = `\n
+      - DIAS, PROCESSADOR, MEMÓRIA RAM E ARMAZENAMENTO (valores em porcentagem, exceto os dias): ${JSON.stringify(jsonValores)} \n
+      - Total da Memória RAM (em Gigabytes): ${totalRam} \n
+      - Total de Armazenamento (em Gigabytes): ${totalDisco}\n\n
+    `;
 
   textoIA.push(componentValues);
+  textoIA.push(texto1);
+  textoIA.push(texto2);
+  textoIA.push(texto3);
+  textoIA.push(texto4);
+  // textoIA.push(texto5);
 
   try {
-    const resultado = await gerarSugestao(textoIA);
-    var resultadoFormat = `IA: ${resultado}`
-    textoIA.push(resultadoFormat);
+    let resultado = await gerarSugestao(textoIA);
+    
     console.log(resultado);
     res.json({ resultado });
-  } 
+  }
   catch (error) {
     res.status(500).json({ error: 'Erro interno do servidor' });
   }
