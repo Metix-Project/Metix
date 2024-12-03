@@ -318,6 +318,82 @@ function DadosKpiLatenciaTempoReal(req, res) {
 }
 
 
+function DadosKpiDisco(req, res) {
+  var mcAdress = req.body.mcAdressServer;
+  console.log("puxando dados Disco");
+  graficosModel.DadosKpiDisco(mcAdress)
+    .then(function (resposta) {
+      if (resposta.length > 0) {
+        console.log("Estou no Controller");
+        res.status(200).json(resposta);
+      } else {
+        res.status(204).send("nenhum resultado encontrado");
+      }
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log("houve um erro ao buscar resultados", erro.sqlMessage);
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
+async function DadosKpiDiscoPicos(req, res) {
+  console.log("puxando dados Disco");
+  var mcAdress = req.body.mcAdressServer;
+
+  try {
+    const resultado1 = await graficosModel.DadosKpiDiscoPicos(mcAdress);
+    if (resultado1.length > 0) {
+      console.log("Estou no Controller");
+      res.status(200).json(resultado1);
+    } else {
+      res.status(204).send("Nenhum resultado encontrado");
+    }
+  } catch (erro) {
+    console.log("Houve um erro ao buscar resultados", erro.sqlMessage);
+    res.status(500).json({ error: erro.sqlMessage });
+  }
+}
+
+function DadosKpiDiscoAlertas(req, res) {
+  var mcAdress = req.body.mcAdressServer;
+  console.log("puxando dados Disco");
+  graficosModel.DadosKpiDiscoAlertas(mcAdress)
+    .then(function (resposta) {
+      if (resposta.length > 0) {
+        console.log("Estou no Controller");
+        res.status(200).json(resposta);
+      } else {
+        res.status(204).send("nenhum resultado encontrado");
+      }
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log("houve um erro ao buscar resultados", erro.sqlMessage);
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
+
+function DadosKpiDiscoTempoReal(req, res) {
+  var mcAdress = req.body.mcAdressServer;
+  console.log("puxando dados Disco");
+  graficosModel.DadosKpiDiscoTempoReal(mcAdress)
+    .then(function (resposta) {
+      if (resposta.length > 0) {
+        console.log("Estou no Controller");
+        res.status(200).json(resposta);
+      } else {
+        res.status(204).send("nenhum resultado encontrado");
+      }
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log("houve um erro ao buscar resultados", erro.sqlMessage);
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
 // exporta para outro arquivo:
 module.exports = {
   pegarDados,
@@ -336,11 +412,14 @@ module.exports = {
   DadosKpiRedePicos,
   DadosKpiRedeAlertas,
   GraficoRedeTempoReal,
-  
+
   DadosKpiLatencia,
   DadosKpiLatenciaPicos,
   DadosKpiLatenciaAlertas,
-  DadosKpiLatenciaTempoReal
+  DadosKpiLatenciaTempoReal,
 
-
+  DadosKpiDisco,
+  DadosKpiDiscoPicos,
+  DadosKpiDiscoAlertas,
+  DadosKpiDiscoTempoReal
 };
