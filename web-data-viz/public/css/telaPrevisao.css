@@ -55,31 +55,48 @@ h1 {
 }
 
 .graficos {
-    flex: 2; /* Parte maior para os gráficos */
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
 }
 
 .chat {
-    flex: 1; /* Menor espaço para o chat */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end; /* Posiciona o conteúdo na parte inferior */
     background-color: var(--cor-secundaria);
     border: 2px solid var(--cor-primaria);
     border-radius: 10px;
     padding: 20px;
     box-sizing: border-box;
-
-    max-width: 350px
+    max-width: 350px;
+    height: 150px; /* Reduz o tamanho do chat */
 }
 
 .chat-box {
-    display: flex;
-    flex-direction: column;
     height: 100%;
 }
+
+.filtros {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+
+.filtros select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--cor-primaria);
+    background-color: var(--cor-terciaria);
+    color: white;
+    cursor: pointer;
+    background-color: #645f59;
+}
+
 
 .messages {
     flex: 1;
@@ -114,4 +131,136 @@ button {
 
 button:hover {
     background-color: var(--cor-primaria);
+}
+
+.grafico1 {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--cor-secundaria);
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grafico1 canvas {
+    width: 100% !important; /* Faz o gráfico ocupar toda a largura */
+    height: auto !important; /* Mantém a proporção */
+}
+
+.linha-inferior {
+    display: flex;
+    gap: 20px;
+}
+
+.grafico2 {
+    flex: 2; /* O gráfico 2 ocupa 2/3 da largura total */
+    padding: 10px;
+    background-color: var(--cor-secundaria);
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grafico2 canvas {
+    width: 100%;
+    height: auto;
+}
+.informacoes {
+    background-color: var(--cor-secundaria); /* Fundo consistente com o tema */
+    border: 2px solid var(--cor-primaria); /* Borda sutil */
+    border-radius: 8px;
+    padding: 15px;
+    color: white;
+    box-sizing: border-box;
+    font-size: 14px;
+    max-width: 400px;
+}
+
+.informacoes h3 {
+    font-size: 20px;
+    margin-top: -4px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: white;
+}
+
+.ano-navegacao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.ano-navegacao h4 {
+    flex: 1;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    max-width: 150px;
+    color: white;
+}
+
+.ano-navegacao button {
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.ano-navegacao button:hover {
+    background-color: var(--cor-terciaria);
+}
+
+.ano-navegacao span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.legenda {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.legenda li {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.legenda .cor-laranja {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: orange;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.legenda .cor-azul {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: rgba(34, 127, 188, 0.9);
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.detalhes p {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    justify-content: space-evenly;
 }
