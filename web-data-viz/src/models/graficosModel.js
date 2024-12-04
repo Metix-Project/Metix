@@ -227,7 +227,7 @@ LIMIT 2;`;
 function DadosKpiDiscoAlertas(mcAdress) {
   var instrucaosql = `SELECT macAddress, COUNT(*) AS DiscoAlerta1
 FROM DadosServidor
-WHERE DiscoPorc > 40 AND macAddress = "${mcAdress}"
+WHERE DiscoPorc > 85 AND macAddress = "${mcAdress}"
 GROUP BY macAddress;`;
 
   console.log("Executando Query \n" + instrucaosql);
