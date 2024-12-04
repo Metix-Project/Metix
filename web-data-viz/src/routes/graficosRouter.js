@@ -10,36 +10,84 @@ router.get("/pegarDados", function (req, res) {
   graficosController.pegarDados(req, res);
 });
 
-router.get("/DadosKpiCPU", function (req, res) {
+router.post("/DadosKpiCPU", function (req, res) {
   graficosController.DadosKpiCPU(req, res);
 });
 
-router.get("/DadosKpiCPUPicos", function (req, res) {
+router.post("/DadosKpiCPUPicos", function (req, res) {
   graficosController.DadosKpiCPUPicos(req, res);
 });
 
-router.get("/DadosKpiCPUAlertas", function (req, res) {
+router.post("/DadosKpiCPUAlertas", function (req, res) {
   graficosController.DadosKpiCPUAlertas(req, res);
 });
 
-router.get("/DadosKpiCPUTempoReal", function (req, res) {
+router.post("/DadosKpiCPUTempoReal", function (req, res) {
   graficosController.DadosKpiCPUTempoReal(req, res);
 });
 
-router.get("/DadosKpiMemoria", function (req, res) {
+router.post("/DadosKpiMemoria", function (req, res) {
   graficosController.DadosKpiMemoria(req, res);
 });
 
-router.get("/DadosKpiMemoriaPicos", function (req, res) {
+router.post("/DadosKpiMemoriaPicos", function (req, res) {
   graficosController.DadosKpiMemoriaPicos(req, res);
 });
 
-router.get("/DadosKpiMemoriaAlertas", function (req, res) {
+router.post("/DadosKpiMemoriaAlertas", function (req, res) {
   graficosController.DadosKpiMemoriaAlertas(req, res);
 });
 
-router.get("/DadosKpiMemoriaTempoReal", function (req, res) {
+router.post("/DadosKpiMemoriaTempoReal", function (req, res) {
   graficosController.DadosKpiMemoriaTempoReal(req, res);
+});
+
+router.post("/DadosKpiRede", function (req, res) {
+  graficosController.DadosKpiRede(req, res);
+});
+
+router.post("/DadosKpiRedePicos", function (req, res) {
+  graficosController.DadosKpiRedePicos(req, res);
+});
+
+router.post("/DadosKpiRedeAlertas", function (req, res) {
+  graficosController.DadosKpiRedeAlertas(req, res);
+});
+
+router.post("/GraficoRedeTempoReal", function (req, res) {
+  graficosController.GraficoRedeTempoReal(req, res);
+});
+
+router.post("/DadosKpiLatencia", function (req, res) {
+  graficosController.DadosKpiLatencia(req, res);
+});
+
+router.post("/DadosKpiLatenciaPicos", function (req, res) {
+  graficosController.DadosKpiLatenciaPicos(req, res);
+});
+
+router.post("/DadosKpiLatenciaAlertas", function (req, res) {
+  graficosController.DadosKpiLatenciaAlertas(req, res);
+});
+
+router.post("/DadosKpiLatenciaTempoReal", function (req, res) {
+  graficosController.DadosKpiLatenciaTempoReal(req, res);
+});
+
+router.post("/DadosKpiDisco", function (req, res) {
+  graficosController.DadosKpiDisco(req, res);
+});
+
+router.post("/DadosKpiDiscoPicos", function (req, res) {
+  graficosController.DadosKpiDiscoPicos(req, res);
+});
+
+router.post("/DadosKpiDiscoAlertas", function (req, res) {
+  graficosController.DadosKpiDiscoAlertas(req, res);
+});
+
+router.post("/DadosKpiDiscoTempoReal", function (req, res) {
+  graficosController.DadosKpiDiscoTempoReal(req, res);
 });
 
 // exporta para outro arquivo:

@@ -5,7 +5,6 @@ function pegarMedias(req, res) {
     var data = req.body.dataServer;
     var macAddress = req.body.macAddressServer;
 
-    // envia os dados para a função `pegarDados` do model:
     historicoModel.pegarMedias(macAddress, data)
     .then(function (resultado) {
         res.status(200).json(resultado);

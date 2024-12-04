@@ -17,7 +17,10 @@
 </head>
 
 <body onload="DadosKpiCPU(); DadosKpiCPUPicos(); DadosKpiCPUAlertas(); DadosKpiCPUTempoReal(); 
-DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMemoriaTempoReal();">
+DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMemoriaTempoReal();
+DadosKpiRede(); DadosKpiRedePicos(); DadosKpiRedeAlertas(); GraficoRedeTempoReal();
+DadosKpiLatencia(); DadosKpiLatenciaPicos(); DadosKpiLatenciaAlertas(); DadosKpiLatenciaTempoReal();
+DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTempoReal();">
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
@@ -46,11 +49,11 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
         <div class="main-content">
 
             <div class="div_select">
-                <select class="filter-container" id="selectServidor" onchange="modificarComponente()">
-                    <option value="Servidor1">Servidor 1</option>
-                    <option value="Servidor2">Servidor 2</option>
-                    <option value="Servidor3">Servidor 3</option>
-                    <option value="Servidor4">Servidor 4</option>
+                <select class="filter-container" id="selectServidor" onchange="modificarServidor()">
+                    <option value="08979866bdfd">Servidor 1</option>
+                    <option value="e8fb1cd57ab6">Servidor 2</option>
+                    <option value="d09466c9be45">Servidor 3</option>
+                    <option value="c7d12465a943">Servidor 4</option>
                 </select>
                 <select class="filter-container" id="selectComponente" onchange="modificarComponente()">
                     <option value="cpu">CPU</option>
@@ -67,22 +70,21 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                     <div class="kpi">
                         <h3>Média de Uso da CPU</h3>
                         <div class="quadrado-editor">
-                            <div class="quadrado-dentro-media">
-                                <p>Nas últimas 24 horas, a média é: <br></p><span id="DadosCPU">X%</span></p>
+                            <div id="quadradoMedia" class="quadrado-dentro-media">
+                                <p>Nas últimas 24 horas, a média é: <br><br><span id="DadosCPU">X%</span></p>
                             </div>
-
                         </div>
                     </div>
 
                     <div class="kpi">
                         <h3> 2 Principais picos de Uso</h3>
                         <div class="quadrado-editor">
-                            <div class="quadrado-dentro-pico1">
-                                <p>Porcentagem: <br><span id="CPUpico1" >X%</span></p>
+                            <div id="pico1CPU" class="quadrado-dentro-pico1">
+                                <p>Porcentagem: <br><span id="CPUpico1">X%</span></p>
                                 <p>Data: <br> <span id="datapico1">X</span></p>
                                 <p>Hora: <br><span id="horapico1">X</span></p>
                             </div>
-                            <div id="2" class="quadrado-dentro-pico2">
+                            <div id="pico2CPU" class="quadrado-dentro-pico2">
                                 <p>Porcentagem: <br><span id="CPUpico2">X%</span></p>
                                 <p>Data: <br> <span id="datapico2">x</span></p>
                                 <p>Hora: <br> <span id="horapico2">x</span></p>
@@ -91,8 +93,9 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                     </div>
                     <div class="kpi">
                         <h3>Quantidade de Alertas</h3>
-                        <div class="quadrado-dentro-alertas">
-                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="CPUAlerta"> X </span> <br> <span>alertas</span></p>
+                        <div id="quadradoAlertaCPU" class="quadrado-dentro-alertas">
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="CPUAlerta"> 0 </span> <br>
+                            <span>alertas</span></p>
                         </div>
                         <div class="botao-alertas">
                             <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
@@ -107,7 +110,7 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                     <div class="kpi">
                         <h3>Média de Uso da Memória</h3>
                         <div class="quadrado-editor">
-                            <div class="quadrado-dentro-media">
+                            <div id="quadradoMediaMemoria" class="quadrado-dentro-media">
                                 <p>Nas últimas 24 horas, a média é: <br></p><span id="DadosMemoria">X%</span></p>
                             </div>
                         </div>
@@ -116,12 +119,12 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                     <div class="kpi">
                         <h3>2 Principais Picos de Uso</h3>
                         <div class="quadrado-editor">
-                            <div class="quadrado-dentro-pico1">
-                                <p>Porcentagem: <br><span id="Memoriapico1" >X%</span></p>
+                            <div id="pico1Memoria" class="quadrado-dentro-pico1">
+                                <p>Porcentagem: <br><span id="Memoriapico1">X%</span></p>
                                 <p>Data: <br> <span id="Memoriadatapico1">X</span></p>
                                 <p>Hora: <br><span id="Memoriahorapico1">X</span></p>
                             </div>
-                            <div id="2" class="quadrado-dentro-pico2">
+                            <div id="pico2Memoria" class="quadrado-dentro-pico2">
                                 <p>Porcentagem: <br><span id="Memoriapico2">X%</span></p>
                                 <p>Data: <br> <span id="Memoriadatapico2">x</span></p>
                                 <p>Hora: <br> <span id="Memoriahorapico2">x</span></p>
@@ -131,8 +134,9 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
 
                     <div class="kpi">
                         <h3>Quantidade de Alertas</h3>
-                        <div class="quadrado-dentro-alertas">
-                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="MemoriaAlerta"> X </span> <br> <span>alertas</span></p>
+                        <div id="quadradoAlertaMemoria" class="quadrado-dentro-alertas">
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="MemoriaAlerta"> X </span> <br>
+                            <span>alertas</span></p>
                         </div>
                         <div class="botao-alertas">
                             <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
@@ -148,8 +152,8 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                     <div class="kpi">
                         <h3>Média de Uso de Disco</h3>
                         <div class="quadrado-editor">
-                            <div class="quadrado-dentro-media">
-                                <p>Nas últimas 24 horas, a média é: <br></p><span>55%</span></p>
+                            <div id="quadradoMediaDisco" class="quadrado-dentro-media">
+                                <p>Nas últimas 24 horas, a média é: <br></p><span id="DadosDisco">X</span></p>
                             </div>
                         </div>
                     </div>
@@ -157,23 +161,24 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                     <div class="kpi">
                         <h3>2 Principais Picos de Uso</h3>
                         <div class="quadrado-editor">
-                            <div class="quadrado-dentro-pico1">
-                                <p>Porcentagem: <br><span>60%</span></p>
-                                <p>Data: <br> 2024-11-23</p>
-                                <p>Hora: 14:30</p>
+                            <div id="pico1Disco" class="quadrado-dentro-pico1">
+                                <p>Porcentagem: <br><span id="Discopico1">X%</span></p>
+                                <p>Data: <br> <span id="Discodatapico1">X</span></p>
+                                <p>Hora: <br><span id="Discohorapico1">X</span></p>
                             </div>
-                            <div class="quadrado-dentro-pico2">
-                                <p>Porcentagem: <br><span>80%</span></p>
-                                <p>Data: <br> 2024-11-23</p>
-                                <p>Hora: 11:45</p>
+                            <div id="pico2Disco" class="quadrado-dentro-pico2">
+                                <p>Porcentagem: <br><span id="Discopico2">X%</span></p>
+                                <p>Data: <br> <span id="Discodatapico2">x</span></p>
+                                <p>Hora: <br> <span id="Discohorapico2">x</span></p>
                             </div>
                         </div>
                     </div>
 
                     <div class="kpi">
                         <h3>Quantidade de Alertas</h3>
-                        <div class="quadrado-dentro-alertas">
-                            <p>Nas últimas 24 horas, foi aberto: <br></p><span> <br>alertas</span></p>
+                        <div id="quadradoDiscoAlerta" class="quadrado-dentro-alertas">
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="DiscoAlerta">
+                                0</span><br><span>alertas</span></p>
                         </div>
                         <div class="botao-alertas">
                             <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
@@ -187,11 +192,12 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
             <div id="kpi-rede" style="display: none;">
                 <div class="kpi-container">
                     <div class="kpi">
-                        <h3>Rede - Média de Tráfego</h3>
+                        <h3>Média de Tráfego de Rede</h3>
                         <div class="quadrado-editor">
-                            <div class="quadrado-dentro-media">
-                                Enviados: <span>120 MBps</span></p>
-                                Recebidos: <span>120 MBps</span></p>
+                            <div id="quadradoMediaRede" class="quadrado-dentro-media">
+                                <p style="margin-top: 7px;">Nas últimas 24 horas, a média é:</p>
+                                <p>Enviados: <span id="DadosRedeEnv">X </span></p>
+                                <p>Recebidos: <span id="DadosRedeRec">X </span></p>
                             </div>
                         </div>
                     </div>
@@ -199,23 +205,23 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                     <div class="kpi">
                         <h3>2 Principais Picos de Tráfego</h3>
                         <div class="quadrado-editor">
-                            <div class="quadrado-dentro-pico1">
-                                <p>Enviados: <br><span>250 MBps</span></p>
-                                <p>Data: <br> 2024-11-23</p>
-                                <p>Hora: 16:00</p>
+                            <div id="quadradoPico1Rede" class="quadrado-dentro-pico1">
+                                <p>Mbps Enviado: <br><span id="Redepico1">X</span></p>
+                                <p>Data: <br> <span id="Rededatapico1">X</span></p>
+                                <p>Hora: <br><span id="Redehorapico1">X</span></p>
                             </div>
-                            <div class="quadrado-dentro-pico2">
-                                <p>Recebidos: <br><span>280 MBps</span></p>
-                                <p>Data: <br> 2024-11-23</p>
-                                <p>Hora: 10:45</p>
+                            <div id="quadradoPico2Rede" class="quadrado-dentro-pico2">
+                                <p>Mbps Recebido: <br><span id="Redepico2">X</span></p>
+                                <p>Data: <br> <span id="Rededatapico2">X</span></p>
+                                <p>Hora: <br><span id="Redehorapico2">X</span></p>
                             </div>
                         </div>
                     </div>
 
                     <div class="kpi">
                         <h3>Quantidade de Alertas</h3>
-                        <div class="quadrado-dentro-alertas">
-                            <p>Nas últimas 24 horas, foi aberto: <br></p><span> 5<br>alertas</span></p>
+                        <div id="quadradoAlertaRede" class="quadrado-dentro-alertas">
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="RedeAlerta"> 0<br>alertas</span></p>
                         </div>
                         <div class="botao-alertas">
                             <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
@@ -230,30 +236,32 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                     <div class="kpi">
                         <h3>Média de Latência</h3>
                         <div class="quadrado-editor">
-                            <div class="quadrado-dentro-media">
-                                <p>Nas últimas 24 horas, a média é: <br></p><span>30 ms</span></p>
+                            <div id="quadradoMediaLatencia" class="quadrado-dentro-media">
+                                <p>Nas últimas 24 horas, a média é: <br></p><span id="DadosLatencia">X</span></p>
                             </div>
                         </div>
                     </div>
                     <div class="kpi">
                         <h3>2 Principais Picos</h3>
                         <div class="quadrado-editor">
-                            <div class="quadrado-dentro-pico1">
-                                <p>Latência: <br><span>120 ms</span></p>
-                                <p>Data: <br> 2024-11-23</p>
-                                <p>Hora: 17:15</p>
+                            <div id="quadrado1PicoLatencia" class="quadrado-dentro-pico1">
+                                <p>Milissegundos: <br><span id="Latenciapico1">X</span></p>
+                                <p>Data: <br> <span id="Latenciadatapico1">X</span></p>
+                                <p>Hora: <br><span id="Latenciahorapico1">X</span></p>
                             </div>
-                            <div class="quadrado-dentro-pico2">
-                                <p>Latência: <br><span>100 ms</span></p>
-                                <p>Data: <br> 2024-11-23</p>
-                                <p>Hora: 08:30</p>
+                            <div id="quadrado2PicoLatencia" class="quadrado-dentro-pico2">
+                                <p>Milissegundos: <br><span id="Latenciapico2">X</span></p>
+                                <p>Data: <br> <span id="Latenciadatapico2">X</span></p>
+                                <p>Hora: <br><span id="Latenciahorapico2">X</span></p>
                             </div>
                         </div>
                     </div>
+
                     <div class="kpi">
                         <h3>Quantidade de Alertas</h3>
-                        <div class="quadrado-dentro-alertas">
-                            <p>Nas últimas 24 horas, foi aberto: <br></p><span> 5<br>alertas</span></p>
+                        <div id="AlertaLatencia" class="quadrado-dentro-alertas">
+                            <p>Nas últimas 24 horas, foi aberto: <br></p><span id="LatenciaAlerta"> 0<br>alertas</span>
+                            </p>
                         </div>
                         <div class="botao-alertas">
                             <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
@@ -294,7 +302,28 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
 </html>
 
 <script>
-    
+    var mcAdress = document.getElementById("selectServidor").value;
+    function modificarServidor() {
+        mcAdress = document.getElementById("selectServidor").value;
+        console.log("Servidor selecionado:", mcAdress);
+        // Chame as funções novamente para atualizar os dados com o novo servidor
+        DadosKpiCPU();
+        DadosKpiCPUPicos();
+        DadosKpiCPUAlertas();
+        DadosKpiCPUTempoReal();
+        DadosKpiMemoria();
+        DadosKpiMemoriaPicos();
+        DadosKpiMemoriaAlertas();
+        DadosKpiMemoriaTempoReal();
+        DadosKpiRede();
+        DadosKpiRedePicos();
+        DadosKpiRedeAlertas();
+        GraficoRedeTempoReal();
+        DadosKpiDisco();
+        DadosKpiDiscoPicos();
+        DadosKpiDiscoAlertas();
+    }
+
     function modificarComponente() {
         const componenteSelecionado = document.getElementById("selectComponente").value;
 
@@ -335,6 +364,33 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
             document.getElementById("kpi-disco").style.display = "block";
         }
     }
+
+//CPU 
+setInterval(DadosKpiCPUTempoReal, 500);
+setInterval(DadosKpiCPUPicos, 500);
+setInterval(DadosKpiCPU, 500);
+setInterval(DadosKpiCPUAlertas, 500);
+//Memória
+setInterval(DadosKpiMemoriaTempoReal, 500);
+setInterval(DadosKpiMemoriaPicos, 500);
+setInterval(DadosKpiMemoria, 500);
+setInterval(DadosKpiMemoriaAlertas, 500);
+//Rede
+setInterval(GraficoRedeTempoReal, 500);
+setInterval(DadosKpiRedePicos, 500);
+setInterval(DadosKpiRede, 500);
+setInterval(DadosKpiRedeAlertas, 500);
+//Latencia
+setInterval(DadosKpiLatenciaTempoReal, 500);
+setInterval(DadosKpiLatenciaPicos, 500);
+setInterval(DadosKpiLatencia, 500);
+setInterval(DadosKpiLatenciaAlertas, 100);
+//Disco
+setInterval(DadosKpiDiscoTempoReal, 500);
+setInterval(DadosKpiDiscoPicos, 500);
+setInterval(DadosKpiDisco, 500);
+setInterval(DadosKpiDiscoAlertas, 500);
+
 
     /////////////////// AQUI ESTOU MONTANDO OS GRAFICOOSS //////////////////
     const labels5 = [];
@@ -404,14 +460,14 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
         config5
     );
 
-    const labels = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
+    const labels = [];
 
     const data = {
         labels: labels,
         datasets: [
             {
                 label: 'Enviados (MB)',
-                data: [300, 500, 800, 400, 600, 300, 300],
+                data: [],
                 fill: true,
                 borderColor: 'rgb(125, 148, 60)',
                 tension: 0.1,
@@ -419,7 +475,7 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
             },
             {
                 label: 'Recebidos (MB)',
-                data: [400, 550, 1200, 550, 700, 400, 500],
+                data: [],
                 fill: true,
                 borderColor: 'rgb(5, 208, 222)',
                 tension: 0.1,
@@ -470,7 +526,9 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                 y: {
                     ticks: {
                         color: 'white'
-                    }
+                    },
+                    min: 0
+
                 }
             }
         }
@@ -481,14 +539,14 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
         config
     );
 
-    const labels2 = ['13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35'];
+    const labels2 = [];
 
     const data2 = {
         labels: labels2,
         datasets: [
             {
                 label: 'Latência (ms)',
-                data: [30, 70, 50, 40, 60, 45, 55],
+                data: [],
                 fill: true,
                 borderColor: 'rgb(102, 35, 168)',
                 tension: 0.1,
@@ -539,7 +597,8 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                 y: {
                     ticks: {
                         color: 'white'
-                    }
+                    },
+                    min: 0
                 }
             }
         }
@@ -627,7 +686,7 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
         datasets: [
             {
                 label: 'Uso de Disco',
-                data: [40, 60],
+                data: [],
                 backgroundColor: ['rgb(249, 146, 44)', 'rgb(125, 148, 60)'],
                 hoverOffset: 4
             }
@@ -635,7 +694,7 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
     };
 
     const config4 = {
-        type: 'doughnut',
+        type: 'pie',
         data: data4,
         options: {
             responsive: true,
@@ -652,10 +711,17 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
         config4
     );
 
-//AQUI COMEÇA CPU
+    //AQUI COMEÇA CPU
     function DadosKpiCPU() {
+        var mcAdressVar = mcAdress;
         fetch("/graficosRouter/DadosKpiCPU/", {
-            method: "GET",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
         })
             .then(function (resposta) {
                 console.log("Estou na função do DadosKPICpu");
@@ -664,10 +730,24 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                 if (resposta.ok) {
                     resposta.json()
                         .then(function (resposta) {
-                            console.log(resposta)
+                            console.log(resposta);
 
-                            DadosCPU.innerHTML = `${resposta[0].mediaUsoCPU}%`
-                        })
+                            if (resposta.length > 0) {
+                                const usoCPU = resposta[0].mediaUsoCPU;
+                                DadosCPU.innerHTML = `${usoCPU}%`;
+
+
+                                if (usoCPU <= 70) {
+                                    quadradoMedia.style.backgroundColor = "green";
+                                } else if (usoCPU > 70 && usoCPU <= 85) {
+                                    quadradoMedia.style.backgroundColor = "yellow";
+                                } else {
+                                    quadradoMedia.style.backgroundColor = "red";
+                                }
+                            } else {
+                                console.log("Nenhum dado encontrado");
+                            }
+                        });
                 } else {
                     throw "Houve erro ao puxar";
                 }
@@ -676,42 +756,75 @@ DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMem
                 console.log(`#ERRO: ${resposta}`);
             });
     }
-
     function DadosKpiCPUPicos() {
-    fetch("/graficosRouter/DadosKpiCPUPicos/", {
-        method: "GET",
-    })
-    .then(function (resposta) {
-        console.log("Estou na função do DadosKpiCPUPicos");
-        console.log("resposta:", resposta);
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiCPUPicos/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKpiCPUPicos");
+                console.log("resposta:", resposta);
 
-        if (resposta.ok) {
-            return resposta.json(); 
-        } else {
-            throw "Houve erro ao puxar";
-        }
-    })
-    .then(function (resposta) {
-        console.log(resposta);
+                if (resposta.ok) {
+                    return resposta.json();
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .then(function (resposta) {
+                console.log(resposta);
+                const usoCPU1 = resposta[0].picoCPU;
+                const usoCPU2 = resposta[1].picoCPU;
 
-        
-        CPUpico1.innerHTML = `${resposta[0].picoCPU}%`;
-        datapico1.innerHTML = `${resposta[0].Data1}`
-        horapico1.innerHTML = `${resposta[0].Hora1}`
+                CPUpico1.innerHTML = `${resposta[0].picoCPU}%`;
+                datapico1.innerHTML = `${resposta[0].Data1}`;
+                horapico1.innerHTML = `${resposta[0].Hora1}`;
 
-        CPUpico2.innerHTML = `${resposta[1].picoCPU}%`;
-        datapico2.innerHTML = `${resposta[1].Data1}`
-        horapico2.innerHTML = `${resposta[1].Hora1}`
+                CPUpico2.innerHTML = `${resposta[1].picoCPU}%`;
+                datapico2.innerHTML = `${resposta[1].Data1}`;
+                horapico2.innerHTML = `${resposta[1].Hora1}`;
 
-    })
-    .catch(function (erro) {
-        console.log(`#ERRO: ${erro}`);
-    });
-}
+                if (usoCPU1 <= 70) {
+                    pico1CPU.style.backgroundColor = "green";
+                }
+                if (usoCPU1 > 70 && usoCPU1 <= 85) {
+                    pico1CPU.style.backgroundColor = "yellow";
+                }
+                if (usoCPU1 > 85) {
+                    pico1CPU.style.backgroundColor = "red";
+                }
 
-function DadosKpiCPUAlertas() {
+                if (usoCPU2 <= 70) {
+                    pico2CPU.style.backgroundColor = "green";
+                }
+                if (usoCPU2 > 70 && usoCPU2 <= 85) {
+                    pico2CPU.style.backgroundColor = "yellow";
+                }
+                if (usoCPU2 > 85) {
+                    pico2CPU.style.backgroundColor = "red";
+                }
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+    }
+
+    function DadosKpiCPUAlertas() {
+        var mcAdressVar = mcAdress;
         fetch("/graficosRouter/DadosKpiCPUAlertas/", {
-            method: "GET",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
         })
             .then(function (resposta) {
                 console.log("Estou na função do DadosKPICpuAlertas");
@@ -720,75 +833,17 @@ function DadosKpiCPUAlertas() {
                 if (resposta.ok) {
                     resposta.json()
                         .then(function (resposta) {
-                            console.log(resposta)
-
-                            CPUAlerta.innerHTML = `${resposta[0].CPUAlerta}`
-                        })
-                } else {
-                    throw "Houve erro ao puxar";
-                }
-            })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-            });
-}
-
-function DadosKpiCPUTempoReal() {
-    
-    fetch("/graficosRouter/DadosKpiCPUTempoReal/", {
-        method: "GET",
-    })
-        .then(function (resposta) {
-            console.log("Estou na função do DadosKpiCPUTempoReal");
-            console.log("resposta:", resposta);
-
-            if (resposta.ok) {
-                resposta.json()
-                    .then(function (resposta) {
-                        console.log(resposta);
-                        resposta.reve
-                        
-                        const labelsAtualizados = resposta.map(dado => dado.hora); 
-                        const cpuDadosAtualizados = resposta.map(dado => dado.CPUTempoReal);
-
-                        myChart5.data.labels = labelsAtualizados.reverse();
-                        myChart5.data.datasets[0].data = cpuDadosAtualizados.reverse();
-
-                       
-                        myChart5.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
-
-                        myChart5.update();
-                    });
-            } else {
-                throw "Houve erro ao puxar";
-            }
-        })
-        .catch(function (resposta) {
-            console.log(`#ERRO: ${resposta}`);
-        });
-}
-setInterval(DadosKpiCPUTempoReal, 10000);
-setInterval(DadosKpiCPUPicos, 10000);
-setInterval(DadosKpiCPU, 10000);
-setInterval(DadosKpiCPUAlertas, 10000);
-
-//AQUI COMEÇA MEMORIA RAM
-
-function DadosKpiMemoria() {
-        fetch("/graficosRouter/DadosKpiMemoria/", {
-            method: "GET",
-        })
-            .then(function (resposta) {
-                console.log("Estou na função do DadosKPIMemoria");
-                console.log("resposta:", resposta);
-
-                if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta)
-
-                            DadosMemoria.innerHTML = `${resposta[0].mediaUsoMemoria}%`
-                        })
+                            console.log(resposta);
+                            const quantidadeAlertas = resposta[0].CPUAlerta;
+                            CPUAlerta.innerHTML = `${resposta[0].CPUAlerta}`;
+                            if (quantidadeAlertas <= 5) {
+                                quadradoAlertaCPU.style.backgroundColor = "green";
+                            } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
+                                quadradoAlertaCPU.style.backgroundColor = "yellow";
+                            } else {
+                                quadradoAlertaCPU.style.backgroundColor = "red";
+                            }
+                        });
                 } else {
                     throw "Houve erro ao puxar";
                 }
@@ -798,42 +853,154 @@ function DadosKpiMemoria() {
             });
     }
 
+    function DadosKpiCPUTempoReal() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiCPUTempoReal/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKpiCPUTempoReal");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
+
+                            const labelsAtualizados = resposta.map(dado => dado.hora);
+                            const cpuDadosAtualizados = resposta.map(dado => dado.CPUTempoReal);
+
+                            myChart5.data.labels = labelsAtualizados.reverse();
+                            myChart5.data.datasets[0].data = cpuDadosAtualizados.reverse();
+
+                            myChart5.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+
+                            myChart5.update();
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    //AQUI COMEÇA MEMORIA RAM
+
+    function DadosKpiMemoria() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiMemoria/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPIMemoria");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
+                            const usoMemoria = resposta[0].mediaUsoMemoria;
+                            DadosMemoria.innerHTML = `${resposta[0].mediaUsoMemoria}%`;
+
+                            if (usoMemoria <= 70) {
+                                quadradoMediaMemoria.style.backgroundColor = "green";
+                            } else if (usoMemoria > 70 && usoMemoria <= 85) {
+                                quadradoMediaMemoria.style.backgroundColor = "yellow";
+                            } else {
+                                quadradoMediaMemoria.style.backgroundColor = "red";
+                            }
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
 
     function DadosKpiMemoriaPicos() {
-    fetch("/graficosRouter/DadosKpiMemoriaPicos/", {
-        method: "GET",
-    })
-    .then(function (resposta) {
-        console.log("Estou na função do DadosKpiMemoriaPicos");
-        console.log("resposta:", resposta);
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiMemoriaPicos/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKpiMemoriaPicos");
+                console.log("resposta:", resposta);
 
-        if (resposta.ok) {
-            return resposta.json(); 
-        } else {
-            throw "Houve erro ao puxar";
-        }
-    })
-    .then(function (resposta) {
-        console.log(resposta);
+                if (resposta.ok) {
+                    return resposta.json();
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .then(function (resposta) {
+                console.log(resposta);
+                const usoMemoria1 = resposta[0].picoMemoria;
+                const usoMemoria2 = resposta[1].picoMemoria;
+                Memoriapico1.innerHTML = `${resposta[0].picoMemoria}%`;
+                Memoriadatapico1.innerHTML = `${resposta[0].Data1}`;
+                Memoriahorapico1.innerHTML = `${resposta[0].Hora1}`;
 
-        
-        Memoriapico1.innerHTML = `${resposta[0].picoMemoria}%`;
-        Memoriadatapico1.innerHTML = `${resposta[0].Data1}`
-        Memoriahorapico1.innerHTML = `${resposta[0].Hora1}`
+                Memoriapico2.innerHTML = `${resposta[1].picoMemoria}%`;
+                Memoriadatapico2.innerHTML = `${resposta[1].Data1}`;
+                Memoriahorapico2.innerHTML = `${resposta[1].Hora1}`;
 
-        Memoriapico2.innerHTML = `${resposta[1].picoMemoria}%`;
-        Memoriadatapico2.innerHTML = `${resposta[1].Data1}`
-        Memoriahorapico2.innerHTML = `${resposta[1].Hora1}`
 
-    })
-    .catch(function (erro) {
-        console.log(`#ERRO: ${erro}`);
-    });
-}
+                if (usoMemoria1 <= 70) {
+                    pico1Memoria.style.backgroundColor = "green";
+                }
+                else if (usoMemoria1 > 70 && usoMemoria1 <= 85) {
+                    pico1Memoria.style.backgroundColor = "yellow";
+                }
+                else {
+                    pico1Memoria.style.backgroundColor = "red";
+                }
+                if (usoMemoria2 <= 70) {
+                    pico2Memoria.style.backgroundColor = "green";
+                }
+                else if (usoMemoria2 > 70 && usoMemoria2 <= 85) {
+                    pico2Memoria.style.backgroundColor = "yellow";
+                }
+                else {
+                    pico2Memoria.style.backgroundColor = "red";
+                }
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+    }
 
-function DadosKpiMemoriaAlertas() {
+    function DadosKpiMemoriaAlertas() {
+        var mcAdressVar = mcAdress;
         fetch("/graficosRouter/DadosKpiMemoriaAlertas/", {
-            method: "GET",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
         })
             .then(function (resposta) {
                 console.log("Estou na função do DadosKPIMemoriaAlertas");
@@ -842,10 +1009,18 @@ function DadosKpiMemoriaAlertas() {
                 if (resposta.ok) {
                     resposta.json()
                         .then(function (resposta) {
-                            console.log(resposta)
+                            console.log(resposta);
+                            const quantidadeAlertas = resposta[0].MemoriaAlerta1;
+                            MemoriaAlerta.innerHTML = `${resposta[0].MemoriaAlerta1}`;
 
-                            MemoriaAlerta.innerHTML = `${resposta[0].MemoriaAlerta1}`
-                        })
+                            if (quantidadeAlertas <= 5) {
+                                quadradoAlertaMemoria.style.backgroundColor = "green";
+                            } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
+                                quadradoAlertaMemoria.style.backgroundColor = "yellow";
+                            } else {
+                                quadradoAlertaMemoria.style.backgroundColor = "red";
+                            }
+                        });
                 } else {
                     throw "Houve erro ao puxar";
                 }
@@ -853,48 +1028,599 @@ function DadosKpiMemoriaAlertas() {
             .catch(function (resposta) {
                 console.log(`#ERRO: ${resposta}`);
             });
-}
+    }
 
-function DadosKpiMemoriaTempoReal() {
-    
-    fetch("/graficosRouter/DadosKpiMemoriaTempoReal/", {
-        method: "GET",
-    })
-        .then(function (resposta) {
-            console.log("Estou na função do DadosKpiMemoriaTempoReal");
-            console.log("resposta:", resposta);
-
-            if (resposta.ok) {
-                resposta.json()
-                    .then(function (resposta) {
-                        console.log(resposta);
-                        resposta.reve
-                        
-                        const labelsAtualizados = resposta.map(dado => dado.hora); 
-                        const MemoriaDadosAtualizados = resposta.map(dado => dado.MemoriaTempoReal);
-
-                        myChart3.data.labels = labelsAtualizados.reverse();
-                        myChart3.data.datasets[0].data = MemoriaDadosAtualizados.reverse();
-
-                       
-                        myChart3.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
-
-                        myChart3.update();
-                    });
-            } else {
-                throw "Houve erro ao puxar";
-            }
+    function DadosKpiMemoriaTempoReal() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiMemoriaTempoReal/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
         })
-        .catch(function (resposta) {
-            console.log(`#ERRO: ${resposta}`);
-        });
-}
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKpiMemoriaTempoReal");
+                console.log("resposta:", resposta);
 
-setInterval(DadosKpiMemoriaTempoReal, 10000);
-setInterval(DadosKpiMemoriaPicos, 10000);
-setInterval(DadosKpiMemoria, 10000);
-setInterval(DadosKpiMemoriaAlertas, 10000);
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
 
-//AQUI COMEÇA DISCO
+                            const labelsAtualizados = resposta.map(dado => dado.hora);
+                            const MemoriaDadosAtualizados = resposta.map(dado => dado.MemoriaTempoReal);
+
+                            myChart3.data.labels = labelsAtualizados.reverse();
+                            myChart3.data.datasets[0].data = MemoriaDadosAtualizados.reverse();
+
+                            myChart3.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+
+                            myChart3.update();
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    //AQUI COMEÇA REDE 
+
+    function DadosKpiRede() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiRede/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPIRede");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
+                            const usoRedeEnv2 = resposta[0].mediaUsoRedeEnv;
+                            const usoRedeRec2 = resposta[0].mediaUsoRedeRec;
+                            DadosRedeEnv.innerHTML = `${resposta[0].mediaUsoRedeEnv} Mbps`;
+                            DadosRedeRec.innerHTML = `${resposta[0].mediaUsoRedeRec} Mbps`;
+
+                            if (usoRedeEnv2 <= 600 || usoRedeRec2 <= 600) {
+                                quadradoMediaRede.style.backgroundColor = "green";
+                            }
+                            else if (usoRedeEnv2 > 600 && usoRedeEnv2 <= 1000 || usoRedeRec2 > 600 && usoRedeRec2 <=
+                                1000) {
+                                quadradoMediaRede.style.backgroundColor = "yellow";
+                            } else {
+                                quadradoMediaRede.style.backgroundColor = "red";
+                            }
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function DadosKpiRedePicos() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiRedePicos/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKpiRedePicos");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    return resposta.json();
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .then(function (resposta) {
+                console.log(resposta);
+
+                if (resposta.length >= 2) {
+                    const picoRedeEnv2 = resposta[0].MbpsEnviados;
+                    const picoRedeRec2 = resposta[1].MbpsEnviados;
+
+                    Redepico1.innerHTML = `${resposta[0].MbpsEnviados} Mb`;
+                    Rededatapico1.innerHTML = `${resposta[0].Data1}`;
+                    Redehorapico1.innerHTML = `${resposta[0].Hora1}`;
+
+                    Redepico2.innerHTML = `${resposta[1].MbpsEnviados} Mb`;
+                    Rededatapico2.innerHTML = `${resposta[1].Data1}`;
+                    Redehorapico2.innerHTML = `${resposta[1].Hora1}`;
+
+                    if (picoRedeEnv2 <= 600) {
+                        quadradoPico1Rede.style.backgroundColor = "green";
+                    } else if (picoRedeEnv2 > 600 && picoRedeEnv2 <= 1000) {
+                        quadradoPico1Rede.style.backgroundColor = "yellow";
+                    } else {
+                        quadradoPico1Rede.style.backgroundColor = "red";
+                    }
+
+                    if (picoRedeRec2 <= 600) {
+                        quadradoPico2Rede.style.backgroundColor = "green";
+                    } else if (picoRedeRec2 > 600 && picoRedeRec2 <= 1000) {
+                        quadradoPico2Rede.style.backgroundColor = "yellow";
+                    } else {
+                        quadradoPico2Rede.style.backgroundColor = "red";
+                    }
+                } else {
+                    throw "Resposta não contém dados suficientes";
+                }
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+    }
+
+    function DadosKpiRedeAlertas() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiRedeAlertas/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPIRedeAlertas");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
+                            const quantidadeAlertas = resposta[0].RedeAlerta1;
+                            RedeAlerta.innerHTML = `${resposta[0].RedeAlerta1}<br> alertas`;
+
+                            if (quantidadeAlertas <= 5) {
+                                quadradoAlertaRede.style.backgroundColor = "green";
+                            } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
+                                quadradoAlertaRede.style.backgroundColor = "yellow";
+                            } else {
+                                quadradoAlertaRede.style.backgroundColor = "red";
+                            }
+
+
+
+
+
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function GraficoRedeTempoReal() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/GraficoRedeTempoReal/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do GraficoRedeTempoReal");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (dados) {
+                            console.log(dados);
+                            const labelsAtualizados = dados.map(dado => dado.Hora1);
+                            const enviadosDadosAtualizados = dados.map(dado => dado.MbpsEnviados);
+                            const recebidosDadosAtualizados = dados.map(dado => dado.MbpsRecebidos);
+
+                            myChart1.data.labels = labelsAtualizados.reverse();
+                            myChart1.data.datasets[0].data = enviadosDadosAtualizados.reverse();
+                            myChart1.data.datasets[1].data = recebidosDadosAtualizados.reverse();
+                            myChart1.data.datasets[2].data = Array(labelsAtualizados.length).fill(1000);
+                            myChart1.update();
+                        });
+                }
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+    }
+
+    // AQUI COMEÇA O DE LATENCIA
+
+    function DadosKpiLatencia() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiLatencia/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPILatencia");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
+                            const mediaLatencia = resposta[0].mediaUsoLatencia;
+                            DadosLatencia.innerHTML = `${resposta[0].mediaUsoLatencia} Ms`;
+
+
+
+                            if (mediaLatencia <= 50) {
+                                quadradoMediaLatencia.style.backgroundColor = "green";
+                            } else if (mediaLatencia > 50 && mediaLatencia <= 100) {
+                                quadradoMediaLatencia.style.backgroundColor = "yellow";
+                            } else {
+                                quadradoMediaLatencia.style.backgroundColor = "red";
+                            }
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function DadosKpiLatenciaPicos() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiLatenciaPicos/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKpiLatenciaPicos");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    return resposta.json();
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .then(function (resposta) {
+                console.log(resposta);
+                const pico1latencia = resposta[0].picoLatencia;
+                const pico2latencia = resposta[1].picoLatencia;
+
+                Latenciapico1.innerHTML = `${resposta[0].picoLatencia} Ms`;
+                Latenciadatapico1.innerHTML = `${resposta[0].Data1}`;
+                Latenciahorapico1.innerHTML = `${resposta[0].Hora1}`;
+
+                Latenciapico2.innerHTML = `${resposta[1].picoLatencia} Ms`;
+                Latenciadatapico2.innerHTML = `${resposta[1].Data1}`;
+                Latenciahorapico2.innerHTML = `${resposta[1].Hora1}`;
+
+                if (pico1latencia <= 50) {
+                    quadrado1PicoLatencia.style.backgroundColor = "green";
+                }
+                else if (pico1latencia > 50 && pico1latencia <= 1000) {
+                    quadrado1PicoLatencia.style.backgroundColor = "yellow";
+                } else {
+                    quadrado1PicoLatencia.style.backgroundColor = "red";
+                }
+                if (pico2latencia <= 50) {
+                    quadrado2PicoLatencia.style.backgroundColor = "green";
+                }
+                else if (pico2latencia > 50 && pico2latencia <= 1000) {
+                    quadrado2PicoLatencia.style.backgroundColor = "yellow";
+                } else {
+                    quadrado2PicoLatencia.style.backgroundColor = "red";
+                }
+
+
+
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+    }
+
+    function DadosKpiLatenciaAlertas() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiLatenciaAlertas/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPILatenciaAlertas");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
+                            const quantidadeAlertas = resposta[0].LatenciaAlerta1;
+                            LatenciaAlerta.innerHTML = `${resposta[0].LatenciaAlerta1}<br> alertas`;
+
+
+                            if (quantidadeAlertas <= 5) {
+                                AlertaLatencia.style.backgroundColor = "green";
+                            } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
+                                AlertaLatencia.style.backgroundColor = "yellow";
+                            } else {
+                                AlertaLatencia.style.backgroundColor = "red";
+                            }
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function DadosKpiLatenciaTempoReal() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiLatenciaTempoReal/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKpiLatenciaTempoReal");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
+
+                            const labelsAtualizados = resposta.map(dado => dado.hora);
+                            const LatenciaDadosAtualizados = resposta.map(dado => dado.LatenciaTempoReal);
+
+                            myChart2.data.labels = labelsAtualizados.reverse();
+                            myChart2.data.datasets[0].data = LatenciaDadosAtualizados.reverse();
+
+                            myChart2.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+
+                            myChart2.update();
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function DadosKpiDisco() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiDisco/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKPIDisco");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
+                            const mediaDisco = resposta[0].mediaUsoDisco;
+
+                            DadosDisco.innerHTML = `${resposta[0].mediaUsoDisco}%`;
+
+                                if (mediaDisco <= 70) {
+                                    quadradoMediaDisco.style.backgroundColor = "green";
+                                } else if (mediaDisco > 70 && mediaDisco <= 90) {
+                                    quadradoMediaDisco.style.backgroundColor = "yellow";
+                                } else {
+                                    quadradoMediaDisco.style.backgroundColor = "red";
+                                }
+
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function DadosKpiDiscoPicos() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiDiscoPicos/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKpiDiscoPicos");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    return resposta.json();
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .then(function (resposta) {
+                console.log(resposta);
+
+                if (resposta.length > 0) {
+                    const picoDisco1 = resposta[0].picoDisco;
+                    const picoDisco2 = resposta[1].picoDisco;
+                    Discopico1.innerHTML = `${resposta[0].picoDisco}%`;
+                    Discodatapico1.innerHTML = `${resposta[0].Data1}`;
+                    Discohorapico1.innerHTML = `${resposta[0].Hora1}`;
+
+                    Discopico2.innerHTML = `${resposta[1].picoDisco}%`;
+                    Discodatapico2.innerHTML = `${resposta[1].Data1}`;
+                    Discohorapico2.innerHTML = `${resposta[1].Hora1}`;
+
+                if (picoDisco1 <= 70) {
+                    pico1Disco.style.backgroundColor = "green";
+                }
+                else if (picoDisco1 > 70 && picoDisco1 <= 90) {
+                    pico1Disco.style.backgroundColor = "yellow";
+                }
+                else {
+                    pico1Disco.style.backgroundColor = "red";
+                }
+                if (picoDisco2 <= 70) {
+                    pico2Disco.style.backgroundColor = "green";
+                }
+                else if (picoDisco2 > 70 && picoDisco2 <= 90) {
+                    pico2Disco.style.backgroundColor = "yellow";
+                }
+                else {
+                    pico2Disco.style.backgroundColor = "red";
+                }
+                } 
+
+                else {
+                    console.log("Nenhum dado encontrado");
+                }
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+    }
+    function DadosKpiDiscoAlertas() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiDiscoAlertas/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKpiDiscoAlertas");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
+
+                            if (resposta.length > 0) {
+                                const quantidadeAlertas = resposta[0].DiscoAlerta1;
+
+                                DiscoAlerta.innerHTML = `${resposta[0].DiscoAlerta1}`;
+
+
+                            if (quantidadeAlertas <= 5) {
+                                quadradoDiscoAlerta.style.backgroundColor = "green";
+                            } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
+                                quadradoDiscoAlerta.style.backgroundColor = "yellow";
+                            } else {
+                                quadradoDiscoAlerta.style.backgroundColor = "red";
+                            }
+
+
+                            } else {
+                                console.log("Nenhum dado encontrado");
+                            }
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function DadosKpiDiscoTempoReal() {
+        var mcAdressVar = mcAdress;
+        fetch("/graficosRouter/DadosKpiDiscoTempoReal/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                mcAdressServer: mcAdressVar
+            })
+        })
+            .then(function (resposta) {
+                console.log("Estou na função do DadosKpiDiscoTempoReal");
+                console.log("resposta:", resposta);
+
+                if (resposta.ok) {
+                    resposta.json()
+                        .then(function (resposta) {
+                            console.log(resposta);
+
+                            const espacoUtilizado = resposta[0].espacoUtilizado;
+                            const espacoDisponivel = 100 - espacoUtilizado;
+
+                            myChart4.data.datasets[0].data = [espacoUtilizado, espacoDisponivel];
+
+                            myChart4.update();
+                        });
+                } else {
+                    throw "Houve erro ao puxar";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
 
 </script>
