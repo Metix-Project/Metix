@@ -7,7 +7,7 @@ var caminho_env = ambiente_processo === "producao" ? ".env" : ".env.dev";
 //   traz os dados do arquivo .env ou .env.dev:
 require("dotenv").config({ path: caminho_env });
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const chatIA = new GoogleGenerativeAI("AIzaSyBBVHY5V-");
+const chatIA = new GoogleGenerativeAI("AIzaSyBBVHY5V-ep6SqycYO6wBUfNk2ZvO3ovmk");
 
 //   define as bibliotecas/frameworks:
 var express = require("express");
@@ -48,8 +48,8 @@ const textoIA = [];
 const texto1 = `
   Analise os componentes acima, já indicando o processamento, uso da memória RAM e uso do armazenamento em cada dia do JSON, e indique qual é o problema que está ocorrendo e sugira o que poderia ser feito para melhorias apenas nos componentes com problemas. Vale ressaltar que:
   - O limite do uso do processador (CPU) é de 85%; \n
-  - O limite uso da Memória RAM é de 90%; \n
-  - O limite do espaço em uso do Armazenamento (Disco) é de 90%.\n\n
+  - O limite uso da Memória RAM é de 855%; \n
+  - O limite do espaço em uso do Armazenamento (Disco) é de 85%.\n\n
 `;
 
 const texto2 = `Com a análise feita, explique como a sua análise foi feita para cada componente separadamente (Processador, Memória RAM e Disco). Indique também os dias que ultrapassaram o limite em algum dos componentes.\n\n`;

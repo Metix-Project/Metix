@@ -1,5 +1,3 @@
-
-
 body {
     overflow: hidden;
 }
@@ -39,7 +37,7 @@ h2 {
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin: 20px 0;
 }
@@ -88,6 +86,8 @@ h2 {
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 412px;
+    margin-top: 50px;
     align-items: center;
     justify-content: center;
 }
@@ -101,8 +101,11 @@ h2 {
     gap: 30px;
 }
 
-.dados canvas {
+.dados .canvasDiv {
     padding: 20px;
+    height: 412px;
+    width: 850px;
+    box-sizing: border-box;
     background-color: var(--cor-secundaria);
 }
 
@@ -201,7 +204,8 @@ h2 {
 }
 
 #dualHandleSlider input[type="range"]:first-child::-webkit-slider-runnable-track {
-    background-color: var(--cor-secundaria);
+    /* background-color: var(--cor-secundaria); */
+    background: linear-gradient(to right, var(--cor-primaria) 50%, var(--cor-secundaria) 50%);
     border-radius: 5px;
 }
 
@@ -247,7 +251,7 @@ h2 {
     transition: border-color 0.2s;
 }
 
-#modalContainer {
+#modalContainer, #modalChart {
     background-color: rgba(0, 0, 0, 0.6);
     width: 100vw;
     height: 100vh;
@@ -260,17 +264,26 @@ h2 {
     left: 0;
 }
 
-#modalContainer .modal {
+.modal {
     background-color: rgb(79, 77, 74);;
-    width: 60%;
+    width: 70%;
     height: auto;
-    border: 3px solid var(--cor-primaria);
+    /* border: 3px solid var(--cor-primaria); */
     padding: 20px;
     color: white;
     font-size: 18px;
 }
 
-.top {
+.modal canvas {
+    position: absolute;
+    left: 5%;
+}
+
+#modalDiv {
+    position: relative;
+}
+
+.modal .top {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -278,11 +291,33 @@ h2 {
     align-items: center;
 }
 
-#closePopUp {
+.closeModal {
     cursor: pointer;
     font-weight: bold;
 }
 
+.closeChart {
+    position: absolute;
+    right: 20px;
+}
+
 #geminiText {
     font-size: 18px;
+}
+
+.arrow {
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: calc(50% - 10px);
+    background-color: transparent;
+    border: none;
+    color: white;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.arrow:hover {
+    transform: scale(140%, 140%);
 }
