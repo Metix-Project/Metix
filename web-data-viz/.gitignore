@@ -2,8 +2,7 @@
 node_modules/
 
 # Ignorar arquivos específicos
-.env.dev
-env.dev
+web-data-viz/.env.dev
 
 # Ignorar a pasta .github
 .github/
