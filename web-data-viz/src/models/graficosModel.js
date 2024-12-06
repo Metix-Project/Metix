@@ -201,6 +201,56 @@ LIMIT 5;`;
   console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
+
+
+
+function DadosKpiDisco(mcAdress) {
+  var instrucaosql = `SELECT macAddress, ROUND(AVG(DiscoPorc), 2) AS mediaUsoDisco
+FROM DadosServidor
+WHERE dataHora >= NOW() - INTERVAL 1 DAY AND macAddress = "${mcAdress}";`;
+
+  console.log("Executando Query \n" + instrucaosql);
+  return database.executar(instrucaosql);
+}
+
+async function DadosKpiDiscoPicos(mcAdress) {
+  var instrucaosql = `SELECT DATE_FORMAT(dataHora, '%d/%m/%Y') AS Data1, TIME(dataHora) AS Hora1, DiscoPorc as picoDisco
+FROM DadosServidor
+WHERE macAddress = "${mcAdress}"
+ORDER BY DiscoPorc DESC
+LIMIT 2;`;
+
+  console.log("Executando Query \n" + instrucaosql);
+  return database.executar(instrucaosql);
+}
+
+function DadosKpiDiscoAlertas(mcAdress) {
+  var instrucaosql = `SELECT macAddress, COUNT(*) AS DiscoAlerta1
+FROM DadosServidor
+WHERE DiscoPorc > 85 AND macAddress = "${mcAdress}"
+GROUP BY macAddress;`;
+
+  console.log("Executando Query \n" + instrucaosql);
+  return database.executar(instrucaosql);
+}
+
+
+function DadosKpiDiscoTempoReal(mcAdress) {
+  var instrucaosql = `SELECT DATE_FORMAT(dataHora, '%H:%i') AS hora, DiscoPorc AS espacoUtilizado
+FROM DadosServidor
+WHERE macAddress = "08979866bdfd"
+ORDER BY dataHora DESC
+LIMIT 1;`;
+
+  console.log("Executando Query \n" + instrucaosql);
+  return database.executar(instrucaosql);
+}
+
+
+
+
+
+
 // exporta para outro arquivo:
 module.exports = {
   pegarDados,
@@ -222,6 +272,11 @@ module.exports = {
   DadosKpiLatencia,
   DadosKpiLatenciaPicos,
   DadosKpiLatenciaAlertas,
-  DadosKpiLatenciaTempoReal
+  DadosKpiLatenciaTempoReal,
+
+  DadosKpiDisco,
+  DadosKpiDiscoPicos,
+  DadosKpiDiscoAlertas,
+  DadosKpiDiscoTempoReal
 };
   

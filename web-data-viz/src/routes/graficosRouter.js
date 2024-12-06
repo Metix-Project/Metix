@@ -74,5 +74,21 @@ router.post("/DadosKpiLatenciaTempoReal", function (req, res) {
   graficosController.DadosKpiLatenciaTempoReal(req, res);
 });
 
+router.post("/DadosKpiDisco", function (req, res) {
+  graficosController.DadosKpiDisco(req, res);
+});
+
+router.post("/DadosKpiDiscoPicos", function (req, res) {
+  graficosController.DadosKpiDiscoPicos(req, res);
+});
+
+router.post("/DadosKpiDiscoAlertas", function (req, res) {
+  graficosController.DadosKpiDiscoAlertas(req, res);
+});
+
+router.post("/DadosKpiDiscoTempoReal", function (req, res) {
+  graficosController.DadosKpiDiscoTempoReal(req, res);
+});
+
 // exporta para outro arquivo:
 module.exports = router;

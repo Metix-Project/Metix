@@ -32,7 +32,7 @@
     </style>
 </head>
 
-<body>
+<body onload="validarSessao()">
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
@@ -45,11 +45,11 @@
 
             <div class="dashboardLinks">
                 <h2>Dashboards</h2>
-                <button>Monitoramento</button>
-                <button>Alertas</button>
-                <button onclick="window.location.href = 'telaHistorico.html'">Histórico</button>
-                <button onclick="window.location.href = 'telaPrevisao.html'">Previsões</button>
-                <button>Manutenção</button>
+                <button onclick="window.location.href='telaMonitoramento.html'">MONITORAMENTO</button>
+                <button onclick="window.location.href='telaAlerta.html'">ALERTAS</button>
+                <button onclick="window.location.href='telaHistorico.html'">HISTÓRICO</button>
+                <button class="actual" onclick="window.location.href='telaPrevisao.html'">PREVISÕES</button>
+                <button onclick="window.location.href='telaManutencao.html'">MANUTENÇÃO</button>
                 <button onclick="limparSessao()">Sair</button>
             </div>
             <div class="logo">
@@ -320,21 +320,21 @@
         let maquinas = {}; // Variável que armazenará os dados da API
 
         async function carregarDadosGrafico1() {
-    try {
-        const response = await fetch('https://0j2isg5tyc.execute-api.us-east-1.amazonaws.com/graf1estatico');
-        if (!response.ok) {
-            throw new Error('Erro ao carregar os dados da API para o gráfico 1.');
+            try {
+                const response = await fetch('https://0j2isg5tyc.execute-api.us-east-1.amazonaws.com/graf1estatico');
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar os dados da API para o gráfico 1.');
+                }
+                maquinas = await response.json(); // Carrega os dados na variável
+
+                // Adicione este console.log para verificar os dados recebidos
+                console.log('Dados recebidos da API (Gráfico 1):', maquinas);
+
+                criarGrafico(document.getElementById('servidorFiltro').value); // Atualiza o gráfico com os novos dados
+            } catch (error) {
+                console.error('Erro ao buscar os dados do gráfico 1:', error);
+            }
         }
-        maquinas = await response.json(); // Carrega os dados na variável
-
-        // Adicione este console.log para verificar os dados recebidos
-        console.log('Dados recebidos da API (Gráfico 1):', maquinas);
-
-        criarGrafico(document.getElementById('servidorFiltro').value); // Atualiza o gráfico com os novos dados
-    } catch (error) {
-        console.error('Erro ao buscar os dados do gráfico 1:', error);
-    }
-}
 
 
 

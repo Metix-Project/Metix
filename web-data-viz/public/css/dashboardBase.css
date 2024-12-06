@@ -49,6 +49,7 @@ body {
     align-items: center;
     box-sizing: border-box;
     padding: 10px 0;
+    text-decoration: none;
 }
 
 .sidebar h1 {

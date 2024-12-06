@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Métix Proteção Divina</title>
+  <link rel="icon" href="./assets/imgs/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+
+  <!-- scripts do Chart.js - 2022-1 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+
+
+  <!--Script Gerador WordCloud -->
+  <link rel="shortcut icon" href="img/icoNumeEtiqueta.ico" type="image/x-icon">
+
+  <script src="js/scrypt.js"></script>
+  <script src="js/sessao.js"></script>
+  <link rel="stylesheet" href="./css/dashboardBase.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="profile">
+        <img alt="Profile" id="profileImage">
+        <h2 id="profileName">Usuário</h2>
+        <h4 id="profilePosition">Cargo: Gerente</h4>
+        <h4 id="profileBusiness">Banco</h4>
+      </div>
+
+      <div class="dashboardLinks">
+        <h2>Dashboards</h2>
+        <button onclick="window.location.href='telaMonitoramento.html'">MONITORAMENTO</button>
+        <button class="actual" onclick="window.location.href='telaAlerta.html'">ALERTAS</button>
+        <button onclick="window.location.href='telaHistorico.html'">HISTÓRICO</button>
+        <button onclick="window.location.href='telaPrevisao.html'">PREVISÕES</button>
+        <button onclick="window.location.href='telaManutencao.html'">MANUTENÇÃO</button>
+        <button onclick="limparSessao()">Sair</button>
+      </div>
+      <div class="logo">
+        <img src="assets/imgs/Logo1.png" alt="Metix Logo">
+      </div>
+    </div>
+
+
+    <main class="main-content">
+      <!-- Summary Cards -->
+      <div class="status-cards">
+        <div class="status-card green">
+          <h3>111</h3>
+          <p>COMPONENTES EM ESTADO ESTÁVEL</p>
+        </div>
+        <div class="status-card yellow">
+          <h3>05</h3>
+          <p>COMPONENTES EM ESTADO DE ALERTA</p>
+        </div>
+        <div class="status-card red">
+          <h3>00</h3>
+          <p>COMPONENTES EM ESTADO DE RISCO</p>
+        </div>
+        <div class="status-card recent">
+          <h3>10</h3>
+          <p>ALERTAS DAS ÚLTIMAS 24 HORAS</p>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts">
+        <div class="chart ranking">
+          <div class="ranking-filter">
+          <h4>Ranking dos motivos</h4>
+          <div class="filters">
+            <select>
+              <option>Período</option>
+            </select>
+            <select>
+              <option>Servidor</option>
+            </select>
+          </div>
+        </div>
+          <div class="chart-placeholder" style="width: 40%; align-items: center; text-align: center;">
+            <div class="chart-container-period">
+              <canvas id="myChart2"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart period">
+          <div class="period-filter">
+            <h4>Quantidade de alertas </h4>
+            <div class="filters">
+              <select>
+                <option>Componente</option>
+              </select>
+              <select>
+                <option>Período</option>
+              </select>
+              <select>
+                <option>Servidor</option>
+              </select>
+            </div>
+          </div>
+          <div class="chart-container-motive">
+            <canvas id="myChart1"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="transaction-table">
+        <div class="last-alert">
+        <h4>Último Alerta Notificado</h4>
+        <h4><a href="">Veja os alertas do dia</a></h4>
+      </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Categoria</th>
+              <th>Componente</th>
+              <th>Servidor</th>
+              <th>Motivo</th>
+              <th>Data e Hora</th>
+              <th>ID Jira</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Risco</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  </div>
+</body>
+
+</html>
+
+<style>
+
+  .main-content{
+    padding: 20px;
+  }
+
+.sidebar .dashboardLinks .actual{
+    background-color: #6C493A;
+    width: 110%;
+  }
+
+  /* Status Cards */
+  .status-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+
+  .status-card {
+    background-color: #2c2c2c;
+    /* Fundo cinza claro */
+    padding: 20px;
+    border-radius: 10px 10px 10px 10px;
+    /* Bordas superiores arredondadas */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-top: 10px solid;
+    /* Define a borda superior */
+  }
+
+  .status-card.green {
+    border-top-color: #4c9b1e;
+    /* Cor verde para "Estado Estável" */
+  }
+
+  .status-card.green h3{
+    color: #4c9b1e;
+  }
+
+  .status-card.green p{
+    color: #59a62d;
+  }
+
+  .status-card.yellow {
+    border-top-color: #c08a26;
+    /* Cor laranja para "Estado de Alerta" */
+  }
+
+  .status-card.yellow h3{
+    color: #c08a26;
+  }
+
+  .status-card.yellow p{
+    color: #c08a26;
+  }
+
+  .status-card.red {
+    border-top-color: #7b2c2c;
+    /* Cor vermelha para "Estado de Risco" */
+  }
+  
+  .status-card.red h3{
+    color: #832b2b;
+  }
+
+  .status-card.red p{
+    color: #854545;
+  }
+
+  .status-card.recent {
+    border-top-color: #3aa385;
+    /* Cor azul para "Alertas Recentes" */
+  }
+
+  .status-card.recent h3 {
+    color: #3aa385;
+    /* Cor azul para "Alertas Recentes" */
+  }
+
+  .status-card.recent p {
+    color: #3aa385;
+    /* Cor azul para "Alertas Recentes" */
+  }
+
+  .status-card h3 {
+    font-size: 48px;
+    color: rgb(0, 0, 0);
+    margin: 0;
+  }
+
+  .status-card p {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    margin: 10px 0 0;
+  }
+
+  .canvas{
+    background-color: #3aa385;
+  }
+
+
+  .charts {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2%;
+    gap: 15px;
+    margin-left: -5px;
+  }
+
+  .chart-container-period{
+    width: 130%;
+    margin-left: 55%;
+  }
+
+  .chart {
+    background: #2c2c2c;
+    margin: 0.3%;
+    padding: 20px;
+    border-radius: 8px;
+    width: 50%;
+  }
+
+  .chart-placeholder {
+    border-radius: 8px;
+  }
+
+  .chart h4 {
+    width: 40%;
+  }
+
+  .ranking-filter{
+    display: flex;
+  }
+
+  .ranking-filter h4{
+    font-size: 14px;
+  }
+
+  .period-filter {
+    display: flex;
+  }
+
+  .period-filter h4 {
+    font-size: 14px;
+  }
+
+  .filters {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .filters label {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    color: #000;
+    font-weight: bold;
+    align-items: center;
+    text-align: center;
+  }
+
+  .filters select {
+    margin-top: 5px;
+    background-color: #5a3921;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .filters select:hover {
+    background-color: #4a2f1b;
+  }
+
+  .filters select:focus {
+    outline: none;
+    box-shadow: 0 0 4px #fff;
+  }
+
+
+  .transaction-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  .transaction-table th,
+  .transaction-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .transaction-table th {
+    background: #2c2c2c;
+    color: #bcb8b4;
+  }
+
+  .last-alert {
+    display: flex;
+    gap: 808px;
+    margin-bottom: -10px;
+  }
+
+  .last-alert a{
+    text-decoration: none;
+    font-style: normal;
+    color: white;
+    background-color: #876d59;
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  .last-alert a:hover{
+    color: #443027;
+    cursor: pointer;
+  }
+
+
+</style>
+
+<script>
+  // window.onload = validarSessao();
+  const labels1 = ['CPU', 'RAM', 'DISCO', 'LATENCIA', 'REDE-RECEBIDO', 'REDE-ENVIADO'];
+const data1 = {
+  labels: labels1,
+  datasets: [{
+    label: 'Servidor 1',
+    data: [65, 59, 80, 81, 56, 55, 40],
+    fill: true,
+    borderColor: '#6623a8',
+    tension: 0.1,
+    backgroundColor: [
+      '#FFDA6B', // Cor para 'CPU'
+      '#C0B2A0', // Cor para 'RAM'
+      '#f9922c', // Cor para 'DISCO'
+      '#F8A8BA', // Cor para 'LATENCIA'
+      '#7D943C', // Cor para 'REDE-RECEBIDO'
+      '#05D0DE'  // Cor para 'REDE-ENVIADO'
+    ]
+  }]
+};
+
+const config1 = {
+  type: 'bar',
+  data: data1,
+};
+
+const myChart1 = new Chart(
+  document.getElementById('myChart1'),
+  config1
+);
+
+
+  // chart 2
+
+  const labels2 = ['CPU', 'RAM', 'DISCO', 'LATENCIA', 'REDE-RECEBIDO', 'REDE-ENVIADO'];
+const data2 = {
+  labels: labels2,
+  datasets: [{
+    label: 'Servidor 2',
+    data: [65, 59, 80, 82, 56, 55],
+    fill: true,
+    borderColor: '#fff',
+    tension: 0.2,
+    backgroundColor: [
+      '#FFDA6B', // Cor para 'CPU'
+      '#C0B2A0', // Cor para 'RAM'
+      '#f9922c', // Cor para 'DISCO'
+      '#F8A8BA', // Cor para 'LATENCIA'
+      '#7D943C', // Cor para 'REDE-RECEBIDO'
+      '#05D0DE'  // Cor para 'REDE-ENVIADO'
+    ]
+  }]
+};
+
+const config2 = {
+  type: 'pie',
+  data: data2,
+};
+
+const myChart2 = new Chart(
+  document.getElementById('myChart2'),
+  config2
+);
+
+
+</script>
