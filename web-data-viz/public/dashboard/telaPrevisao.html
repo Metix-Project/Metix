@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Métix Proteção Divina</title>
+    <link rel="icon" href="../assets/imgs/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+
+    <!-- scripts do Chart.js - 2022-1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+
+
+    <!--Script Gerador WordCloud -->
+    <link rel="shortcut icon" href="../img/icoNumeEtiqueta.ico" type="image/x-icon">
+
+    <script src="../js/script.js"></script>
+    <script src="../js/sessao.js"></script>
+    <link rel="stylesheet" href="../css/dashboardBase.css">
+    <link rel="stylesheet" href="../css/telaPrevisao.css">
+
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile">
+                <img alt="Profile" id="profileImage">
+                <h2 id="profileName">Usuário</h2>
+                <h4 id="profilePosition">Cargo: Gerente</h4>
+                <h4 id="profileBusiness">Banco</h4>
+            </div>
+
+            <div class="dashboardLinks">
+                <h2>Dashboards</h2>
+                <button onclick="window.location.href='telaMonitoramento.html'">MONITORAMENTO</button>
+                <button onclick="window.location.href='telaAlerta.html'">ALERTAS</button>
+                <button onclick="window.location.href='telaHistorico.html'">HISTÓRICO</button>
+                <button class="actual" onclick="window.location.href='telaPrevisao.html'">PREVISÕES</button>
+                <button onclick="window.location.href='telaManutencao.html'">MANUTENÇÃO</button>
+                <button onclick="limparSessao()">Sair</button>
+            </div>
+            <div class="logo">
+                <img src="../assets/imgs/Logo1.png" alt="Metix Logo">
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <div class="conteudo">
+                <!-- Gráficos -->
+                <div class="graficos">
+                    <!-- Filtros para o gráfico 1 -->
+                    <div class="filtros">
+                        <h2 class="titulo-previsao">Previsão de melhoria de componentes</h2>
+                        <select id="componenteFiltro" onchange="atualizarGrafico()">
+                            <option value="todos">Todos os Componentes</option>
+                            <option value="CPU">CPU</option>
+                            <option value="RAM">RAM</option>
+                            <option value="Disco">Disco</option>
+                        </select>
+
+                        <select id="servidorFiltro" onchange="atualizarGrafico1PorServidor()">
+                            <option value="f946307321c2">1º Ponto de Controle</option>
+                            <option value="14857f833746">2º Ponto de Controle</option>
+                            <option value="d09466c9be45">3º Ponto de Controle</option>
+                            <option value="c7d12465a943">4º Ponto de Controle</option>
+                        </select>
+
+                    </div>
+
+                    <!-- Gráfico 1 -->
+                    <div class="grafico grafico1">
+                        <canvas id="Previsao1"></canvas>
+                    </div>
+
+                    <!-- Gráfico 2 e informações adicionais -->
+                    <div class="linha-inferior">
+
+                        <div class="informacoes">
+                            <h3>Sobre o Gráfico de Transações</h3>
+                            <div class="ano-navegacao">
+                                <h4>Ano Selecionado</h4>
+                                <button id="anoAnterior" onclick="alterarAno(-1)">⬅️</button>
+                                <span id="anoAtual">2024</span>
+                                <button id="anoProximo" onclick="alterarAno(1)">➡️</button>
+                            </div>
+                            <ul class="legenda">
+                                <li><span class="cor-laranja"></span> Previsões</li>
+                                <li><span class="cor-azul"></span> Dados reais</li>
+                            </ul>
+                            <div class="detalhes">
+                                <p><strong>Próxima atualização:</strong> <span id="contadorAtualizacao"></span></p>
+                                <p><strong>Média do mês atual:</strong> <span id="mediaAtual"></span></p>
+                                <p><strong>Percentual de mudança mês a mês:</strong> <span id="mudancaMes"></span></p>
+                                <p><strong>Mês de maior transação:</strong> <span id="mesMaiorTransacao"></span></p>
+                            </div>
+                        </div>
+
+                        <div class="grafico grafico2">
+
+                            <canvas id="Previsao2"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', carregarDadosJSON);
+
+    let dadosGrafico2 = [];
+    let anoSelecionado = 2024;
+
+    function atualizarContadorAtualizacao() {
+        const hoje = new Date();
+        const proximoMes = hoje.getMonth() === 11 ? 0 : hoje.getMonth() + 1;
+        const proximoAno = hoje.getMonth() === 11 ? hoje.getFullYear() + 1 : hoje.getFullYear();
+        const proximaAtualizacao = new Date(proximoAno, proximoMes, 1);
+        const diferencaDias = Math.ceil((proximaAtualizacao - hoje) / (1000 * 60 * 60 * 24));
+
+        document.getElementById('contadorAtualizacao').textContent = `${diferencaDias} dias`;
+    }
+    atualizarContadorAtualizacao();
+    setInterval(atualizarContadorAtualizacao, 86400000); // Atualiza o contador diariamente
+
+
+
+    function calcularMudancaMensal(dadosAno) {
+        // Checar se há dados suficientes para calcular mudanças
+        if (dadosAno.length < 2) {
+            return "Dados insuficientes para calcular mudanças.";
+        }
+
+        // Inicializar array para mudanças
+        const dadosMeses = Array(12).fill(null);
+
+        // Mapear os dados reais para seus índices correspondentes
+        dadosAno.forEach(dado => {
+            dadosMeses[dado.mes - 1] = dado.media;
+        });
+
+        // Calcular mudanças mês a mês
+        const mudancas = [];
+        for (let i = 1; i < 12; i++) {
+            const mesAnterior = dadosMeses[i - 1];
+            const mesAtual = dadosMeses[i];
+
+            if (mesAnterior !== null && mesAtual !== null) {
+                const mudanca = ((mesAtual - mesAnterior) / mesAnterior) * 100;
+                mudancas.push(`${mudanca.toFixed(2)}%`);
+            }
+        }
+
+        // Se não houver mudanças válidas, exibir mensagem
+        if (mudancas.length === 0) {
+            return "Dados insuficientes para calcular mudanças.";
+        }
+
+        return mudancas.join(", ");
+    }
+
+
+    function encontrarMaiorTransacao(dadosAno) {
+        if (dadosAno.length === 0) return "Dados indisponíveis";
+
+        const maior = dadosAno.reduce((max, atual) => (atual.media > max.media ? atual : max), dadosAno[0]);
+        const mesesNome = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+        return `${mesesNome[maior.mes - 1]} com ${maior.media.toLocaleString()} transações`;
+    }
+
+    function atualizarInformacoes() {
+        const dadosAno = filtrarPorAno(anoSelecionado);
+
+        if (dadosAno.length === 0) {
+            document.getElementById('mudancaMes').textContent = "Dados não disponíveis para o ano.";
+            document.getElementById('mesMaiorTransacao').textContent = "Dados não disponíveis.";
+            return;
+        }
+
+        // Calcular mudanças mês a mês
+        const mudancaMensal = calcularMudancaMensal(dadosAno);
+        document.getElementById('mudancaMes').textContent = mudancaMensal;
+
+        // Encontrar o mês de maior transação
+        const maiorTransacao = encontrarMaiorTransacao(dadosAno);
+        document.getElementById('mesMaiorTransacao').textContent = maiorTransacao;
+    }
+
+
+    atualizarInformacoes();
+
+
+    async function carregarDadosJSON() {
+        try {
+            // Passo 1: Obter os dados JSON da API
+            const response = await fetch('https://h57peftagk.execute-api.us-east-1.amazonaws.com/URLPREASSINADA');
+            if (!response.ok) {
+                throw new Error('Erro ao obter os dados da API.');
+            }
+            const data = await response.json();
+            console.log('Dados recebidos da API:', data); // Para verificar os dados no console
+
+            // Passo 2: Processar os dados recebidos
+            // Convertendo strings para números, se necessário
+            dadosGrafico2 = data.map(item => ({
+                ano: parseInt(item.Ano),
+                mes: parseInt(item.Mes),
+                media: parseFloat(item.Media_Transacoes)
+            }));
+
+            atualizarGrafico2(); // Atualiza o gráfico com os novos dados
+            atualizarInformacoes();
+
+        } catch (error) {
+            console.error('Erro ao carregar os dados:', error);
+            alert('Erro ao carregar os dados. Por favor, tente novamente mais tarde.');
+        }
+    }
+
+    function exibirMediaAtual() {
+        const hoje = new Date();
+        const mesAtual = hoje.getMonth() + 1; // Mês atual (1-12)
+        const anoAtual = hoje.getFullYear();
+
+        // Buscar o dado para o mês atual
+        const dadoAtual = dadosGrafico2.find(dado => dado.ano === anoAtual && dado.mes === mesAtual);
+
+        if (dadoAtual) {
+            document.getElementById('mediaAtual').textContent = `${dadoAtual.media.toLocaleString()} transações`;
+        } else {
+            document.getElementById('mediaAtual').textContent = "Dados indisponíveis";
+        }
+    }
+
+    carregarDadosJSON().then(() => {
+        exibirMediaAtual();
+        atualizarGrafico2();
+        atualizarInformacoes();
+    });
+
+    function filtrarPorAno(ano) {
+        const dadosFiltrados = dadosGrafico2.filter(dado => dado.ano === ano);
+        return dadosFiltrados.length ? dadosFiltrados : []; // Retorna um array vazio se não houver dados
+    }
+
+    function atualizarGrafico2() {
+        const mesesNome = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+        // Filtrar dados para o ano selecionado
+        const dadosAno = filtrarPorAno(anoSelecionado);
+
+        // Mapear meses e preencher meses faltantes
+        const dadosMeses = Array(12).fill(null); // Inicializar array para todos os meses
+        dadosAno.forEach(dado => {
+            dadosMeses[dado.mes - 1] = parseFloat(dado.media); // Inserir média no índice correto
+        });
+
+        // Identificar os dois últimos meses globais no CSV
+        const ultimosDoisMeses = dadosGrafico2.slice(-2); // Pegar os dois últimos registros do CSV
+        const indicesPrevisao = ultimosDoisMeses.map(dado => ({
+            ano: dado.ano,
+            mes: dado.mes
+        }));
+
+        // Calcular cores para os meses
+        const cores = dadosAno.map(dado => {
+            const isPrevisao = indicesPrevisao.some(ultimo => ultimo.ano === dado.ano && ultimo.mes === dado.mes);
+            return isPrevisao ? 'orange' : 'rgba(34, 127, 188, 0.9)';
+        });
+
+        // Atualizar gráfico
+        grafico2.data.labels = mesesNome;
+        grafico2.data.datasets[0].data = calcularLinhaDeTendencia(dadosMeses.filter(v => v !== null)); // Apenas dados válidos
+        grafico2.data.datasets[1].data = dadosMeses;
+        grafico2.data.datasets[1].backgroundColor = cores; // Aplicando cores personalizadas
+        grafico2.update();
+    }
+
+    function alterarAno(direcao) {
+        const anosDisponiveis = [...new Set(dadosGrafico2.map(dado => dado.ano))];
+        const indiceAtual = anosDisponiveis.indexOf(anoSelecionado);
+        const novoIndice = indiceAtual + direcao;
+
+        if (novoIndice >= 0 && novoIndice < anosDisponiveis.length) {
+            anoSelecionado = anosDisponiveis[novoIndice];
+            document.getElementById('anoAtual').textContent = anoSelecionado; // Atualiza o texto do ano
+            atualizarGrafico2();
+            atualizarInformacoes();
+        }
+    }
+
+    let grafico1;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        carregarDadosGrafico1();
+        const filtroMaquina = document.getElementById('servidorFiltro');
+        const ctx1 = document.getElementById('Previsao1').getContext('2d');
+
+        let maquinas = {}; // Variável que armazenará os dados da API
+
+        async function carregarDadosGrafico1() {
+            try {
+                const response = await fetch('https://0j2isg5tyc.execute-api.us-east-1.amazonaws.com/graf1estatico');
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar os dados da API para o gráfico 1.');
+                }
+                maquinas = await response.json(); // Carrega os dados na variável
+
+                // Adicione este console.log para verificar os dados recebidos
+                console.log('Dados recebidos da API (Gráfico 1):', maquinas);
+
+                criarGrafico(document.getElementById('servidorFiltro').value); // Atualiza o gráfico com os novos dados
+            } catch (error) {
+                console.error('Erro ao buscar os dados do gráfico 1:', error);
+            }
+        }
+
+
+
+        function criarGrafico(maquina) {
+            if (!maquinas[maquina]) {
+                console.warn('Máquina não encontrada nos dados carregados:', maquina);
+                return;
+            }
+
+            const dados = maquinas[maquina]; // Busca os dados dinâmicos
+
+            if (grafico1) {
+                grafico1.destroy(); // Destroi o gráfico anterior para recriá-lo
+            }
+
+            grafico1 = new Chart(document.getElementById('Previsao1').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    datasets: [
+                        {
+                            label: 'Tendência CPU',
+                            data: calcularLinhaDeTendencia(dados.CPU),
+                            type: 'line',
+                            borderColor: 'rgb(34, 97, 150)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.4,
+                        },
+                        {
+                            label: 'Tendência RAM',
+                            data: calcularLinhaDeTendencia(dados.RAM),
+                            type: 'line',
+                            borderColor: 'rgb(107, 48, 227)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.4,
+                        },
+                        {
+                            label: 'Tendência Disco',
+                            data: calcularLinhaDeTendencia(dados.Disco),
+                            type: 'line',
+                            borderColor: 'rgb(227, 144, 61)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.4,
+                        },
+                        {
+                            label: 'Uso de CPU (%)',
+                            data: dados.CPU,
+                            backgroundColor: 'rgb(54, 162, 235)',
+                            borderWidth: 1,
+                        },
+                        {
+                            label: 'Uso de RAM (%)',
+                            data: dados.RAM,
+                            backgroundColor: 'rgb(153, 102, 255)',
+                            borderWidth: 1,
+                        },
+                        {
+                            label: 'Uso de Disco (%)',
+                            data: dados.Disco,
+                            backgroundColor: 'rgb(255, 159, 64)',
+                            borderWidth: 1,
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Meses',
+                                color: 'white',
+                            },
+                            ticks: {
+                                color: 'white',
+                            },
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Uso (%)',
+                                color: 'white',
+                            },
+                            ticks: {
+                                color: 'white',
+                            },
+                            beginAtZero: true,
+                            max: 100
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'white',
+                            },
+                        },
+                        title: {
+                            display: true,
+                            text: `Tendencia de Uso de Componentes - ${maquina}`,
+                            color: 'white',
+                            font: {
+                                size: 25,
+                            },
+                        },
+                    },
+                },
+            });
+        }
+
+
+        // Listener para mudança no filtro
+        filtroMaquina.addEventListener('change', () => {
+            const maquinaSelecionada = filtroMaquina.value;
+
+            const filtroComponente = document.getElementById('componenteFiltro');
+            filtroComponente.value = "todos";
+
+            criarGrafico(maquinaSelecionada);
+            atualizarGrafico();
+        });
+
+        // Inicializar com a primeira máquina
+        criarGrafico('f946307321c2');
+    });
+
+    function atualizarGrafico() {
+        const componenteSelecionado = document.getElementById('componenteFiltro').value;
+
+        // Verificar se o gráfico foi inicializado
+        if (!grafico1) return;
+
+        grafico1.data.datasets.forEach((dataset) => {
+            if (componenteSelecionado === "todos") {
+                dataset.hidden = false; // Exibe todos os componentes
+            } else {
+                dataset.hidden = !dataset.label.toLowerCase().includes(componenteSelecionado.toLowerCase());
+            }
+        });
+
+        grafico1.update();
+    }
+
+    // Função para calcular a linha de tendência
+    function calcularLinhaDeTendencia(dados) {
+        const n = dados.length;
+        const x = Array.from({ length: n }, (_, i) => i + 1);
+        const sumX = x.reduce((a, b) => a + b, 0);
+        const sumY = dados.reduce((a, b) => a + b, 0);
+        const sumXY = x.map((xi, i) => xi * dados[i]).reduce((a, b) => a + b, 0);
+        const sumX2 = x.map(xi => xi * xi).reduce((a, b) => a + b, 0);
+
+        const m = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX ** 2);
+        const b = (sumY - m * sumX) / n;
+
+        // Calcular tendência para 12 meses (incluindo dezembro)
+        return Array.from({ length: 12 }, (_, i) => m * (i + 1) + b);
+    }
+
+
+    const transacoesMedias = [120, 150, 180, 170, 200, 210, 190, 220, 230, 250, 240, 270];
+    const linhaDeTendencia = calcularLinhaDeTendencia(transacoesMedias);
+
+    const ctx2 = document.getElementById('Previsao2').getContext('2d');
+    const grafico2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Linha de Tendência',
+                    data: [],
+                    type: 'line',
+                    borderColor: '#09358b',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.4,
+                },
+                {
+                    label: 'Média Diária de Transações por Mês',
+                    data: [],
+                    backgroundColor: 'rgba(34, 127, 188, 0.9)',
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Meses',
+                        color: 'white',
+                    },
+                    ticks: {
+                        color: 'white',
+                    },
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Média de Transações',
+                        color: 'white',
+                    },
+                    ticks: {
+                        color: 'white',
+                    },
+                    beginAtZero: true,
+                    max: 140000
+                },
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white',
+                    },
+                },
+                title: {
+                    display: true,
+                    text: "Média Diária de Transações por Mês",
+                    color: 'white',
+                    font: {
+                        size: 25,
+                    },
+                },
+            },
+        },
+    });
+
+
+    // Carregar os dados ao iniciar
+    carregarDadosJSON();
+
+</script>
