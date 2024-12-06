@@ -10,6 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
     <link rel="stylesheet" href="../css/DashRealTemp.css">
     <link rel="stylesheet" href="../css/dashboardBase.css">
+    <script src="../js/script.js"></script>
+    <script src="../js/sessao.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -20,29 +22,28 @@
 DadosKpiMemoria(); DadosKpiMemoriaPicos(); DadosKpiMemoriaAlertas(); DadosKpiMemoriaTempoReal();
 DadosKpiRede(); DadosKpiRedePicos(); DadosKpiRedeAlertas(); GraficoRedeTempoReal();
 DadosKpiLatencia(); DadosKpiLatenciaPicos(); DadosKpiLatenciaAlertas(); DadosKpiLatenciaTempoReal();
-DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTempoReal();">
+DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTempoReal(); validarSessao()">
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="profile">
                 <img alt="Profile" id="profileImage">
-                <div class="prfTxt">
-                    <h2 id="profileName">Olá, Usuário!</h2>
-                    <h4 id="profilePosition">Cargo: Técnico</h4>
-                </div>
+                <h2 id="profileName">Usuário</h2>
+                <h4 id="profilePosition">Cargo: Gerente</h4>
+                <h4 id="profileBusiness">Banco</h4>
             </div>
 
             <div class="dashboardLinks">
-                <button class="actual" onclick="window.location.href='telaMonitoramento.html'">MONITORAMENTO</button>
+                <h2>Dashboards</h2>
+                <button onclick="window.location.href='telaMonitoramento.html'">MONITORAMENTO</button>
                 <button onclick="window.location.href='telaAlerta.html'">ALERTAS</button>
                 <button onclick="window.location.href='telaHistorico.html'">HISTÓRICO</button>
-                <button onclick="window.location.href='telaPrevisao.html'">PREVISÕES</button>
+                <button class="actual" onclick="window.location.href='telaPrevisao.html'">PREVISÕES</button>
                 <button onclick="window.location.href='telaManutencao.html'">MANUTENÇÃO</button>
                 <button onclick="limparSessao()">Sair</button>
-
-                <div class="logo">
-                    <img src="../assets/imgs/Logo1.png" alt="Metix logo">
-                </div>
+            </div>
+            <div class="logo">
+                <img src="../assets/imgs/Logo1.png" alt="Metix Logo">
             </div>
         </div>
 
@@ -98,7 +99,7 @@ DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTemp
                             <span>alertas</span></p>
                         </div>
                         <div class="botao-alertas">
-                            <button onclick="window.location.href='../telaAlerta.html'">Detalhes >>></button>
+                            <button onclick="window.location.href='telaAlerta.html'">Detalhes >>></button>
                         </div>
                     </div>
                 </div>
