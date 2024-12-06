@@ -1,0 +1,206 @@
+/* Ajusta o main-content para ocupar o espaço restante da tela */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #22272d;
+    color: #adbac7;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Certifique-se de que o HTML e o body ocupam 100% da tela */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* A container deve ocupar 100% da altura disponível */
+.container {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+
+#calendar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.month-title {
+    color: #adbac7;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.day-label {
+    text-align: center;
+    font-weight: bold;
+    color: #adbac7;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    width: 100%;
+}
+
+.day-cell {
+    width: 50px;
+    height: 50px;
+    background-color: #2d2d2d;
+    color: #adbac7;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.day-cell.empty {
+    background-color: transparent;
+}
+
+.day-cell:hover {
+    background-color: #4a4a4a;
+}
+
+.tooltip {
+    visibility: hidden;
+    position: absolute;
+    background-color: white;
+    color: black;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.day-cell:hover .tooltip {
+    visibility: visible;
+}
+
+#calendar-navigation {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+#calendar-navigation button {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#calendar-navigation button:hover {
+    background-color: #555;
+}
+
+.day-cell {
+    width: 50px;
+    height: 50px;
+    background-color: #2d2d2d;
+    color: black; /* Updated to make the text black */
+    text-align: center;
+    line-height: 50px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.day-cell.empty {
+    background-color: transparent;
+    color: transparent; /* Ensure empty cells don't show any text */
+}
+
+
+.side-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    background-color: #2d2d2d;
+    color: #adbac7;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 300px;
+  }
+  
+  .side-form #schedule-button {
+    background-color: #645f59;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .side-form #schedule-button:hover {
+    background-color: #6c493a;
+  }
+  
+  .side-form form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .side-form form label {
+    margin-bottom: 5px;
+  }
+  
+  .side-form form input,
+  .side-form form textarea,
+  .side-form form button {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #22272d;
+    color: #adbac7;
+  }
+  
+  .side-form form button {
+    background-color: #645f59;
+    cursor: pointer;
+  }
+  
+  .side-form form button:hover {
+    background-color: #6c493a;
+  }
+  
+  #schedule-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #22272d;
+    color: #adbac7;
+  }
+  
+  #schedule-form select:focus {
+    outline: none;
+    border-color: #645f59;
+  }
+  

@@ -17,6 +17,7 @@ body {
 }
 
 .main-content {
+    margin-top: -10px;
     padding: 30px;
     width: 100%;
 }
@@ -83,7 +84,16 @@ h1 {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
-    margin-bottom: 10px;
+}
+
+.titulo-previsao {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin-right: 90px;  
+    display: flex;
+    align-items: center; 
+    max-height: 7px;
 }
 
 
