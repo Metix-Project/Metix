@@ -62,6 +62,20 @@ create table DadosServidorMedia(
 	latencia DECIMAL(7,2) NOT NULL
 );
 
+create table Monitoramento(
+	idMonitoramento INT AUTO_INCREMENT,
+    fkServidor VARCHAR(17) NOT NULL,
+    PRIMARY KEY(idMonitoramento, fkServidor),
+    componente VARCHAR(15) NOT NULL,
+    horaData DATETIME DEFAULT CURRENT_TIMESTAMP,
+    motivoCriacao CHAR(20) NOT NULL,
+    estado VARCHAR(7) NOT NULL,
+    CONSTRAINT fkServ_Monitoramento FOREIGN KEY(fkServidor) REFERENCES Servidor(macAddress),
+    CONSTRAINT chk_componente CHECK (componente IN ('CPU', 'RAM', 'DISCO', 'LATÊNCIA', 'REDE')),
+    CONSTRAINT chk_motivo CHECK (motivoCriacao IN ('ACIMA DA MÉDIA', 'ABAIXO DA MÉDIA')),
+    CONSTRAINT chk_estado CHECK (estado IN ('ESTÁVEL', 'ALERTA', 'RISCO'))
+);
+
 select * from DadosServidor;
 select * from DadosServidorMedia;
 
@@ -97,3 +111,130 @@ insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('c7d12465a
 select * from dadosServidorMedia;
 
 select * from dadosServidorMedia;
+
+create table Componentes (
+	idComponente int,
+    fkIdServidor VARCHAR(17) NOT NULL,
+    PRIMARY KEY(idComponente, fkIdServidor),
+    componenteNome VARCHAR(15) NOT NULL,
+    DataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    motivo CHAR(20) NOT NULL,
+    estadoAtual VARCHAR(7) NOT NULL,
+    CONSTRAINT fkServComponente FOREIGN KEY(fkIdServidor) REFERENCES Servidor(macAddress),
+    CONSTRAINT chk_comp CHECK (componenteNome IN ('CPU', 'RAM', 'DISCO', 'LATÊNCIA', 'REDE')),
+    CONSTRAINT chk_mtv CHECK (motivo IN ('ACIMA DA MÉDIA', 'ABAIXO DA MÉDIA')),
+    CONSTRAINT chk_estd CHECK (estadoAtual IN ('ESTÁVEL', 'ALERTA', 'RISCO'))
+);
+
+
+#Criar um contador de acordo com cada um dos servidores e o componente que gerou um alerta
+SELECT Servidor.macAddress AS Servidor, 
+GROUP_CONCAT(Componentes.componenteNome SEPARATOR ', ') AS componentes
+FROM Servidor
+LEFT JOIN Componentes 
+ON Servidor.macAddress = Componentes.fkIdServidor
+GROUP BY Servidor.macAddress;
+#Criar função que separe os componentes
+
+
+#Criar um ranking que demonstra em um periodo de (tempo escolhido pelo usuário ele realize a pesquisa)
+Create table Ranking(
+idRanking int auto_increment,
+macAddressServidor  varchar(17) not null,
+tipoComponente varchar(15) not null,
+periodoInicio datetime not null,
+periodoFim datetime not null,
+ocorrencia int not null,
+primary key (idRanking),
+foreign key (macAddressServidor) references Servidor(macAddress)
+);
+
+#Criar um separador para todos os componentes que estiverem em estado: "estável", "alerta" ou "em risco"
+Create table EstadoComponentes(
+idEstado int auto_increment primary key,
+idComponenteEST int not null,
+macAddressServidor varchar(17) not null,
+estadoAtual varchar(7) not null,
+dataHora datetime default current_timestamp,
+foreign key (idComponenteEST) references Componentes(idComponente),
+foreign key (macAddressServidor) references Servidor(macAddress),
+constraint chk_estadoComp check (estadoAtual IN ('ESTÁVEL', 'ALERTA', 'RISCO'))
+);
+
+#Criar uma table que pegue todos os alertas recentes
+Create table AlertasRecentes(
+idAlerta int auto_increment primary key,
+idComponenteRCT int not null, 
+macAddressServidor varchar(17) not null,
+componenteNome varchar(15) not null,
+motivo char(20) not null, 
+dataHora datetime default current_timestamp, 
+foreign key (idComponenteRCT) references Componentes(idComponente),
+foreign key (macAddressServidor) references Servidor(macAddress),
+constraint chk_estadoRCT check (motivo IN ('ACIMA DA MÉDIA', 'ABAIXO DA MÉDIA'))
+);
+
+create table Alerta (
+	idAlerta int auto_increment,
+    fkIdServidor VARCHAR(17) NOT NULL,
+    PRIMARY KEY(idAlerta, fkIdServidor),
+    componenteNome VARCHAR(15) NOT NULL,
+    DataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    motivo CHAR(20) NOT NULL,
+    estadoAtual VARCHAR(7) NOT NULL,
+    CONSTRAINT fkServComponente FOREIGN KEY(fkIdServidor) REFERENCES Servidor(macAddress),
+    CONSTRAINT chk_comp CHECK (componenteNome IN ('CPU', 'RAM', 'DISCO', 'LATÊNCIA', 'REDE')),
+    CONSTRAINT chk_mtv CHECK (motivo IN ('ACIMA DA MÉDIA', 'ABAIXO DA MÉDIA')),
+    CONSTRAINT chk_estd CHECK (estadoAtual IN ('ESTÁVEL', 'ALERTA', 'RISCO'))
+);
+
+select * from Servidor;
+
+
+
+
+
+
+
+
+#SELECTS ALERTA::::
+# Select Ranking
+SELECT fkIdServidor AS Servidor, componenteNome AS Componente, motivo AS Motivo, DATE(DataHora) AS Data,
+COUNT(*) AS Quantidade
+FROM Alerta
+GROUP BY fkIdServidor, componenteNome, motivo, DATE(DataHora)
+ORDER BY Quantidade DESC, Data DESC;
+
+
+# Select Qtd Alertas por servidor
+SELECT fkIdServidor AS Servidor, componenteNome AS Componente, DATE(DataHora) AS Periodo, COUNT(*) AS TotalAlertas
+FROM Alerta
+GROUP BY fkIdServidor, componenteNome, DATE(DataHora)
+ORDER BY Periodo DESC, Servidor, Componente;
+
+# Select que pega componente por estado (ALERTA)
+SELECT estadoAtual AS Categoria, componenteNome AS Componente, fkIdServidor AS Servidor, motivo AS Motivo, DataHora, idAlerta, fkIdServidor AS MacAddress, 
+COUNT(*) AS Total
+FROM Alerta
+WHERE estadoAtual = 'ALERTA'
+GROUP BY componenteNome, estadoAtual, fkIdServidor, motivo, DataHora, idAlerta
+ORDER BY Componente;
+
+# Select que pega componente por estado (RISCO)
+SELECT estadoAtual AS Categoria, componenteNome AS Componente, fkIdServidor AS Servidor, motivo AS Motivo, DataHora, idAlerta, fkIdServidor AS MacAddress,
+COUNT(*) AS Total
+FROM Alerta
+WHERE estadoAtual = 'RISCO'
+GROUP BY componenteNome, estadoAtual, fkIdServidor, motivo, DataHora, idAlerta
+ORDER BY Componente;
+
+# Select que mostra os alertas gerados nas ultimas 24H
+SELECT estadoAtual AS Categoria, componenteNome AS Componente, fkIdServidor AS Servidor, motivo AS Motivo, DataHora, idAlerta, fkIdServidor AS MacAddress
+FROM Alerta
+WHERE DataHora >= NOW() - INTERVAL 1 DAY
+ORDER BY DataHora DESC;
+
+# Select que mostra todos os alertas já gerados
+SELECT estadoAtual AS Categoria, componenteNome AS Componente, fkIdServidor AS Servidor, motivo AS Motivo, DataHora, idAlerta, fkIdServidor AS MacAddress
+FROM Alerta
+ORDER BY DataHora DESC;

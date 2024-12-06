@@ -18,7 +18,7 @@ var path = require("path");
 var usuarioRouter = require("./src/routes/usuarioRouter.js");
 var servidorRouter = require("./src/routes/servidorRouter.js");
 var graficosRouter = require("./src/routes/graficosRouter.js");
-
+var alertaRouter = require("./src/routes/alertaRouter.js");
 // define a variável do servidor:
 var app = express();
 
@@ -33,6 +33,7 @@ app.use(cors());
 app.use("/usuarios", usuarioRouter);
 app.use("/servidor", servidorRouter);
 app.use("/graficosRouter", graficosRouter);
+app.use("/alertaRouter", alertaRouter)
 
 //   roda o servidor (listing/escuta por conexões):
 app.listen(process.env.APP_PORT, function () {

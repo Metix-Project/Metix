@@ -11,36 +11,40 @@
 
   <!-- scripts do Chart.js - 2022-1 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
 
+  <!-- CSS Dependencies Modal-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
   <!--Script Gerador WordCloud -->
   <link rel="shortcut icon" href="img/icoNumeEtiqueta.ico" type="image/x-icon">
 
-  <script src="js/scrypt.js"></script>
+  <script src="js/script.js"></script>
   <script src="js/sessao.js"></script>
   <link rel="stylesheet" href="./css/dashboardBase.css">
 </head>
 
-<body>
+<body onload="listarRanking(), listarQtdPorServidor(), listarTodos(), listarPorEstadoAlerta(), listarPorEstadoRisco(), listarUltimas24Horas()">
 
-  <div class="container">
+  <div class="containerA">
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="profile">
         <img alt="Profile" id="profileImage">
-        <h2 id="profileName">Usuário</h2>
+        <h2 id="profileName">Usuario</h2>
         <h4 id="profilePosition">Cargo: Gerente</h4>
         <h4 id="profileBusiness">Banco</h4>
       </div>
 
+      <a style="background-color: #28a745; width: 100px;" href="telaAlerta.html"></a>
+
       <div class="dashboardLinks">
         <h2>Dashboards</h2>
-        <button>Monitoramento</button>
-        <button class="actual">Alertas</button>
-        <button onclick="window.location.href = 'telaHistorico.html'">Histórico</button>
-        <button>Previsões</button>
-        <button>Manutenção</button>
+        <button onclick="window.location.href = 'dashTecnico/dashAtualizadaTecnico.html'">Monitoramento</button>
+        <button onclick="window.location.href = 'telaAlerta.html'" class="actual">Alertas</button>
+        <button onclick="window.location.href = 'dashGerente/telaHistorico.html'">Histórico</button>
+        <button onclick="window.location.href = 'dashGerente/telaPrevisao.html'">Previsões</button>
+        <button onclick="window.location.href = 'dashGerente/telaManutencao.html'">Manutenção</button>
         <button onclick="limparSessao()">Sair</button>
       </div>
       <div class="logo">
@@ -52,21 +56,132 @@
     <main class="main-content">
       <!-- Summary Cards -->
       <div class="status-cards">
-        <div class="status-card green">
-          <h3>111</h3>
-          <p>COMPONENTES EM ESTADO ESTÁVEL</p>
-        </div>
         <div class="status-card yellow">
           <h3>05</h3>
           <p>COMPONENTES EM ESTADO DE ALERTA</p>
+          <button class="bttnModalOpenY" onclick="openModalYellow()"> Abrir modal </button>
+
+          <dialog id="modalYellow">
+            <div class="container-fluid py-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="dataTableYellow" class="table table-hover table-striped" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>Categoria</th>
+                          <th>Componente</th>
+                          <th>Servidor</th>
+                          <th>Motivo</th>
+                          <th>DataHora</th>
+                          <th>idAlerta</th>
+                          <th>MacAddress</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="bttnModalClose" onclick="modalYellow.close()"> Fechar modal </button>
+          </dialog>
         </div>
+
         <div class="status-card red">
           <h3>00</h3>
           <p>COMPONENTES EM ESTADO DE RISCO</p>
+          <button class="bttnModalOpenD" onclick="openModalRed()"> Abrir modal </button>
+
+          <dialog id="modalRed">
+            <div class="container-fluid py-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="dataTableRed" class="table table-hover table-striped" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>Categoria</th>
+                          <th>Componente</th>
+                          <th>Servidor</th>
+                          <th>Motivo</th>
+                          <th>DataHora</th>
+                          <th>idAlerta</th>
+                          <th>MacAddress</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="bttnModalClose" onclick="modalRed.close()"> Fechar modal </button>
+          </dialog>
         </div>
+
         <div class="status-card recent">
           <h3>10</h3>
           <p>ALERTAS DAS ÚLTIMAS 24 HORAS</p>
+          <button class="bttnModalOpenR" onclick="openModalRecent()"> Abrir modal </button>
+
+          <dialog id="modalRecent">
+            <div class="container-fluid py-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="dataTableRecent" class="table table-hover table-striped" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>Categoria</th>
+                          <th>Componente</th>
+                          <th>Servidor</th>
+                          <th>Motivo</th>
+                          <th>DataHora</th>
+                          <th>idAlerta</th>
+                          <th>MacAddress</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="bttnModalClose" onclick="modalRecent.close()"> Fechar modal </button>
+          </dialog>
+        </div>
+
+        <div class="status-card green">
+          <h3>111</h3>
+          <p>TODOS OS ALERTAS JÁ GERADOS</p>
+          <button class="bttnModalOpenG" onclick="openModalGreen()"> Abrir modal </button>
+
+          <dialog id="modalGreen">
+            <div class="container-fluid py-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="dataTableGreen" class="table table-hover table-striped" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>Categoria</th>
+                          <th>Componente</th>
+                          <th>Servidor</th>
+                          <th>Motivo</th>
+                          <th>DataHora</th>
+                          <th>idAlerta</th>
+                          <th>MacAddress</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="bttnModalClose" onclick="modalGreen.close()"> Fechar modal </button>
+          </dialog>
         </div>
       </div>
 
@@ -74,19 +189,24 @@
       <div class="charts">
         <div class="chart ranking">
           <div class="ranking-filter">
-          <h4>Ranking dos motivos</h4>
-          <div class="filters">
-            <select>
-              <option>Período</option>
-            </select>
-            <select>
-              <option>Servidor</option>
-            </select>
+            <h4>Ranking dos motivos</h4>
+            <div class="filters">
+              <select>
+                <option>Semana</option>
+                <option>Mês</option>
+              </select>
+              <select id="selectServidor1" onchange="modificarServidor()">
+                <!-- <option>Todos os Servidores</option> -->
+                <option value="f946307321c2">Servidor 1</option>
+                <option value="14857f833746">Servidor 2</option>
+                <option value="d09466c9be45">Servidor 3</option>
+                <option value="c7d12465a943">Servidor 4</option>
+              </select>
+            </div>
           </div>
-        </div>
-          <div class="chart-placeholder" style="width: 40%; align-items: center; text-align: center;">
-            <div class="chart-container-period">
-              <canvas id="myChart2"></canvas>
+          <div class="chart-placeholder">
+            <div class="chart-container-ranking">
+              <canvas id="chartRanking"></canvas>
             </div>
           </div>
         </div>
@@ -96,68 +216,61 @@
             <h4>Quantidade de alertas </h4>
             <div class="filters">
               <select>
-                <option>Componente</option>
-              </select>
-              <select>
-                <option>Período</option>
-              </select>
-              <select>
-                <option>Servidor</option>
-              </select>
+                <option>Componentes</option>
+                <option>CPU</option>
+                <option>RAM</option>
+                <option>DISCO</option>
+                <option>LATÊNCIA</option>
+                <option>REDE</olalertasServ2LATENCIA>
+
+                  <select>
+                    <option>Semana</option>
+                    <option>Mês</option>
+                  </select>
+
+                  <select id="selectServidor2" onchange="modificarServidor()">
+                    <option value="Todos"> Todos os Servidores</option>
+                    <option value="f946307321c2">Servidor 1</option>
+                    <option value="14857f833746">Servidor 2</option>
+                    <option value="d09466c9be45">Servidor 3</option>
+                    <option value="c7d12465a943">Servidor 4</option>
+                  </select>
             </div>
           </div>
-          <div class="chart-container-motive">
-            <canvas id="myChart1"></canvas>
+          <div class="chart-container-period">
+            <canvas id="chartQtd"></canvas>
           </div>
         </div>
       </div>
 
-      <!-- Table -->
-      <div class="transaction-table">
-        <div class="last-alert">
-        <h4>Último Alerta Notificado</h4>
-        <h4><a href="">Veja os alertas do dia</a></h4>
-      </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Categoria</th>
-              <th>Componente</th>
-              <th>Servidor</th>
-              <th>Motivo</th>
-              <th>Data e Hora</th>
-              <th>ID Jira</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Risco</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
     </main>
   </div>
 
-  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 </body>
 
 </html>
 
 <style>
-
-  .main-content{
-    padding: 20px;
+  body {
+    background-color: #191715;
   }
 
-.sidebar .dashboardLinks .actual{
+  .sidebar .dashboardLinks .actual {
     background-color: #6C493A;
-    width: 110%;
+    font-weight: bold;
+    padding-bottom: 30px;
+    width: 105%;
+  }
+
+  .containerA {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
   }
 
   /* Status Cards */
@@ -184,11 +297,11 @@
     /* Cor verde para "Estado Estável" */
   }
 
-  .status-card.green h3{
+  .status-card.green h3 {
     color: #4c9b1e;
   }
 
-  .status-card.green p{
+  .status-card.green p {
     color: #59a62d;
   }
 
@@ -197,11 +310,11 @@
     /* Cor laranja para "Estado de Alerta" */
   }
 
-  .status-card.yellow h3{
+  .status-card.yellow h3 {
     color: #c08a26;
   }
 
-  .status-card.yellow p{
+  .status-card.yellow p {
     color: #c08a26;
   }
 
@@ -209,12 +322,12 @@
     border-top-color: #7b2c2c;
     /* Cor vermelha para "Estado de Risco" */
   }
-  
-  .status-card.red h3{
+
+  .status-card.red h3 {
     color: #832b2b;
   }
 
-  .status-card.red p{
+  .status-card.red p {
     color: #854545;
   }
 
@@ -245,7 +358,153 @@
     margin: 10px 0 0;
   }
 
-  .canvas{
+  .bttnModalOpenG {
+    margin-top: 15px;
+    width: 80%;
+    border-radius: 50px;
+    padding: 5px;
+    background-color: #4c9b1e;
+    border: #7fc755 solid 2px;
+  }
+
+  .bttnModalOpenY {
+    margin-top: 15px;
+    width: 80%;
+    border-radius: 50px;
+    padding: 5px;
+    background-color: #c08a26;
+    border: #e0b461 solid 2px;
+  }
+
+  .bttnModalOpenD {
+    margin-top: 15px;
+    width: 80%;
+    border-radius: 50px;
+    padding: 5px;
+    background-color: #832b2b;
+    border: #854545 solid 2px;
+  }
+
+  .bttnModalOpenR {
+    margin-top: 15px;
+    width: 80%;
+    border-radius: 50px;
+    padding: 5px;
+    background-color: #3aa385;
+    border: #68b9a2 solid 2px;
+  }
+
+  .bttnModalClose {
+    width: 20%;
+    border-radius: 50px;
+    padding: 5px;
+    border: white solid 2px;
+  }
+
+  #modalGreen {
+    width: 90%;
+    height: 90%;
+    background-color: #4c9b1e;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  #modalYellow {
+    width: 90%;
+    height: 90%;
+    background-color: #c08a26;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  #modalRed {
+    width: 90%;
+    height: 90%;
+    background-color: #7b2c2c;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  #modalRecent {
+    width: 90%;
+    height: 90%;
+    background-color: #3aa385;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  /*Table Modal*/
+  /*Tabela*/
+  /* General Styles */
+  .bg-grey {
+    background-color: #f8f9fa;
+  }
+
+  .bg-green-light {
+    background-color: #d4edda;
+  }
+
+  .text-green {
+    color: #28a745;
+  }
+
+  /* Card Styles */
+  .card {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .active-filter {
+    border: 2px solid #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+  }
+
+  /* Typography */
+  .subtitle {
+    font-size: 0.875rem;
+  }
+
+  /* Table Styles */
+  .table th {
+    font-weight: 600;
+    background-color: #f8f9fa;
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+  }
+
+  /* Button Styles */
+  #btnClearFilter {
+    transition: all 0.2s ease;
+  }
+
+  #btnClearFilter:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .card {
+      margin-bottom: 1rem;
+    }
+
+    .table-responsive {
+      border: 0;
+    }
+  }
+
+  /*Graphics Chart.JS*/
+
+  .canvas {
     background-color: #3aa385;
   }
 
@@ -256,11 +515,6 @@
     margin-top: 2%;
     gap: 15px;
     margin-left: -5px;
-  }
-
-  .chart-container-period{
-    width: 130%;
-    margin-left: 55%;
   }
 
   .chart {
@@ -279,12 +533,21 @@
     width: 40%;
   }
 
-  .ranking-filter{
+  .chart-container-period {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .chart-container-ranking {
+    width: 100%;
+  }
+
+  .ranking-filter {
     display: flex;
   }
 
-  .ranking-filter h4{
-    font-size: 14px;
+  .ranking-filter h4 {
+    font-size: 13px;
   }
 
   .period-filter {
@@ -292,7 +555,7 @@
   }
 
   .period-filter h4 {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .filters {
@@ -356,11 +619,11 @@
 
   .last-alert {
     display: flex;
-    gap: 808px;
+    gap: 735px;
     margin-bottom: -10px;
   }
 
-  .last-alert a{
+  .last-alert a {
     text-decoration: none;
     font-style: normal;
     color: white;
@@ -369,78 +632,609 @@
     border-radius: 12px;
   }
 
-  .last-alert a:hover{
+  .last-alert a:hover {
     color: #443027;
     cursor: pointer;
   }
-
-
 </style>
 
 <script>
+  var macAddress = document.getElementById('selectServidor1').value;
+  var macAddress2 = document.getElementById('selectServidor2').value;
+
+  function modificarServidor() {
+    macAddress = document.getElementById('selectServidor1').value;
+    listarRanking();
+  }
+
   // window.onload = validarSessao();
-  const labels1 = ['CPU', 'RAM', 'DISCO', 'LATENCIA', 'REDE-RECEBIDO', 'REDE-ENVIADO'];
-const data1 = {
-  labels: labels1,
-  datasets: [{
-    label: 'Servidor 1',
-    data: [65, 59, 80, 81, 56, 55, 40],
-    fill: true,
-    borderColor: '#6623a8',
-    tension: 0.1,
-    backgroundColor: [
-      '#FFDA6B', // Cor para 'CPU'
-      '#C0B2A0', // Cor para 'RAM'
-      '#f9922c', // Cor para 'DISCO'
-      '#F8A8BA', // Cor para 'LATENCIA'
-      '#7D943C', // Cor para 'REDE-RECEBIDO'
-      '#05D0DE'  // Cor para 'REDE-ENVIADO'
+  const labels1 = ['Servidor 1', 'Servidor 2', 'Servidor 3', 'Servidor 4'];
+
+  const data1 = {
+    labels: labels1,
+    datasets: [
+      {
+        label: 'CPU',
+        data: [65, 45, 25, 50],
+        backgroundColor: '#FFDA6B', // Cor para 'CPU'
+      },
+      {
+        label: 'RAM',
+        data: [59, 70, 50, 10],
+        backgroundColor: '#C0B2A0', // Cor para 'RAM'
+      },
+      {
+        label: 'DISCO',
+        data: [80, 60, 40, 20],
+        backgroundColor: '#f9922c', // Cor para 'DISCO'
+      },
+      {
+        label: 'LATÊNCIA',
+        data: [81, 50, 90, 90],
+        backgroundColor: '#F8A8BA', // Cor para 'LATÊNCIA'
+      },
+      {
+        label: 'REDE',
+        data: [81, 50, 90, 45],
+        backgroundColor: 'red', // Cor para 'LATÊNCIA'
+      }
     ]
-  }]
-};
+  };
 
-const config1 = {
-  type: 'bar',
-  data: data1,
-};
+  const config1 = {
+    type: 'bar',
+    data: data1,
+    options: {
+      indexAxis: 'y', // Inverte os eixos (horizontal)
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true, // Empilha no eixo X
+          beginAtZero: true // Garante que comece do zero
+        },
+        y: {
+          stacked: true // Empilha no eixo Y
+        }
+      }
+    }
+  };
 
-const myChart1 = new Chart(
-  document.getElementById('myChart1'),
-  config1
-);
+  const chartQtd = new Chart(
+    document.getElementById('chartQtd').getContext('2d'),
+    config1
+  );
 
 
   // chart 2
 
-  const labels2 = ['CPU', 'RAM', 'DISCO', 'LATENCIA', 'REDE-RECEBIDO', 'REDE-ENVIADO'];
-const data2 = {
-  labels: labels2,
-  datasets: [{
-    label: 'Servidor 2',
-    data: [65, 59, 80, 82, 56, 55],
-    fill: true,
-    borderColor: '#fff',
-    tension: 0.2,
-    backgroundColor: [
-      '#FFDA6B', // Cor para 'CPU'
-      '#C0B2A0', // Cor para 'RAM'
-      '#f9922c', // Cor para 'DISCO'
-      '#F8A8BA', // Cor para 'LATENCIA'
-      '#7D943C', // Cor para 'REDE-RECEBIDO'
-      '#05D0DE'  // Cor para 'REDE-ENVIADO'
+  const data2 = {
+    labels: [
+      'CPU ACIMA',
+      'CPU ABAIXO',
+      'RAM ACIMA',
+      'RAM ABAIXO',
+      'DISCO ACIMA',
+      'DISCO ABAIXO',
+      'LATÊNCIA ACIMA',
+      'LATÊNCIA ABAIXO'
+    ],
+    datasets: [
+      {
+        label: 'Servidor 1',
+        data: [''],
+        // backgroundColor: [
+        //   '#FFDA6B', // CPU ACIMA
+        //   '#FFDA6B', // CPU ABAIXO
+        //   '#C0B2A0', // RAM ACIMA
+        //   '#C0B2A0', // RAM ABAIXO
+        //   '#f9922c', // DISCO ACIMA
+        //   '#f9922c', // DISCO ABAIXO
+        //   '#F8A8BA', // LATÊNCIA ACIMA
+        //   '#F8A8BA' // LATÊNCIA ABAIXO
+        // ],
+        // borderColor: [
+        //   '#FFDA6B',
+        //   '#FFDA6B',
+        //   '#C0B2A0',
+        //   '#C0B2A0',
+        //   '#f9922c',
+        //   '#f9922c',
+        //   '#F8A8BA',
+        //   '#F8A8BA'
+        // ],
+        backgroundColor: 'blue',
+        // borderWidth: 1,
+      },
+      {
+        label: 'Servidor 2',
+        data: [],
+        backgroundColor: 'red',
+        // backgroundColor: [
+        //   '#FFDA6B', // CPU ACIMA
+        //   '#FFDA6B', // CPU ABAIXO
+        //   '#C0B2A0', // RAM ACIMA
+        //   '#C0B2A0', // RAM ABAIXO
+        //   '#f9922c', // DISCO ACIMA
+        //   '#f9922c', // DISCO ABAIXO
+        //   '#F8A8BA', // LATÊNCIA ACIMA
+        //   '#F8A8BA' // LATÊNCIA ABAIXO
+        // ],
+        // borderColor: [
+        //   '#FFDA6B',
+        //   '#FFDA6B',
+        //   '#C0B2A0',
+        //   '#C0B2A0',
+        //   '#f9922c',
+        //   '#f9922c',
+        //   '#F8A8BA',
+        //   '#F8A8BA'
+        // ],
+        // borderWidth: 1,
+      }
     ]
-  }]
-};
+  };
 
-const config2 = {
-  type: 'pie',
-  data: data2,
-};
+  const config2 = {
+    type: 'bar', // Gráfico de barras
+    data: data2,
+  };
 
-const myChart2 = new Chart(
-  document.getElementById('myChart2'),
-  config2
-);
+  const chartRanking = new Chart(
+    document.getElementById('chartRanking'),
+    config2
+  );
 
+  //RANKING
+  function listarRanking() {
+    var macAddressVar = macAddress;
+    fetch("/alertaRouter/listarRanking/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        macAddressServer: macAddressVar
+      })
+    })
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json()
+            .then(function (resposta) {
+              const labelsAtualizados = resposta.map(dado => dado.Componente);
+
+              const LatenciaDadosAtualizados = resposta.map(dado => dado.Quantidade);
+
+              // console.log(LatenciaDadosAtualizados)
+              chartRanking.data.labels = labelsAtualizados.reverse();
+              chartRanking.data.datasets[0].data = LatenciaDadosAtualizados;
+              chartRanking.data.datasets[0].label = "Acima da Média"
+
+              chartRanking.data.datasets[1].data = LatenciaDadosAtualizados;
+              chartRanking.data.datasets[1].label = "Abaixo da Média"
+              // chartRanking.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+
+              chartRanking.update();
+            });
+        } else {
+          throw "Houve erro ao puxar";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+  //QTD
+  function listarQtdPorServidor() {
+    fetch("alertaRouter/listarQtdPorServidor", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      // body: JSON.stringify({
+      //     macAddressServer: macAddressVar
+      // })
+    })
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then((resultado) => {
+            console.log(resultado);
+            const alertasServ1 = []
+            const alertasServ2 = [];
+            const alertasServ3 = [];
+            const alertasServ4 = [];
+
+            resultado.forEach(item => {
+              if (item.Servidor === "f946307321c2") alertasServ1.push([item.Componente, item.TotalAlertas]);
+              else if (item.Servidor === "14857f833746") alertasServ2.push([item.Componente, item.TotalAlertas]);
+              else if (item.Servidor === "d09466c9be45") alertasServ3.push([item.Componente, item.TotalAlertas]);
+              else alertasServ4.push([item.Componente, item.TotalAlertas]);
+            });
+
+            let alertasServ1CPU = 0;
+            let alertasServ1RAM = 0;
+            let alertasServ1DISCO = 0;
+            let alertasServ1LATENCIA = 0;
+            let alertasServ1REDE = 0;
+
+            for (var i = 0; i < alertasServ1.length; i++) {
+              if (alertasServ1[i][0] === 'CPU') {
+                alertasServ1CPU = alertasServ1[i][1];
+              }
+              else if (alertasServ1[i][0] === 'RAM') {
+                alertasServ1RAM = alertasServ1[i][1];
+              }
+              else if (alertasServ1[i][0] === 'DISCO') {
+                alertasServ1DISCO = alertasServ1[i][1];
+              }
+              else if (alertasServ1[i][0] === 'LATÊNCIA') {
+                alertasServ1LATENCIA = alertasServ1[i][1];
+              }
+              else {
+                alertasServ1REDE = alertasServ1[i][1];
+              }
+            }
+
+            let alertasServ2CPU = 0;
+            let alertasServ2RAM = 0;
+            let alertasServ2DISCO = 0;
+            let alertasServ2LATENCIA = 0;
+            let alertasServ2REDE = 0;
+
+            for (var i = 0; i < alertasServ2.length; i++) {
+              if (alertasServ2[i][0] === 'CPU') {
+                alertasServ2CPU = alertasServ2[i][1];
+              }
+              else if (alertasServ2[i][0] === 'RAM') {
+                alertasServ2RAM = alertasServ2[i][1];
+              }
+              else if (alertasServ2[i][0] === 'DISCO') {
+                alertasServ2DISCO = alertasServ2[i][1];
+              }
+              else if (alertasServ2[i][0] === 'LATÊNCIA') {
+                alertasServ2LATENCIA = alertasServ2[i][1];
+              }
+              else {
+                alertasServ2REDE = alertasServ2[i][1];
+              }
+            }
+
+            let alertasServ3CPU = 0;
+            let alertasServ3RAM = 0;
+            let alertasServ3DISCO = 0;
+            let alertasServ3LATENCIA = 0;
+            let alertasServ3REDE = 0;
+
+            for (var i = 0; i < alertasServ3.length; i++) {
+              if (alertasServ3[i][0] === 'CPU') {
+                alertasServ3CPU = alertasServ3[i][1];
+              }
+              else if (alertasServ3[i][0] === 'RAM') {
+                alertasServ3RAM = alertasServ3[i][1];
+              }
+              else if (alertasServ3[i][0] === 'DISCO') {
+                alertasServ3DISCO = alertasServ3[i][1];
+              }
+              else if (alertasServ3[i][0] === 'LATÊNCIA') {
+                alertasServ3LATENCIA = alertasServ3[i][1];
+              }
+              else {
+                alertasServ3REDE = alertasServ1[i][1];
+              }
+            }
+
+            let alertasServ4CPU = 0;
+            let alertasServ4RAM = 0;
+            let alertasServ4DISCO = 0;
+            let alertasServ4LATENCIA = 0;
+            let alertasServ4REDE = 0;
+
+            for (var i = 0; i < alertasServ4.length; i++) {
+              if (alertasServ4[i][0] === 'CPU') {
+                alertasServ4CPU = alertasServ4[i][1];
+              }
+              else if (alertasServ4[i][0] === 'RAM') {
+                alertasServ4RAM = alertasServ4[i][1];
+              }
+              else if (alertasServ4[i][0] === 'DISCO') {
+                alertasServ4DISCO = alertasServ4[i][1];
+              }
+              else if (alertasServ4[i][0] === 'LATÊNCIA') {
+                alertasServ4LATENCIA = alertasServ4[i][1];
+              }
+              else {
+                alertasServ4REDE = alertasServ4[i][1];
+              }
+            }
+
+            chartQtd.data.datasets[0].data = [alertasServ1CPU, alertasServ2CPU, alertasServ3CPU, alertasServ4CPU];
+            chartQtd.data.datasets[1].data = [alertasServ1RAM, alertasServ2RAM, alertasServ3RAM, alertasServ4RAM];
+            chartQtd.data.datasets[2].data = [alertasServ1DISCO, alertasServ2DISCO, alertasServ3DISCO, alertasServ4DISCO];
+            chartQtd.data.datasets[3].data = [alertasServ1LATENCIA, alertasServ2LATENCIA, alertasServ3LATENCIA, alertasServ4LATENCIA];
+            chartQtd.data.datasets[4].data = [alertasServ1REDE, alertasServ2REDE, alertasServ3REDE, alertasServ4REDE];
+
+
+
+            chartQtd.update();
+          })
+        }
+        else {
+          throw "Erro ao pegar dados de listarQtdPorServidor";
+        }
+      })
+      .catch(function (erro) {
+        console.error(erro);
+      })
+  }
+
+
+
+
+
+  // MODAL KPI´S
+
+  const sampleDataGreen = [];
+  const sampleDataYellow = [];
+  const sampleDataRed = [];
+  const sampleDataRecent = [];
+
+  function initializeDataTableGreen() {
+    $('#dataTableGreen').DataTable({
+      data: sampleDataGreen,
+      columns: [
+        { data: 'Categoria' },
+        { data: 'Componente' },
+        { data: 'Servidor' },
+        { data: 'Motivo' },
+        { data: 'DataHora' },
+        { data: 'IdAlerta' },
+        { data: 'MacAddress' }
+      ]
+    });
+  }
+
+  function openModalGreen() {
+    const modalGreen = document.getElementById('modalGreen');
+    modalGreen.showModal();
+    if (!$.fn.DataTable.isDataTable('#dataTableGreen')) {
+      initializeDataTableGreen();
+    } else {
+      $('#dataTableGreen').DataTable().draw();
+    }
+  }
+
+  function initializeDataTableYellow() {
+    $('#dataTableYellow').DataTable({
+      data: sampleDataYellow,
+      columns: [
+        { data: 'Categoria' },
+        { data: 'Componente' },
+        { data: 'Servidor' },
+        { data: 'Motivo' },
+        { data: 'DataHora' },
+        { data: 'IdAlerta' },
+        { data: 'MacAddress' }
+      ]
+    });
+  }
+
+  function openModalYellow() {
+    const modalYellow = document.getElementById('modalYellow');
+    modalYellow.showModal();
+    if (!$.fn.DataTable.isDataTable('#dataTableYellow')) {
+      initializeDataTableYellow();
+    } else {
+      $('#dataTableYellow').DataTable().draw();
+    }
+  }
+
+  function initializeDataTableRed() {
+    $('#dataTableRed').DataTable({
+      data: sampleDataRed,
+      columns: [
+        { data: 'Categoria' },
+        { data: 'Componente' },
+        { data: 'Servidor' },
+        { data: 'Motivo' },
+        { data: 'DataHora' },
+        { data: 'IdAlerta' },
+        { data: 'MacAddress' }
+      ]
+    });
+  }
+
+  function openModalRed() {
+    const modalRed = document.getElementById('modalRed');
+    modalRed.showModal();
+    if (!$.fn.DataTable.isDataTable('#dataTableRed')) {
+      initializeDataTableRed();
+    } else {
+      $('#dataTableRed').DataTable().draw();
+    }
+  }
+
+  function initializeDataTableRecent() {
+    $('#dataTableRecent').DataTable({
+      data: sampleDataRecent,
+      columns: [
+        { data: 'Categoria' },
+        { data: 'Componente' },
+        { data: 'Servidor' },
+        { data: 'Motivo' },
+        { data: 'DataHora' },
+        { data: 'IdAlerta' },
+        { data: 'MacAddress' }
+      ]
+    });
+  }
+
+  function openModalRecent() {
+    const modalRecent = document.getElementById('modalRecent');
+    modalRecent.showModal();
+    if (!$.fn.DataTable.isDataTable('#dataTableRecent')) {
+      initializeDataTableRecent();
+    } else {
+      $('#dataTableRecent').DataTable().draw();
+    }
+  }
+
+  //MODAL
+  function listarTodos() {
+    var macAddressVar = macAddress;
+    fetch("/alertaRouter/listarTodos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json()
+            .then(function (resposta) {
+              console.log(resposta);
+
+              resposta.forEach(item=>{
+                sampleDataGreen.push(
+                  {
+                    Categoria: item.Categoria,
+                    Componente: item.Componente,
+                    Servidor: item.Servidor,
+                    Motivo: item.Motivo,
+                    DataHora: item.DataHora,
+                    IdAlerta: item.idAlerta,
+                    MacAddress: item.MacAddress
+                  }
+                )
+              })
+            });
+        } else {
+          throw "Houve erro ao puxar";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+
+
+
+
+  function listarPorEstadoAlerta() {
+    var macAddressVar = macAddress;
+    fetch("/alertaRouter/listarPorEstadoAlerta", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json()
+            .then(function (resposta) {
+              console.log(resposta);
+
+              resposta.forEach(item=>{
+                sampleDataYellow.push(
+                  {
+                    Categoria: item.Categoria,
+                    Componente: item.Componente,
+                    Servidor: item.Servidor,
+                    Motivo: item.Motivo,
+                    DataHora: item.DataHora,
+                    IdAlerta: item.idAlerta,
+                    MacAddress: item.MacAddress
+                  }
+                )
+              })
+            });
+        } else {
+          throw "Houve erro ao puxar";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+  
+
+
+
+  function listarPorEstadoRisco() {
+    var macAddressVar = macAddress;
+    fetch("/alertaRouter/listarPorEstadoRisco", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json()
+            .then(function (resposta) {
+              console.log(resposta);
+
+              resposta.forEach(item=>{
+                sampleDataRed.push(
+                  {
+                    Categoria: item.Categoria,
+                    Componente: item.Componente,
+                    Servidor: item.Servidor,
+                    Motivo: item.Motivo,
+                    DataHora: item.DataHora,
+                    IdAlerta: item.idAlerta,
+                    MacAddress: item.MacAddress
+                  }
+                )
+              })
+            });
+        } else {
+          throw "Houve erro ao puxar";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+
+  
+function listarUltimas24Horas() {
+    var macAddressVar = macAddress;
+    fetch("/alertaRouter/listarUltimas24Horas", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json()
+            .then(function (resposta) {
+              console.log(resposta);
+
+              resposta.forEach(item=>{
+                sampleDataRecent.push(
+                  {
+                    Categoria: item.Categoria,
+                    Componente: item.Componente,
+                    Servidor: item.Servidor,
+                    Motivo: item.Motivo,
+                    DataHora: item.DataHora,
+                    IdAlerta: item.idAlerta,
+                    MacAddress: item.MacAddress
+                  }
+                )
+              })
+            });
+        } else {
+          throw "Houve erro ao puxar";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
 
 </script>
