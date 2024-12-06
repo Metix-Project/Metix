@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Métix Proteção Divina</title>
+    <title>Dashboard de Histórico - Métix Proteção Divina</title>
     <link rel="icon" href="../assets/imgs/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
@@ -46,10 +45,10 @@
 
             <div class="dashboardLinks">
                 <h2>Dashboards</h2>
-                <button>Monitoramento</button>
+                <button onclick="window.location.href = 'dashAtualizadaTecnico.html'">Monitoramento</button>
                 <button>Alertas</button>
-                <button onclick="window.location.href = 'telaHistorico.html'">Histórico</button>
-                <button onclick="window.location.href = 'telaPrevisao.html'">Previsões</button>
+                <button onclick="window.location.href = '../telaHistorico.html'">Histórico</button>
+                <button onclick="window.location.href = '../telaPrevisao.html'">Previsões</button>
                 <button>Manutenção</button>
                 <button onclick="limparSessao()">Sair</button>
             </div>
