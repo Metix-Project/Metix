@@ -34,8 +34,8 @@ create table Servidor(
 );
 
 create table DadosServidor(
-dataHora datetime not null default current_timestamp,
-macAddress varchar(17),
+	dataHora datetime not null default current_timestamp,
+	macAddress varchar(17),
     cpuPorc decimal(7, 2),
     memoriaPorc decimal(7, 2),
     discoPorc decimal(7, 2),
@@ -62,21 +62,19 @@ create table DadosServidorMedia(
 	latencia DECIMAL(7,2) NOT NULL
 );
 
-select * from DadosServidor;
-select * from DadosServidorMedia;
-
-create user if not exists 'metixAdm'@'%' identified by 'sptech';
-grant all privileges on Metix.* to 'metixAdm'@'%';
-
-create user if not exists 'metixUser'@'%' identified by 'sptech';
-grant insert, select on Metix.* to 'metixUser'@'%';
-
-create user if not exists 'metixUserInsert'@'%' identified by 'sptech';
-grant insert on Metix.* to 'metixUserInsert'@'%';
-
--- drop user 'metixUserSelect'@'%';
-create user if not exists 'metixUserSelect'@'%' identified by 'sptech';
-grant select on Metix.* to 'metixUserSelect'@'%';
+create table Alerta (
+	idAlerta int auto_increment,
+    fkIdServidor VARCHAR(17) NOT NULL,
+    PRIMARY KEY(idAlerta, fkIdServidor),
+    componenteNome VARCHAR(15) NOT NULL,
+    DataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    motivo CHAR(20) NOT NULL,
+    estadoAtual VARCHAR(7) NOT NULL,
+    CONSTRAINT fkServComponente FOREIGN KEY(fkIdServidor) REFERENCES Servidor(macAddress),
+    CONSTRAINT chk_comp CHECK (componenteNome IN ('CPU', 'RAM', 'DISCO', 'LATÊNCIA', 'REDE')),
+    CONSTRAINT chk_mtv CHECK (motivo IN ('ACIMA DA MÉDIA', 'ABAIXO DA MÉDIA')),
+    CONSTRAINT chk_estd CHECK (estadoAtual IN ('ESTÁVEL', 'ALERTA', 'RISCO'))
+);
 
 insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa, codigoSeguranca, imgLogo) values (
 	1, 
@@ -89,11 +87,11 @@ insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, t
 	"https://avatars.githubusercontent.com/u/16822015?s=200&v=4"
 );
 
-insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('14857f833746', 1, 1);
-insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('f946307321c2', 2, 1);
+insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('f946307321c2', 1, 1);
+insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('14857f833746', 2, 1);
 insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('d09466c9be45', 3, 1);
-insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('c7d12465a943', 3, 1);
+insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('c7d12465a943', 4, 1);
 
-select * from dadosServidorMedia;
-
-select * from dadosServidorMedia;
+INSERT INTO Usuario(nome, email, senha, cpf, telefone, cargo, fkEmpresa) VALUES 
+("Jamal", "jamal@gmail.com", "1234567", "55544433321", "11999998888", "Gerente", 1),
+("José Carlos", "jose_carlos@gmail.com", "1234567", "99988877764", "11949498585", "Técnico", 1);
