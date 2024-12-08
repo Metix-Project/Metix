@@ -203,4 +203,157 @@ html, body {
     outline: none;
     border-color: #645f59;
   }
-  
+
+/* Adicionar ao arquivo CSS ou na tag <style> */
+.modal {
+  display: none; /* Oculto por padrão */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Ajuste a largura do modal */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-button {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.hour-row {
+  display: flex;
+  justify-content: space-between; /* Espaçamento entre as colunas */
+  padding: 8px 0;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.hour-row:last-child {
+  border-bottom: none; /* Remove linha no último item */
+}
+
+.hour-column {
+  width: 50%; /* Ajusta a largura da coluna do horário */
+  text-align: left; /* Alinha à esquerda */
+}
+
+.transaction-column {
+  width: 50%; /* Ajusta a largura da coluna de transações */
+  text-align: right; /* Alinha à direita */
+}
+
+.hour-row strong {
+  color: #d7301f; /* Destaque em negrito */
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-date-title .total-transactions {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #555; /* Cor para diferenciação */
+}
+.modal-date-title .total-transactions strong {
+  color: #000; /* Destaque para o número */
+}
+
+.hidden {
+  display: none;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.schedule-button,
+.back-button,
+.confirm-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+.schedule-button:hover,
+.back-button:hover,
+.confirm-button:hover {
+  background-color: #0056b3;
+}
+form div {
+  margin-bottom: 15px;
+}
+form label {
+  display: block;
+  margin-bottom: 5px;
+}
+form input,
+form select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estilo para o botão dentro da nova classe */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#schedule-maintenance-btn {
+  background-color: #4CAF50; /* Exemplo de cor verde */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#schedule-maintenance-btn:hover {
+  background-color: #45a049;
+}
+
+
+
