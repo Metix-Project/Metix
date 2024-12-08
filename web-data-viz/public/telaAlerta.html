@@ -24,7 +24,8 @@
   <link rel="stylesheet" href="./css/dashboardBase.css">
 </head>
 
-<body onload="listarRanking(), listarQtdPorServidor(), listarTodos(), listarPorEstadoAlerta(), listarPorEstadoRisco(), listarUltimas24Horas()">
+<body
+  onload="listarRanking(), listarQtdPorServidor(), listarTodos(), listarPorEstadoAlerta(), listarPorEstadoRisco(), listarUltimas24Horas()">
 
   <div class="containerA">
     <!-- Sidebar -->
@@ -35,8 +36,6 @@
         <h4 id="profilePosition">Cargo: Gerente</h4>
         <h4 id="profileBusiness">Banco</h4>
       </div>
-
-      <a style="background-color: #28a745; width: 100px;" href="telaAlerta.html"></a>
 
       <div class="dashboardLinks">
         <h2>Dashboards</h2>
@@ -57,7 +56,7 @@
       <!-- Summary Cards -->
       <div class="status-cards">
         <div class="status-card yellow">
-          <h3>05</h3>
+          <h3 id="TotalAlerta">00</h3>
           <p>COMPONENTES EM ESTADO DE ALERTA</p>
           <button class="bttnModalOpenY" onclick="openModalYellow()"> Abrir modal </button>
 
@@ -89,7 +88,7 @@
         </div>
 
         <div class="status-card red">
-          <h3>00</h3>
+          <h3 id="TotalRisco">00</h3>
           <p>COMPONENTES EM ESTADO DE RISCO</p>
           <button class="bttnModalOpenD" onclick="openModalRed()"> Abrir modal </button>
 
@@ -121,7 +120,7 @@
         </div>
 
         <div class="status-card recent">
-          <h3>10</h3>
+          <h3 id="Total24Horas">00</h3>
           <p>ALERTAS DAS ÚLTIMAS 24 HORAS</p>
           <button class="bttnModalOpenR" onclick="openModalRecent()"> Abrir modal </button>
 
@@ -153,7 +152,7 @@
         </div>
 
         <div class="status-card green">
-          <h3>111</h3>
+          <h3 id="TotalTodos">00</h3>
           <p>TODOS OS ALERTAS JÁ GERADOS</p>
           <button class="bttnModalOpenG" onclick="openModalGreen()"> Abrir modal </button>
 
@@ -221,20 +220,21 @@
                 <option>RAM</option>
                 <option>DISCO</option>
                 <option>LATÊNCIA</option>
-                <option>REDE</olalertasServ2LATENCIA>
+                <option>REDE</option>
+              </select>
 
-                  <select>
-                    <option>Semana</option>
-                    <option>Mês</option>
-                  </select>
+              <select>
+                <option>Semana</option>
+                <option>Mês</option>
+              </select>
 
-                  <select id="selectServidor2" onchange="modificarServidor()">
-                    <option value="Todos"> Todos os Servidores</option>
-                    <option value="f946307321c2">Servidor 1</option>
-                    <option value="14857f833746">Servidor 2</option>
-                    <option value="d09466c9be45">Servidor 3</option>
-                    <option value="c7d12465a943">Servidor 4</option>
-                  </select>
+              <select id="selectServidor2" onchange="modificarServidor()">
+                <option value="Todos"> Todos os Servidores</option>
+                <option value="f946307321c2">Servidor 1</option>
+                <option value="14857f833746">Servidor 2</option>
+                <option value="d09466c9be45">Servidor 3</option>
+                <option value="c7d12465a943">Servidor 4</option>
+              </select>
             </div>
           </div>
           <div class="chart-container-period">
@@ -643,9 +643,11 @@
   var macAddress2 = document.getElementById('selectServidor2').value;
 
   function modificarServidor() {
-    macAddress = document.getElementById('selectServidor1').value;
-    listarRanking();
+    var macAddress = document.getElementById('selectServidor1').value;
+    console.log("macAddress: " + macAddress)
+    listarRanking(macAddress);
   }
+
 
   // window.onload = validarSessao();
   const labels1 = ['Servidor 1', 'Servidor 2', 'Servidor 3', 'Servidor 4'];
@@ -785,9 +787,11 @@
   );
 
   //RANKING
-  function listarRanking() {
+  function listarRanking(macAddress) {
+    console.log("macAddress: " + macAddress)
     var macAddressVar = macAddress;
-    fetch("/alertaRouter/listarRanking/", {
+    console.log("macAddress: " + macAddressVar)
+    fetch(`/alertaRouter/listarRanking/${macAddressVar}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -804,13 +808,28 @@
 
               const LatenciaDadosAtualizados = resposta.map(dado => dado.Quantidade);
 
-              // console.log(LatenciaDadosAtualizados)
-              chartRanking.data.labels = labelsAtualizados.reverse();
-              chartRanking.data.datasets[0].data = LatenciaDadosAtualizados;
-              chartRanking.data.datasets[0].label = "Acima da Média"
+              console.log('Resposta: ' + resposta[0].Motivo);
+              console.log('Dados: ' + LatenciaDadosAtualizados)
+              console.log('Labels: ' + labelsAtualizados)
 
-              chartRanking.data.datasets[1].data = LatenciaDadosAtualizados;
-              chartRanking.data.datasets[1].label = "Abaixo da Média"
+
+              chartRanking.data.labels = labelsAtualizados.reverse();
+
+              for (i = 0; i < resposta.length; i++) {
+                if (resposta[i].Motivo == 'ACIMA DA MEDIA') {
+                  chartRanking.data.datasets[0].data = LatenciaDadosAtualizados;
+                  chartRanking.data.datasets[0].label = "Acima da Média"
+                } else {
+                  {
+                    chartRanking.data.datasets[1].data = LatenciaDadosAtualizados;
+                    chartRanking.data.datasets[1].label = "Abaixo da Média"
+                  }
+                }
+              }
+
+
+
+
               // chartRanking.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
 
               chartRanking.update();
@@ -1092,8 +1111,8 @@
           resposta.json()
             .then(function (resposta) {
               console.log(resposta);
-
-              resposta.forEach(item=>{
+              document.getElementById("TotalTodos").textContent = resposta.length; // Atualiza o card de Todos os Alertas
+              resposta.forEach(item => {
                 sampleDataGreen.push(
                   {
                     Categoria: item.Categoria,
@@ -1133,8 +1152,8 @@
           resposta.json()
             .then(function (resposta) {
               console.log(resposta);
-
-              resposta.forEach(item=>{
+              document.getElementById("TotalAlerta").textContent = resposta.length; // Atualiza o card de estado de Alerta
+              resposta.forEach(item => {
                 sampleDataYellow.push(
                   {
                     Categoria: item.Categoria,
@@ -1157,7 +1176,7 @@
       });
   }
 
-  
+
 
 
 
@@ -1174,8 +1193,8 @@
           resposta.json()
             .then(function (resposta) {
               console.log(resposta);
-
-              resposta.forEach(item=>{
+              document.getElementById("TotalRisco").textContent = resposta.length; // Atualiza o card de estado de Risco
+              resposta.forEach(item => {
                 sampleDataRed.push(
                   {
                     Categoria: item.Categoria,
@@ -1199,8 +1218,8 @@
   }
 
 
-  
-function listarUltimas24Horas() {
+
+  function listarUltimas24Horas() {
     var macAddressVar = macAddress;
     fetch("/alertaRouter/listarUltimas24Horas", {
       method: "POST",
@@ -1213,8 +1232,8 @@ function listarUltimas24Horas() {
           resposta.json()
             .then(function (resposta) {
               console.log(resposta);
-
-              resposta.forEach(item=>{
+              document.getElementById("Total24Horas").textContent = resposta.length; // Atualiza o card de alertas das últimas 24 horas
+              resposta.forEach(item => {
                 sampleDataRecent.push(
                   {
                     Categoria: item.Categoria,
