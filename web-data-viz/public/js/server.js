@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 
 // Credenciais do Jira
 const username = 'victor.braga@sptech.school';
-const password = 'ATATT3xFfGF0oiT3Rg5JG_nShLII8Y-Rn4j83KnCATD2nG_HJ_nEpquzDQBXQnUGrWKmaeeehCCbMvSqMr21KJfgfavv1FbeH-ZS8_cdgx_EbuOubXNunhT7IsAUAPR0l2Rj6iiSITxEpFV_K_gaUI4c_CrqZGodjrq2Ak4eEqdeNiVS92H_RGg=706B6DE9';
 const domain = 'metix2';
 
 const auth = {
