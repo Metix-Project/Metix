@@ -76,6 +76,25 @@ create table Alerta (
     CONSTRAINT chk_estd CHECK (estadoAtual IN ('ALERTA', 'RISCO'))
 );
 
+CREATE VIEW ResumoSemanalMedias AS
+SELECT
+    fkMaquina,
+    DATE_SUB(dia, INTERVAL DAYOFWEEK(dia) - 1 DAY) AS semana,
+    ROUND(AVG(cpuPorc), 1) AS cpuPorc,
+    ROUND(AVG(memoriaPorc), 1) AS memoriaPorc,
+    ROUND(AVG(memoriaGb), 1) AS memoriaGb,
+    ROUND(AVG(memoriaTotal), 0) AS memoriaTotal,
+    ROUND(AVG(discoPorc), 1) AS discoPorc,
+    ROUND(AVG(discoGb), 1) AS discoGb,
+    ROUND(AVG(discoTotal), 0) AS discoTotal,
+    ROUND(AVG(mbpsRecebidos), 0) AS mbpsRecebidos,
+    ROUND(AVG(mbpsEnviados), 0) AS mbpsEnviados,
+    ROUND(AVG(latencia), 1) AS latencia
+FROM DadosServidorMedia
+GROUP BY semana, fkMaquina
+ORDER BY MIN(dia);
+
+
 insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa, codigoSeguranca, imgLogo) values (
 	1, 
 	"Banco Central do Brasil", 
