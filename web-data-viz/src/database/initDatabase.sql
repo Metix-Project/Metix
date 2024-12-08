@@ -64,16 +64,16 @@ create table DadosServidorMedia(
 
 create table Alerta (
 	idAlerta int auto_increment,
-    fkIdServidor VARCHAR(17) NOT NULL,
+    fkIdServidor VARCHAR(17),
     PRIMARY KEY(idAlerta, fkIdServidor),
     componenteNome VARCHAR(15) NOT NULL,
     DataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
     motivo CHAR(20) NOT NULL,
     estadoAtual VARCHAR(7) NOT NULL,
     CONSTRAINT fkServComponente FOREIGN KEY(fkIdServidor) REFERENCES Servidor(macAddress),
-    CONSTRAINT chk_comp CHECK (componenteNome IN ('CPU', 'RAM', 'DISCO', 'LATÊNCIA', 'REDE')),
-    CONSTRAINT chk_mtv CHECK (motivo IN ('ACIMA DA MÉDIA', 'ABAIXO DA MÉDIA')),
-    CONSTRAINT chk_estd CHECK (estadoAtual IN ('ESTÁVEL', 'ALERTA', 'RISCO'))
+    CONSTRAINT chk_comp CHECK (componenteNome IN ('CPU', 'RAM', 'DISCO', 'LATENCIA', 'REDE')),
+    CONSTRAINT chk_mtv CHECK (motivo IN ('ACIMA DA MEDIA', 'ABAIXO DA MEDIA')),
+    CONSTRAINT chk_estd CHECK (estadoAtual IN ('ALERTA', 'RISCO'))
 );
 
 insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa, codigoSeguranca, imgLogo) values (
