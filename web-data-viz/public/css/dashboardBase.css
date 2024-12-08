@@ -127,3 +127,8 @@ body {
     justify-content: center;
     width: 80%;
 }
+
+.sidebar .dashboardLinks .actual{
+    background-color: #6C493A;
+    width: 110%;
+  }
