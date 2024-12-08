@@ -8,7 +8,7 @@ var alertaController = require("../controllers/alertaController.js");
 // Rotas para os alertas
 
 // Lista o ranking de alertas por servidor
-router.post("/listarRanking", function (req, res) {
+router.post("/listarRanking/:macAddressVar", function (req, res) {
   alertaController.listarRanking(req, res);
 });
 

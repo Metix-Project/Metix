@@ -12,7 +12,7 @@ function listarRanking(macAddress) {
 // Lista a quantidade de alertas por servidor, componente e período
 function listarQtdPorServidor() {
   return database.executar(
-    `SELECT fkIdServidor AS Servidor, componenteNome AS Componente, DATE(DataHora) AS Periodo, COUNT(*) AS TotalAlertas FROM Alerta GROUP BY fkIdServidor, componenteNome, DATE(DataHora) ORDER BY Periodo DESC, Servidor, Componente;`
+    `SELECT fkIdServidor AS Servidor, componenteNome AS Componente, DATE(DataHora) AS Periodo, COUNT(*) AS TotalAlertas FROM Alerta WHERE ${filtroPeriodo} ${filtroComponente} GROUP BY fkIdServidor, componenteNome, DATE(DataHora) ORDER BY Periodo DESC, Servidor, Componente;`
   );
 }
 

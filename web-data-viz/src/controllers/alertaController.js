@@ -3,7 +3,7 @@ var alertaModel = require("../models/alertaModel.js");
 
 // Lista o ranking de alertas por servidor
 function listarRanking(req, res) {
-  var macAddress = req.body.macAddressServer;
+  var macAddress = req.params.macAddressVar;
   alertaModel
     .listarRanking(macAddress)
     .then((resultado) => {
@@ -17,8 +17,9 @@ function listarRanking(req, res) {
 
 // Lista a quantidade de alertas por servidor, componente e período
 function listarQtdPorServidor(req, res) {
+  const {periodo, componente} = req.body;
   alertaModel
-    .listarQtdPorServidor()
+    .listarQtdPorServidor(periodo, componente)
     .then((resultado) => res.status(200).json(resultado))
     .catch((erro) => {
       console.error("Erro ao listar quantidade de alertas por servidor:", erro);
