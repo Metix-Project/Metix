@@ -162,7 +162,10 @@
     <div id="modalContainer">
         <div class="modal" id="modalContent">
             <div class="top">
-                <h1>Relatório da Inteligência Artificial</h1>
+                <div class="title">
+                    <h1>Relatório do BobIA</h1>
+                    <img src="../assets/imgs/bobIA.png" alt="bobIA">
+                </div>
                 <span class="closeModal" onclick="document.getElementById('modalContainer').style.display = 'none';">&#10005;</span>
             </div>
             <div id="geminiParagraph"></div>
@@ -987,13 +990,16 @@
                 ${relatorioCompleto}
                 <hr/>
                 <div class='creditsPdf'>
-                    <div>
+                    <div class='ia'>
                         <span><b>Inteligência Artificial utilizada: </b></span>
                         <img src='../assets/imgs/gemini.png' alt='geminiLogo'>
                     </div>
-                    <div>
+                    <div class='bobia'>
                         <span><b>API Utilizada: <u>Architronic-IA (BobIA)</u></b></span>
-                        <span>Desenvolvido por:<br>- Matheus Ferreira Matos<br>- Marise Miranda</span>
+                        <div class='bobiaText'>
+                            <img src='../assets/imgs/bobIA.png'>
+                            <span>Desenvolvido por:<br>- Marise Miranda<br>- Matheus Ferreira Matos<br>- Alexander Gonçalves</span>
+                        </div>
                     </div>
                 </div>
                 <h2 style='margin: 20px 0;'>FACULDADE SÃO PAULO TECH SCHOOL</h2>

@@ -21,10 +21,24 @@ function pegarUltimos105Dias(macAddress) {
     return database.executar(instrucaoSql);
 }
 
+function pegarTotalAlertas(macAddress, componente) {
+    var instrucaoSql = ``;
+
+    return database.executar(instrucaoSql);
+}
+
+function capturarUltimoAlerta(macAddress, componente) {
+    var instrucaoSql = `SELECT DataHora FROM Alerta WHERE fkIdServidor = "${macAddress}" AND componenteNome = "${componente}" ORDER BY DataHora DESC LIMIT 1;`;
+
+    return database.executar(instrucaoSql);
+}
+
 // exporta para outro arquivo:
 module.exports = {
     pegarMedias,
     pegarMediasSemanais,
-    pegarUltimos105Dias
+    pegarUltimos105Dias,
+    pegarTotalAlertas,
+    capturarUltimoAlerta
 };
  

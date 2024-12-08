@@ -294,6 +294,19 @@ h2 {
     color: #bbb;
 }
 
+#modalContent .title {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+#modalContent img {
+    width: 75px;
+    height: 75px;
+}
+
 #modalDiv {
     position: relative;
 }
@@ -402,18 +415,29 @@ hr {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
 }
 
 .creditsPdf div {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    width: 45%;
+    width: 50%;
 }
 
-.creditsPdf img {
+.creditsPdf .ia img {
     width: 170px;
+}
+
+.creditsPdf .bobia img {
+    width: 95px;
+}
+
+.creditsPdf .bobia .bobiaText {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 #geminiParagraph {

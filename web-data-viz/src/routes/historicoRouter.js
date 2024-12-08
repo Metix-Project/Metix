@@ -18,5 +18,13 @@ router.post("/pegarUltimos105Dias", function (req, res) {
   historicoController.pegarUltimos105Dias(req, res);
 });
 
+router.post("/pegarTotalAlertas", function (req, res) {
+  historicoController.pegarTotalAlertas(req, res);
+});
+
+router.post("/capturarUltimoAlerta", function (req, res) {
+  historicoController.capturarUltimoAlerta(req, res);
+});
+
 // exporta para outro arquivo:
 module.exports = router; 
