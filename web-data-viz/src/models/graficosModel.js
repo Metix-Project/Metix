@@ -1,6 +1,6 @@
 // define o arquivo de conexão com o database:
 
-const { DadosKpiRedeTempoReal } = require("../controllers/graficosController.js");
+// const { DadosKpiRedeTempoReal } = require("../controllers/graficosController.js");
 var database = require("../database/connection.js");
 
 function pegarDados() {

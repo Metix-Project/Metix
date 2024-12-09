@@ -35,10 +35,10 @@ DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTemp
 
             <div class="dashboardLinks">
                 <h2>Dashboards</h2>
-                <button onclick="window.location.href='telaMonitoramento.html'">MONITORAMENTO</button>
+                <button class="actual">MONITORAMENTO</button>
                 <button onclick="window.location.href='telaAlerta.html'">ALERTAS</button>
                 <button onclick="window.location.href='telaHistorico.html'">HISTÓRICO</button>
-                <button class="actual" onclick="window.location.href='telaPrevisao.html'">PREVISÕES</button>
+                <button onclick="window.location.href='telaPrevisao.html'">PREVISÕES</button>
                 <button onclick="window.location.href='telaManutencao.html'">MANUTENÇÃO</button>
                 <button onclick="limparSessao()">Sair</button>
             </div>
@@ -51,8 +51,8 @@ DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTemp
 
             <div class="div_select">
                 <select class="filter-container" id="selectServidor" onchange="modificarServidor()">
-                    <option value="08979866bdfd">Servidor 1</option>
-                    <option value="e8fb1cd57ab6">Servidor 2</option>
+                    <option value="f946307321c2">Servidor 1</option>
+                    <option value="14857f833746">Servidor 2</option>
                     <option value="d09466c9be45">Servidor 3</option>
                     <option value="c7d12465a943">Servidor 4</option>
                 </select>
@@ -366,31 +366,31 @@ DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTemp
         }
     }
 
-//CPU 
-setInterval(DadosKpiCPUTempoReal, 500);
-setInterval(DadosKpiCPUPicos, 500);
-setInterval(DadosKpiCPU, 500);
-setInterval(DadosKpiCPUAlertas, 500);
-//Memória
-setInterval(DadosKpiMemoriaTempoReal, 500);
-setInterval(DadosKpiMemoriaPicos, 500);
-setInterval(DadosKpiMemoria, 500);
-setInterval(DadosKpiMemoriaAlertas, 500);
-//Rede
-setInterval(GraficoRedeTempoReal, 500);
-setInterval(DadosKpiRedePicos, 500);
-setInterval(DadosKpiRede, 500);
-setInterval(DadosKpiRedeAlertas, 500);
-//Latencia
-setInterval(DadosKpiLatenciaTempoReal, 500);
-setInterval(DadosKpiLatenciaPicos, 500);
-setInterval(DadosKpiLatencia, 500);
-setInterval(DadosKpiLatenciaAlertas, 100);
-//Disco
-setInterval(DadosKpiDiscoTempoReal, 500);
-setInterval(DadosKpiDiscoPicos, 500);
-setInterval(DadosKpiDisco, 500);
-setInterval(DadosKpiDiscoAlertas, 500);
+    //CPU 
+    setInterval(DadosKpiCPUTempoReal, 500);
+    setInterval(DadosKpiCPUPicos, 500);
+    setInterval(DadosKpiCPU, 500);
+    setInterval(DadosKpiCPUAlertas, 500);
+    //Memória
+    setInterval(DadosKpiMemoriaTempoReal, 500);
+    setInterval(DadosKpiMemoriaPicos, 500);
+    setInterval(DadosKpiMemoria, 500);
+    setInterval(DadosKpiMemoriaAlertas, 500);
+    //Rede
+    setInterval(GraficoRedeTempoReal, 500);
+    setInterval(DadosKpiRedePicos, 500);
+    setInterval(DadosKpiRede, 500);
+    setInterval(DadosKpiRedeAlertas, 500);
+    //Latencia
+    setInterval(DadosKpiLatenciaTempoReal, 500);
+    setInterval(DadosKpiLatenciaPicos, 500);
+    setInterval(DadosKpiLatencia, 500);
+    setInterval(DadosKpiLatenciaAlertas, 100);
+    //Disco
+    setInterval(DadosKpiDiscoTempoReal, 500);
+    setInterval(DadosKpiDiscoPicos, 500);
+    setInterval(DadosKpiDisco, 500);
+    setInterval(DadosKpiDiscoAlertas, 500);
 
 
     /////////////////// AQUI ESTOU MONTANDO OS GRAFICOOSS //////////////////
@@ -729,26 +729,25 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
 
-                            if (resposta.length > 0) {
-                                const usoCPU = resposta[0].mediaUsoCPU;
-                                DadosCPU.innerHTML = `${usoCPU}%`;
+                        if (resultado.length > 0) {
+                            const usoCPU = resultado[0].mediaUsoCPU;
+                            DadosCPU.innerHTML = `${usoCPU}%`;
 
 
-                                if (usoCPU <= 70) {
-                                    quadradoMedia.style.backgroundColor = "green";
-                                } else if (usoCPU > 70 && usoCPU <= 85) {
-                                    quadradoMedia.style.backgroundColor = "yellow";
-                                } else {
-                                    quadradoMedia.style.backgroundColor = "red";
-                                }
+                            if (usoCPU <= 70) {
+                                quadradoMedia.style.backgroundColor = "green";
+                            } else if (usoCPU > 70 && usoCPU <= 85) {
+                                quadradoMedia.style.backgroundColor = "yellow";
                             } else {
-                                console.log("Nenhum dado encontrado");
+                                quadradoMedia.style.backgroundColor = "red";
                             }
-                        });
+                        } else {
+                            console.log("Nenhum dado encontrado");
+                        }
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
@@ -778,18 +777,18 @@ setInterval(DadosKpiDiscoAlertas, 500);
                     throw "Houve erro ao puxar";
                 }
             })
-            .then(function (resposta) {
-                console.log(resposta);
-                const usoCPU1 = resposta[0].picoCPU;
-                const usoCPU2 = resposta[1].picoCPU;
+            .then(function (resultado) {
+                console.log(resultado);
+                const usoCPU1 = resultado[0].picoCPU;
+                const usoCPU2 = resultado[1].picoCPU;
 
-                CPUpico1.innerHTML = `${resposta[0].picoCPU}%`;
-                datapico1.innerHTML = `${resposta[0].Data1}`;
-                horapico1.innerHTML = `${resposta[0].Hora1}`;
+                CPUpico1.innerHTML = `${resultado[0].picoCPU}%`;
+                datapico1.innerHTML = `${resultado[0].Data1}`;
+                horapico1.innerHTML = `${resultado[0].Hora1}`;
 
-                CPUpico2.innerHTML = `${resposta[1].picoCPU}%`;
-                datapico2.innerHTML = `${resposta[1].Data1}`;
-                horapico2.innerHTML = `${resposta[1].Hora1}`;
+                CPUpico2.innerHTML = `${resultado[1].picoCPU}%`;
+                datapico2.innerHTML = `${resultado[1].Data1}`;
+                horapico2.innerHTML = `${resultado[1].Hora1}`;
 
                 if (usoCPU1 <= 70) {
                     pico1CPU.style.backgroundColor = "green";
@@ -832,25 +831,24 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
-                            const quantidadeAlertas = resposta[0].CPUAlerta;
-                            CPUAlerta.innerHTML = `${resposta[0].CPUAlerta}`;
-                            if (quantidadeAlertas <= 5) {
-                                quadradoAlertaCPU.style.backgroundColor = "green";
-                            } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
-                                quadradoAlertaCPU.style.backgroundColor = "yellow";
-                            } else {
-                                quadradoAlertaCPU.style.backgroundColor = "red";
-                            }
-                        });
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
+                        const quantidadeAlertas = resultado[0].CPUAlerta;
+                        CPUAlerta.innerHTML = `${resultado[0].CPUAlerta}`;
+                        if (quantidadeAlertas <= 5) {
+                            quadradoAlertaCPU.style.backgroundColor = "green";
+                        } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
+                            quadradoAlertaCPU.style.backgroundColor = "yellow";
+                        } else {
+                            quadradoAlertaCPU.style.backgroundColor = "red";
+                        }
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -870,26 +868,25 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
 
-                            const labelsAtualizados = resposta.map(dado => dado.hora);
-                            const cpuDadosAtualizados = resposta.map(dado => dado.CPUTempoReal);
+                        const labelsAtualizados = resultado.map(dado => dado.hora);
+                        const cpuDadosAtualizados = resultado.map(dado => dado.CPUTempoReal);
 
-                            myChart5.data.labels = labelsAtualizados.reverse();
-                            myChart5.data.datasets[0].data = cpuDadosAtualizados.reverse();
+                        myChart5.data.labels = labelsAtualizados.reverse();
+                        myChart5.data.datasets[0].data = cpuDadosAtualizados.reverse();
 
-                            myChart5.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+                        myChart5.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
 
-                            myChart5.update();
-                        });
+                        myChart5.update();
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -908,29 +905,26 @@ setInterval(DadosKpiDiscoAlertas, 500);
         })
             .then(function (resposta) {
                 console.log("Estou na função do DadosKPIMemoria");
-                console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
-                            const usoMemoria = resposta[0].mediaUsoMemoria;
-                            DadosMemoria.innerHTML = `${resposta[0].mediaUsoMemoria}%`;
+                    resposta.json().then((resultado) => {
+                        const usoMemoria = resultado[0].mediaUsoMemoria;
+                        DadosMemoria.innerHTML = `${resultado[0].mediaUsoMemoria}%`;
 
-                            if (usoMemoria <= 70) {
-                                quadradoMediaMemoria.style.backgroundColor = "green";
-                            } else if (usoMemoria > 70 && usoMemoria <= 85) {
-                                quadradoMediaMemoria.style.backgroundColor = "yellow";
-                            } else {
-                                quadradoMediaMemoria.style.backgroundColor = "red";
-                            }
-                        });
+                        if (usoMemoria <= 70) {
+                            quadradoMediaMemoria.style.backgroundColor = "green";
+                        } else if (usoMemoria > 70 && usoMemoria <= 85) {
+                            quadradoMediaMemoria.style.backgroundColor = "yellow";
+                        } else {
+                            quadradoMediaMemoria.style.backgroundColor = "red";
+                        }
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -955,17 +949,17 @@ setInterval(DadosKpiDiscoAlertas, 500);
                     throw "Houve erro ao puxar";
                 }
             })
-            .then(function (resposta) {
-                console.log(resposta);
-                const usoMemoria1 = resposta[0].picoMemoria;
-                const usoMemoria2 = resposta[1].picoMemoria;
-                Memoriapico1.innerHTML = `${resposta[0].picoMemoria}%`;
-                Memoriadatapico1.innerHTML = `${resposta[0].Data1}`;
-                Memoriahorapico1.innerHTML = `${resposta[0].Hora1}`;
+            .then(function (resultado) {
+                console.log(resultado);
+                const usoMemoria1 = resultado[0].picoMemoria;
+                const usoMemoria2 = resultado[1].picoMemoria;
+                Memoriapico1.innerHTML = `${resultado[0].picoMemoria}%`;
+                Memoriadatapico1.innerHTML = `${resultado[0].Data1}`;
+                Memoriahorapico1.innerHTML = `${resultado[0].Hora1}`;
 
-                Memoriapico2.innerHTML = `${resposta[1].picoMemoria}%`;
-                Memoriadatapico2.innerHTML = `${resposta[1].Data1}`;
-                Memoriahorapico2.innerHTML = `${resposta[1].Hora1}`;
+                Memoriapico2.innerHTML = `${resultado[1].picoMemoria}%`;
+                Memoriadatapico2.innerHTML = `${resultado[1].Data1}`;
+                Memoriahorapico2.innerHTML = `${resultado[1].Hora1}`;
 
 
                 if (usoMemoria1 <= 70) {
@@ -1008,26 +1002,25 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
-                            const quantidadeAlertas = resposta[0].MemoriaAlerta1;
-                            MemoriaAlerta.innerHTML = `${resposta[0].MemoriaAlerta1}`;
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
+                        const quantidadeAlertas = resultado[0].MemoriaAlerta1;
+                        MemoriaAlerta.innerHTML = `${resultado[0].MemoriaAlerta1}`;
 
-                            if (quantidadeAlertas <= 5) {
-                                quadradoAlertaMemoria.style.backgroundColor = "green";
-                            } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
-                                quadradoAlertaMemoria.style.backgroundColor = "yellow";
-                            } else {
-                                quadradoAlertaMemoria.style.backgroundColor = "red";
-                            }
-                        });
+                        if (quantidadeAlertas <= 5) {
+                            quadradoAlertaMemoria.style.backgroundColor = "green";
+                        } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
+                            quadradoAlertaMemoria.style.backgroundColor = "yellow";
+                        } else {
+                            quadradoAlertaMemoria.style.backgroundColor = "red";
+                        }
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -1047,26 +1040,25 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
 
-                            const labelsAtualizados = resposta.map(dado => dado.hora);
-                            const MemoriaDadosAtualizados = resposta.map(dado => dado.MemoriaTempoReal);
+                        const labelsAtualizados = resultado.map(dado => dado.hora);
+                        const MemoriaDadosAtualizados = resultado.map(dado => dado.MemoriaTempoReal);
 
-                            myChart3.data.labels = labelsAtualizados.reverse();
-                            myChart3.data.datasets[0].data = MemoriaDadosAtualizados.reverse();
+                        myChart3.data.labels = labelsAtualizados.reverse();
+                        myChart3.data.datasets[0].data = MemoriaDadosAtualizados.reverse();
 
-                            myChart3.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+                        myChart3.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
 
-                            myChart3.update();
-                        });
+                        myChart3.update();
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -1088,30 +1080,29 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
-                            const usoRedeEnv2 = resposta[0].mediaUsoRedeEnv;
-                            const usoRedeRec2 = resposta[0].mediaUsoRedeRec;
-                            DadosRedeEnv.innerHTML = `${resposta[0].mediaUsoRedeEnv} Mbps`;
-                            DadosRedeRec.innerHTML = `${resposta[0].mediaUsoRedeRec} Mbps`;
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
+                        const usoRedeEnv2 = resultado[0].mediaUsoRedeEnv;
+                        const usoRedeRec2 = resultado[0].mediaUsoRedeRec;
+                        DadosRedeEnv.innerHTML = `${resultado[0].mediaUsoRedeEnv} Mbps`;
+                        DadosRedeRec.innerHTML = `${resultado[0].mediaUsoRedeRec} Mbps`;
 
-                            if (usoRedeEnv2 <= 600 || usoRedeRec2 <= 600) {
-                                quadradoMediaRede.style.backgroundColor = "green";
-                            }
-                            else if (usoRedeEnv2 > 600 && usoRedeEnv2 <= 1000 || usoRedeRec2 > 600 && usoRedeRec2 <=
-                                1000) {
-                                quadradoMediaRede.style.backgroundColor = "yellow";
-                            } else {
-                                quadradoMediaRede.style.backgroundColor = "red";
-                            }
-                        });
+                        if (usoRedeEnv2 <= 600 || usoRedeRec2 <= 600) {
+                            quadradoMediaRede.style.backgroundColor = "green";
+                        }
+                        else if (usoRedeEnv2 > 600 && usoRedeEnv2 <= 1000 || usoRedeRec2 > 600 && usoRedeRec2 <=
+                            1000) {
+                            quadradoMediaRede.style.backgroundColor = "yellow";
+                        } else {
+                            quadradoMediaRede.style.backgroundColor = "red";
+                        }
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (resultado) {
+                console.log(`#ERRO: ${resultado}`);
             });
     }
 
@@ -1136,20 +1127,20 @@ setInterval(DadosKpiDiscoAlertas, 500);
                     throw "Houve erro ao puxar";
                 }
             })
-            .then(function (resposta) {
-                console.log(resposta);
+            .then(function (resultado) {
+                console.log(resultado);
 
-                if (resposta.length >= 2) {
-                    const picoRedeEnv2 = resposta[0].MbpsEnviados;
-                    const picoRedeRec2 = resposta[1].MbpsEnviados;
+                if (resultado.length >= 2) {
+                    const picoRedeEnv2 = resultado[0].MbpsEnviados;
+                    const picoRedeRec2 = resultado[1].MbpsEnviados;
 
-                    Redepico1.innerHTML = `${resposta[0].MbpsEnviados} Mb`;
-                    Rededatapico1.innerHTML = `${resposta[0].Data1}`;
-                    Redehorapico1.innerHTML = `${resposta[0].Hora1}`;
+                    Redepico1.innerHTML = `${resultado[0].MbpsEnviados} Mb`;
+                    Rededatapico1.innerHTML = `${resultado[0].Data1}`;
+                    Redehorapico1.innerHTML = `${resultado[0].Hora1}`;
 
-                    Redepico2.innerHTML = `${resposta[1].MbpsEnviados} Mb`;
-                    Rededatapico2.innerHTML = `${resposta[1].Data1}`;
-                    Redehorapico2.innerHTML = `${resposta[1].Hora1}`;
+                    Redepico2.innerHTML = `${resultado[1].MbpsEnviados} Mb`;
+                    Rededatapico2.innerHTML = `${resultado[1].Data1}`;
+                    Redehorapico2.innerHTML = `${resultado[1].Hora1}`;
 
                     if (picoRedeEnv2 <= 600) {
                         quadradoPico1Rede.style.backgroundColor = "green";
@@ -1191,31 +1182,25 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
-                            const quantidadeAlertas = resposta[0].RedeAlerta1;
-                            RedeAlerta.innerHTML = `${resposta[0].RedeAlerta1}<br> alertas`;
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
+                        const quantidadeAlertas = resultado[0].RedeAlerta1;
+                        RedeAlerta.innerHTML = `${resultado[0].RedeAlerta1}<br> alertas`;
 
-                            if (quantidadeAlertas <= 5) {
-                                quadradoAlertaRede.style.backgroundColor = "green";
-                            } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
-                                quadradoAlertaRede.style.backgroundColor = "yellow";
-                            } else {
-                                quadradoAlertaRede.style.backgroundColor = "red";
-                            }
-
-
-
-
-
-                        });
+                        if (quantidadeAlertas <= 5) {
+                            quadradoAlertaRede.style.backgroundColor = "green";
+                        } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
+                            quadradoAlertaRede.style.backgroundColor = "yellow";
+                        } else {
+                            quadradoAlertaRede.style.backgroundColor = "red";
+                        }
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -1232,22 +1217,21 @@ setInterval(DadosKpiDiscoAlertas, 500);
         })
             .then(function (resposta) {
                 console.log("Estou na função do GraficoRedeTempoReal");
-                console.log("resposta:", resposta);
+                console.warn("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (dados) {
-                            console.log(dados);
-                            const labelsAtualizados = dados.map(dado => dado.Hora1);
-                            const enviadosDadosAtualizados = dados.map(dado => dado.MbpsEnviados);
-                            const recebidosDadosAtualizados = dados.map(dado => dado.MbpsRecebidos);
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
+                        const labelsAtualizados = resultado.map(dado => dado.Hora1);
+                        const enviadosDadosAtualizados = resultado.map(dado => dado.MbpsEnviados);
+                        const recebidosDadosAtualizados = resultado.map(dado => dado.MbpsRecebidos);
 
-                            myChart1.data.labels = labelsAtualizados.reverse();
-                            myChart1.data.datasets[0].data = enviadosDadosAtualizados.reverse();
-                            myChart1.data.datasets[1].data = recebidosDadosAtualizados.reverse();
-                            myChart1.data.datasets[2].data = Array(labelsAtualizados.length).fill(1000);
-                            myChart1.update();
-                        });
+                        myChart1.data.labels = labelsAtualizados.reverse();
+                        myChart1.data.datasets[0].data = enviadosDadosAtualizados.reverse();
+                        myChart1.data.datasets[1].data = recebidosDadosAtualizados.reverse();
+                        myChart1.data.datasets[2].data = Array(labelsAtualizados.length).fill(1000);
+                        myChart1.update();
+                    });
                 }
             })
             .catch(function (erro) {
@@ -1273,28 +1257,27 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
-                            const mediaLatencia = resposta[0].mediaUsoLatencia;
-                            DadosLatencia.innerHTML = `${resposta[0].mediaUsoLatencia} Ms`;
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
+                        const mediaLatencia = resultado[0].mediaUsoLatencia;
+                        DadosLatencia.innerHTML = `${resultado[0].mediaUsoLatencia} Ms`;
 
 
 
-                            if (mediaLatencia <= 50) {
-                                quadradoMediaLatencia.style.backgroundColor = "green";
-                            } else if (mediaLatencia > 50 && mediaLatencia <= 100) {
-                                quadradoMediaLatencia.style.backgroundColor = "yellow";
-                            } else {
-                                quadradoMediaLatencia.style.backgroundColor = "red";
-                            }
-                        });
+                        if (mediaLatencia <= 50) {
+                            quadradoMediaLatencia.style.backgroundColor = "green";
+                        } else if (mediaLatencia > 50 && mediaLatencia <= 100) {
+                            quadradoMediaLatencia.style.backgroundColor = "yellow";
+                        } else {
+                            quadradoMediaLatencia.style.backgroundColor = "red";
+                        }
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -1319,18 +1302,18 @@ setInterval(DadosKpiDiscoAlertas, 500);
                     throw "Houve erro ao puxar";
                 }
             })
-            .then(function (resposta) {
-                console.log(resposta);
-                const pico1latencia = resposta[0].picoLatencia;
-                const pico2latencia = resposta[1].picoLatencia;
+            .then(function (resultado) {
+                console.log(resultado);
+                const pico1latencia = resultado[0].picoLatencia;
+                const pico2latencia = resultado[1].picoLatencia;
 
-                Latenciapico1.innerHTML = `${resposta[0].picoLatencia} Ms`;
-                Latenciadatapico1.innerHTML = `${resposta[0].Data1}`;
-                Latenciahorapico1.innerHTML = `${resposta[0].Hora1}`;
+                Latenciapico1.innerHTML = `${resultado[0].picoLatencia} Ms`;
+                Latenciadatapico1.innerHTML = `${resultado[0].Data1}`;
+                Latenciahorapico1.innerHTML = `${resultado[0].Hora1}`;
 
-                Latenciapico2.innerHTML = `${resposta[1].picoLatencia} Ms`;
-                Latenciadatapico2.innerHTML = `${resposta[1].Data1}`;
-                Latenciahorapico2.innerHTML = `${resposta[1].Hora1}`;
+                Latenciapico2.innerHTML = `${resultado[1].picoLatencia} Ms`;
+                Latenciadatapico2.innerHTML = `${resultado[1].Data1}`;
+                Latenciahorapico2.innerHTML = `${resultado[1].Hora1}`;
 
                 if (pico1latencia <= 50) {
                     quadrado1PicoLatencia.style.backgroundColor = "green";
@@ -1373,27 +1356,26 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
-                            const quantidadeAlertas = resposta[0].LatenciaAlerta1;
-                            LatenciaAlerta.innerHTML = `${resposta[0].LatenciaAlerta1}<br> alertas`;
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
+                        const quantidadeAlertas = resultado[0].LatenciaAlerta1;
+                        LatenciaAlerta.innerHTML = `${resultado[0].LatenciaAlerta1}<br> alertas`;
 
 
-                            if (quantidadeAlertas <= 5) {
-                                AlertaLatencia.style.backgroundColor = "green";
-                            } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
-                                AlertaLatencia.style.backgroundColor = "yellow";
-                            } else {
-                                AlertaLatencia.style.backgroundColor = "red";
-                            }
-                        });
+                        if (quantidadeAlertas <= 5) {
+                            AlertaLatencia.style.backgroundColor = "green";
+                        } else if (quantidadeAlertas > 5 && quantidadeAlertas <= 10) {
+                            AlertaLatencia.style.backgroundColor = "yellow";
+                        } else {
+                            AlertaLatencia.style.backgroundColor = "red";
+                        }
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -1413,26 +1395,25 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
 
-                            const labelsAtualizados = resposta.map(dado => dado.hora);
-                            const LatenciaDadosAtualizados = resposta.map(dado => dado.LatenciaTempoReal);
+                        const labelsAtualizados = resultado.map(dado => dado.hora);
+                        const LatenciaDadosAtualizados = resultado.map(dado => dado.LatenciaTempoReal);
 
-                            myChart2.data.labels = labelsAtualizados.reverse();
-                            myChart2.data.datasets[0].data = LatenciaDadosAtualizados.reverse();
+                        myChart2.data.labels = labelsAtualizados.reverse();
+                        myChart2.data.datasets[0].data = LatenciaDadosAtualizados.reverse();
 
-                            myChart2.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
+                        myChart2.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
 
-                            myChart2.update();
-                        });
+                        myChart2.update();
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -1452,28 +1433,27 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
-                            const mediaDisco = resposta[0].mediaUsoDisco;
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
+                        const mediaDisco = resultado[0].mediaUsoDisco;
 
-                            DadosDisco.innerHTML = `${resposta[0].mediaUsoDisco}%`;
+                        DadosDisco.innerHTML = `${resultado[0].mediaUsoDisco}%`;
 
-                                if (mediaDisco <= 70) {
-                                    quadradoMediaDisco.style.backgroundColor = "green";
-                                } else if (mediaDisco > 70 && mediaDisco <= 90) {
-                                    quadradoMediaDisco.style.backgroundColor = "yellow";
-                                } else {
-                                    quadradoMediaDisco.style.backgroundColor = "red";
-                                }
+                        if (mediaDisco <= 70) {
+                            quadradoMediaDisco.style.backgroundColor = "green";
+                        } else if (mediaDisco > 70 && mediaDisco <= 90) {
+                            quadradoMediaDisco.style.backgroundColor = "yellow";
+                        } else {
+                            quadradoMediaDisco.style.backgroundColor = "red";
+                        }
 
-                        });
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -1498,39 +1478,39 @@ setInterval(DadosKpiDiscoAlertas, 500);
                     throw "Houve erro ao puxar";
                 }
             })
-            .then(function (resposta) {
-                console.log(resposta);
+            .then(function (resultado) {
+                console.log(resultado);
 
-                if (resposta.length > 0) {
-                    const picoDisco1 = resposta[0].picoDisco;
-                    const picoDisco2 = resposta[1].picoDisco;
-                    Discopico1.innerHTML = `${resposta[0].picoDisco}%`;
-                    Discodatapico1.innerHTML = `${resposta[0].Data1}`;
-                    Discohorapico1.innerHTML = `${resposta[0].Hora1}`;
+                if (resultado.length > 0) {
+                    const picoDisco1 = resultado[0].picoDisco;
+                    const picoDisco2 = resultado[1].picoDisco;
+                    Discopico1.innerHTML = `${resultado[0].picoDisco}%`;
+                    Discodatapico1.innerHTML = `${resultado[0].Data1}`;
+                    Discohorapico1.innerHTML = `${resultado[0].Hora1}`;
 
-                    Discopico2.innerHTML = `${resposta[1].picoDisco}%`;
-                    Discodatapico2.innerHTML = `${resposta[1].Data1}`;
-                    Discohorapico2.innerHTML = `${resposta[1].Hora1}`;
+                    Discopico2.innerHTML = `${resultado[1].picoDisco}%`;
+                    Discodatapico2.innerHTML = `${resultado[1].Data1}`;
+                    Discohorapico2.innerHTML = `${resultado[1].Hora1}`;
 
-                if (picoDisco1 <= 70) {
-                    pico1Disco.style.backgroundColor = "green";
+                    if (picoDisco1 <= 70) {
+                        pico1Disco.style.backgroundColor = "green";
+                    }
+                    else if (picoDisco1 > 70 && picoDisco1 <= 90) {
+                        pico1Disco.style.backgroundColor = "yellow";
+                    }
+                    else {
+                        pico1Disco.style.backgroundColor = "red";
+                    }
+                    if (picoDisco2 <= 70) {
+                        pico2Disco.style.backgroundColor = "green";
+                    }
+                    else if (picoDisco2 > 70 && picoDisco2 <= 90) {
+                        pico2Disco.style.backgroundColor = "yellow";
+                    }
+                    else {
+                        pico2Disco.style.backgroundColor = "red";
+                    }
                 }
-                else if (picoDisco1 > 70 && picoDisco1 <= 90) {
-                    pico1Disco.style.backgroundColor = "yellow";
-                }
-                else {
-                    pico1Disco.style.backgroundColor = "red";
-                }
-                if (picoDisco2 <= 70) {
-                    pico2Disco.style.backgroundColor = "green";
-                }
-                else if (picoDisco2 > 70 && picoDisco2 <= 90) {
-                    pico2Disco.style.backgroundColor = "yellow";
-                }
-                else {
-                    pico2Disco.style.backgroundColor = "red";
-                }
-                } 
 
                 else {
                     console.log("Nenhum dado encontrado");
@@ -1556,14 +1536,13 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
+                    resposta.json().then((resultado) => {
+                        console.log(resultado);
 
-                            if (resposta.length > 0) {
-                                const quantidadeAlertas = resposta[0].DiscoAlerta1;
+                        if (resultado.length > 0) {
+                            const quantidadeAlertas = resultado[0].DiscoAlerta1;
 
-                                DiscoAlerta.innerHTML = `${resposta[0].DiscoAlerta1}`;
+                            DiscoAlerta.innerHTML = `${resultado[0].DiscoAlerta1}`;
 
 
                             if (quantidadeAlertas <= 5) {
@@ -1575,16 +1554,16 @@ setInterval(DadosKpiDiscoAlertas, 500);
                             }
 
 
-                            } else {
-                                console.log("Nenhum dado encontrado");
-                            }
-                        });
+                        } else {
+                            console.log("Nenhum dado encontrado");
+                        }
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 
@@ -1604,23 +1583,20 @@ setInterval(DadosKpiDiscoAlertas, 500);
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
-                    resposta.json()
-                        .then(function (resposta) {
-                            console.log(resposta);
+                    resposta.json().then((resultado) => {
+                        const espacoUtilizado = resultado[0].espacoUtilizado;
+                        const espacoDisponivel = 100 - espacoUtilizado;
 
-                            const espacoUtilizado = resposta[0].espacoUtilizado;
-                            const espacoDisponivel = 100 - espacoUtilizado;
+                        myChart4.data.datasets[0].data = [espacoUtilizado, espacoDisponivel];
 
-                            myChart4.data.datasets[0].data = [espacoUtilizado, espacoDisponivel];
-
-                            myChart4.update();
-                        });
+                        myChart4.update();
+                    });
                 } else {
                     throw "Houve erro ao puxar";
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
             });
     }
 

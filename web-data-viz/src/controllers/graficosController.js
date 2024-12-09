@@ -230,7 +230,7 @@ function GraficoRedeTempoReal(req, res) {
   graficosModel.GraficoRedeTempoReal(mcAdress)
     .then(function (resultado) {
       if (resultado.length > 0) {
-      //console.log("Dados encontrados: ", resultado);
+        console.warn("Dados encontrados: ", resultado);
         res.status(200).json(resultado);  // Retorna os dados para o cliente
       } else {
         res.status(204).send("Nenhum dado encontrado");  // Caso não haja dados
@@ -381,7 +381,8 @@ function DadosKpiDiscoTempoReal(req, res) {
   graficosModel.DadosKpiDiscoTempoReal(mcAdress)
     .then(function (resposta) {
       if (resposta.length > 0) {
-      //console.log("Estou no Controller");
+        // console.log("Estou no Controller:");
+        
         res.status(200).json(resposta);
       } else {
         res.status(204).send("nenhum resultado encontrado");
