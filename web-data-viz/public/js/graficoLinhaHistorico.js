@@ -136,6 +136,45 @@ function gerarGraficoLinhaDias(sundayValue, saturdayValue, macAddress, component
                     historicoEmDiasChart.options.scales.y.title.text = "Tempo de Resposta (Ms)";
                     historicoEmDiasChart.data.datasets.splice(2, 1);
                 }
+                else {
+                    const mbpsEnviados = [];
+
+                    jsonDataValues.forEach(item => {
+                        const date = new Date(item.dia);
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const year = date.getFullYear();
+                        const diaSemanaIndex = date.getDay();
+                        const diaFormatado = `${diaSemanas[diaSemanaIndex]} - ${day}/${month}/${year}`;
+
+                        arrayValues.push(item.mbpsRecebidos);
+                        mbpsEnviados.push(item.mbpsEnviados);
+                        labelValues.push(diaFormatado);
+                        maxValues.push(100);
+                    });
+
+                    historicoEmDiasChart.data.datasets[0].data = arrayValues;
+                    historicoEmDiasChart.data.datasets[1].data = maxValues;
+                    historicoEmDiasChart.data.labels = labelValues;
+                    historicoEmDiasChart.data.datasets[0].label = "Pacotes Recebidos";
+                    historicoEmDiasChart.data.datasets[0].borderColor = 'rgba(5, 208, 222, 0.8)';
+                    historicoEmDiasChart.data.datasets[0].backgroundColor = 'rgba(5, 208, 222, 0.2)';
+                    historicoEmDiasChart.data.datasets[0].pointBackgroundColor = 'rgb(5, 208, 222)';
+
+                    historicoEmDiasChart.data.datasets[2] = {
+                        data: mbpsEnviados,
+                        label: "Pacotes Enviados",
+                        borderColor: 'rgba(125, 148, 60, 0.8)',
+                        backgroundColor: 'rgba(125, 148, 60, 0.2)',
+                        pointBackgroundColor: 'rgb(125, 148, 60)',
+                        fill: true,
+                        lineTension: 0.3,
+                    }
+
+                    historicoEmDiasChart.options.plugins.title.text = `Rede (${labelValues[0].split(' - ')[1]} - ${labelValues[labelValues.length - 1].split(' - ')[1]})`;
+                    historicoEmDiasChart.options.scales.y.max = 140;
+                    historicoEmDiasChart.options.scales.y.title.text = "Velocidade (mbps)";
+                }
 
                 historicoEmDiasChart.update();
             })

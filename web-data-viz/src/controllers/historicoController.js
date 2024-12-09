@@ -43,10 +43,53 @@ function pegarUltimos105Dias(req, res){
     });
 }
 
+function pegarTotalAlertas(req, res){
+    var macAddress = req.body.macAddressServer;
+    var componente = req.body.componenteServer;
+    var dateValue = req.body.dateValueServer;
+
+    historicoModel.pegarTotalAlertas(macAddress, componente, dateValue)
+    .then(function (resultado) {
+        res.status(200).json(resultado);
+    })
+    .catch(function (erro) {
+        res.status(500).json(erro);
+    })
+}
+
+function obterDiaComMaisAlertas(req, res){
+    var macAddress = req.body.macAddressServer;
+    var componente = req.body.componenteServer;
+
+    historicoModel.obterDiaComMaisAlertas(macAddress, componente)
+    .then(function (resultado) {
+        res.status(200).json(resultado);
+    })
+    .catch(function (erro) {
+        res.status(500).json(erro);
+    })
+}
+
+function capturarUltimoAlerta(req, res){
+    var macAddress = req.body.macAddressServer;
+    var componente = req.body.componenteServer;
+
+    historicoModel.capturarUltimoAlerta(macAddress, componente)
+    .then(function (resultado) {
+        res.status(200).json(resultado);
+    })
+    .catch(function (erro) {
+        res.status(500).json(erro);
+    })
+}
+
 // exporta para outro arquivo:
 module.exports = {
     pegarMedias,
     pegarMediasSemanais,
-    pegarUltimos105Dias
+    pegarUltimos105Dias,
+    pegarTotalAlertas,
+    obterDiaComMaisAlertas,
+    capturarUltimoAlerta
 };
  
