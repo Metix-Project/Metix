@@ -62,8 +62,8 @@ create table DadosServidorMedia(
 	latencia DECIMAL(7,2) NOT NULL
 );
 
-create table Alerta (
-	idAlerta int auto_increment,
+CREATE TABLE Alerta (
+	idAlerta INT AUTO_INCREMENT,
     fkIdServidor VARCHAR(17),
     PRIMARY KEY(idAlerta, fkIdServidor),
     componenteNome VARCHAR(15) NOT NULL,
@@ -74,6 +74,17 @@ create table Alerta (
     CONSTRAINT chk_comp CHECK (componenteNome IN ('CPU', 'RAM', 'DISCO', 'LATENCIA', 'REDE')),
     CONSTRAINT chk_mtv CHECK (motivo IN ('ACIMA DA MEDIA', 'ABAIXO DA MEDIA')),
     CONSTRAINT chk_estd CHECK (estadoAtual IN ('ALERTA', 'RISCO'))
+);
+
+insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa, codigoSeguranca, imgLogo) values (
+	1, 
+	"Banco Central do Brasil", 
+	"Banco Central do Brasil", 
+	"bc@br.br", 
+	"12345678901234",  
+	"1234567890123",
+    "B3C6B9",
+	"https://avatars.githubusercontent.com/u/16822015?s=200&v=4"
 );
 
 CREATE VIEW ResumoSemanalMedias AS
@@ -94,18 +105,6 @@ FROM DadosServidorMedia
 GROUP BY semana, fkMaquina
 ORDER BY MIN(dia);
 
-
-insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa, codigoSeguranca, imgLogo) values (
-	1, 
-	"Banco Central do Brasil", 
-	"Banco Central do Brasil", 
-	"bc@br.br", 
-	"12345678901234",  
-	"1234567890123",
-    "B3C6B9",
-	"https://avatars.githubusercontent.com/u/16822015?s=200&v=4"
-);
-
 insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('f946307321c2', 1, 1);
 insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('14857f833746', 2, 1);
 insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('d09466c9be45', 3, 1);
@@ -115,10 +114,6 @@ INSERT INTO Usuario(nome, email, senha, cpf, telefone, cargo, fkEmpresa) VALUES
 ("Jamal", "jamal@gmail.com", "1234567", "55544433321", "11999998888", "Gerente", 1),
 ("José Carlos", "jose_carlos@gmail.com", "1234567", "99988877764", "11949498585", "Técnico", 1);
 
+SELECT * FROM Usuario;
 
-insert into Alerta (fkIdServidor, componenteNome, DataHora, motivo, estadoAtual) values
-('f946307321c2', 'CPU', '2024-12-02 10:15:00', 'ACIMA DA MEDIA', 'ALERTA'), 
-('14857f833746', 'RAM', '2024-12-02 10:30:00', 'ABAIXO DA MEDIA', 'RISCO'), 
-('d09466c9be45', 'DISCO', '2024-12-02 11:00:00', 'ACIMA DA MEDIA', 'ALERTA'), 
-('c7d12465a943', 'LATENCIA', '2024-12-02 11:45:00', 'ABAIXO DA MEDIA', 'RISCO'), 
-('f946307321c2', 'REDE', '2024-12-02 12:00:00', 'ACIMA DA MEDIA', 'ALERTA');
+SELECT * FROM DadosServidorMedia;
