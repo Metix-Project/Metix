@@ -464,15 +464,15 @@
                                 arrayWeek.push(`${domingo} - ${sabado}`);
                             });
 
-                            document.getElementById("alertTimeValue").style.borderColor = 'rgb(102, 35, 168)';
-                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(102, 35, 168)';
-                            document.getElementById("geminiText").style.borderColor = 'rgb(102, 35, 168)';
+                            document.getElementById("alertTimeValue").style.borderColor = 'rgb(180, 138, 222)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(180, 138, 222)';
+                            document.getElementById("geminiText").style.borderColor = 'rgb(180, 138, 222)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
                             historicoComponenteEscolhidoChart.data.datasets[0].label = "Latência";
-                            historicoComponenteEscolhidoChart.data.datasets[0].borderColor = 'rgba(102, 35, 168, 0.8)';
-                            historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = 'rgba(102, 35, 168, 0.2)';
-                            historicoComponenteEscolhidoChart.data.datasets[0].pointBackgroundColor = 'rgb(102, 35, 168)';
+                            historicoComponenteEscolhidoChart.data.datasets[0].borderColor = 'rgba(180, 138, 222, 0.8)';
+                            historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = 'rgba(180, 138, 222, 0.2)';
+                            historicoComponenteEscolhidoChart.data.datasets[0].pointBackgroundColor = 'rgb(180, 138, 222)';
                             historicoComponenteEscolhidoChart.data.datasets[1].data = maxData;
                             historicoComponenteEscolhidoChart.data.labels = arrayWeek;
                             historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | Latência`;

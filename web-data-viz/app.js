@@ -7,7 +7,7 @@ var caminho_env = ambiente_processo === "producao" ? ".env" : ".env.dev";
 //   traz os dados do arquivo .env ou .env.dev:
 require("dotenv").config({ path: caminho_env });
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const chatIA = new GoogleGenerativeAI("AIzaSyBBVHY5V-ep6SqycYO6wBUfNk2ZvO3ovmk");
+const chatIA = new GoogleGenerativeAI("AIzaSyCWAwKNsOCgXjB7IFZPgyqz_KLQhj-agwk");
 
 //   define as bibliotecas/frameworks:
 var express = require("express");
