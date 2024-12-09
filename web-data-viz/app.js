@@ -48,9 +48,9 @@ app.listen(process.env.APP_PORT, function () {
 const textoIA = [];
 
 const texto1 = `
-  Analise os componentes acima, já indicando o processamento, uso da memória RAM e uso do armazenamento em cada dia do JSON, e indique qual é o problema que está ocorrendo e sugira o que poderia ser feito para melhorias apenas nos componentes com problemas. Vale ressaltar que:
+  Analise os componentes acima, já indicando o processamento, uso da memória RAM e uso do armazenamento em cada dia do JSON, e indique qual é o problema que está ocorrendo. Vale ressaltar que:
   - O limite do uso do processador (CPU) é de 85%; \n
-  - O limite uso da Memória RAM é de 855%; \n
+  - O limite uso da Memória RAM é de 85%; \n
   - O limite do espaço em uso do Armazenamento (Disco) é de 85%.\n\n
 `;
 
@@ -59,9 +59,14 @@ const texto2 = `Com a análise feita, explique como a sua análise foi feita par
 const texto3 = `Após isso, resuma tudo que você disse anteriormente em, no máximo, 5 palavras.\n\n`;
 
 const texto4 = `Observações: \n
-- Os títulos devem ser: "Explicação da Análise Feita", "Processador", "Memória RAM", "Armazenamento", "Sugestão(ões)" e "Resumo"; \n
-- Nas sugestões, explique o motivo de cada uma da sugestão indicada; \n
-- Em "Resumo", o texto deve conter, no máximo, 5 palavras e indicar o componente com problemas. Não ultrapasse este limite!; \n`;
+- Os títulos devem ser: "1- Explicação Detalhada da Análise Feita", "2- Processador", "3- Memória RAM", "4- Armazenamento", "5- Sugestões" e "6- Resumo"; \n
+- Para separar cada título, escreva "CUT_HERE" antes do título; \n 
+- Nas sugestões, explique o motivo de cada uma da sugestão indicada. Todas as sugestões devem ser oferecidas aqui; \n
+- Em "Resumo", o texto deve conter, no máximo, 5 palavras e indicar o componente com problemas. Não ultrapasse este limite!; \n
+- Não mencione "JSON", "CSV" ou "Métix" no texto. \n\n`;
+
+const texto5 = `Para mais informações, veja o contexto do projeto abaixo:\n
+A Métix está proponto um sistema no qual irá monitorar os componentes dos servidores do Banco Central do Brasil responsáveis pelas transações de Pix em todo o território brasileiro. Para isso, foi desenvolvido dashboards para a analise desses dados a fim de prevenir e evitar os impactos causados pela sobrecarga desses componentes dos servidores diariamente, visto que há uma forte demanda de uso do Pix no Brasil.\n`;
 
 app.post("/gerarRelatorio", async (req, res) => {
   const dia = req.body.diaServer;
@@ -94,11 +99,10 @@ app.post("/gerarRelatorio", async (req, res) => {
   textoIA.push(texto2);
   textoIA.push(texto3);
   textoIA.push(texto4);
-  // textoIA.push(texto5);
+  textoIA.push(texto5);
 
   try {
     let resultado = await gerarSugestao(textoIA);
-    
     console.log(resultado);
     res.json({ resultado });
   }
@@ -119,3 +123,21 @@ async function gerarSugestao(mensagem) {
     throw error;
   }
 }
+
+// Importar o serviço do Jira
+const { createIssue } = require('./public/js/jiraService.js');
+
+// Adicionar a rota para lidar com a criação de tickets
+app.post('/api/maintenance/create-ticket', async (req, res) => {
+  const { summary, description } = req.body;
+
+  try {
+    // Chamar o serviço para criar o ticket no Jira
+    const ticketKey = await createIssue('METIX', summary, description);
+    res.status(200).json({ ticketKey });
+  } catch (error) {
+    console.error('Erro ao criar ticket no Jira:', error);
+    res.status(500).json({ error: 'Erro ao criar ticket no Jira' });
+  }
+});
+

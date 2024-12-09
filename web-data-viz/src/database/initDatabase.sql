@@ -64,17 +64,36 @@ create table DadosServidorMedia(
 
 create table Alerta (
 	idAlerta int auto_increment,
-    fkIdServidor VARCHAR(17) NOT NULL,
+    fkIdServidor VARCHAR(17),
     PRIMARY KEY(idAlerta, fkIdServidor),
     componenteNome VARCHAR(15) NOT NULL,
     DataHora DATETIME DEFAULT CURRENT_TIMESTAMP,
     motivo CHAR(20) NOT NULL,
     estadoAtual VARCHAR(7) NOT NULL,
     CONSTRAINT fkServComponente FOREIGN KEY(fkIdServidor) REFERENCES Servidor(macAddress),
-    CONSTRAINT chk_comp CHECK (componenteNome IN ('CPU', 'RAM', 'DISCO', 'LATÊNCIA', 'REDE')),
-    CONSTRAINT chk_mtv CHECK (motivo IN ('ACIMA DA MÉDIA', 'ABAIXO DA MÉDIA')),
-    CONSTRAINT chk_estd CHECK (estadoAtual IN ('ESTÁVEL', 'ALERTA', 'RISCO'))
+    CONSTRAINT chk_comp CHECK (componenteNome IN ('CPU', 'RAM', 'DISCO', 'LATENCIA', 'REDE')),
+    CONSTRAINT chk_mtv CHECK (motivo IN ('ACIMA DA MEDIA', 'ABAIXO DA MEDIA')),
+    CONSTRAINT chk_estd CHECK (estadoAtual IN ('ALERTA', 'RISCO'))
 );
+
+CREATE VIEW ResumoSemanalMedias AS
+SELECT
+    fkMaquina,
+    DATE_SUB(dia, INTERVAL DAYOFWEEK(dia) - 1 DAY) AS semana,
+    ROUND(AVG(cpuPorc), 1) AS cpuPorc,
+    ROUND(AVG(memoriaPorc), 1) AS memoriaPorc,
+    ROUND(AVG(memoriaGb), 1) AS memoriaGb,
+    ROUND(AVG(memoriaTotal), 0) AS memoriaTotal,
+    ROUND(AVG(discoPorc), 1) AS discoPorc,
+    ROUND(AVG(discoGb), 1) AS discoGb,
+    ROUND(AVG(discoTotal), 0) AS discoTotal,
+    ROUND(AVG(mbpsRecebidos), 0) AS mbpsRecebidos,
+    ROUND(AVG(mbpsEnviados), 0) AS mbpsEnviados,
+    ROUND(AVG(latencia), 1) AS latencia
+FROM DadosServidorMedia
+GROUP BY semana, fkMaquina
+ORDER BY MIN(dia);
+
 
 insert into Empresa (idEmpresa, razaoSocial, nomeFantasia, emailEmpresa, cnpj, telefoneEmpresa, codigoSeguranca, imgLogo) values (
 	1, 

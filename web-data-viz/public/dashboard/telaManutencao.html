@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Métix Proteção Divina</title>
+  <link rel="icon" href="../assets/imgs/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../css/telaManutencao.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="../js/sessao.js"></script>
+  <link rel="stylesheet" href="../css/dashboardBase.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="profile">
+        <img alt="Profile" id="profileImage">
+        <h2 id="profileName">Usuário</h2>
+        <h4 id="profilePosition">Cargo: Gerente</h4>
+        <h4 id="profileBusiness">Banco</h4>
+      </div>
+
+      <div class="dashboardLinks">
+        <h2>Dashboards</h2>
+        <button onclick="window.location.href='telaMonitoramento.html'">MONITORAMENTO</button>
+        <button onclick="window.location.href='telaAlerta.html'">ALERTAS</button>
+        <button onclick="window.location.href='telaHistorico.html'">HISTÓRICO</button>
+        <button onclick="window.location.href='telaPrevisao.html'">PREVISÕES</button>
+        <button class="actual" onclick="window.location.href='telaManutencao.html'">MANUTENÇÃO</button>
+        <button onclick="limparSessao()">Sair</button>
+      </div>
+      <div class="logo">
+        <img src="../assets/imgs/Logo1.png" alt="Metix Logo">
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="content-wrapper">
+        <div id="calendar-container"></div>
+        <div id="calendar-navigation">
+          <!-- Botões de navegação de mês -->
+          <div class="navigations-buttons">
+            <button id="prev-month" onclick="goToPrevMonth()">← Mês Anterior</button>
+            <button id="next-month" onclick="goToNextMonth()">Próximo Mês &rarr;</button>
+          </div>
+        </div>
+        <div class="status-card green" onclick="redirectToJira()">
+          <p>MANUTENÇÕES PARA OS PRÓXIMOS MESES</p>
+          <h3 id="manutencoes-kpi">0</h3>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Modal para exibir horas -->
+    <div id="hour-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <h2 id="modal-date-title">
+          <div id="modal-transactions-info"></div>
+        </h2>
+        <button id="schedule-maintenance-btn" onclick="openScheduleScreen()">Agendar manutenção</button>
+        <div id="lowest-transactions" style="color: white;"></div>
+        <div id="hour-transactions" style="color: white;"></div>
+      </div>
+    </div>
+
+    <!-- Nova tela de agendamento -->
+    <div id="schedule-screen" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close-button" onclick="backToModal()">&times;</span>
+        <h2 style="color: white;">Agendar manutenção</h2>
+        <form id="schedule-form">
+          <div class="date-container" style="color: white;">
+            <label for="selected-date" style="color: white;">Data:</label>
+            <span id="selected-date"></span> <!-- Este é o local onde a data será exibida -->
+          </div>
+
+          <label for="schedule-time" style="color: white; width: 390px;">Hora:</label>
+          <input type="time" id="schedule-time" name="schedule-time" required>
+          <br>
+
+          <label for="server-select" style="color: white;">Servidor:</label>
+          <select id="server-select" name="server-select" required>
+            <option value="server1">Servidor 1</option>
+            <option value="server2">Servidor 2</option>
+            <option value="server3">Servidor 3</option>
+            <option value="server4">Servidor 4</option>
+          </select>
+
+          <label for="component-select" style="color: white;">Componente:</label>
+          <select id="component-select" name="component-select" required>
+            <option value="cpu">CPU</option>
+            <option value="ram">RAM</option>
+            <option value="disk">DISCO</option>
+          </select>
+
+          <!-- Botão de confirmação movido para baixo -->
+          <div class="button-container">
+            <button type="submit" id="schedule-maintenance-btn" class="btn-confirm">Confirmar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+  // KPI
+
+  function redirectToJira() {
+    const jiraLink = "https://metix2.atlassian.net/jira/servicedesk/projects/METIX/queues/custom/1";
+    window.open(jiraLink, "_blank");  // Abre o link em nova aba
+  }
+
+  function updateKPI() {
+    const kpiElement = document.getElementById("manutencoes-kpi");
+    let currentCount = parseInt(kpiElement.textContent, 10) || 0;
+    kpiElement.textContent = currentCount + 1;
+  }
+
+  // API JIRA
+  async function createIssue(summary, description) {
+    const response = await fetch('http://localhost:3333/api/maintenance/create-ticket', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ summary, description })
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao criar o ticket');
+    }
+
+    return await response.json();
+  }
+
+  document.getElementById("schedule-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const date = document.getElementById("selected-date").textContent;
+    const time = document.getElementById("schedule-time").value;
+    const server = document.getElementById("server-select").value;
+    const component = document.getElementById("component-select").value;
+
+    if (!date || !time || !server || !component) {
+      alert("Por favor, preencha todos os campos do formulário!");
+      return;
+    }
+
+    // Atualiza KPI local
+    updateKPI();
+
+    // Cria o ticket no Jira
+    try {
+      const summary = `Manutenção agendada para ${date} às ${time}`;
+      const description = `Servidor: ${server}, Componente: ${component}.`;
+
+      const ticketKey = (await createIssue(summary, description)).ticketKey;
+      alert(`Manutenção agendada com sucesso!\nTicket Jira: ${ticketKey}`);
+
+
+      // Mensagem de sucesso
+      alert(`Manutenção agendada com sucesso!\nTicket Jira: ${ticketKey}`);
+    } catch (error) {
+      console.error('Erro ao criar o ticket:', error);
+      alert('Erro ao criar o ticket no Jira, mas a manutenção foi agendada localmente.');
+    }
+
+    // Fecha todos os modais e retorna para a tela principal
+    closeModal();
+  });
+
+  // CALENDARIO DE MAPA DE CALOR E AGENDAMENTOS
+
+  let currentMonthIndex = 0;
+
+  // Abre a tela de agendamento e fecha o modal de transações
+  const openScheduleScreen = () => {
+    const hourModal = document.getElementById("hour-modal");
+    const scheduleScreen = document.getElementById("schedule-screen");
+
+    hourModal.style.display = "none";
+    scheduleScreen.style.display = "block";
+  };
+
+  // Volta para o modal de transações e fecha a tela de agendamento
+  const backToModal = () => {
+    const hourModal = document.getElementById("hour-modal");
+    const scheduleScreen = document.getElementById("schedule-screen");
+
+    hourModal.style.display = "block";
+    scheduleScreen.style.display = "none";
+  };
+
+  // Fecha o modal completamente
+  const closeModal = () => {
+    document.getElementById("hour-modal").style.display = "none";
+    document.getElementById("schedule-screen").style.display = "none";
+  };
+
+  const showModal = (dateTitle, hourlyData) => {
+    const modal = document.getElementById("hour-modal");
+    const modalTitle = document.getElementById("modal-date-title");
+    const hourContainer = document.getElementById("hour-transactions");
+    const lowestTransactionsContainer = document.getElementById("lowest-transactions");
+    const transactionsInfo = document.getElementById("modal-transactions-info");
+
+    const totalTransactions = hourlyData.reduce((sum, data) => sum + Math.round(data.media_transacoes_hora), 0);
+
+    // Formata o número com separadores de milhar
+    const formattedTotalTransactions = totalTransactions.toLocaleString("pt-BR");
+
+    transactionsInfo.innerHTML = `
+  <div style="color: white;">${dateTitle}</div>
+  <div class="total-transactions" style="color: white;">Média de transações no dia: <strong>${formattedTotalTransactions}</strong></div>
+`;
+
+
+    hourContainer.innerHTML = "";
+    lowestTransactionsContainer.innerHTML = "";
+
+    // Atualiza o campo da data na tela de agendamento
+    const selectedDateElement = document.getElementById("selected-date");
+    selectedDateElement.textContent = dateTitle;  // Exibe a data escolhida pelo usuário
+
+    // Ordenar os dados pelos valores de transações em ordem crescente
+    const sortedData = [...hourlyData].sort((a, b) => a.media_transacoes_hora - b.media_transacoes_hora);
+
+    // Exibe os 5 horários com menor número de transações
+    const lowestHours = sortedData.slice(0, 5);
+    lowestTransactionsContainer.innerHTML = `<h3>Horários com menor fluxo de transações:</h3>`;
+    lowestHours.forEach(data => {
+      const row = document.createElement("div");
+      row.className = "hour-row";
+      row.innerHTML = `
+        <div class="hour-column"><strong>${data.hora}:00</strong></div>
+        <div class="transaction-column"><strong>${Math.round(data.media_transacoes_hora)} transações</strong></div>`;
+      lowestTransactionsContainer.appendChild(row);
+    });
+
+    // Agora exibimos os horários de 00:00 a 23:00 na ordem correta
+    const hourlyMap = new Array(24).fill(null);  // Cria um array para armazenar os dados de 00:00 a 23:00
+    hourlyData.forEach(data => {
+      hourlyMap[data.hora] = data;  // Preenche os horários no mapa com os dados correspondentes
+    });
+
+    // Exibe os horários de 00:00 a 23:00 na ordem cronológica
+    hourContainer.innerHTML = `<h3>Quantia de transações por horário:</h3>`;
+for (let hour = 0; hour < 24; hour++) {
+  const data = hourlyMap[hour];
+  if (data) {  // Verifica se há dados para o horário
+    const formattedTransactions = Math.round(data.media_transacoes_hora).toLocaleString("pt-BR");
+    const row = document.createElement("div");
+    row.className = "hour-row";
+    row.innerHTML = `
+      <div class="hour-column">${data.hora}:00</div>
+      <div class="transaction-column">${formattedTransactions} transações</div>`;
+    hourContainer.appendChild(row);
+  }
+}
+
+
+    modal.style.display = "block";
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("https://3x712yec1c.execute-api.us-east-1.amazonaws.com/Curated-JSON-HTML-prev2");
+      const rawData = await response.json();
+
+      const groupedData = rawData.reduce((acc, curr) => {
+        const monthKey = `${curr.ano}-${curr.mes}`;
+        acc[monthKey] = acc[monthKey] || [];
+        acc[monthKey].push(curr);
+        return acc;
+      }, {});
+
+      return Object.entries(groupedData).map(([key, values]) => {
+        const [ano, mes] = key.split("-").map(Number);
+        const dailyTotals = values.reduce((dayAcc, curr) => {
+          const dateKey = curr.dia;
+          dayAcc[dateKey] = (dayAcc[dateKey] || 0) + curr.media_transacoes_hora;
+          return dayAcc;
+        }, {});
+
+        return { ano, mes, dailyTotals, hourlyData: values };
+      });
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      return [];
+    }
+  };
+
+  const goToNextMonth = async () => {
+    const data = await fetchData();
+    if (currentMonthIndex < data.length - 1) {
+      currentMonthIndex++;
+      renderCalendar(currentMonthIndex);
+    }
+  };
+
+  const goToPrevMonth = async () => {
+    if (currentMonthIndex > 0) {
+      currentMonthIndex--;
+      renderCalendar(currentMonthIndex);
+    }
+  };
+
+  const renderCalendar = async (monthIndex = 0) => {
+    const data = await fetchData();
+
+    if (data.length === 0) {
+      console.error("Nenhum dado disponível para renderizar o calendário.");
+      return;
+    }
+
+    const { ano, mes, dailyTotals } = data[monthIndex];
+    const maxTransactions = Math.max(...Object.values(dailyTotals));
+    const colorScale = d3.scaleLinear().domain([0, maxTransactions]).range(["#ffffff", "#d7301f"]);
+
+    const container = d3.select("#calendar-container");
+    container.html("");
+
+    // Atualiza a visibilidade dos botões de navegação
+    document.getElementById("prev-month").style.display = monthIndex > 0 ? "inline-block" : "none";
+    document.getElementById("next-month").style.display = monthIndex < data.length - 1 ? "inline-block" : "none";
+
+    const monthTitle = new Date(ano, mes - 1).toLocaleString("pt-BR", { month: "long", year: "numeric" });
+    const formattedMonthTitle = monthTitle.charAt(0).toUpperCase() + monthTitle.slice(1); // Formata o mês para iniciar com letra maiúscula
+    container.append("h2").attr("class", "month-title").text(formattedMonthTitle);
+
+
+    const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+    const header = container.append("div").attr("class", "calendar-header");
+    weekDays.forEach((day) => {
+      header.append("div").attr("class", "day-label").text(day);
+    });
+
+    const daysInMonth = new Date(ano, mes, 0).getDate();
+    const startDay = new Date(ano, mes - 1, 1).getDay();
+
+    const grid = container.append("div").attr("class", "calendar-grid");
+
+    for (let i = 0; i < startDay; i++) {
+      grid.append("div").attr("class", "day-cell empty");
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const total = dailyTotals[day] || 0;
+
+      grid
+        .append("div")
+        .attr("class", "day-cell")
+        .style("background-color", colorScale(total))
+        .text(day)
+        .on("click", () => {
+          const hourlyData = data[monthIndex].hourlyData.filter(item => item.dia === day);
+          const dateTitle = `${day}/${mes}/${ano}`;
+          showModal(dateTitle, hourlyData);
+        });
+    }
+  };
+
+  window.addEventListener("load", () => {
+    renderCalendar();
+  });
+</script>
+
+</html>

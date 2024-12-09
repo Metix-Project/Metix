@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Métix Proteção Divina</title>
-    <link rel="icon" href="../assets/imgs/logo.png">
+    <title>Dashboard de Histórico - Métix Proteção Divina</title>
+    <link rel="icon" href="../assets/imgs/logoSemtexto.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
 
     <!-- scripts do Chart.js - 2022-1 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js" integrity="sha512-MpDFIChbcXl2QgipQrt1VcPHMldRILetapBl5MPCA9Y8r7qvlwx1/Mc9hNTzY+kS5kX6PdoDq41ws1HiVNLdZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
     <!--Script Gerador WordCloud -->
@@ -103,7 +104,7 @@
                 <div class="metricas">
                     <div class="cards" id="cards">
                         <div class="card">
-                            <span>Uso médio da CPU</span>
+                            <span>Uso médio do Processador</span>
                             <span class="infoValue" id="initialValue">0%</span>
                         </div>
                         <div class="card">
@@ -113,7 +114,7 @@
                         <div class="card">
                             <span>Quantidade de Alertas</span>
                             <span class="infoValue" id="qtdAlertsValue">0</span>
-                            <span onclick="alert('')" class="seeMoreDetails">Ver detalhes</span>
+                            <span onclick="window.location.href='./telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
                         </div>
                     </div>
                     <div class="dados">
@@ -123,20 +124,24 @@
                         <div class="moreInfo">
                             <div class="warnings">
                                 <div class="infoCard">
-                                    <span class="title">Tempo Total Acima do Limite Indicado</span>
-                                    <span class="cardValue" id="totalTimeValue">00h 00min 00s</span>
+                                    <span class="title">Dia com maior quantidade de alertas</span>
+                                    <span class="cardValue" id="dayWithMostAlerts">Carregando...</span>
                                 </div>
                                 <div class="infoCard">
                                     <span class="title">Último Registro de Alerta do Componente</span>
-                                    <span class="cardValue" id="alertTimeValue">23h59 31/12/2099</span>
+                                    <span class="cardValue" id="alertTimeValue">Carregando...</span>
                                 </div>
                             </div>
                             <div class="infoCard">
-                                <span class="title">Análise do Gemini</span>
+                                <div class="titleGeminiCard">
+                                    <span class="title">Análise do</span>
+                                    <img src="../assets/imgs/gemini.png" alt="GeminiLogo" onclick="window.location.href='https://gemini.google.com/app?hl=pt-BR'">
+                                </div>
                                 <span class="cardValue" id="geminiText">Carregando Resposta...</span>
-                                <span class="seeMoreDetails"
-                                    onclick="document.getElementById('modalContainer').style.display = 'flex';">Ver
-                                    detalhes</span>
+                                <div class="optionsCard">
+                                    <button class="seeMoreDetails geminiOptionsClass" id="abrirRelatorioBtn" onclick="visualizarRelatorio()" disabled>Ver detalhes</button>
+                                    <button class="seeMoreDetails geminiOptionsClass" id="baixarRelatorioBtn" onclick="downloadPdf()" disabled>Baixar Relatório</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -155,18 +160,15 @@
         </div>
     </div>
     <div id="modalContainer">
-        <div class="modal">
+        <div class="modal" id="modalContent">
             <div class="top">
-                <span class="modalTitle">Resumo da Inteligência Artificial</span>
-                <span class="closeModal"
-                    onclick="document.getElementById('modalContainer').style.display = 'none';">&#10005;</span>
+                <div class="title">
+                    <h1>Relatório do BobIA</h1>
+                    <img src="../assets/imgs/bobIA.png" alt="bobIA">
+                </div>
+                <span class="closeModal" onclick="document.getElementById('modalContainer').style.display = 'none';">&#10005;</span>
             </div>
-            <p id="geminiParagraph"></p>
-            <span>
-                Para mais informações,
-                <a href="">clique aqui</a>
-                para ver as previsões
-            </span>
+            <div id="geminiParagraph"></div>
         </div>
     </div>
 </body>
@@ -184,6 +186,7 @@
     let indexDayChart = 0;
     let sundayValue;
     let saturdayValue;
+    let relatorioCompleto = "";
 
     dataAtual.setDate(dataAtual.getDate() - (semana * 7));
     let year = dataAtual.getFullYear();
@@ -200,6 +203,13 @@
     function modificarServidor(serverIdentifier) {
         const element = document.getElementById("bodyTitle");
 
+        document.getElementById("abrirRelatorioBtn").disabled = true;
+        document.getElementById("abrirRelatorioBtn").style.cursor = 'default';
+        document.getElementById("abrirRelatorioBtn").style.color = '#bbb';
+        document.getElementById("baixarRelatorioBtn").disabled = true;
+        document.getElementById("baixarRelatorioBtn").style.cursor = 'default';
+        document.getElementById("baixarRelatorioBtn").style.color = '#bbb';
+
         if(serverIdentifier === "f946307321c2") element.innerHTML = ` Histórico de Dados dos Servidores Pix | 1º Ponto de Controle`;
         else if(serverIdentifier === "14857f833746") element.innerHTML = `Histórico de Dados dos Servidores Pix | 2º Ponto de Controle`;
         else if(serverIdentifier === "d09466c9be45") element.innerHTML = `Histórico de Dados dos Servidores Pix | 3º Ponto de Controle`;
@@ -207,45 +217,6 @@
 
         document.getElementById("geminiText").innerHTML = "Carregando Resposta...";
         gerarRelatorio(serverIdentifier);
-    }
-
-    function modificarComponente(componente) {
-        if (true) {
-            document.getElementById("cards").innerHTML = `
-                <div class="card">
-                    <span>Quantidade Média de Pacotes Recebidos</span>
-                    <span class="infoValue" id="initialValue">120 Mbps</span>
-                </div>
-                <div class="card">
-                    <span>Quantidade Média de Pacotes Enviados</span>
-                    <span class="infoValue" id="limitValue">670 Mbps</span>
-                </div>
-                <div class="card">
-                    <span>Quantidade de Alertas</span>
-                    <span class="infoValue" id="qtdAlertsValue">2</span>
-                    <span onclick="alert('')" class="seeMoreDetails">Ver detalhes</span>
-                </div>
-            `;
-
-            document.getElementById("alertTimeValue").style.borderColor = 'rgb(65, 178, 141)';
-            document.getElementById("totalTimeValue").style.borderColor = 'rgb(65, 178, 141)';
-            document.getElementById("geminiText").style.borderColor = 'rgb(65, 178, 141)';
-            historicoComponenteEscolhidoChart.options.scales.y.max = 1250;
-            historicoComponenteEscolhidoChart.options.scales.y.title.text = "Mbps";
-            historicoComponenteEscolhidoChart.data.datasets[2] = {
-                label: "Pacotes Recebidos",
-                borderWidth: 4,
-                borderColor: 'rgba(5, 208, 222, 0.8)',
-                backgroundColor: 'rgba(5, 208, 222, 0.2)',
-                fill: true,
-                lineTension: 0.3,
-                data: valores6
-            }
-            historicoComponenteEscolhidoChart.update();
-
-            atualizarGraficoLinha(valores5, maxValues5, 'rgba(125, 148, 60, 0.8)', 'rgba(125, 148, 60, 0.2)', "Rede");
-            document.getElementById("initialValue").innerHTML = `${mediaLatenciaValue} Ms`;
-        }
     }
 
     function atualizarGraficoLinha(valorData, valorMacAddress, idMetrica) {
@@ -286,8 +257,8 @@
                                 </div>
                                 <div class="card">
                                     <span>Quantidade de Alertas</span>
-                                    <span class="infoValue" id="qtdAlertsValue">4</span>
-                                    <span onclick="alert('')" class="seeMoreDetails">Ver detalhes</span>
+                                    <span class="infoValue" id="qtdAlertsValue">0</span>
+                                    <span onclick="window.location.href = './telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
                                 </div>
                             `;
 
@@ -311,7 +282,7 @@
                             });
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(255, 218, 107)';
-                            document.getElementById("totalTimeValue").style.borderColor = 'rgb(255, 218, 107)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(255, 218, 107)';
                             document.getElementById("geminiText").style.borderColor = 'rgb(255, 218, 107)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
@@ -333,6 +304,8 @@
                             let somaGeralTotalRam = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.memoriaTotal), 0);
                             let mediaGeralTotalRam = somaGeralTotalRam / dataJsonFunc.length;
 
+                            let limitePermitidoRam = mediaGeralTotalRam * 0.85;
+
                             document.getElementById("cards").innerHTML = `
                                 <div class="card">
                                     <span>Uso médio da Memória RAM</span>
@@ -340,7 +313,7 @@
                                 </div>
                                 <div class="card">
                                     <span>Limite Permitido</span>
-                                    <span class="infoValue" id="limitValue">14.5 GB</span>
+                                    <span class="infoValue" id="limitValue">${limitePermitidoRam.toFixed(1)} GB</span>
                                 </div>
                                 <div class="card">
                                     <span>Total de Memória RAM</span>
@@ -348,8 +321,8 @@
                                 </div>
                                 <div class="card">
                                     <span>Quantidade de Alertas</span>
-                                    <span class="infoValue" id="qtdAlertsValue">2</span>
-                                    <span onclick="alert('')" class="seeMoreDetails">Ver detalhes</span>
+                                    <span class="infoValue" id="qtdAlertsValue">0</span>
+                                    <span onclick="window.location.href = './telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
                                 </div>
                             `;
 
@@ -373,7 +346,7 @@
                             });
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(192, 178, 160)';
-                            document.getElementById("totalTimeValue").style.borderColor = 'rgb(192, 178, 160)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(192, 178, 160)';
                             document.getElementById("geminiText").style.borderColor = 'rgb(192, 178, 160)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
@@ -395,6 +368,8 @@
                             let somaGeralTotalDisco = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.discoTotal), 0);
                             let mediaGeralTotalDisco = somaGeralTotalDisco / dataJsonFunc.length;
 
+                            let limitePermitidoDisco = mediaGeralTotalDisco * 0.85
+
                             document.getElementById("cards").innerHTML = `
                                 <div class="card">
                                     <span>Média do Armazenamento</span>
@@ -402,7 +377,7 @@
                                 </div>
                                 <div class="card">
                                     <span>Limite Permitido</span>
-                                    <span class="infoValue" id="limitValue">930 GB</span>
+                                    <span class="infoValue" id="limitValue">${limitePermitidoDisco.toFixed(1)} GB</span>
                                 </div>
                                 <div class="card">
                                     <span>Armazenamento Total</span>
@@ -411,7 +386,7 @@
                                 <div class="card">
                                     <span>Quantidade de Alertas</span>
                                     <span class="infoValue" id="qtdAlertsValue">0</span>
-                                    <span onclick="alert('')" class="seeMoreDetails">Ver detalhes</span>
+                                    <span onclick="window.location.href = './telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
                                 </div>
                             `;
 
@@ -435,7 +410,7 @@
                             });
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(249, 146, 44)';
-                            document.getElementById("totalTimeValue").style.borderColor = 'rgb(249, 146, 44)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(249, 146, 44)';
                             document.getElementById("geminiText").style.borderColor = 'rgb(249, 146, 44)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
@@ -465,8 +440,8 @@
                                 </div>
                                 <div class="card">
                                     <span>Quantidade de Alertas</span>
-                                    <span class="infoValue" id="qtdAlertsValue">6</span>
-                                    <span onclick="alert('')" class="seeMoreDetails">Ver detalhes</span>
+                                    <span class="infoValue" id="qtdAlertsValue">0</span>
+                                    <span onclick="window.location.href = './telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
                                 </div>
                             `;
 
@@ -490,7 +465,7 @@
                             });
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(102, 35, 168)';
-                            document.getElementById("totalTimeValue").style.borderColor = 'rgb(102, 35, 168)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(102, 35, 168)';
                             document.getElementById("geminiText").style.borderColor = 'rgb(102, 35, 168)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
@@ -518,13 +493,17 @@
                                     <span class="infoValue" id="initialValue">${mediaGeralmbpsRecebidos.toFixed(0)} mbps</span>
                                 </div>
                                 <div class="card">
+                                    <span>Quantidade Média de Pacotes Enviados</span>
+                                    <span class="infoValue" id="initialValue">${mediaGeralmbpsEnviados.toFixed(0)} mbps</span>
+                                </div>
+                                <div class="card">
                                     <span>Limite Permitido</span>
                                     <span class="infoValue" id="limitValue">100 mbps</span>
                                 </div>
                                 <div class="card">
                                     <span>Quantidade de Alertas</span>
-                                    <span class="infoValue" id="qtdAlertsValue">6</span>
-                                    <span onclick="alert('')" class="seeMoreDetails">Ver detalhes</span>
+                                    <span class="infoValue" id="qtdAlertsValue">0</span>
+                                    <span onclick="window.location.href = './telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
                                 </div>
                             `;
 
@@ -551,7 +530,7 @@
                             });
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(65, 178, 141)';
-                            document.getElementById("totalTimeValue").style.borderColor = 'rgb(65, 178, 141)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(65, 178, 141)';
                             document.getElementById("geminiText").style.borderColor = 'rgb(65, 178, 141)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
@@ -566,43 +545,50 @@
                                 label: "Pacotes Enviados",
                                 borderColor: 'rgba(125, 148, 60, 0.8)',
                                 backgroundColor: 'rgba(125, 148, 60, 0.2)',
-                                pointBackgroundColor: 'rgb(125, 148, 60)'
+                                pointBackgroundColor: 'rgb(125, 148, 60)',
+                                fill: true,
+                                lineTension: 0.3
                             };
 
                             historicoComponenteEscolhidoChart.data.labels = arrayWeek;
-                            historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | Pacotes`;
+                            historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | Rede`;
                             historicoComponenteEscolhidoChart.options.scales.y.max = 200;
                             historicoComponenteEscolhidoChart.options.scales.y.title.text = "Velocidade (mbps)";
-                            // historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
                         }
 
                         historicoComponenteEscolhidoChart.update();
+                        pegarTotalAlertas();
+                        capturarUltimoAlerta();
+                        obterDiaComMaisAlertas();
                     })
                 } else throw "Erro";
             })
             .catch(function (erro) {
                 console.error(erro);
             })
-
-        // historicoComponenteEscolhidoChart.data.datasets[0].data = vetorValores;
-        // historicoComponenteEscolhidoChart.data.datasets[1].data = vetorMax;
-        // historicoComponenteEscolhidoChart.data.datasets[0].borderColor = cor1;
-        // historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = cor2;
-        // historicoComponenteEscolhidoChart.data.datasets[0].label = component;
-        // historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | ${component}`;
-        // historicoComponenteEscolhidoChart.update();
     }
 
     window.addEventListener("load", () => document.querySelectorAll("#dualHandleSlider").forEach(dualHandleSlider => {
         const input = dualHandleSlider.querySelector("input[type='range']");
         const weekValue = document.getElementById("weekValue");
         
-        input.addEventListener("change", ()=>{
-            
+        input.addEventListener("input", ()=>{
+            weekValue.value = input.value;
+
+            const elementSlider = document.createElement("style");
+            const percElement1 = (input.value - 5) * 10;
+
+            elementSlider.textContent = `
+                #dualHandleSlider input[type="range"]:first-child::-webkit-slider-runnable-track {  
+                    background: linear-gradient(to right, var(--cor-primaria) 0%, var(--cor-primaria) ${percElement1}%, var(--cor-secundaria) ${percElement1}%, var(--cor-secundaria) 100%);
+                    border-radius: 5px;
+                }
+            `;
+
+            document.head.appendChild(elementSlider);
         })
 
         input.addEventListener("mouseup", () => {
-            weekValue.value = input.value;
             let week = input.value;
 
             var dataAtual = new Date();
@@ -822,14 +808,69 @@
                         response.json().then((answer) => {
                             console.log(answer.resultado);
 
-                            let textoGemini = answer.resultado.split(/Resumo/i)[1];
+                            let textoGemini = answer.resultado.split(/6- Resumo/i)[1];
 
                             if (textoGemini.match(/[*:#]/)) {
                                 textoGemini = textoGemini.replace(/[*:#]/g, "");
                             }
 
                             document.getElementById("geminiText").innerHTML = textoGemini;
-                            document.getElementById("geminiParagraph").innerHTML = answer.resultado;
+                            document.getElementById("abrirRelatorioBtn").disabled = false;
+                            document.getElementById("abrirRelatorioBtn").style.cursor = 'pointer';
+                            document.getElementById("abrirRelatorioBtn").style.color = 'white';
+                            document.getElementById("baixarRelatorioBtn").disabled = false;
+                            document.getElementById("baixarRelatorioBtn").style.cursor = 'pointer';
+                            document.getElementById("baixarRelatorioBtn").style.color = 'white';
+
+                            let relatorioFormatado;
+
+                            if (answer.resultado.match(/[*:#]/)) {
+                                relatorioFormatado = answer.resultado.replace(/(\*\*+|#)/g, "");
+                            } else relatorioFormatado = answer.resultado;
+
+                            const topicos = relatorioFormatado.split("CUT_HERE");
+
+                            const topico1 = topicos[1].split("1- Explicação Detalhada da Análise Feita");
+                            const topico2 = topicos[2].split("2- Processador");
+                            const topico3 = topicos[3].split("3- Memória RAM");
+                            const topico4 = topicos[4].split("4- Armazenamento");
+                            const topico5 = topicos[5].split("5- Sugestões");
+
+                            const topico1Formatado = topico1[1].replace(/[-*]/g, '<br>- ');
+                            const topico2Formatado = topico2[1].replace(/[-*]/g, '<br>- ');
+                            const topico3Formatado = topico3[1].replace(/[-*]/g, '<br>- ');
+                            const topico4Formatado = topico4[1].replace(/[-*]/g, '<br>-');
+                            const topico5Formatado = topico5[1].replace(/[-*]/g, '<br>- ');
+
+                            relatorioCompleto = `
+                                <h2>Resumo: ${document.getElementById("geminiText").textContent}</h2>
+                                <hr/>
+                                <h2>Explicação da Análise Realizada</h2>
+                                ${topico1Formatado}
+                                <div style="page-break-before: always;"></div>
+                                <hr/>
+                                <h2>Componentes</h2>
+                                <h3>- Processador</h3>
+                                ${topico2Formatado}
+                                <br>
+                                <br>
+                                <br>
+                                <h3>- Memória RAM</h3>
+                                ${topico3Formatado}
+                                <br>
+                                <br>
+                                <br>
+                                <h3>- Armazenamento</h3>
+                                ${topico4Formatado}
+                                <div style="page-break-after: always;"></div>
+                                <hr/>
+                                <h2>Sugestões</h2>
+                                ${topico5Formatado}
+                            `;
+
+                        })
+                        .catch(function(erro){
+                            document.getElementById("geminiText").innerHTML = "Não foi possível gerar o relatório!";
                         });
                     })
                 } else throw "Erro ao gerar o relatório";
@@ -837,12 +878,96 @@
             .catch(function (erro) {
                 console.error(erro);
             })
+    }
 
+    function visualizarRelatorio(){
+        document.getElementById("modalContainer").style.display = "flex";
+        const textElement = document.getElementById("geminiParagraph");
 
+        textElement.innerHTML = relatorioCompleto;
+    }
 
+    function downloadPdf(){
+        const optionsPdf = {
+            filename: 'Relatório Gemini.pdf',
+            html2canvas: {
+                scale: 2
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            }
+        }
 
+        const dataFinal = new Date();
 
-        // const data = await response.json();
+        const dataFinalPdf = dataFinal.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+
+        const dataInicial = new Date(dataFinal);
+        dataInicial.setDate(dataFinal.getDate() - 105);
+
+        const dataInicialPdf = dataInicial.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+
+        const hours = dataFinal.getHours();
+        const minutes = dataFinal.getMinutes();
+        const horario = `${hours.toString().padStart(2, '0')}h${minutes.toString().padStart(2, '0')}`;
+
+        let num;
+        if(document.getElementById('selectServer').value === "f946307321c2") num = 1;
+        else if(document.getElementById('selectServer').value === "14857f833746") num = 2;
+        else if(document.getElementById('selectServer').value === "d09466c9be45") num = 3;
+        else num = 4;
+
+        const contentPdf = `
+            <div class="divPDF">
+                <h1 style='text-decoration: underline; margin-top: 40px;'>MÉTIX</h1>
+                <div class='pdfInfo'>
+                    <h2>Integrantes</h2>
+                    <span>Arthur Ramos dos Santos</span>
+                    <span>Fabricio Prudente Ferreira</span>
+                    <span>Luis Henrique Ribeiro Alves</span>
+                    <span>Luiza Câmara Moreira</span>
+                    <span>Victor Hugo Ribeiro Braga</span>
+                    <h1 style='line-height: 46px;'>HISTÓRICO DE DADOS DOS SERVIDORES PIX</h1>
+                    <img src="../assets/imgs/logoSemtexto.png" class='logoPdf'>
+                    <span>E-mail: metix@gmail.com</span>
+                    <span>Telefone: +55 (11) 98765-4321</span>
+                    <span>Endereço: Rua Haddock Lobo, 595 São Paulo - SP</span>
+                    <span>${dataFinalPdf} - ${horario}</span>
+                </div>
+                <h1 style='text-decoration: underline;'>Relatório da Inteligência Artificial</h1>
+                <span>- Servidor Analisado: <b>Servidor ${num} (Código MacAddress: ${document.getElementById('selectServer').value})</b></span>
+                <br><br>
+                <span>- Período da Análise: ${dataInicialPdf} - ${dataFinalPdf}</span>
+                ${relatorioCompleto}
+                <hr/>
+                <div class='creditsPdf'>
+                    <div class='ia'>
+                        <span><b>Inteligência Artificial utilizada: </b></span>
+                        <img src='../assets/imgs/gemini.png' alt='geminiLogo'>
+                    </div>
+                    <div class='bobia'>
+                        <span><b>API Utilizada: <u>Architronic-IA (BobIA)</u></b></span>
+                        <div class='bobiaText'>
+                            <img src='../assets/imgs/bobIA.png'>
+                            <span>Desenvolvido por:<br>- Marise Miranda<br>- Matheus Ferreira Matos<br>- Alexander Gonçalves</span>
+                        </div>
+                    </div>
+                </div>
+                <h2 style='margin: 20px 0;'>FACULDADE SÃO PAULO TECH SCHOOL</h2>
+            </div>
+        `
+
+        html2pdf().set(optionsPdf).from(contentPdf).save();
     }
 
     atualizarGraficoLinha(dataVar, macAddressVar, 1);
@@ -1010,4 +1135,145 @@
         document.getElementById("leftArrow").style.color = "white";
         document.getElementById("leftArrow").style.cursor = "pointer";
     }
+
+    document.getElementById('abrirRelatorioBtn').addEventListener('mouseenter', ()=>{
+        document.getElementById('abrirRelatorioBtn').style.color = '#bbb';
+    });
+
+    document.getElementById('baixarRelatorioBtn').addEventListener('mouseenter', ()=>{
+        document.getElementById('baixarRelatorioBtn').style.color = '#bbb';
+    })
+
+    document.getElementById('abrirRelatorioBtn').addEventListener('mouseleave', ()=>{
+        if(!document.getElementById('abrirRelatorioBtn').disabled){
+            document.getElementById('abrirRelatorioBtn').style.color = 'white';
+        }
+    });
+
+    document.getElementById('baixarRelatorioBtn').addEventListener('mouseleave', ()=>{
+        if(!document.getElementById('baixarRelatorioBtn').disabled){
+            document.getElementById('baixarRelatorioBtn').style.color = 'white';
+        }
+    });
+
+    function pegarTotalAlertas() {
+        let componenteSelecionado;
+        const elementValue = document.getElementById("selectHardware").value;
+        
+        if(elementValue == 1) componenteSelecionado = "CPU";
+        else if(elementValue == 2) componenteSelecionado = "RAM";
+        else if(elementValue == 3) componenteSelecionado = "DISCO";
+        else if(elementValue == 4) componenteSelecionado = "LATENCIA";
+        else componenteSelecionado = "REDE";
+
+        fetch("../historico/pegarTotalAlertas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                macAddressServer: document.getElementById("selectServer").value,
+                componenteServer: componenteSelecionado,
+                dateValueServer: dataVar
+            })
+        })
+        .then(function(response) {
+            if(response.ok){
+                response.json().then(resultado => {
+                    document.getElementById("qtdAlertsValue").innerHTML = resultado[0].totalAlertas;
+                });
+            } else throw "Erro em pegarTotalAlertas";
+        })
+        .catch(function(erro) {
+            console.error(erro);
+        })
+    }
+
+    function obterDiaComMaisAlertas() {
+        let componenteSelecionado;
+        const elementValue = document.getElementById("selectHardware").value;
+        
+        if(elementValue == 1) componenteSelecionado = "CPU";
+        else if(elementValue == 2) componenteSelecionado = "RAM";
+        else if(elementValue == 3) componenteSelecionado = "DISCO";
+        else if(elementValue == 4) componenteSelecionado = "LATENCIA";
+        else componenteSelecionado = "REDE";
+
+        fetch("../historico/obterDiaComMaisAlertas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                macAddressServer: document.getElementById("selectServer").value,
+                componenteServer: componenteSelecionado
+            })
+        })
+        .then(function(response) {
+            if(response.ok){
+                response.json().then(resultado => {
+                    const dataHora = new Date(resultado[0].Dia);
+
+                    const yearValue = dataHora.getFullYear();
+                    const monthValue = String(dataHora.getMonth() + 1).padStart(2, "0");
+                    const dayValue = String(dataHora.getDate()).padStart(2, "0");
+
+                    document.getElementById("dayWithMostAlerts").innerHTML = `${dayValue}/${monthValue}/${yearValue}`// | ${resultado[0].Quantidade} alerta(s)`;
+                })
+                .catch(function(erro){
+                    document.getElementById("dayWithMostAlerts").innerHTML = "Sem alertas!";
+                })
+            } else throw "Erro em pegarTotalAlertas";
+        })
+        .catch(function(erro) {
+            console.error(erro);
+        })
+    }
+
+    function capturarUltimoAlerta() {
+        let componenteSelecionado;
+        const elementValue = document.getElementById("selectHardware").value;
+        
+        if(elementValue == 1) componenteSelecionado = "CPU";
+        else if(elementValue == 2) componenteSelecionado = "RAM";
+        else if(elementValue == 3) componenteSelecionado = "DISCO";
+        else if(elementValue == 4) componenteSelecionado = "LATENCIA";
+        else componenteSelecionado = "REDE";
+
+        fetch("../historico/capturarUltimoAlerta", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                macAddressServer: document.getElementById("selectServer").value,
+                componenteServer: componenteSelecionado
+            })
+        })
+        .then(function(response) {
+            if(response.ok){
+                response.json().then(resultado => {
+                    const dataHora = new Date(resultado[0].DataHora);
+
+                    const yearValue = dataHora.getFullYear();
+                    const monthValue = String(dataHora.getMonth() + 1).padStart(2, '0');
+                    const dayValue = String(dataHora.getDate()).padStart(2, '0');
+
+                    const hourValue = String(dataHora.getHours()).padStart(2, '0');
+                    const minuteValue = String(dataHora.getMinutes()).padStart(2, '0');
+
+                    document.getElementById('alertTimeValue').innerHTML = `${hourValue}h${minuteValue} ${dayValue}/${monthValue}/${yearValue}`;
+                })
+                .catch(function(erro){
+                    document.getElementById("alertTimeValue").innerHTML = "Sem alertas!";
+                    console.log(erro);
+                });
+            } 
+            else throw "Erro em capturarUltimoAlerta";
+        })
+        .catch(function(erro) {
+            console.error(erro);
+        })
+    }
+    
 </script>

@@ -1,13 +1,14 @@
 /* Ajusta o main-content para ocupar o espaço restante da tela */
 .main-content {
-    flex-grow: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #22272d;
-    color: #adbac7;
-    height: 100%;
-    overflow: hidden;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;  /* Adicionado para empilhar os elementos */
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center;     /* Centraliza horizontalmente */
+  background-color: #22272d;
+  color: #adbac7;
+  height: 100%;
+  overflow: hidden;
 }
 
 /* Certifique-se de que o HTML e o body ocupam 100% da tela */
@@ -19,23 +20,33 @@ html, body {
 
 /* A container deve ocupar 100% da altura disponível */
 .container {
-    display: flex;
-    height: 100%;
-    overflow: hidden;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  justify-content: center; /* Centraliza a sidebar e a main-content */
+  align-items: center;     /* Alinha os itens ao centro */
 }
 
-#calendar-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 20px;
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinha os itens à esquerda */
+  margin-left: 20px; /* Ajuste conforme necessário */
 }
+
+.navigation-buttons {
+  display: flex;
+  gap: 10px; /* Espaçamento entre os botões */
+  margin-bottom: 10px; /* Espaçamento abaixo dos botões */
+}
+
 
 .month-title {
-    color: #adbac7;
-    font-size: 24px;
-    margin-bottom: 10px;
+  color: #FFFF;
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center; /* Centraliza o texto dentro do contêiner */
+  width: 100%; /* Garante que o título ocupe toda a largura do contêiner */
 }
 
 .calendar-header {
@@ -48,81 +59,53 @@ html, body {
 .day-label {
     text-align: center;
     font-weight: bold;
-    color: #adbac7;
+    color: #FFFF;
 }
 
 .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;  /* Aumentado de 5px para 10px */
+  width: 100%;
 }
 
-.day-cell {
-    width: 50px;
-    height: 50px;
-    background-color: #2d2d2d;
-    color: #adbac7;
-    text-align: center;
-    line-height: 50px;
-    border-radius: 5px;
-    position: relative;
-}
-
-.day-cell.empty {
-    background-color: transparent;
-}
-
-.day-cell:hover {
-    background-color: #4a4a4a;
-}
-
-.tooltip {
-    visibility: hidden;
-    position: absolute;
-    background-color: white;
-    color: black;
-    padding: 5px;
-    border-radius: 3px;
-    font-size: 12px;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
 
 .day-cell:hover .tooltip {
     visibility: visible;
 }
 
+/* Centralização dos botões de navegação abaixo do calendário */
 #calendar-navigation {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 0px; /* Adiciona um espaço entre o calendário e os botões */
+  width: 100%;
 }
 
 #calendar-navigation button {
-    background-color: #444;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin: 0;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px; /* Espaçamento entre os botões */
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 20px;
 }
 
 #calendar-navigation button:hover {
-    background-color: #555;
+  background-color: #555;
 }
 
+
 .day-cell {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background-color: #2d2d2d;
     color: black; /* Updated to make the text black */
     text-align: center;
-    line-height: 50px;
+    line-height: 60px;
     border-radius: 5px;
     position: relative;
 }
@@ -203,4 +186,213 @@ html, body {
     outline: none;
     border-color: #645f59;
   }
+
+/* Adicionar ao arquivo CSS ou na tag <style> */
+.modal {
+  display: none; /* Oculto por padrão */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+}
+
+.modal-content {
+  background-color: #191715;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #3F352B;
+  width: 40%; /* Ajuste a largura do modal */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-button {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.hour-row {
+  display: flex;
+  justify-content: space-between; /* Espaçamento entre as colunas */
+  padding: 8px 0;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  border-bottom: 1px solid #3F352B;
+  color: white;
+}
+
+.hour-row:last-child {
+  border-bottom: none; /* Remove linha no último item */
+}
+
+.hour-column {
+  width: 50%; /* Ajusta a largura da coluna do horário */
+  text-align: left; /* Alinha à esquerda */
+}
+
+.transaction-column {
+  width: 50%; /* Ajusta a largura da coluna de transações */
+  text-align: right; /* Alinha à direita */
+}
+
+.hour-row strong {
+  color: #d7301f; /* Destaque em negrito */
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-date-title .total-transactions {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #555; /* Cor para diferenciação */
+}
+.modal-date-title .total-transactions strong {
+  color: #000; /* Destaque para o número */
+}
+
+.hidden {
+  display: none;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.schedule-button,
+.back-button,
+.confirm-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+.schedule-button:hover,
+.back-button:hover,
+.confirm-button:hover {
+  background-color: #0056b3;
+}
+form div {
+  margin-bottom: 15px;
+}
+form label {
+  display: block;
+  margin-bottom: 5px;
+}
+form input,
+form select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estilo para o botão dentro da nova classe */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#schedule-maintenance-btn {
+  background-color: #4CAF50; /* Exemplo de cor verde */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#schedule-maintenance-btn:hover {
+  background-color: #45a049;
+}
+
+/* Status Cards */
+.status-cards {
+  display: grid;
+  grid-template-columns: 1;
+  gap: 15px;
+}
+
+.status-card {
+  background-color: #2c2c2c;
+  padding: 30px;  /* Mais espaço dentro do cartão */
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-top: 10px solid;
+  width: 150px;  /* Largura fixa */
+  height: 75px; /* Altura fixa */
+  margin-left: -250px;
+}
+
+.status-card.green {
+  border-top-color: #a49568;
+}
+
+.status-card.green h3 {
+  color: #a49568;
+  font-size: 45px;  /* Aumenta o tamanho do número da KPI */
+}
+
+.status-card.green p {
+  color: #a49568;
+  font-size: 15px;  /* Aumenta o tamanho do texto descritivo */
+}
+
+.status-card h3 {
+  font-size: 48px;
+  color: rgb(0, 0, 0);
+  margin: 0;
+}
+
+.status-card p {
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  margin: -20px 0 0;
+}
+
+form input, form select {
+  width:577px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   
+}
+
+
+
+

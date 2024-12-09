@@ -21,10 +21,31 @@ function pegarUltimos105Dias(macAddress) {
     return database.executar(instrucaoSql);
 }
 
+function pegarTotalAlertas(macAddress, componente, dateValue) {
+    var instrucaoSql = `SELECT COUNT(idAlerta) AS totalAlertas FROM Alerta WHERE fkIdServidor = "${macAddress}" AND componenteNome = "${componente}" AND DataHora >= "${dateValue}";`;
+
+    return database.executar(instrucaoSql);
+}
+
+function obterDiaComMaisAlertas(macAddress, componente) {
+    var instrucaoSql = `SELECT DATE(DataHora) AS Dia, COUNT(idAlerta) AS Quantidade FROM Alerta WHERE fkIdServidor = "${macAddress}" AND componenteNome = "${componente}" GROUP BY Dia ORDER BY Quantidade DESC LIMIT 1;`;
+
+    return database.executar(instrucaoSql);
+}
+
+function capturarUltimoAlerta(macAddress, componente) {
+    var instrucaoSql = `SELECT CONVERT_TZ(DataHora, '+00:00', '-03:00') AS DataHora FROM Alerta WHERE fkIdServidor = "${macAddress}" AND componenteNome = "${componente}" ORDER BY DataHora DESC LIMIT 1;`;
+
+    return database.executar(instrucaoSql);
+}
+
 // exporta para outro arquivo:
 module.exports = {
     pegarMedias,
     pegarMediasSemanais,
-    pegarUltimos105Dias
+    pegarUltimos105Dias,
+    pegarTotalAlertas,
+    obterDiaComMaisAlertas,
+    capturarUltimoAlerta
 };
  
