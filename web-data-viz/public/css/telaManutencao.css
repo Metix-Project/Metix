@@ -100,14 +100,21 @@ html, body {
 
 
 .day-cell {
-    width: 60px;
-    height: 60px;
-    background-color: #2d2d2d;
-    color: black; /* Updated to make the text black */
-    text-align: center;
-    line-height: 60px;
-    border-radius: 5px;
-    position: relative;
+  width: 60px;
+  height: 60px;
+  background-color: #2d2d2d;
+  color: black;
+  text-align: center;
+  line-height: 60px;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+}
+
+.day-cell:hover {
+  background-color: #4c4c4c; 
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
 }
 
 .day-cell.empty {
@@ -348,14 +355,21 @@ form select {
 
 .status-card {
   background-color: #2c2c2c;
-  padding: 30px;  /* Mais espaço dentro do cartão */
+  padding: 30px;
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-top: 10px solid;
-  width: 150px;  /* Largura fixa */
-  height: 75px; /* Altura fixa */
+  width: 150px;
+  height: 75px;
   margin-left: -250px;
+  cursor: pointer;
+}
+
+.status-card:hover {
+  background-color: #4c4c4c; 
+  transform: scale(1.05); 
+  transition: transform 0.2s ease-in-out;
 }
 
 .status-card.green {
