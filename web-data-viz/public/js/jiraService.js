@@ -2,7 +2,7 @@ const axios = require('axios');
 
 // Credenciais do Jira
 const username = 'victor.braga@sptech.school';
-const password = 'ATATT3xFfGF0NGXPPPP_WdBnFNzSLzJ-eXbw9lUVyO0n9RdxVUdX4MX4lXb_wRcbxs13tDB9HDW8gDtpaYjGApiQ4WJkzHCnhTIAbbBjt0p6qotQjMQt5rM2yb3AasgE3cbqhY4j512j6dGsnDqnh-QG7wZWR30mI3FkQhXb3IyxTYkLasbdyl8=42FEE82C';
+const password = 'ATATT3xFfGF0A3sFstw9dONGL6Zc6VHEseN_s2dol5iKVsVliNi7PWYA1H-EMVMIcUZ_T_R8H9MfYg_gIL9NYHtZzQ5oAdilmzkcNnW1-cSJRl06TPNoo7P6fwvrc1XKOFQ2Khqcx_NcF_hli2KIANLN9wahDdif8QbNlqSiOEs6W0d-Qs00pxM=5D0466EF';
 const domain = 'metix2';
 
 const auth = {
