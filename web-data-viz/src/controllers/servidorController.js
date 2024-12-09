@@ -18,7 +18,7 @@ function listar(req, res) {
         res.status(200).json(resultado);
       })
       .catch(function (erro) {
-        console.log("servidorModel.js: ", erro);
+      //console.log("servidorModel.js: ", erro);
         // retorna o erro para o then do fetch com um status de erro de servidor (500-599):
         res.status(500).json(erro);
       });
@@ -48,7 +48,7 @@ function cadastrar(req, res) {
         res.status(200).json(resultado);
       })
       .catch(function (erro) {
-        console.log("servidorModel.js: ", erro);
+      //console.log("servidorModel.js: ", erro);
         // retorna o erro para o then do fetch com um status de erro de servidor (500-599):
         res.status(500).json(erro);
       });

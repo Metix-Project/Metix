@@ -12,7 +12,7 @@ function listar(req, res) {
         res.status(200).json(resultado);
       })
       .catch((erro) => {
-        console.log("Erro em listar:", erro);
+      //console.log("Erro em listar:", erro);
         res.status(500).json(erro);
       });
   }
@@ -68,7 +68,7 @@ function autenticar(req, res) {
         }
       })
       .catch((erro) => {
-        console.log("Erro em autenticar:", erro);
+      //console.log("Erro em autenticar:", erro);
         res.status(500).json(erro);
       });
   }

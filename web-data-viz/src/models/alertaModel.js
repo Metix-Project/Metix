@@ -3,17 +3,30 @@ var database = require("../database/connection.js");
 
 
 // Lista o ranking de alertas por servidor
-function listarRanking(macAddress) {
+function listarRanking(macAddress, Periodo) {
+ //console.log("macAddress Atual: " + macAddress)
+ var instrucaoSQL = `SELECT fkIdServidor AS Servidor, componenteNome AS Componente, motivo AS Motivo, DATE(DataHora) AS Data, COUNT(*) AS Quantidade FROM Alerta WHERE fkIdServidor = "${macAddress}" and 
+DataHora >= NOW() - INTERVAL ${Periodo} DAY GROUP BY fkIdServidor, componenteNome, motivo, DATE(DataHora) ORDER BY Quantidade DESC, Data DESC;`
+
+ //console.log("executando a instrução SQL: \n" + instrucaoSQL)
   return database.executar(
-    `SELECT fkIdServidor AS Servidor, componenteNome AS Componente, motivo AS Motivo, DATE(DataHora) AS Data, COUNT(*) AS Quantidade FROM Alerta WHERE fkIdServidor = "${macAddress}" GROUP BY fkIdServidor, componenteNome, motivo, DATE(DataHora) ORDER BY Quantidade DESC, Data DESC;`
+    
+    instrucaoSQL
   ); 
 }
 
 // Lista a quantidade de alertas por servidor, componente e período
-function listarQtdPorServidor() {
+function listarQtdPorServidor(periodo, servidor) {
   return database.executar(
-    `SELECT fkIdServidor AS Servidor, componenteNome AS Componente, DATE(DataHora) AS Periodo, COUNT(*) AS TotalAlertas FROM Alerta WHERE ${filtroPeriodo} ${filtroComponente} GROUP BY fkIdServidor, componenteNome, DATE(DataHora) ORDER BY Periodo DESC, Servidor, Componente;`
+    `SELECT fkIdServidor AS Servidor, componenteNome AS Componente, motivo AS Motivo, DATE(DataHora) AS Data, COUNT(*) AS TotalAlertas FROM Alerta WHERE fkIdServidor = "${servidor}" and 
+DataHora >= NOW() - INTERVAL ${periodo} DAY GROUP BY fkIdServidor, componenteNome, motivo, DATE(DataHora) ORDER BY TotalAlertas DESC, Data DESC;`
   );
+}
+
+function listarServidoresPorPeriodo (periodo){
+  return database.executar(
+    `SELECT fkIdServidor AS Servidor, componenteNome AS Componente, motivo AS Motivo, DATE(DataHora) AS Data, COUNT(*) AS TotalAlertas FROM Alerta WHERE DataHora >= NOW() - INTERVAL ${periodo} DAY GROUP BY fkIdServidor, componenteNome, motivo, DATE(DataHora) ORDER BY TotalAlertas DESC, Data DESC;`
+  )
 }
 
 // Lista alertas por estado (ALERTA)
@@ -47,6 +60,7 @@ function listarTodos() {
 module.exports = {
   listarRanking,
   listarQtdPorServidor,
+  listarServidoresPorPeriodo,
   listarPorEstadoAlerta,
   listarPorEstadoRisco,
   listarUltimas24Horas,

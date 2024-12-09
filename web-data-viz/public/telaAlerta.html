@@ -58,7 +58,7 @@
         <div class="status-card yellow">
           <h3 id="TotalAlerta">00</h3>
           <p>COMPONENTES EM ESTADO DE ALERTA</p>
-          <button class="bttnModalOpenY" onclick="openModalYellow()"> Abrir modal </button>
+          <button class="bttnModalOpenY" onclick="openModalYellow()"> Visualizar </button>
 
           <dialog id="modalYellow">
             <div class="container-fluid py-4">
@@ -83,14 +83,14 @@
                 </div>
               </div>
             </div>
-            <button class="bttnModalClose" onclick="modalYellow.close()"> Fechar modal </button>
+            <button class="bttnModalClose" onclick="modalYellow.close()"> Fechar visualização de dados </button>
           </dialog>
         </div>
 
         <div class="status-card red">
           <h3 id="TotalRisco">00</h3>
           <p>COMPONENTES EM ESTADO DE RISCO</p>
-          <button class="bttnModalOpenD" onclick="openModalRed()"> Abrir modal </button>
+          <button class="bttnModalOpenD" onclick="openModalRed()"> Visualizar </button>
 
           <dialog id="modalRed">
             <div class="container-fluid py-4">
@@ -115,14 +115,14 @@
                 </div>
               </div>
             </div>
-            <button class="bttnModalClose" onclick="modalRed.close()"> Fechar modal </button>
+            <button class="bttnModalClose" onclick="modalRed.close()"> Fechar visualização de dados </button>
           </dialog>
         </div>
 
         <div class="status-card recent">
           <h3 id="Total24Horas">00</h3>
           <p>ALERTAS DAS ÚLTIMAS 24 HORAS</p>
-          <button class="bttnModalOpenR" onclick="openModalRecent()"> Abrir modal </button>
+          <button class="bttnModalOpenR" onclick="openModalRecent()"> Visualizar </button>
 
           <dialog id="modalRecent">
             <div class="container-fluid py-4">
@@ -147,14 +147,14 @@
                 </div>
               </div>
             </div>
-            <button class="bttnModalClose" onclick="modalRecent.close()"> Fechar modal </button>
+            <button class="bttnModalClose" onclick="modalRecent.close()"> Fechar visualização de dados </button>
           </dialog>
         </div>
 
         <div class="status-card green">
           <h3 id="TotalTodos">00</h3>
           <p>TODOS OS ALERTAS JÁ GERADOS</p>
-          <button class="bttnModalOpenG" onclick="openModalGreen()"> Abrir modal </button>
+          <button class="bttnModalOpenG" onclick="openModalGreen()"> Visualizar </button>
 
           <dialog id="modalGreen">
             <div class="container-fluid py-4">
@@ -179,7 +179,7 @@
                 </div>
               </div>
             </div>
-            <button class="bttnModalClose" onclick="modalGreen.close()"> Fechar modal </button>
+            <button class="bttnModalClose" onclick="modalGreen.close()"> Fechar visualização de dados </button>
           </dialog>
         </div>
       </div>
@@ -190,13 +190,13 @@
           <div class="ranking-filter">
             <h4>Ranking dos motivos</h4>
             <div class="filters">
-              <select>
-                <option>Semana</option>
-                <option>Mês</option>
+              <select id="selectPeriodo1" onchange="listarRanking()">
+                <option value="7" selected>Semana</option>
+                <option value="30">Mês</option>
               </select>
-              <select id="selectServidor1" onchange="modificarServidor()">
+              <select id="selectServidor1" onchange="listarRanking()">
                 <!-- <option>Todos os Servidores</option> -->
-                <option value="f946307321c2">Servidor 1</option>
+                <option value="f946307321c2" id="Servidor_1" selected>Servidor 1</option>
                 <option value="14857f833746">Servidor 2</option>
                 <option value="d09466c9be45">Servidor 3</option>
                 <option value="c7d12465a943">Servidor 4</option>
@@ -214,22 +214,14 @@
           <div class="period-filter">
             <h4>Quantidade de alertas </h4>
             <div class="filters">
-              <select>
-                <option>Componentes</option>
-                <option>CPU</option>
-                <option>RAM</option>
-                <option>DISCO</option>
-                <option>LATÊNCIA</option>
-                <option>REDE</option>
+
+              <select id="selectPeriodo2" onchange="listarQtdPorServidor()">
+                <option value="7" selected>Semana</option>
+                <option value="30">Mês</option>
               </select>
 
-              <select>
-                <option>Semana</option>
-                <option>Mês</option>
-              </select>
-
-              <select id="selectServidor2" onchange="modificarServidor()">
-                <option value="Todos"> Todos os Servidores</option>
+              <select id="selectServidor2" onchange="listarQtdPorServidor()">
+                <option value="Todos" selected> Todos os Servidores</option>
                 <option value="f946307321c2">Servidor 1</option>
                 <option value="14857f833746">Servidor 2</option>
                 <option value="d09466c9be45">Servidor 3</option>
@@ -643,7 +635,7 @@
   var macAddress2 = document.getElementById('selectServidor2').value;
 
   function modificarServidor() {
-    var macAddress = document.getElementById('selectServidor1').value;
+    var macAddress = selectServidor1.value;
     console.log("macAddress: " + macAddress)
     listarRanking(macAddress);
   }
@@ -671,14 +663,14 @@
         backgroundColor: '#f9922c', // Cor para 'DISCO'
       },
       {
-        label: 'LATÊNCIA',
+        label: 'LATENCIA',
         data: [81, 50, 90, 90],
-        backgroundColor: '#F8A8BA', // Cor para 'LATÊNCIA'
+        backgroundColor: '#F8A8BA', // Cor para 'LATENCIA'
       },
       {
         label: 'REDE',
         data: [81, 50, 90, 45],
-        backgroundColor: 'red', // Cor para 'LATÊNCIA'
+        backgroundColor: '#05d0de', // Cor para 'LATENCIA'
       }
     ]
   };
@@ -709,21 +701,13 @@
 
   // chart 2
 
+  let labelsData2 = [];
   const data2 = {
-    labels: [
-      'CPU ACIMA',
-      'CPU ABAIXO',
-      'RAM ACIMA',
-      'RAM ABAIXO',
-      'DISCO ACIMA',
-      'DISCO ABAIXO',
-      'LATÊNCIA ACIMA',
-      'LATÊNCIA ABAIXO'
-    ],
+    labels: labelsData2,
     datasets: [
       {
-        label: 'Servidor 1',
-        data: [''],
+        label: 'Acima da Media',
+        data: [],
         // backgroundColor: [
         //   '#FFDA6B', // CPU ACIMA
         //   '#FFDA6B', // CPU ABAIXO
@@ -731,8 +715,8 @@
         //   '#C0B2A0', // RAM ABAIXO
         //   '#f9922c', // DISCO ACIMA
         //   '#f9922c', // DISCO ABAIXO
-        //   '#F8A8BA', // LATÊNCIA ACIMA
-        //   '#F8A8BA' // LATÊNCIA ABAIXO
+        //   '#F8A8BA', // LATENCIA ACIMA
+        //   '#F8A8BA' // LATENCIA ABAIXO
         // ],
         // borderColor: [
         //   '#FFDA6B',
@@ -744,13 +728,13 @@
         //   '#F8A8BA',
         //   '#F8A8BA'
         // ],
-        backgroundColor: 'blue',
+        backgroundColor: '#f25c54',
         // borderWidth: 1,
       },
       {
-        label: 'Servidor 2',
+        label: 'Abaixo da Media',
         data: [],
-        backgroundColor: 'red',
+        backgroundColor: '#d8e2dc',
         // backgroundColor: [
         //   '#FFDA6B', // CPU ACIMA
         //   '#FFDA6B', // CPU ABAIXO
@@ -758,8 +742,8 @@
         //   '#C0B2A0', // RAM ABAIXO
         //   '#f9922c', // DISCO ACIMA
         //   '#f9922c', // DISCO ABAIXO
-        //   '#F8A8BA', // LATÊNCIA ACIMA
-        //   '#F8A8BA' // LATÊNCIA ABAIXO
+        //   '#F8A8BA', // LATENCIA ACIMA
+        //   '#F8A8BA' // LATENCIA ABAIXO
         // ],
         // borderColor: [
         //   '#FFDA6B',
@@ -786,51 +770,49 @@
     config2
   );
 
+
   //RANKING
-  function listarRanking(macAddress) {
+  function listarRanking() {
     console.log("macAddress: " + macAddress)
-    var macAddressVar = macAddress;
-    console.log("macAddress: " + macAddressVar)
-    fetch(`/alertaRouter/listarRanking/${macAddressVar}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        macAddressServer: macAddressVar
-      })
+    var macAddressVar = selectServidor1.value;
+    if (macAddressVar == undefined) {
+      macAddressVar = Servidor_1.value;
+    }
+    var periodoVar = selectPeriodo1.value;
+    if (periodoVar == undefined) {
+      periodoVar = 7;
+    }
+
+    console.log("macAddress Atualizado: " + macAddressVar)
+    fetch(`/alertaRouter/listarRanking/${macAddressVar}/${periodoVar}`, {
+      method: "GET",
     })
       .then(function (resposta) {
         if (resposta.ok) {
           resposta.json()
             .then(function (resposta) {
-              const labelsAtualizados = resposta.map(dado => dado.Componente);
+              console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+              resposta.reverse();
 
-              const LatenciaDadosAtualizados = resposta.map(dado => dado.Quantidade);
+              while (labelsData2.pop() !== undefined);
+              while (data2.datasets[0].data.pop() !== undefined);
+              while (data2.datasets[1].data.pop() !== undefined);
 
-              console.log('Resposta: ' + resposta[0].Motivo);
-              console.log('Dados: ' + LatenciaDadosAtualizados)
-              console.log('Labels: ' + labelsAtualizados)
-
-
-              chartRanking.data.labels = labelsAtualizados.reverse();
+              console.log(resposta);
 
               for (i = 0; i < resposta.length; i++) {
-                if (resposta[i].Motivo == 'ACIMA DA MEDIA') {
-                  chartRanking.data.datasets[0].data = LatenciaDadosAtualizados;
-                  chartRanking.data.datasets[0].label = "Acima da Média"
+                var registro = resposta[i];
+
+                if (!labelsData2.includes(registro.Componente)) {
+                  labelsData2.push(registro.Componente);
+                }
+
+                if (registro.Motivo == "ACIMA DA MEDIA") {
+                  data2.datasets[0].data.push(registro.Quantidade);
                 } else {
-                  {
-                    chartRanking.data.datasets[1].data = LatenciaDadosAtualizados;
-                    chartRanking.data.datasets[1].label = "Abaixo da Média"
-                  }
+                  data2.datasets[1].data.push(registro.Quantidade);
                 }
               }
-
-
-
-
-              // chartRanking.data.datasets[1].data = Array(labelsAtualizados.length).fill(85);
 
               chartRanking.update();
             });
@@ -841,149 +823,299 @@
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
       });
+
   }
 
   //QTD
   function listarQtdPorServidor() {
-    fetch("alertaRouter/listarQtdPorServidor", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      // body: JSON.stringify({
-      //     macAddressServer: macAddressVar
-      // })
-    })
-      .then(function (response) {
-        if (response.ok) {
-          response.json().then((resultado) => {
-            console.log(resultado);
-            const alertasServ1 = []
-            const alertasServ2 = [];
-            const alertasServ3 = [];
-            const alertasServ4 = [];
-
-            resultado.forEach(item => {
-              if (item.Servidor === "f946307321c2") alertasServ1.push([item.Componente, item.TotalAlertas]);
-              else if (item.Servidor === "14857f833746") alertasServ2.push([item.Componente, item.TotalAlertas]);
-              else if (item.Servidor === "d09466c9be45") alertasServ3.push([item.Componente, item.TotalAlertas]);
-              else alertasServ4.push([item.Componente, item.TotalAlertas]);
-            });
-
-            let alertasServ1CPU = 0;
-            let alertasServ1RAM = 0;
-            let alertasServ1DISCO = 0;
-            let alertasServ1LATENCIA = 0;
-            let alertasServ1REDE = 0;
-
-            for (var i = 0; i < alertasServ1.length; i++) {
-              if (alertasServ1[i][0] === 'CPU') {
-                alertasServ1CPU = alertasServ1[i][1];
-              }
-              else if (alertasServ1[i][0] === 'RAM') {
-                alertasServ1RAM = alertasServ1[i][1];
-              }
-              else if (alertasServ1[i][0] === 'DISCO') {
-                alertasServ1DISCO = alertasServ1[i][1];
-              }
-              else if (alertasServ1[i][0] === 'LATÊNCIA') {
-                alertasServ1LATENCIA = alertasServ1[i][1];
-              }
-              else {
-                alertasServ1REDE = alertasServ1[i][1];
-              }
-            }
-
-            let alertasServ2CPU = 0;
-            let alertasServ2RAM = 0;
-            let alertasServ2DISCO = 0;
-            let alertasServ2LATENCIA = 0;
-            let alertasServ2REDE = 0;
-
-            for (var i = 0; i < alertasServ2.length; i++) {
-              if (alertasServ2[i][0] === 'CPU') {
-                alertasServ2CPU = alertasServ2[i][1];
-              }
-              else if (alertasServ2[i][0] === 'RAM') {
-                alertasServ2RAM = alertasServ2[i][1];
-              }
-              else if (alertasServ2[i][0] === 'DISCO') {
-                alertasServ2DISCO = alertasServ2[i][1];
-              }
-              else if (alertasServ2[i][0] === 'LATÊNCIA') {
-                alertasServ2LATENCIA = alertasServ2[i][1];
-              }
-              else {
-                alertasServ2REDE = alertasServ2[i][1];
-              }
-            }
-
-            let alertasServ3CPU = 0;
-            let alertasServ3RAM = 0;
-            let alertasServ3DISCO = 0;
-            let alertasServ3LATENCIA = 0;
-            let alertasServ3REDE = 0;
-
-            for (var i = 0; i < alertasServ3.length; i++) {
-              if (alertasServ3[i][0] === 'CPU') {
-                alertasServ3CPU = alertasServ3[i][1];
-              }
-              else if (alertasServ3[i][0] === 'RAM') {
-                alertasServ3RAM = alertasServ3[i][1];
-              }
-              else if (alertasServ3[i][0] === 'DISCO') {
-                alertasServ3DISCO = alertasServ3[i][1];
-              }
-              else if (alertasServ3[i][0] === 'LATÊNCIA') {
-                alertasServ3LATENCIA = alertasServ3[i][1];
-              }
-              else {
-                alertasServ3REDE = alertasServ1[i][1];
-              }
-            }
-
-            let alertasServ4CPU = 0;
-            let alertasServ4RAM = 0;
-            let alertasServ4DISCO = 0;
-            let alertasServ4LATENCIA = 0;
-            let alertasServ4REDE = 0;
-
-            for (var i = 0; i < alertasServ4.length; i++) {
-              if (alertasServ4[i][0] === 'CPU') {
-                alertasServ4CPU = alertasServ4[i][1];
-              }
-              else if (alertasServ4[i][0] === 'RAM') {
-                alertasServ4RAM = alertasServ4[i][1];
-              }
-              else if (alertasServ4[i][0] === 'DISCO') {
-                alertasServ4DISCO = alertasServ4[i][1];
-              }
-              else if (alertasServ4[i][0] === 'LATÊNCIA') {
-                alertasServ4LATENCIA = alertasServ4[i][1];
-              }
-              else {
-                alertasServ4REDE = alertasServ4[i][1];
-              }
-            }
-
-            chartQtd.data.datasets[0].data = [alertasServ1CPU, alertasServ2CPU, alertasServ3CPU, alertasServ4CPU];
-            chartQtd.data.datasets[1].data = [alertasServ1RAM, alertasServ2RAM, alertasServ3RAM, alertasServ4RAM];
-            chartQtd.data.datasets[2].data = [alertasServ1DISCO, alertasServ2DISCO, alertasServ3DISCO, alertasServ4DISCO];
-            chartQtd.data.datasets[3].data = [alertasServ1LATENCIA, alertasServ2LATENCIA, alertasServ3LATENCIA, alertasServ4LATENCIA];
-            chartQtd.data.datasets[4].data = [alertasServ1REDE, alertasServ2REDE, alertasServ3REDE, alertasServ4REDE];
-
-
-
-            chartQtd.update();
-          })
-        }
-        else {
-          throw "Erro ao pegar dados de listarQtdPorServidor";
-        }
+    console.log("macAddress: " + macAddress)
+    var periodoVar = selectPeriodo2.value;
+    if (periodoVar == undefined) {
+      periodoVar = 7;
+    }
+    var macAddressVar = selectServidor2.value;
+    if (macAddressVar == "Todos") {
+      fetch("alertaRouter/listarServidoresPorPeriodo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          periodo: periodoVar
+        })
       })
-      .catch(function (erro) {
-        console.error(erro);
+        .then(function (response) {
+          if (response.ok) {
+            response.json().then((resultado) => {
+              const alertasServ1 = []
+              const alertasServ2 = [];
+              const alertasServ3 = [];
+              const alertasServ4 = [];
+
+              resultado.forEach(item => {
+                if (item.Servidor === "f946307321c2") alertasServ1.push([item.Componente, item.TotalAlertas]);
+                else if (item.Servidor === "14857f833746") alertasServ2.push([item.Componente, item.TotalAlertas]);
+                else if (item.Servidor === "d09466c9be45") alertasServ3.push([item.Componente, item.TotalAlertas]);
+                else if (item.Servidor === "c7d12465a943") alertasServ4.push([item.Componente, item.TotalAlertas]);
+              });
+
+              let alertasServ1CPU = 0;
+              let alertasServ1RAM = 0;
+              let alertasServ1DISCO = 0;
+              let alertasServ1LATENCIA = 0;
+              let alertasServ1REDE = 0;
+
+              for (var i = 0; i < alertasServ1.length; i++) {
+                if (alertasServ1[i][0] === 'CPU') {
+                  alertasServ1CPU += alertasServ1[i][1];
+                }
+                else if (alertasServ1[i][0] === 'RAM') {
+                  alertasServ1RAM += alertasServ1[i][1];
+                }
+                else if (alertasServ1[i][0] === 'DISCO') {
+                  alertasServ1DISCO += alertasServ1[i][1];
+                }
+                else if (alertasServ1[i][0] === 'LATENCIA') {
+                  alertasServ1LATENCIA += alertasServ1[i][1];
+                }
+                else if (alertasServ1[i][0] === 'REDE') {
+                  alertasServ1REDE += alertasServ1[i][1];
+                }
+              }
+
+              let alertasServ2CPU = 0;
+              let alertasServ2RAM = 0;
+              let alertasServ2DISCO = 0;
+              let alertasServ2LATENCIA = 0;
+              let alertasServ2REDE = 0;
+
+              for (var i = 0; i < alertasServ2.length; i++) {
+                if (alertasServ2[i][0] === 'CPU') {
+                  alertasServ2CPU += alertasServ2[i][1];
+                }
+                else if (alertasServ2[i][0] === 'RAM') {
+                  alertasServ2RAM += alertasServ2[i][1];
+                }
+                else if (alertasServ2[i][0] === 'DISCO') {
+                  alertasServ2DISCO += alertasServ2[i][1];
+                }
+                else if (alertasServ2[i][0] === 'LATENCIA') {
+                  alertasServ2LATENCIA += alertasServ2[i][1];
+                }
+                else if (alertasServ2[i][0] === 'REDE') {
+                  alertasServ2REDE += alertasServ2[i][1];
+                }
+              }
+
+              let alertasServ3CPU = 0;
+              let alertasServ3RAM = 0;
+              let alertasServ3DISCO = 0;
+              let alertasServ3LATENCIA = 0;
+              let alertasServ3REDE = 0;
+
+              for (var i = 0; i < alertasServ3.length; i++) {
+                if (alertasServ3[i][0] === 'CPU') {
+                  alertasServ3CPU += alertasServ3[i][1];
+                }
+                else if (alertasServ3[i][0] === 'RAM') {
+                  alertasServ3RAM += alertasServ3[i][1];
+                }
+                else if (alertasServ3[i][0] === 'DISCO') {
+                  alertasServ3DISCO += alertasServ3[i][1];
+                }
+                else if (alertasServ3[i][0] === 'LATENCIA') {
+                  alertasServ3LATENCIA += alertasServ3[i][1];
+                }
+                else if (alertasServ3[i][0] === 'REDE') {
+                  alertasServ3REDE += alertasServ1[i][1];
+                }
+              }
+
+              let alertasServ4CPU = 0;
+              let alertasServ4RAM = 0;
+              let alertasServ4DISCO = 0;
+              let alertasServ4LATENCIA = 0;
+              let alertasServ4REDE = 0;
+
+              for (var i = 0; i < alertasServ4.length; i++) {
+                if (alertasServ4[i][0] === 'CPU') {
+                  alertasServ4CPU += alertasServ4[i][1];
+                }
+                else if (alertasServ4[i][0] === 'RAM') {
+                  alertasServ4RAM += alertasServ4[i][1];
+                }
+                else if (alertasServ4[i][0] === 'DISCO') {
+                  alertasServ4DISCO += alertasServ4[i][1];
+                }
+                else if (alertasServ4[i][0] === 'LATENCIA') {
+                  alertasServ4LATENCIA += alertasServ4[i][1];
+                }
+                else if (alertasServ4[i][0] === 'REDE') {
+                  alertasServ4REDE += alertasServ4[i][1];
+                }
+              }
+
+              chartQtd.data.datasets[0].data = [alertasServ1CPU, alertasServ2CPU, alertasServ3CPU, alertasServ4CPU];
+              chartQtd.data.datasets[1].data = [alertasServ1RAM, alertasServ2RAM, alertasServ3RAM, alertasServ4RAM];
+              chartQtd.data.datasets[2].data = [alertasServ1DISCO, alertasServ2DISCO, alertasServ3DISCO, alertasServ4DISCO];
+              chartQtd.data.datasets[3].data = [alertasServ1LATENCIA, alertasServ2LATENCIA, alertasServ3LATENCIA, alertasServ4LATENCIA];
+              chartQtd.data.datasets[4].data = [alertasServ1REDE, alertasServ2REDE, alertasServ3REDE, alertasServ4REDE];
+
+
+
+              chartQtd.update();
+            })
+          }
+          else {
+            throw "Erro ao pegar dados de listarQtdPorServidor";
+          }
+        })
+        .catch(function (erro) {
+          console.error(erro);
+        })
+
+    } else {
+      fetch("alertaRouter/listarQtdPorServidor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          servidor: macAddressVar, periodo: periodoVar
+        })
       })
+        .then(function (response) {
+          if (response.ok) {
+            response.json().then((resultado) => {
+              console.log(resultado);
+              const alertasServ1 = []
+              const alertasServ2 = [];
+              const alertasServ3 = [];
+              const alertasServ4 = [];
+
+              resultado.forEach(item => {
+                if (item.Servidor === "f946307321c2") alertasServ1.push([item.Componente, item.TotalAlertas]);
+                else if (item.Servidor === "14857f833746") alertasServ2.push([item.Componente, item.TotalAlertas]);
+                else if (item.Servidor === "d09466c9be45") alertasServ3.push([item.Componente, item.TotalAlertas]);
+                else if (item.Servidor === "c7d12465a943") alertasServ4.push([item.Componente, item.TotalAlertas]);
+              });
+
+              let alertasServ1CPU = 0;
+              let alertasServ1RAM = 0;
+              let alertasServ1DISCO = 0;
+              let alertasServ1LATENCIA = 0;
+              let alertasServ1REDE = 0;
+
+              for (var i = 0; i < alertasServ1.length; i++) {
+                if (alertasServ1[i][0] === 'CPU') {
+                  alertasServ1CPU += alertasServ1[i][1];
+                }
+                else if (alertasServ1[i][0] === 'RAM') {
+                  alertasServ1RAM += alertasServ1[i][1];
+                }
+                else if (alertasServ1[i][0] === 'DISCO') {
+                  alertasServ1DISCO += alertasServ1[i][1];
+                }
+                else if (alertasServ1[i][0] === 'LATENCIA') {
+                  alertasServ1LATENCIA += alertasServ1[i][1];
+                }
+                else if (alertasServ1[i][0] === 'REDE') {
+                  alertasServ1REDE += alertasServ1[i][1];
+                }
+              }
+
+              let alertasServ2CPU = 0;
+              let alertasServ2RAM = 0;
+              let alertasServ2DISCO = 0;
+              let alertasServ2LATENCIA = 0;
+              let alertasServ2REDE = 0;
+
+              for (var i = 0; i < alertasServ2.length; i++) {
+                if (alertasServ2[i][0] === 'CPU') {
+                  alertasServ2CPU += alertasServ2[i][1];
+                }
+                else if (alertasServ2[i][0] === 'RAM') {
+                  alertasServ2RAM += alertasServ2[i][1];
+                }
+                else if (alertasServ2[i][0] === 'DISCO') {
+                  alertasServ2DISCO += alertasServ2[i][1];
+                }
+                else if (alertasServ2[i][0] === 'LATENCIA') {
+                  alertasServ2LATENCIA += alertasServ2[i][1];
+                }
+                else if (alertasServ2[i][0] === 'REDE') {
+                  alertasServ2REDE += alertasServ2[i][1];
+                }
+              }
+
+              let alertasServ3CPU = 0;
+              let alertasServ3RAM = 0;
+              let alertasServ3DISCO = 0;
+              let alertasServ3LATENCIA = 0;
+              let alertasServ3REDE = 0;
+
+              for (var i = 0; i < alertasServ3.length; i++) {
+                if (alertasServ3[i][0] === 'CPU') {
+                  alertasServ3CPU += alertasServ3[i][1];
+                }
+                else if (alertasServ3[i][0] === 'RAM') {
+                  alertasServ3RAM += alertasServ3[i][1];
+                }
+                else if (alertasServ3[i][0] === 'DISCO') {
+                  alertasServ3DISCO += alertasServ3[i][1];
+                }
+                else if (alertasServ3[i][0] === 'LATENCIA') {
+                  alertasServ3LATENCIA += alertasServ3[i][1];
+                }
+                else if (alertasServ3[i][0] === 'REDE') {
+                  alertasServ3REDE += alertasServ1[i][1];
+                }
+              }
+
+              let alertasServ4CPU = 0;
+              let alertasServ4RAM = 0;
+              let alertasServ4DISCO = 0;
+              let alertasServ4LATENCIA = 0;
+              let alertasServ4REDE = 0;
+
+              for (var i = 0; i < alertasServ4.length; i++) {
+                if (alertasServ4[i][0] === 'CPU') {
+                  alertasServ4CPU += alertasServ4[i][1];
+                }
+                else if (alertasServ4[i][0] === 'RAM') {
+                  alertasServ4RAM += alertasServ4[i][1];
+                }
+                else if (alertasServ4[i][0] === 'DISCO') {
+                  alertasServ4DISCO += alertasServ4[i][1];
+                }
+                else if (alertasServ4[i][0] === 'LATENCIA') {
+                  alertasServ4LATENCIA += alertasServ4[i][1];
+                }
+                else if (alertasServ4[i][0] === 'REDE') {
+                  alertasServ4REDE += alertasServ4[i][1];
+                }
+              }
+
+              chartQtd.data.datasets[0].data = [alertasServ1CPU, alertasServ2CPU, alertasServ3CPU, alertasServ4CPU];
+              chartQtd.data.datasets[1].data = [alertasServ1RAM, alertasServ2RAM, alertasServ3RAM, alertasServ4RAM];
+              chartQtd.data.datasets[2].data = [alertasServ1DISCO, alertasServ2DISCO, alertasServ3DISCO, alertasServ4DISCO];
+              chartQtd.data.datasets[3].data = [alertasServ1LATENCIA, alertasServ2LATENCIA, alertasServ3LATENCIA, alertasServ4LATENCIA];
+              chartQtd.data.datasets[4].data = [alertasServ1REDE, alertasServ2REDE, alertasServ3REDE, alertasServ4REDE];
+
+
+
+              chartQtd.update();
+            })
+          }
+          else {
+            throw "Erro ao pegar dados de listarQtdPorServidor";
+          }
+        })
+        .catch(function (erro) {
+          console.error(erro);
+        })
+    }
+
   }
 
 
@@ -1255,5 +1387,6 @@
         console.log(`#ERRO: ${resposta}`);
       });
   }
+
 
 </script>

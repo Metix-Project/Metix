@@ -40,7 +40,7 @@ function executar(instrucao) {
         reject(erro);
       }
       // caso contrário, imprime os resultados da instrução:
-      console.log(resultados);
+    //console.log(resultados);
       // e resolve a promessa enviando os resultados, que podem ser tratados em um `.then`:
       resolve(resultados);
     });

@@ -16,7 +16,7 @@ function DadosKpiCPU(mcAdress) {
 FROM DadosServidor
 WHERE dataHora >= NOW() - INTERVAL 1 DAY AND macAddress = "${mcAdress}";`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -27,7 +27,7 @@ WHERE macAddress = "${mcAdress}"
 ORDER BY cpuPorc DESC
 LIMIT 2;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -37,7 +37,7 @@ FROM DadosServidor
 WHERE cpuPorc > 85 AND macAddress = "${mcAdress}"
 GROUP BY macAddress;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -48,7 +48,7 @@ WHERE macAddress = "${mcAdress}"
 ORDER BY dataHora DESC
 LIMIT 5;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -60,7 +60,7 @@ FROM DadosServidor
 WHERE dataHora >= NOW() - INTERVAL 1 DAY AND macAddress = "${mcAdress}"
 GROUP BY macAddress;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -71,7 +71,7 @@ WHERE macAddress = "${mcAdress}"
 ORDER BY MemoriaPorc DESC
 LIMIT 2;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -81,7 +81,7 @@ FROM DadosServidor
 WHERE MemoriaPorc > 85 AND macAddress = "${mcAdress}"
 GROUP BY macAddress;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -92,7 +92,7 @@ WHERE macAddress = "${mcAdress}"
 ORDER BY dataHora DESC
 LIMIT 5;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -104,7 +104,7 @@ function DadosKpiRede(mcAdress) {
 FROM DadosServidor
 WHERE macAddress = "${mcAdress}";`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -121,7 +121,7 @@ MbpsRecebidos AS picoRedeRec
 FROM DadosServidor
 WHERE MbpsRecebidos = (SELECT MAX(MbpsRecebidos) FROM DadosServidor WHERE macAddress = "${mcAdress}");`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -130,7 +130,7 @@ function DadosKpiRedeAlertas(mcAdress) {
 FROM DadosServidor
 WHERE (MbpsEnviados > 1000 OR MbpsRecebidos > 1000) AND macAddress = "${mcAdress}";`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -154,7 +154,7 @@ LEFT JOIN
 ON enviados.dataHora = recebidos.dataHora
 ORDER BY enviados.dataHora DESC;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -166,7 +166,7 @@ FROM DadosServidor
 WHERE dataHora >= NOW() - INTERVAL 1 DAY AND macAddress = "${mcAdress}"
 GROUP BY macAddress;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -178,7 +178,7 @@ WHERE macAddress = "${mcAdress}"
 ORDER BY Latencia DESC
 LIMIT 2;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -187,7 +187,7 @@ function DadosKpiLatenciaAlertas(mcAdress) {
 FROM DadosServidor
 WHERE Latencia > 100 AND macAddress = "${mcAdress}";`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -198,7 +198,7 @@ WHERE macAddress = "${mcAdress}"
 ORDER BY dataHora DESC
 LIMIT 5;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -209,7 +209,7 @@ function DadosKpiDisco(mcAdress) {
 FROM DadosServidor
 WHERE dataHora >= NOW() - INTERVAL 1 DAY AND macAddress = "${mcAdress}";`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -220,7 +220,7 @@ WHERE macAddress = "${mcAdress}"
 ORDER BY DiscoPorc DESC
 LIMIT 2;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -230,7 +230,7 @@ FROM DadosServidor
 WHERE DiscoPorc > 85 AND macAddress = "${mcAdress}"
 GROUP BY macAddress;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 
@@ -242,7 +242,7 @@ WHERE macAddress = "08979866bdfd"
 ORDER BY dataHora DESC
 LIMIT 1;`;
 
-  console.log("Executando Query \n" + instrucaosql);
+//console.log("Executando Query \n" + instrucaosql);
   return database.executar(instrucaosql);
 }
 

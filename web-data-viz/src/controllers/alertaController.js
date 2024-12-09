@@ -4,8 +4,9 @@ var alertaModel = require("../models/alertaModel.js");
 // Lista o ranking de alertas por servidor
 function listarRanking(req, res) {
   var macAddress = req.params.macAddressVar;
+  var Periodo = req.params.Periodo;
   alertaModel
-    .listarRanking(macAddress)
+    .listarRanking(macAddress, Periodo)
     .then((resultado) => {
       res.status(200).json(resultado);
     })
@@ -17,10 +18,27 @@ function listarRanking(req, res) {
 
 // Lista a quantidade de alertas por servidor, componente e período
 function listarQtdPorServidor(req, res) {
-  const {periodo, componente} = req.body;
+  const {periodo, servidor} = req.body;
   alertaModel
-    .listarQtdPorServidor(periodo, componente)
-    .then((resultado) => res.status(200).json(resultado))
+    .listarQtdPorServidor(periodo, servidor)
+    .then((resultado) => {
+      //console.log("resultado:", resultado)
+      res.status(200).json(resultado)
+    })
+    .catch((erro) => {
+      console.error("Erro ao listar quantidade de alertas por servidor:", erro);
+      res.status(500).json(erro);
+    });
+}
+
+function listarServidoresPorPeriodo(req, res) {
+  const {periodo} = req.body;
+  alertaModel
+    .listarServidoresPorPeriodo(periodo)
+    .then((resultado) => {
+      //console.log("resultado:", resultado)
+      res.status(200).json(resultado)
+    })
     .catch((erro) => {
       console.error("Erro ao listar quantidade de alertas por servidor:", erro);
       res.status(500).json(erro);
@@ -75,6 +93,7 @@ function listarTodos(req, res) {
 module.exports = {
   listarRanking,
   listarQtdPorServidor,
+  listarServidoresPorPeriodo,
   listarPorEstadoAlerta,
   listarPorEstadoRisco,
   listarUltimas24Horas,
