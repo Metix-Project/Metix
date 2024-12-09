@@ -43,7 +43,7 @@ function gerarGraficoLinhaDias(sundayValue, saturdayValue, macAddress, component
 
                         arrayValues.push(item.cpuPorc);
                         labelValues.push(diaFormatado);
-                        maxValues.push(85);
+                        maxValues.push(75);
                     });
 
                     historicoEmDiasChart.data.datasets[0].data = arrayValues;
@@ -69,7 +69,7 @@ function gerarGraficoLinhaDias(sundayValue, saturdayValue, macAddress, component
 
                         arrayValues.push(item.memoriaPorc);
                         labelValues.push(diaFormatado);
-                        maxValues.push(85);
+                        maxValues.push(75);
                     });
 
                     historicoEmDiasChart.data.datasets[0].data = arrayValues;
@@ -95,7 +95,7 @@ function gerarGraficoLinhaDias(sundayValue, saturdayValue, macAddress, component
 
                         arrayValues.push(item.discoPorc);
                         labelValues.push(diaFormatado);
-                        maxValues.push(85);
+                        maxValues.push(75);
                     });
 
                     historicoEmDiasChart.data.datasets[0].data = arrayValues;
@@ -121,7 +121,7 @@ function gerarGraficoLinhaDias(sundayValue, saturdayValue, macAddress, component
 
                         arrayValues.push(item.latencia);
                         labelValues.push(diaFormatado);
-                        maxValues.push(100);
+                        maxValues.push(90);
                     });
 
                     historicoEmDiasChart.data.datasets[0].data = arrayValues;
@@ -150,7 +150,7 @@ function gerarGraficoLinhaDias(sundayValue, saturdayValue, macAddress, component
                         arrayValues.push(item.mbpsRecebidos);
                         mbpsEnviados.push(item.mbpsEnviados);
                         labelValues.push(diaFormatado);
-                        maxValues.push(100);
+                        maxValues.push(90);
                     });
 
                     historicoEmDiasChart.data.datasets[0].data = arrayValues;
