@@ -808,9 +808,9 @@
                 }
 
                 if (registro.Motivo == "ACIMA DA MEDIA") {
-                  data2.datasets[0].data.push(registro.Quantidade);
+                  data2.datasets[0].data[labelsData2.indexOf(registro.Componente)] = registro.Quantidade;
                 } else {
-                  data2.datasets[1].data.push(registro.Quantidade);
+                  data2.datasets[1].data[labelsData2.indexOf(registro.Componente)] = registro.Quantidade;
                 }
               }
 

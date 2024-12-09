@@ -114,3 +114,11 @@ insert into Servidor (macAddress, pontoDeControle, fkEmpresa) VALUES ('c7d12465a
 INSERT INTO Usuario(nome, email, senha, cpf, telefone, cargo, fkEmpresa) VALUES 
 ("Jamal", "jamal@gmail.com", "1234567", "55544433321", "11999998888", "Gerente", 1),
 ("José Carlos", "jose_carlos@gmail.com", "1234567", "99988877764", "11949498585", "Técnico", 1);
+
+
+insert into Alerta (fkIdServidor, componenteNome, DataHora, motivo, estadoAtual) values
+('f946307321c2', 'CPU', '2024-12-02 10:15:00', 'ACIMA DA MEDIA', 'ALERTA'), 
+('14857f833746', 'RAM', '2024-12-02 10:30:00', 'ABAIXO DA MEDIA', 'RISCO'), 
+('d09466c9be45', 'DISCO', '2024-12-02 11:00:00', 'ACIMA DA MEDIA', 'ALERTA'), 
+('c7d12465a943', 'LATENCIA', '2024-12-02 11:45:00', 'ABAIXO DA MEDIA', 'RISCO'), 
+('f946307321c2', 'REDE', '2024-12-02 12:00:00', 'ACIMA DA MEDIA', 'ALERTA');
