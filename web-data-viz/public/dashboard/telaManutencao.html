@@ -40,14 +40,22 @@
 
     <div class="main-content">
       <div class="content-wrapper">
+        <div id="calendar-container"></div>
         <div id="calendar-navigation">
           <!-- Botões de navegação de mês -->
-          <button id="prev-month" onclick="goToPrevMonth()">← Mês Anterior</button>
-          <button id="next-month" onclick="goToNextMonth()">Próximo Mês &rarr;</button>
+          <div class="navigations-buttons">
+            <button id="prev-month" onclick="goToPrevMonth()">← Mês Anterior</button>
+            <button id="next-month" onclick="goToNextMonth()">Próximo Mês &rarr;</button>
+          </div>
         </div>
-        <div id="calendar-container"></div>
+        <div class="status-card green" onclick="redirectToJira()">
+          <p>MANUTENÇÕES PARA OS PRÓXIMOS MESES</p>
+          <h3 id="manutencoes-kpi">0</h3>
+        </div>
       </div>
     </div>
+
+
 
     <!-- Modal para exibir horas -->
     <div id="hour-modal" class="modal">
@@ -57,8 +65,8 @@
           <div id="modal-transactions-info"></div>
         </h2>
         <button id="schedule-maintenance-btn" onclick="openScheduleScreen()">Agendar manutenção</button>
-        <div id="lowest-transactions"></div>
-        <div id="hour-transactions"></div>
+        <div id="lowest-transactions" style="color: white;"></div>
+        <div id="hour-transactions" style="color: white;"></div>
       </div>
     </div>
 
@@ -66,17 +74,18 @@
     <div id="schedule-screen" class="modal" style="display: none;">
       <div class="modal-content">
         <span class="close-button" onclick="backToModal()">&times;</span>
-        <h2>Agendar manutenção</h2>
+        <h2 style="color: white;">Agendar manutenção</h2>
         <form id="schedule-form">
-          <div class="date-container">
-            <label for="selected-date">Data:</label>
+          <div class="date-container" style="color: white;">
+            <label for="selected-date" style="color: white;">Data:</label>
             <span id="selected-date"></span> <!-- Este é o local onde a data será exibida -->
           </div>
 
-          <label for="schedule-time">Hora:</label>
+          <label for="schedule-time" style="color: white; width: 390px;">Hora:</label>
           <input type="time" id="schedule-time" name="schedule-time" required>
+          <br>
 
-          <label for="server-select">Servidor:</label>
+          <label for="server-select" style="color: white;">Servidor:</label>
           <select id="server-select" name="server-select" required>
             <option value="server1">Servidor 1</option>
             <option value="server2">Servidor 2</option>
@@ -84,7 +93,7 @@
             <option value="server4">Servidor 4</option>
           </select>
 
-          <label for="component-select">Componente:</label>
+          <label for="component-select" style="color: white;">Componente:</label>
           <select id="component-select" name="component-select" required>
             <option value="cpu">CPU</option>
             <option value="ram">RAM</option>
@@ -102,47 +111,71 @@
 </body>
 
 <script>
+  // KPI
+
+  function redirectToJira() {
+    const jiraLink = "https://metix2.atlassian.net/jira/servicedesk/projects/METIX/queues/custom/1";
+    window.open(jiraLink, "_blank");  // Abre o link em nova aba
+  }
+
+  function updateKPI() {
+    const kpiElement = document.getElementById("manutencoes-kpi");
+    let currentCount = parseInt(kpiElement.textContent, 10) || 0;
+    kpiElement.textContent = currentCount + 1;
+  }
 
   // API JIRA
-  async function createIssue(projectKey, summary, description) {
+  async function createIssue(summary, description) {
+    const response = await fetch('http://localhost:3333/api/maintenance/create-ticket', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ summary, description })
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro ao criar o ticket');
+    }
+
+    return await response.json();
+  }
+
+  document.getElementById("schedule-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const date = document.getElementById("selected-date").textContent;
+    const time = document.getElementById("schedule-time").value;
+    const server = document.getElementById("server-select").value;
+    const component = document.getElementById("component-select").value;
+
+    if (!date || !time || !server || !component) {
+      alert("Por favor, preencha todos os campos do formulário!");
+      return;
+    }
+
+    // Atualiza KPI local
+    updateKPI();
+
+    // Cria o ticket no Jira
     try {
-      const response = await fetch('http://localhost:3000/create-maintenance-ticket', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          summary: 'TESTE DE MANUTENÇÃO',
-          description: 'TROCA DE CPU',
-        })
-      });
+      const summary = `Manutenção agendada para ${date} às ${time}`;
+      const description = `Servidor: ${server}, Componente: ${component}.`;
 
-      if (!response.ok) {
-        throw new Error('Erro ao criar o ticket no backend');
-      }
+      const ticketKey = (await createIssue(summary, description)).ticketKey;
+      alert(`Manutenção agendada com sucesso!\nTicket Jira: ${ticketKey}`);
 
-      const data = await response.json();
-      return data.ticketKey;  // Retorna a chave do ticket criado
+
+      // Mensagem de sucesso
+      alert(`Manutenção agendada com sucesso!\nTicket Jira: ${ticketKey}`);
     } catch (error) {
       console.error('Erro ao criar o ticket:', error);
-      throw error;
+      alert('Erro ao criar o ticket no Jira, mas a manutenção foi agendada localmente.');
     }
-  }
-  document.getElementById("schedule-form").addEventListener("submit", async (event) => {
-    event.preventDefault(); // Impede o envio tradicional do formulário
-    console.log('Formulário enviado');  // Verifique se esse log aparece no console
 
-    const summary = 'Manutenção agendada'; // Resumo do ticket
-    const description = 'Manutenção agendada no servidor'; // Descrição do ticket
-
-    try {
-      const ticketKey = await createIssue('METIX', summary, description);  // Chamando a função para criar o ticket
-      console.log('Ticket criado com sucesso:', ticketKey);  // Exibe a chave do ticket no console
-    } catch (error) {
-      console.error('Erro ao criar o ticket:', error);  // Exibe erro no console
-    }
+    // Fecha todos os modais e retorna para a tela principal
+    closeModal();
   });
-
 
   // CALENDARIO DE MAPA DE CALOR E AGENDAMENTOS
 
@@ -181,10 +214,14 @@
 
     const totalTransactions = hourlyData.reduce((sum, data) => sum + Math.round(data.media_transacoes_hora), 0);
 
+    // Formata o número com separadores de milhar
+    const formattedTotalTransactions = totalTransactions.toLocaleString("pt-BR");
+
     transactionsInfo.innerHTML = `
-      <div>${dateTitle}</div>
-      <div class="total-transactions">Quantidade de transações no dia: <strong>${totalTransactions}</strong></div>
-    `;
+  <div style="color: white;">${dateTitle}</div>
+  <div class="total-transactions" style="color: white;">Média de transações no dia: <strong>${formattedTotalTransactions}</strong></div>
+`;
+
 
     hourContainer.innerHTML = "";
     lowestTransactionsContainer.innerHTML = "";
@@ -198,6 +235,7 @@
 
     // Exibe os 5 horários com menor número de transações
     const lowestHours = sortedData.slice(0, 5);
+    lowestTransactionsContainer.innerHTML = `<h3>Horários com menor fluxo de transações:</h3>`;
     lowestHours.forEach(data => {
       const row = document.createElement("div");
       row.className = "hour-row";
@@ -207,16 +245,27 @@
       lowestTransactionsContainer.appendChild(row);
     });
 
-    // Agora exibimos o restante dos horários na ordem original
-    const remainingHours = hourlyData.filter(data => !lowestHours.includes(data)); // Exclui os 5 horários com menor transação
-    remainingHours.forEach(data => {
-      const row = document.createElement("div");
-      row.className = "hour-row";
-      row.innerHTML = `
-        <div class="hour-column">${data.hora}:00</div>
-        <div class="transaction-column">${Math.round(data.media_transacoes_hora)} transações</div>`;
-      hourContainer.appendChild(row);
+    // Agora exibimos os horários de 00:00 a 23:00 na ordem correta
+    const hourlyMap = new Array(24).fill(null);  // Cria um array para armazenar os dados de 00:00 a 23:00
+    hourlyData.forEach(data => {
+      hourlyMap[data.hora] = data;  // Preenche os horários no mapa com os dados correspondentes
     });
+
+    // Exibe os horários de 00:00 a 23:00 na ordem cronológica
+    hourContainer.innerHTML = `<h3>Quantia de transações por horário:</h3>`;
+for (let hour = 0; hour < 24; hour++) {
+  const data = hourlyMap[hour];
+  if (data) {  // Verifica se há dados para o horário
+    const formattedTransactions = Math.round(data.media_transacoes_hora).toLocaleString("pt-BR");
+    const row = document.createElement("div");
+    row.className = "hour-row";
+    row.innerHTML = `
+      <div class="hour-column">${data.hora}:00</div>
+      <div class="transaction-column">${formattedTransactions} transações</div>`;
+    hourContainer.appendChild(row);
+  }
+}
+
 
     modal.style.display = "block";
   };
@@ -284,7 +333,9 @@
     document.getElementById("next-month").style.display = monthIndex < data.length - 1 ? "inline-block" : "none";
 
     const monthTitle = new Date(ano, mes - 1).toLocaleString("pt-BR", { month: "long", year: "numeric" });
-    container.append("h2").attr("class", "month-title").text(monthTitle);
+    const formattedMonthTitle = monthTitle.charAt(0).toUpperCase() + monthTitle.slice(1); // Formata o mês para iniciar com letra maiúscula
+    container.append("h2").attr("class", "month-title").text(formattedMonthTitle);
+
 
     const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
     const header = container.append("div").attr("class", "calendar-header");
@@ -317,6 +368,9 @@
     }
   };
 
-  renderCalendar();
+  window.addEventListener("load", () => {
+    renderCalendar();
+  });
 </script>
+
 </html>

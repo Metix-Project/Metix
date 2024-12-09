@@ -119,3 +119,21 @@ async function gerarSugestao(mensagem) {
     throw error;
   }
 }
+
+// Importar o serviço do Jira
+const { createIssue } = require('./public/js/jiraService.js');
+
+// Adicionar a rota para lidar com a criação de tickets
+app.post('/api/maintenance/create-ticket', async (req, res) => {
+  const { summary, description } = req.body;
+
+  try {
+    // Chamar o serviço para criar o ticket no Jira
+    const ticketKey = await createIssue('METIX', summary, description);
+    res.status(200).json({ ticketKey });
+  } catch (error) {
+    console.error('Erro ao criar ticket no Jira:', error);
+    res.status(500).json({ error: 'Erro ao criar ticket no Jira' });
+  }
+});
+
