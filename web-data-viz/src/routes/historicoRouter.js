@@ -22,6 +22,10 @@ router.post("/pegarTotalAlertas", function (req, res) {
   historicoController.pegarTotalAlertas(req, res);
 });
 
+router.post("/obterDiaComMaisAlertas", function (req, res) {
+  historicoController.obterDiaComMaisAlertas(req, res);
+});
+
 router.post("/capturarUltimoAlerta", function (req, res) {
   historicoController.capturarUltimoAlerta(req, res);
 });

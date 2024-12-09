@@ -124,12 +124,12 @@
                         <div class="moreInfo">
                             <div class="warnings">
                                 <div class="infoCard">
-                                    <span class="title">Tempo Total Acima do Limite Indicado</span>
-                                    <span class="cardValue" id="totalTimeValue">00h 00min 00s</span>
+                                    <span class="title">Dia com maior quantidade de alertas</span>
+                                    <span class="cardValue" id="dayWithMostAlerts">Carregando...</span>
                                 </div>
                                 <div class="infoCard">
                                     <span class="title">Último Registro de Alerta do Componente</span>
-                                    <span class="cardValue" id="alertTimeValue">23h59 31/12/2024</span>
+                                    <span class="cardValue" id="alertTimeValue">Carregando...</span>
                                 </div>
                             </div>
                             <div class="infoCard">
@@ -219,45 +219,6 @@
         gerarRelatorio(serverIdentifier);
     }
 
-    function modificarComponente(componente) {
-        if (true) {
-            document.getElementById("cards").innerHTML = `
-                <div class="card">
-                    <span>Quantidade Média de Pacotes Recebidos</span>
-                    <span class="infoValue" id="initialValue">120 Mbps</span>
-                </div>
-                <div class="card">
-                    <span>Quantidade Média de Pacotes Enviados</span>
-                    <span class="infoValue" id="limitValue">670 Mbps</span>
-                </div>
-                <div class="card">
-                    <span>Quantidade de Alertas</span>
-                    <span class="infoValue" id="qtdAlertsValue">2</span>
-                    <span onclick="window.location.href = './telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
-                </div>
-            `;
-
-            document.getElementById("alertTimeValue").style.borderColor = 'rgb(65, 178, 141)';
-            document.getElementById("totalTimeValue").style.borderColor = 'rgb(65, 178, 141)';
-            document.getElementById("geminiText").style.borderColor = 'rgb(65, 178, 141)';
-            historicoComponenteEscolhidoChart.options.scales.y.max = 1250;
-            historicoComponenteEscolhidoChart.options.scales.y.title.text = "Mbps";
-            historicoComponenteEscolhidoChart.data.datasets[2] = {
-                label: "Pacotes Recebidos",
-                borderWidth: 4,
-                borderColor: 'rgba(5, 208, 222, 0.8)',
-                backgroundColor: 'rgba(5, 208, 222, 0.2)',
-                fill: true,
-                lineTension: 0.3,
-                data: valores6
-            }
-            historicoComponenteEscolhidoChart.update();
-
-            atualizarGraficoLinha(valores5, maxValues5, 'rgba(125, 148, 60, 0.8)', 'rgba(125, 148, 60, 0.2)', "Rede");
-            document.getElementById("initialValue").innerHTML = `${mediaLatenciaValue} Ms`;
-        }
-    }
-
     function atualizarGraficoLinha(valorData, valorMacAddress, idMetrica) {
         fetch("../historico/pegarMediasSemanais", {
             method: "POST",
@@ -296,7 +257,7 @@
                                 </div>
                                 <div class="card">
                                     <span>Quantidade de Alertas</span>
-                                    <span class="infoValue" id="qtdAlertsValue">4</span>
+                                    <span class="infoValue" id="qtdAlertsValue">0</span>
                                     <span onclick="window.location.href = './telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
                                 </div>
                             `;
@@ -321,7 +282,7 @@
                             });
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(255, 218, 107)';
-                            document.getElementById("totalTimeValue").style.borderColor = 'rgb(255, 218, 107)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(255, 218, 107)';
                             document.getElementById("geminiText").style.borderColor = 'rgb(255, 218, 107)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
@@ -343,6 +304,8 @@
                             let somaGeralTotalRam = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.memoriaTotal), 0);
                             let mediaGeralTotalRam = somaGeralTotalRam / dataJsonFunc.length;
 
+                            let limitePermitidoRam = mediaGeralTotalRam * 0.85;
+
                             document.getElementById("cards").innerHTML = `
                                 <div class="card">
                                     <span>Uso médio da Memória RAM</span>
@@ -350,7 +313,7 @@
                                 </div>
                                 <div class="card">
                                     <span>Limite Permitido</span>
-                                    <span class="infoValue" id="limitValue">14.5 GB</span>
+                                    <span class="infoValue" id="limitValue">${limitePermitidoRam.toFixed(1)} GB</span>
                                 </div>
                                 <div class="card">
                                     <span>Total de Memória RAM</span>
@@ -358,7 +321,7 @@
                                 </div>
                                 <div class="card">
                                     <span>Quantidade de Alertas</span>
-                                    <span class="infoValue" id="qtdAlertsValue">2</span>
+                                    <span class="infoValue" id="qtdAlertsValue">0</span>
                                     <span onclick="window.location.href = './telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
                                 </div>
                             `;
@@ -383,7 +346,7 @@
                             });
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(192, 178, 160)';
-                            document.getElementById("totalTimeValue").style.borderColor = 'rgb(192, 178, 160)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(192, 178, 160)';
                             document.getElementById("geminiText").style.borderColor = 'rgb(192, 178, 160)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
@@ -405,6 +368,8 @@
                             let somaGeralTotalDisco = dataJsonFunc.reduce((acumulador, valor) => acumulador + parseFloat(valor.discoTotal), 0);
                             let mediaGeralTotalDisco = somaGeralTotalDisco / dataJsonFunc.length;
 
+                            let limitePermitidoDisco = mediaGeralTotalDisco * 0.85
+
                             document.getElementById("cards").innerHTML = `
                                 <div class="card">
                                     <span>Média do Armazenamento</span>
@@ -412,7 +377,7 @@
                                 </div>
                                 <div class="card">
                                     <span>Limite Permitido</span>
-                                    <span class="infoValue" id="limitValue">930 GB</span>
+                                    <span class="infoValue" id="limitValue">${limitePermitidoDisco.toFixed(1)} GB</span>
                                 </div>
                                 <div class="card">
                                     <span>Armazenamento Total</span>
@@ -445,7 +410,7 @@
                             });
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(249, 146, 44)';
-                            document.getElementById("totalTimeValue").style.borderColor = 'rgb(249, 146, 44)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(249, 146, 44)';
                             document.getElementById("geminiText").style.borderColor = 'rgb(249, 146, 44)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
@@ -475,7 +440,7 @@
                                 </div>
                                 <div class="card">
                                     <span>Quantidade de Alertas</span>
-                                    <span class="infoValue" id="qtdAlertsValue">6</span>
+                                    <span class="infoValue" id="qtdAlertsValue">0</span>
                                     <span onclick="window.location.href = './telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
                                 </div>
                             `;
@@ -500,7 +465,7 @@
                             });
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(102, 35, 168)';
-                            document.getElementById("totalTimeValue").style.borderColor = 'rgb(102, 35, 168)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(102, 35, 168)';
                             document.getElementById("geminiText").style.borderColor = 'rgb(102, 35, 168)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
@@ -537,7 +502,7 @@
                                 </div>
                                 <div class="card">
                                     <span>Quantidade de Alertas</span>
-                                    <span class="infoValue" id="qtdAlertsValue">6</span>
+                                    <span class="infoValue" id="qtdAlertsValue">0</span>
                                     <span onclick="window.location.href = './telaAlerta.html'" class="seeMoreDetails">Ver detalhes</span>
                                 </div>
                             `;
@@ -565,7 +530,7 @@
                             });
 
                             document.getElementById("alertTimeValue").style.borderColor = 'rgb(65, 178, 141)';
-                            document.getElementById("totalTimeValue").style.borderColor = 'rgb(65, 178, 141)';
+                            document.getElementById("dayWithMostAlerts").style.borderColor = 'rgb(65, 178, 141)';
                             document.getElementById("geminiText").style.borderColor = 'rgb(65, 178, 141)';
 
                             historicoComponenteEscolhidoChart.data.datasets[0].data = arrayValues;
@@ -580,31 +545,27 @@
                                 label: "Pacotes Enviados",
                                 borderColor: 'rgba(125, 148, 60, 0.8)',
                                 backgroundColor: 'rgba(125, 148, 60, 0.2)',
-                                pointBackgroundColor: 'rgb(125, 148, 60)'
+                                pointBackgroundColor: 'rgb(125, 148, 60)',
+                                fill: true,
+                                lineTension: 0.3
                             };
 
                             historicoComponenteEscolhidoChart.data.labels = arrayWeek;
-                            historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | Pacotes`;
+                            historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | Rede`;
                             historicoComponenteEscolhidoChart.options.scales.y.max = 200;
                             historicoComponenteEscolhidoChart.options.scales.y.title.text = "Velocidade (mbps)";
-                            // historicoComponenteEscolhidoChart.data.datasets.splice(2, 1);
                         }
 
                         historicoComponenteEscolhidoChart.update();
+                        pegarTotalAlertas();
+                        capturarUltimoAlerta();
+                        obterDiaComMaisAlertas();
                     })
                 } else throw "Erro";
             })
             .catch(function (erro) {
                 console.error(erro);
             })
-
-        // historicoComponenteEscolhidoChart.data.datasets[0].data = vetorValores;
-        // historicoComponenteEscolhidoChart.data.datasets[1].data = vetorMax;
-        // historicoComponenteEscolhidoChart.data.datasets[0].borderColor = cor1;
-        // historicoComponenteEscolhidoChart.data.datasets[0].backgroundColor = cor2;
-        // historicoComponenteEscolhidoChart.data.datasets[0].label = component;
-        // historicoComponenteEscolhidoChart.options.plugins.title.text = `Últimos Dados Capturados | ${component}`;
-        // historicoComponenteEscolhidoChart.update();
     }
 
     window.addEventListener("load", () => document.querySelectorAll("#dualHandleSlider").forEach(dualHandleSlider => {
@@ -1194,4 +1155,125 @@
             document.getElementById('baixarRelatorioBtn').style.color = 'white';
         }
     });
+
+    function pegarTotalAlertas() {
+        let componenteSelecionado;
+        const elementValue = document.getElementById("selectHardware").value;
+        
+        if(elementValue == 1) componenteSelecionado = "CPU";
+        else if(elementValue == 2) componenteSelecionado = "RAM";
+        else if(elementValue == 3) componenteSelecionado = "DISCO";
+        else if(elementValue == 4) componenteSelecionado = "LATENCIA";
+        else componenteSelecionado = "REDE";
+
+        fetch("../historico/pegarTotalAlertas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                macAddressServer: document.getElementById("selectServer").value,
+                componenteServer: componenteSelecionado,
+                dateValueServer: dataVar
+            })
+        })
+        .then(function(response) {
+            if(response.ok){
+                response.json().then(resultado => {
+                    document.getElementById("qtdAlertsValue").innerHTML = resultado[0].totalAlertas;
+                });
+            } else throw "Erro em pegarTotalAlertas";
+        })
+        .catch(function(erro) {
+            console.error(erro);
+        })
+    }
+
+    function obterDiaComMaisAlertas() {
+        let componenteSelecionado;
+        const elementValue = document.getElementById("selectHardware").value;
+        
+        if(elementValue == 1) componenteSelecionado = "CPU";
+        else if(elementValue == 2) componenteSelecionado = "RAM";
+        else if(elementValue == 3) componenteSelecionado = "DISCO";
+        else if(elementValue == 4) componenteSelecionado = "LATENCIA";
+        else componenteSelecionado = "REDE";
+
+        fetch("../historico/obterDiaComMaisAlertas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                macAddressServer: document.getElementById("selectServer").value,
+                componenteServer: componenteSelecionado
+            })
+        })
+        .then(function(response) {
+            if(response.ok){
+                response.json().then(resultado => {
+                    const dataHora = new Date(resultado[0].Dia);
+
+                    const yearValue = dataHora.getFullYear();
+                    const monthValue = String(dataHora.getMonth() + 1).padStart(2, "0");
+                    const dayValue = String(dataHora.getDate()).padStart(2, "0");
+
+                    document.getElementById("dayWithMostAlerts").innerHTML = `${dayValue}/${monthValue}/${yearValue}`// | ${resultado[0].Quantidade} alerta(s)`;
+                })
+                .catch(function(erro){
+                    document.getElementById("dayWithMostAlerts").innerHTML = "Sem alertas!";
+                })
+            } else throw "Erro em pegarTotalAlertas";
+        })
+        .catch(function(erro) {
+            console.error(erro);
+        })
+    }
+
+    function capturarUltimoAlerta() {
+        let componenteSelecionado;
+        const elementValue = document.getElementById("selectHardware").value;
+        
+        if(elementValue == 1) componenteSelecionado = "CPU";
+        else if(elementValue == 2) componenteSelecionado = "RAM";
+        else if(elementValue == 3) componenteSelecionado = "DISCO";
+        else if(elementValue == 4) componenteSelecionado = "LATENCIA";
+        else componenteSelecionado = "REDE";
+
+        fetch("../historico/capturarUltimoAlerta", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                macAddressServer: document.getElementById("selectServer").value,
+                componenteServer: componenteSelecionado
+            })
+        })
+        .then(function(response) {
+            if(response.ok){
+                response.json().then(resultado => {
+                    const dataHora = new Date(resultado[0].DataHora);
+
+                    const yearValue = dataHora.getFullYear();
+                    const monthValue = String(dataHora.getMonth() + 1).padStart(2, '0');
+                    const dayValue = String(dataHora.getDate()).padStart(2, '0');
+
+                    const hourValue = String(dataHora.getHours()).padStart(2, '0');
+                    const minuteValue = String(dataHora.getMinutes()).padStart(2, '0');
+
+                    document.getElementById('alertTimeValue').innerHTML = `${hourValue}h${minuteValue} ${dayValue}/${monthValue}/${yearValue}`;
+                })
+                .catch(function(erro){
+                    document.getElementById("alertTimeValue").innerHTML = "Sem alertas!";
+                    console.log(erro);
+                });
+            } 
+            else throw "Erro em capturarUltimoAlerta";
+        })
+        .catch(function(erro) {
+            console.error(erro);
+        })
+    }
+    
 </script>
