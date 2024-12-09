@@ -24,8 +24,7 @@
   <link rel="stylesheet" href="../css/dashboardBase.css">
 </head>
 
-<body
-  onload="listarRanking(), listarQtdPorServidor()">
+<body>
 
   <div class="containerA">
     <!-- Sidebar -->
@@ -635,6 +634,8 @@
   window.onload = listarPorEstadoRisco();
   window.onload = listarUltimas24Horas();
   window.onload = listarTodos();
+  window.onload = listarRanking();
+  window.onload = listarQtdPorServidor()
 
   var macAddress = document.getElementById('selectServidor1').value;
   var macAddress2 = document.getElementById('selectServidor2').value;
