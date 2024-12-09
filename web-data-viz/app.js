@@ -49,9 +49,9 @@ const textoIA = [];
 
 const texto1 = `
   Analise os componentes acima, já indicando o processamento, uso da memória RAM e uso do armazenamento em cada dia do JSON, e indique qual é o problema que está ocorrendo. Vale ressaltar que:
-  - O limite do uso do processador (CPU) é de 85%; \n
-  - O limite uso da Memória RAM é de 85%; \n
-  - O limite do espaço em uso do Armazenamento (Disco) é de 85%.\n\n
+  - O limite do uso do processador (CPU) é de 75%; \n
+  - O limite uso da Memória RAM é de 75%; \n
+  - O limite do espaço em uso do Armazenamento (Disco) é de 75%.\n\n
 `;
 
 const texto2 = `Com a análise feita, explique como a sua análise foi feita para cada componente separadamente (Processador, Memória RAM e Disco). Indique também os dias que ultrapassaram o limite em algum dos componentes.\n\n`;
