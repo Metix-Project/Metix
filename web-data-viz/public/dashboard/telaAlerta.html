@@ -25,7 +25,7 @@
 </head>
 
 <body
-  onload="listarRanking(), listarQtdPorServidor(), listarTodos(), listarPorEstadoAlerta(), listarPorEstadoRisco(), listarUltimas24Horas()">
+  onload="listarRanking(), listarQtdPorServidor()">
 
   <div class="containerA">
     <!-- Sidebar -->
@@ -631,6 +631,11 @@
 </style>
 
 <script>
+  window.onload = listarPorEstadoAlerta();
+  window.onload = listarPorEstadoRisco();
+  window.onload = listarUltimas24Horas();
+  window.onload = listarTodos();
+
   var macAddress = document.getElementById('selectServidor1').value;
   var macAddress2 = document.getElementById('selectServidor2').value;
 
@@ -784,7 +789,7 @@
     }
 
     console.log("macAddress Atualizado: " + macAddressVar)
-    fetch(`/alertaRouter/listarRanking/${macAddressVar}/${periodoVar}`, {
+    fetch(`../alertaRouter/listarRanking/${macAddressVar}/${periodoVar}`, {
       method: "GET",
     })
       .then(function (resposta) {
@@ -1232,7 +1237,7 @@
   //MODAL
   function listarTodos() {
     var macAddressVar = macAddress;
-    fetch("/alertaRouter/listarTodos", {
+    fetch("../alertaRouter/listarTodos", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -1273,7 +1278,7 @@
 
   function listarPorEstadoAlerta() {
     var macAddressVar = macAddress;
-    fetch("/alertaRouter/listarPorEstadoAlerta", {
+    fetch("../alertaRouter/listarPorEstadoAlerta", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -1314,7 +1319,7 @@
 
   function listarPorEstadoRisco() {
     var macAddressVar = macAddress;
-    fetch("/alertaRouter/listarPorEstadoRisco", {
+    fetch("../alertaRouter/listarPorEstadoRisco", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -1353,7 +1358,7 @@
 
   function listarUltimas24Horas() {
     var macAddressVar = macAddress;
-    fetch("/alertaRouter/listarUltimas24Horas", {
+    fetch("../alertaRouter/listarUltimas24Horas", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
