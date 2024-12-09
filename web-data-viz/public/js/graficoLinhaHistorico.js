@@ -5,7 +5,7 @@ function gerarGraficoLinhaDias(sundayValue, saturdayValue, macAddress, component
     else if(macAddress == "14857f833746") servidorName = "Servidor 2";
     else if(macAddress == "d09466c9be45") servidorName = "Servidor 3";
 
-    const diaSemanas = ["Sáb", "Dom", "Seg", "Ter", "Qua", "Qui", "Sex"];
+    const diaSemanas = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
     
     fetch("../historico/pegarMedias", {
         method: "POST",
@@ -35,7 +35,7 @@ function gerarGraficoLinhaDias(sundayValue, saturdayValue, macAddress, component
                 if(componente == 1){
                     jsonDataValues.forEach(item => {
                         const date = new Date(item.dia);
-                        const day = String(date.getDate() + 1 - 1).padStart(2, '0');
+                        const day = String(date.getDate() + 1).padStart(2, '0');
                         const month = String(date.getMonth() + 1).padStart(2, '0');
                         const year = date.getFullYear();
                         const diaSemanaIndex = date.getDay();
