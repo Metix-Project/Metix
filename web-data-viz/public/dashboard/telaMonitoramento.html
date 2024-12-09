@@ -1217,7 +1217,6 @@ DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTemp
         })
             .then(function (resposta) {
                 console.log("Estou na função do GraficoRedeTempoReal");
-                console.warn("resposta:", resposta);
 
                 if (resposta.ok) {
                     resposta.json().then((resultado) => {
@@ -1569,7 +1568,7 @@ DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTemp
 
     function DadosKpiDiscoTempoReal() {
         var mcAdressVar = mcAdress;
-        fetch("/graficosRouter/DadosKpiDiscoTempoReal/", {
+        fetch("../graficosRouter/DadosKpiDiscoTempoReal/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1579,7 +1578,7 @@ DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTemp
             })
         })
             .then(function (resposta) {
-                console.log("Estou na função do DadosKpiDiscoTempoReal");
+                console.warn("Estou na função do DadosKpiDiscoTempoReal");
                 console.log("resposta:", resposta);
 
                 if (resposta.ok) {
@@ -1590,7 +1589,7 @@ DadosKpiDisco(); DadosKpiDiscoPicos(); DadosKpiDiscoAlertas(); DadosKpiDiscoTemp
                         myChart4.data.datasets[0].data = [espacoUtilizado, espacoDisponivel];
 
                         myChart4.update();
-                    });
+                    })
                 } else {
                     throw "Houve erro ao puxar";
                 }

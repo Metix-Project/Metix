@@ -236,9 +236,9 @@ GROUP BY macAddress;`;
 
 
 function DadosKpiDiscoTempoReal(mcAdress) {
-  var instrucaosql = `SELECT DATE_FORMAT(dataHora, '%H:%i') AS hora, DiscoPorc AS espacoUtilizado
+  var instrucaosql = `SELECT DATE_FORMAT(dataHora, '%H:%i') AS hora, discoPorc AS espacoUtilizado
 FROM DadosServidor
-WHERE macAddress = "08979866bdfd"
+WHERE macAddress = "${mcAdress}"
 ORDER BY dataHora DESC
 LIMIT 1;`;
 
